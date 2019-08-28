@@ -1,6 +1,5 @@
 stages:
   - build
-  # - test
   - deploy
 
 prepare:
@@ -15,8 +14,8 @@ prepare:
   artifacts:
     paths:
       - storybook-static/
-  only:
-    - tags
+  tags:
+    - spot
 
 pages:
   stage: deploy
@@ -27,3 +26,5 @@ pages:
   artifacts:
     paths:
       - public/
+  tags:
+    - spot

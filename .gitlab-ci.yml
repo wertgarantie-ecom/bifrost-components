@@ -1,0 +1,31 @@
+stages:
+  - build
+  # - test
+  - deploy
+
+prepare:
+  image: node:latest
+  stage: build
+  script:
+    - npm install
+    - npm run build
+    - npm run build-storybook
+    - pwd
+    - ls
+  artifacts:
+    paths:
+      - storybook-static/
+  only:
+    - tags
+
+pages:
+  stage: deploy
+  script:
+    - mkdir $CI_PROJECT_DIR/public
+    - mv storybook-static/* $CI_PROJECT_DIR/public/
+    - rm -rf storybook-static/
+  artifacts:
+    paths:
+      - public/
+  only:
+    - tags

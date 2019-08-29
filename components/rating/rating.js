@@ -12,8 +12,8 @@ template.innerHTML = `
             --star-filled: yellow;
             --percent: calc(var(--rating) / 5 * 100%);
             display: inline-block;
-            font-family: Times, serif; // make sure ★ appears correctly
-        font-size: var(--star-size);
+            font-family: Times, serif; /* make sure ★ appears correctly */
+            font-size: var(--star-size);
             background: linear-gradient(90deg, var(--star-filled) var(--percent), var(--star-empty) var(--percent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -39,21 +39,31 @@ class WgRating extends HTMLElement {
     }
 
     connectedCallback() {
-        let self = this;
-        fetch("http://localhost:3000/wertgarantie/rating")
-            .then(function (response) {
-                return response.json()
-            })
-            .then(function (body) {
-                self.ratingSpan.innerText = body.rating;
+        if (this.getAttribute('dummy-text') && this.getAttribute('dummy-uri') && this.getAttribute('dummy-rating')) {
+            this.ratingSpan.innerText = this.getAttribute('dummy-rating');
                 // add rating stars
-                self.ratingStarsDiv.innerText = '★★★★★';
-                self.ratingStarsDiv.style.setProperty("--rating", body.rating);
+                this.ratingStarsDiv.innerText = '★★★★★';
+                this.ratingStarsDiv.style.setProperty("--rating", this.getAttribute('dummy-rating'));
                 // add url and text
-                self.ratingLink.setAttribute('href', body.url);
-                self.ratingLink.innerText = body.text;
-            })
-            .catch(error => console.error('Error:', error));
+                this.ratingLink.setAttribute('href', this.getAttribute('dummy-uri'));
+                this.ratingLink.innerText = this.getAttribute('dummy-text');
+        } else {
+            let self = this;
+            fetch("http://localhost:3000/wertgarantie/rating")
+                .then(function (response) {
+                    return response.json()
+                })
+                .then(function (body) {
+                    self.ratingSpan.innerText = body.rating;
+                    // add rating stars
+                    self.ratingStarsDiv.innerText = '★★★★★';
+                    self.ratingStarsDiv.style.setProperty("--rating", body.rating);
+                    // add url and text
+                    self.ratingLink.setAttribute('href', body.url);
+                    self.ratingLink.innerText = body.text;
+                })
+                .catch(error => console.error('Error:', error));
+        }
     }
 }
 

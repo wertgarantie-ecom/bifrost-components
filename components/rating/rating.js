@@ -37,31 +37,25 @@ class WgRating extends HTMLElement {
         this.ratingStarsDiv = this.shadowRoot.querySelector('#wg-rating-stars');
         this.ratingLink = this.shadowRoot.querySelector('#rating-link');
     }
-    
-    get rating() {
-        return this.getAttribute('rating');
-    }
-
-    get url() {
-        return this.getAttribute('url');
-    }
-
-    get urlText() {
-        return this.getAttribute('url-text');
-    }
 
     connectedCallback() {
-        // add rating
-        this.ratingSpan.innerText = this.rating;
-
-        // add rating stars
-        this.ratingStarsDiv.innerText = '★★★★★';
-        this.ratingStarsDiv.style.setProperty("--rating", this.rating);
-
-        // add url and text
-        this.ratingLink.setAttribute('href', this.url);
-        this.ratingLink.innerText = this.urlText;
+        let self = this;
+        fetch("http://localhost:3000/wertgarantie/rating")
+            .then(function (response) {
+                return response.json()
+            })
+            .then(function (body) {
+                self.ratingSpan.innerText = body.rating;
+                // add rating stars
+                self.ratingStarsDiv.innerText = '★★★★★';
+                self.ratingStarsDiv.style.setProperty("--rating", body.rating);
+                // add url and text
+                self.ratingLink.setAttribute('href', body.url);
+                self.ratingLink.innerText = body.text;
+            })
+            .catch(error => console.error('Error:', error));
     }
 }
+
 window.customElements.define('wg-rating', WgRating);
 

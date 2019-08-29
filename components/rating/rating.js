@@ -1,7 +1,6 @@
 const template = document.createElement('template');
-
-template.innerHTML = `
-    <style>
+template.innerHTML = 
+    `<style>
         .wg-rating {
             display: inline-block;
         }
@@ -25,8 +24,7 @@ template.innerHTML = `
         <span id="rating"></span>
         <div id="wg-rating-stars"></div>
         <a id="rating-link"></a>
-    </div>
-`;
+    </div>`;
 
 class WgRating extends HTMLElement {
     constructor() {
@@ -36,9 +34,13 @@ class WgRating extends HTMLElement {
         this.ratingSpan = this.shadowRoot.querySelector('#rating');
         this.ratingStarsDiv = this.shadowRoot.querySelector('#wg-rating-stars');
         this.ratingLink = this.shadowRoot.querySelector('#rating-link');
+        this.styling = this.shadowRoot.querySelector('style');
     }
 
     connectedCallback() {
+        if (this.getAttribute('styling')) {
+            this.styling.innerText = '@import "' + this.getAttribute('styling') + '"';
+        }
         if (this.getAttribute('dummy-text') && this.getAttribute('dummy-uri') && this.getAttribute('dummy-rating')) {
             this.ratingSpan.innerText = this.getAttribute('dummy-rating');
                 // add rating stars
@@ -68,4 +70,3 @@ class WgRating extends HTMLElement {
 }
 
 window.customElements.define('wg-rating', WgRating);
-

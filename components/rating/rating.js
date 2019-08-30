@@ -1,5 +1,5 @@
 const template = document.createElement('template');
-template.innerHTML = 
+template.innerHTML =
     `<style>
         .wg-rating {
             display: inline-block;
@@ -12,7 +12,6 @@ template.innerHTML =
             --percent: calc(var(--rating) / 5 * 100%);
             display: inline-block;
             font-family: Times, serif; /* make sure ★ appears correctly */
-            font-size: var(--star-size);
             background: linear-gradient(90deg, var(--star-filled) var(--percent), var(--star-empty) var(--percent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -43,12 +42,12 @@ class WgRating extends HTMLElement {
         }
         if (this.getAttribute('dummy-text') && this.getAttribute('dummy-uri') && this.getAttribute('dummy-rating')) {
             this.ratingSpan.innerText = this.getAttribute('dummy-rating');
-                // add rating stars
-                this.ratingStarsDiv.innerText = '★★★★★';
-                this.ratingStarsDiv.style.setProperty("--rating", this.getAttribute('dummy-rating'));
-                // add url and text
-                this.ratingLink.setAttribute('href', this.getAttribute('dummy-uri'));
-                this.ratingLink.innerText = this.getAttribute('dummy-text');
+            // add rating stars
+            this.ratingStarsDiv.innerText = '★★★★★';
+            this.ratingStarsDiv.style.setProperty("--rating", this.getAttribute('dummy-rating'));
+            // add url and text
+            this.ratingLink.setAttribute('href', this.getAttribute('dummy-uri'));
+            this.ratingLink.innerText = this.getAttribute('dummy-text');
         } else {
             let self = this;
             fetch("http://localhost:3000/wertgarantie/rating")

@@ -34,39 +34,70 @@ class WgRating extends HTMLElement {
         this.ratingStarsDiv = this.shadowRoot.querySelector('#wg-rating-stars');
         this.ratingLink = this.shadowRoot.querySelector('#rating-link');
         this.updateDisplay = this.updateDisplay.bind(this);
+        this.overwriteWithUserDefinedAttributes = this.overwriteWithUserDefinedAttributes.bind(this);
+        this.fetchUri = "http://localhost:3000/wertgarantie/rating";
     }
 
     connectedCallback() {
-        if (this.getAttribute('dummy-text')
-            && this.getAttribute('dummy-uri')
-            && this.getAttribute('dummy-rating')) {
-            this.updateDisplay({
-                rating: this.getAttribute('dummy-rating'),
-                uri: this.getAttribute('dummy-uri'),
-                text: this.getAttribute('dummy-text'),
-            })
-        } else {
-            this.fetchRating("http://localhost:3000/wertgarantie/rating")
-                .then(this.updateDisplay)
-
-
+        if (this.getAttribute('data-fetchUrl')) {
+            this.fetchUri = this.getAttribute('data-fetchUrl');
         }
-    }
-
-    updateDisplay(ratingValues) {
-        this.ratingStarsDiv.innerText = '★★★★★';
-        this.ratingSpan.innerText = ratingValues.rating;
-        this.ratingStarsDiv.style.setProperty("--rating", ratingValues.rating);
-        this.ratingLink.setAttribute('href', ratingValues.url);
-        this.ratingLink.innerText = ratingValues.text;
+        this.fetchRating(this.fetchUri)
+            .then(this.overwriteWithUserDefinedAttributes)
+            .then(this.checkIfRatingDefined)
+            .then(this.updateDisplay);
     }
 
     async fetchRating(url) {
+        if (!url) {
+            return {};
+        }
         try {
-            let response = await fetch(url);
+            const response = await fetch(url);
+            if (response.status !== 200) {
+                console.error('fetch failed:', response);
+                return {};
+            }
             return await response.json();
         } catch (error) {
             console.error('Error:', error);
+            return {};
+        }
+    }
+
+    overwriteWithUserDefinedAttributes(values) {
+        const merge = (object1, object2) => {
+            return {...object1, ...object2}
+        };
+
+        const addIfDefined = (object, name, property) => {
+            if (property) object[name] = property;
+        };
+
+        const userData = {};
+        addIfDefined(userData, 'rating', this.getAttribute('data-rating'));
+        addIfDefined(userData, 'text', this.getAttribute('data-text'));
+        addIfDefined(userData, 'url', this.getAttribute('data-url'));
+
+        return merge(values, userData);
+    }
+
+    checkIfRatingDefined(values) {
+        if (!values || !values.rating) {
+            throw new Error("rating undefined");
+        }
+        return values
+    }
+
+    updateDisplay({rating, url, text}) {
+        this.ratingStarsDiv.innerText = '★★★★★';
+        this.ratingSpan.innerText = rating;
+        this.ratingStarsDiv.style.setProperty("--rating", rating);
+        if (url) {
+            this.ratingLink.setAttribute('href', url);
+        }
+        if (text) {
+            this.ratingLink.innerText = text;
         }
     }
 }

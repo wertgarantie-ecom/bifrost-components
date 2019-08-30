@@ -8,7 +8,7 @@ template.innerHTML =
         #wg-rating-stars {
             --rating: 1.3;
             --star-empty: #fff;
-            --star-filled: yellow;
+            --star-filled: #fc0f;
             --percent: calc(var(--rating) / 5 * 100%);
             display: inline-block;
             font-family: Times, serif; /* make sure ★ appears correctly */

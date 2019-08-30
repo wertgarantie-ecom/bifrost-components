@@ -28,3 +28,7 @@ pages:
       - public/
   tags:
     - spot
+
+cache:
+  paths:
+    - node_modules/

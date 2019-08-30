@@ -33,37 +33,40 @@ class WgRating extends HTMLElement {
         this.ratingSpan = this.shadowRoot.querySelector('#rating');
         this.ratingStarsDiv = this.shadowRoot.querySelector('#wg-rating-stars');
         this.ratingLink = this.shadowRoot.querySelector('#rating-link');
-        this.styling = this.shadowRoot.querySelector('style');
+        this.updateDisplay = this.updateDisplay.bind(this);
     }
 
     connectedCallback() {
-        if (this.getAttribute('styling')) {
-            this.styling.innerText = '@import "' + this.getAttribute('styling') + '"';
-        }
-        if (this.getAttribute('dummy-text') && this.getAttribute('dummy-uri') && this.getAttribute('dummy-rating')) {
-            this.ratingSpan.innerText = this.getAttribute('dummy-rating');
-            // add rating stars
-            this.ratingStarsDiv.innerText = '★★★★★';
-            this.ratingStarsDiv.style.setProperty("--rating", this.getAttribute('dummy-rating'));
-            // add url and text
-            this.ratingLink.setAttribute('href', this.getAttribute('dummy-uri'));
-            this.ratingLink.innerText = this.getAttribute('dummy-text');
+        if (this.getAttribute('dummy-text')
+            && this.getAttribute('dummy-uri')
+            && this.getAttribute('dummy-rating')) {
+            this.updateDisplay({
+                rating: this.getAttribute('dummy-rating'),
+                uri: this.getAttribute('dummy-uri'),
+                text: this.getAttribute('dummy-text'),
+            })
         } else {
-            let self = this;
-            fetch("http://localhost:3000/wertgarantie/rating")
-                .then(function (response) {
-                    return response.json()
-                })
-                .then(function (body) {
-                    self.ratingSpan.innerText = body.rating;
-                    // add rating stars
-                    self.ratingStarsDiv.innerText = '★★★★★';
-                    self.ratingStarsDiv.style.setProperty("--rating", body.rating);
-                    // add url and text
-                    self.ratingLink.setAttribute('href', body.url);
-                    self.ratingLink.innerText = body.text;
-                })
-                .catch(error => console.error('Error:', error));
+            this.fetchRating("http://localhost:3000/wertgarantie/rating")
+                .then(this.updateDisplay)
+
+
+        }
+    }
+
+    updateDisplay(ratingValues) {
+        this.ratingStarsDiv.innerText = '★★★★★';
+        this.ratingSpan.innerText = ratingValues.rating;
+        this.ratingStarsDiv.style.setProperty("--rating", ratingValues.rating);
+        this.ratingLink.setAttribute('href', ratingValues.url);
+        this.ratingLink.innerText = ratingValues.text;
+    }
+
+    async fetchRating(url) {
+        try {
+            let response = await fetch(url);
+            return await response.json();
+        } catch (error) {
+            console.error('Error:', error);
         }
     }
 }

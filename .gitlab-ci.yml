@@ -1,6 +1,13 @@
 stages:
+  - lint
   - build
   - deploy
+
+eslint:
+  stage: lint
+  script:
+    - npm i eslint
+    - node_modules/eslint/bin/eslint.js .
 
 prepare:
   image: node:latest

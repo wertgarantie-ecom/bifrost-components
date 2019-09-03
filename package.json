@@ -9,7 +9,8 @@
     "build": "faucet",
     "fingerprint": "faucet --fingerprint",
     "watch": "faucet -w",
-    "serve": "faucet -w --liveservice 9999"
+    "serve": "faucet -w --liveservice 9999",
+    "build-storybook": "build-storybook"
   },
   "author": "arne.landwehr@innoq.com",
   "license": "ISC",

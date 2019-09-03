@@ -1,24 +1,26 @@
 {
-  "name": "wertgarantie-ecommerce-component-lib",
+  "name": "midgard-component-lib",
   "version": "1.0.0",
-  "description": "YesICan Component Library",
+  "description": "midgard component lib",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "storybook": "start-storybook -p 6006 -s ./node_modules,./.storybook,./components/rating",
+    "storybook": "start-storybook -p 6006",
     "build": "faucet",
-    "build-storybook": "build-storybook"
+    "fingerprint": "faucet --fingerprint",
+    "watch": "faucet -w",
+    "serve": "faucet -w --liveservice 9999"
   },
   "author": "arne.landwehr@innoq.com",
   "license": "ISC",
-  "dependencies": {},
   "devDependencies": {
     "@babel/core": "^7.5.4",
     "@storybook/html": "^5.1.9",
     "babel-loader": "^8.0.6",
     "eslint": "^6.2.2",
     "eslint-config-google": "^0.13.0",
-    "faucet-pipeline-sass": "^1.3.0",
-    "faucet-pipeline-static": "^1.1.0"
+    "faucet-pipeline-js": "^2.0.8",
+    "donny": "^0.1.0",
+    "live-server": "^1.2.1"
   }
 }

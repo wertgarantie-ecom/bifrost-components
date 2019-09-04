@@ -44,21 +44,29 @@ class WgRating extends HTMLElement {
     }
 
     connectedCallback() {
-        if (this.getAttribute('data-fetchUrl')) {
-            this.fetchUri = this.getAttribute('data-fetchUrl');
+        const definedAttributes = {
+            fetchUri: this.getAttribute('data-fetchUrl'),
+            rating: this.getAttribute('data-rating'),
+            text: this.getAttribute('data-text'),
+            uri: this.getAttribute('data-url'),
+            allSet: () => this.rating && this.text && this.uri
         }
-        this.fetchRating(this.fetchUri)
-            .then(this.overwriteWithUserDefinedAttributes)
+
+        if (definedAttributes.fetchUri) {
+            this.fetchUri = definedAttributes.fetchUri;
+        }
+        this.fetchRating(this.fetchUri, definedAttributes)
+            .then((fetchedValues) => this.overwriteWithUserDefinedAttributes(fetchedValues, definedAttributes))
             .then(this.checkIfRatingDefined)
             .then(this.updateDisplay);
     }
 
-    async fetchRating(url) {
-        if (!url) {
+    async fetchRating(fetchUri, definedAttributes) {
+        if (!fetchUri || definedAttributes.allSet()) {
             return {};
-        }
+        } 
         try {
-            const response = await fetch(url);
+            const response = await fetch(fetchUri);
             if (response.status !== 200) {
                 console.error('fetch failed:', response);
                 return {};
@@ -70,7 +78,7 @@ class WgRating extends HTMLElement {
         }
     }
 
-    overwriteWithUserDefinedAttributes(values) {
+    overwriteWithUserDefinedAttributes(fetchedValues, definedAttributes) {
         const merge = (object1, object2) => {
             return {...object1, ...object2}
         };
@@ -80,11 +88,11 @@ class WgRating extends HTMLElement {
         };
 
         const userData = {};
-        addIfDefined(userData, 'rating', this.getAttribute('data-rating'));
-        addIfDefined(userData, 'text', this.getAttribute('data-text'));
-        addIfDefined(userData, 'url', this.getAttribute('data-url'));
+        addIfDefined(userData, 'rating', definedAttributes.rating);
+        addIfDefined(userData, 'text', definedAttributes.text);
+        addIfDefined(userData, 'url', definedAttributes.url);
 
-        return merge(values, userData);
+        return merge(fetchedValues, userData);
     }
 
     checkIfRatingDefined(values) {

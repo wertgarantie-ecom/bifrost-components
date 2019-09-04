@@ -1,14 +1,18 @@
 const template = document.createElement('template');
 template.innerHTML =
     `<style>
+        .inline{
+            display: inline-block;
+        } 
+        
         .wg-rating {
             display: inline-block;
         }
-        
+       
         #wg-rating-stars {
             --rating: 1.3;
-            --star-empty: #fff;
-            --star-filled: #fc0f;
+            --star-empty: #d3dbdb;
+            --star-filled: #ed6f2b;
             --percent: calc(var(--rating) / 5 * 100%);
             display: inline-block;
             font-family: Times, serif; /* make sure ★ appears correctly */
@@ -20,6 +24,7 @@ template.innerHTML =
     </style>
 
     <div class=wg-rating>
+        <slot class="inline" name="prefix"></slot>
         <span id="rating"></span>
         <div id="wg-rating-stars"></div>
         <a id="rating-link"></a>

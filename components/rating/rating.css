@@ -1,4 +1,53 @@
 :root {
-    background: #F8F8F8;
+    font-family: "Open Sans", sans-serif;
 }
 
+.info-box {
+    max-width: 600px;
+    padding-left: 32px;
+    box-sizing: border-box;
+    font-weight: 400;
+}
+
+li {
+    font-size: 16px;
+    line-height: 22.4px;
+    list-style-type: none;
+    line-style-position: outside;
+    margin-bottom: 8px;
+    text-align: left;
+}
+
+a {
+    color: #84bc34;
+    font-size: 13px;
+    line-height: 18.2px;
+    position: static;
+    text-decoration-color: #84bc34;
+    text-decoration-style: solid;
+    text-decoration-line: none;
+}
+
+
+i {
+    color: #84bc34;
+}
+
+h2 {
+    text-align: center;
+    font-size: 20px;
+    color: #84bc34;
+    font-weight: 700;
+    padding: 5px 5px 5px 40px;
+
+}
+
+.checkbox {
+    color: #21314d;
+    background-color: #f2f2f2;
+    padding: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration-style: solid;
+    margin-bottom: 20px;
+}

@@ -1,15 +1,12 @@
 module.exports = {
     js: [{
-        source: "./components/rating/rating.js",
-        target: "./public/rating.js",
-        esnext: true
-    }, {
-        source: "./components/rating/rating.js",
-        target: "./public/rating.min.js",
+        source: "./src/rating/rating.js",
+        target: "./dist/rating.js",
+        esnext: true,
         compact: "mangle"
     }],
     manifest: {
-        target: "./public/manifest.json"
+        target: "./dist/manifest.json"
     },
     watchDirs: ["./components"]
 };

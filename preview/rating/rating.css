@@ -13,7 +13,7 @@ li {
     font-size: 16px;
     line-height: 22.4px;
     list-style-type: none;
-    line-style-position: outside;
+    /* line-style-position: outside; */
     margin-bottom: 8px;
     text-align: left;
 }

@@ -8,14 +8,16 @@
 </head>
 <body>
 <wg-policy-selection
-        data-fetch-uri="http://localhost:3000/wertgarantie/policies">
+        data-fetch-uri="http://localhost:3000/wertgarantie/policies"
+        data-device-price="100"
+        data-device-id="234897548957"
+>
     <!--        data-title="Vergessen Sie nicht Ihren Rundumschutz"-->
     <!--        data-checkbox-label="Schutzpaket Premium für nur mtl. 9,95 € aktivieren"-->
     <!--        data-details-text="Alle Details zum Tarif"-->
     <!--        data-details-uri="http://www.example.com"-->
     <!--        data-information-sheet-text="Produktinformationsblatt"-->
     <!--        data-information-sheet-uri="http://www.example.com"-->
-
     <li slot="advantages">
         <wg-rating data-text="2.557 Google-Rezensionen" data-rating="2.4" data-url="http://www.innoq.com">
         </wg-rating>
@@ -25,4 +27,10 @@
 </body>
 <script src="../../src/policy-selection/policy-selection.js"></script>
 <script src="../../src/rating/rating.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelector('wg-policy-selection').price = 11111;
+        document.querySelector('wg-policy-selection').productId = 11111;
+    });
+</script>
 </html>

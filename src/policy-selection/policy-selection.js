@@ -48,6 +48,7 @@
             this.overwriteWithUserDefinedAttributes = this.overwriteWithUserDefinedAttributes.bind(this);
             this.checkIfPolicyDefined = this.checkIfPolicyDefined.bind(this);
             this.updateDisplay = this.updateDisplay.bind(this);
+            this.updateDisplay = this.updateDisplay.bind(this);
         }
 
         connectedCallback() {
@@ -58,21 +59,29 @@
                 detailsUri: this.getAttribute('data-details-uri'),
                 infoSheetText: this.getAttribute('data-information-sheet-text'),
                 infoSheetUri: this.getAttribute('data-information-sheet-uri'),
+                devicePrice: this.getAttribute('data-device-price'),
+                deviceId: this.getAttribute('data-device-id'),
                 fetchUri: this.getAttribute('data-fetch-uri'),
             };
 
-            this.fetchPolicy(definedAttributes.fetchUri)
+            this.fetchPolicy(definedAttributes)
                 .then((fetchedValues) => this.overwriteWithUserDefinedAttributes(fetchedValues, definedAttributes))
                 .then(this.checkIfPolicyDefined)
                 .then(this.updateDisplay);
         }
 
-        async fetchPolicy(fetchUri) {
+        async fetchPolicy({fetchUri, devicePrice, deviceId}) {
             if (!fetchUri) {
                 return {};
             }
             try {
-                const response = await fetch(fetchUri);
+                const url = new URL(fetchUri);
+                const queryParams = {
+                    devicePrice: devicePrice,
+                    deviceId: deviceId
+                };
+                Object.keys(queryParams).forEach(key => url.searchParams.append(key, queryParams[key]));
+                const response = await fetch(url);
                 if (response.status !== 200) {
                     console.error('fetch failed:', response);
                     return {};

@@ -1,4 +1,4 @@
-(function() {
+(function () {
     const template = document.createElement('template');
     template.innerHTML = `
         <div class="policy-selection">
@@ -20,9 +20,19 @@
             </div>
         </div>
     `;
-    
+
+
+    /*
+    TODOs:
+     - do not display element on error or missing values
+     - we need to provide auth information
+     - we need to send query params to midgard
+     - let's style
+     - what to do with multiple product offerings?
+     - what to do with multiple documents?
+     */
     class PolicySelection extends HTMLElement {
-    
+
         constructor() {
             super();
             this.attachShadow({mode: 'open'});
@@ -33,12 +43,11 @@
             this.productInformationSheet = this.shadowRoot.querySelector('#product-information-sheet');
             this.checkboxOrderPolicy = this.shadowRoot.querySelector('#order');
             this.checkboxLabel = this.shadowRoot.querySelector('#order-label');
-            this.fetchUri = "http://localhost:3000/wertgarantie/policies";
 
             this.overwriteWithUserDefinedAttributes = this.overwriteWithUserDefinedAttributes.bind(this);
             this.updateDisplay = this.updateDisplay.bind(this);
         }
-    
+
         connectedCallback() {
             const definedAttributes = {
                 title: this.getAttribute('data-title'),
@@ -48,27 +57,18 @@
                 infoSheetText: this.getAttribute('data-information-sheet-text'),
                 infoSheetUri: this.getAttribute('data-information-sheet-uri'),
                 fetchUri: this.getAttribute('data-fetch-uri'),
-                allSet: () => this.title && this.checkboxLabel && this.detailsText && this.detailsUri && this.infoSheetText && this.infoSheetUri
             };
 
-            if (definedAttributes.fetchUri) {
-                this.fetchUri = definedAttributes.fetchUri;
-            }
-            this.fetchPolicy(this.fetchUri, definedAttributes)
+            this.fetchPolicy(definedAttributes.fetchUri)
                 .then((fetchedValues) => this.overwriteWithUserDefinedAttributes(fetchedValues, definedAttributes))
                 .then(this.checkIfPolicyDefined)
                 .then(this.updateDisplay);
-
-
-            // const listElement = document.createElement('li');
-            // listElement.innerText = "Appended child for advantages list";
-            // this.advantagesList.appendChild(listElement);
-
         }
-        async fetchPolicy(fetchUri, definedAttributes) {
-            if (!fetchUri || definedAttributes.allSet()) {
+
+        async fetchPolicy(fetchUri) {
+            if (!fetchUri) {
                 return {};
-            } 
+            }
             try {
                 const response = await fetch(fetchUri);
                 if (response.status !== 200) {
@@ -91,15 +91,6 @@
                 if (property) object[name] = property;
             };
 
-            /*
-            title: this.getAttribute('data-title'),
-                checkboxLabel: this.getAttribute('data-checkbox-label'),
-                detailsText: this.getAttribute('data-details-text'),
-                detailsUri: this.getAttribute('data-details-uri'),
-                infoSheetText: this.getAttribute('data-information-sheet-text'),
-                infoSheetUri: this.getAttribute('data-information-sheet-uri'),
-                fetchUri: this.getAttribute('data-fetch-uri'),
-            */
             const userData = {};
             addIfDefined(userData, 'title', definedAttributes.title);
             addIfDefined(userData, 'checkboxLabel', definedAttributes.checkboxLabel);
@@ -112,21 +103,32 @@
         }
 
         checkIfPolicyDefined(values) {
-            if (!values || !values.infoSheetUri) {
-                throw new Error("policy undefined");
-            }
+            // TODO on error we should hide our complete component, just throwing an error is not enough
+            /*
+                        if (!values || !values.infoSheetUri) {
+                            throw new Error("policy undefined");
+                        }
+            */
             return values
         }
 
-        updateDisplay({title, checkboxLabel, detailsText, detailsUri, infoSheetText, infoSheetUri}) {
+        updateDisplay({title, checkboxLabel, detailsText, detailsUri, infoSheetText, infoSheetUri, advantages = []}) {
             this.wgHeader.textContent = title;
             this.checkboxLabel.textContent = checkboxLabel;
             this.productDetails.setAttribute('href', detailsUri);
             this.productDetails.textContent = detailsText;
             this.productInformationSheet.setAttribute('href', infoSheetUri);
             this.productInformationSheet.textContent = infoSheetText;
+
+            advantages.forEach((advantage) => {
+                const listElement = document.createElement('li');
+                listElement.innerText = advantage;
+                this.advantagesList.appendChild(listElement);
+            });
+
         }
-    
+
     }
+
     window.customElements.define('wg-policy-selection', PolicySelection);
 })();

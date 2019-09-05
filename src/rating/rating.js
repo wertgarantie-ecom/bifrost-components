@@ -1,4 +1,4 @@
-(function() {
+(function () {
     const selectionTemplate = document.createElement('template');
     selectionTemplate.innerHTML =
         `<style>
@@ -41,31 +41,26 @@
             this.ratingLink = this.shadowRoot.querySelector('#rating-link');
             this.updateDisplay = this.updateDisplay.bind(this);
             this.overwriteWithUserDefinedAttributes = this.overwriteWithUserDefinedAttributes.bind(this);
-            this.fetchUri = "http://localhost:3000/wertgarantie/rating";
         }
 
         connectedCallback() {
             const definedAttributes = {
-                fetchUri: this.getAttribute('data-fetchUrl'),
+                fetchUri: this.getAttribute('data-fetch-uri'),
                 rating: this.getAttribute('data-rating'),
                 text: this.getAttribute('data-text'),
                 uri: this.getAttribute('data-url'),
-                allSet: () => this.rating && this.text && this.uri
-            }
+            };
 
-            if (definedAttributes.fetchUri) {
-                this.fetchUri = definedAttributes.fetchUri;
-            }
-            this.fetchRating(this.fetchUri, definedAttributes)
+            this.fetchRating(definedAttributes.fetchUri)
                 .then((fetchedValues) => this.overwriteWithUserDefinedAttributes(fetchedValues, definedAttributes))
                 .then(this.checkIfRatingDefined)
                 .then(this.updateDisplay);
         }
 
-        async fetchRating(fetchUri, definedAttributes) {
-            if (!fetchUri || definedAttributes.allSet()) {
+        async fetchRating(fetchUri) {
+            if (!fetchUri) {
                 return {};
-            } 
+            }
             try {
                 const response = await fetch(fetchUri);
                 if (response.status !== 200) {

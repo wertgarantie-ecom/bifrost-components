@@ -1,7 +1,7 @@
 (function () {
     const template = document.createElement('template');
     template.innerHTML = `
-        <div class="policy-selection">
+        <div id="policy-selection-container">
             <div id="wg-header"></div>
             <ul id="wg-advantages-list">
                 <slot name="advantages"></slot>
@@ -37,6 +37,7 @@
             super();
             this.attachShadow({mode: 'open'});
             this.shadowRoot.appendChild(template.content.cloneNode(true));
+            this.policySelectionContainer = this.shadowRoot.querySelector('#policy-selection-container');
             this.wgHeader = this.shadowRoot.querySelector('#wg-header');
             this.advantagesList = this.shadowRoot.querySelector('#wg-advantages-list');
             this.productDetails = this.shadowRoot.querySelector('#product-details');
@@ -45,6 +46,7 @@
             this.checkboxLabel = this.shadowRoot.querySelector('#order-label');
 
             this.overwriteWithUserDefinedAttributes = this.overwriteWithUserDefinedAttributes.bind(this);
+            this.checkIfPolicyDefined = this.checkIfPolicyDefined.bind(this);
             this.updateDisplay = this.updateDisplay.bind(this);
         }
 
@@ -104,11 +106,10 @@
 
         checkIfPolicyDefined(values) {
             // TODO on error we should hide our complete component, just throwing an error is not enough
-            /*
-                        if (!values || !values.infoSheetUri) {
-                            throw new Error("policy undefined");
-                        }
-            */
+            if (!values || !values.infoSheetUri) {
+                this.policySelectionContainer.innerHTML = `<div>Service ist momentan nicht verfügbar</div>`;
+                throw new Error("policy undefined");
+            }
             return values
         }
 
@@ -125,10 +126,7 @@
                 listElement.innerText = advantage;
                 this.advantagesList.appendChild(listElement);
             });
-
         }
-
     }
-
     window.customElements.define('wg-policy-selection', PolicySelection);
 })();

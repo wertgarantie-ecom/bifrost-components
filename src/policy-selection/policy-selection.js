@@ -48,31 +48,44 @@
             this.overwriteWithUserDefinedAttributes = this.overwriteWithUserDefinedAttributes.bind(this);
             this.checkIfPolicyDefined = this.checkIfPolicyDefined.bind(this);
             this.updateDisplay = this.updateDisplay.bind(this);
-            this.updateDisplay = this.updateDisplay.bind(this);
         }
 
         connectedCallback() {
-            const definedAttributes = {
-                title: this.getAttribute('data-title'),
-                checkboxLabel: this.getAttribute('data-checkbox-label'),
-                detailsText: this.getAttribute('data-details-text'),
-                detailsUri: this.getAttribute('data-details-uri'),
-                infoSheetText: this.getAttribute('data-information-sheet-text'),
-                infoSheetUri: this.getAttribute('data-information-sheet-uri'),
-                devicePrice: this.getAttribute('data-device-price'),
-                deviceId: this.getAttribute('data-device-id'),
-                fetchUri: this.getAttribute('data-fetch-uri'),
+            const addIfDefined = (object, name, property) => {
+                if (property) object[name] = property;
             };
 
-            this.fetchPolicy(definedAttributes)
-                .then((fetchedValues) => this.overwriteWithUserDefinedAttributes(fetchedValues, definedAttributes))
-                .then(this.checkIfPolicyDefined)
-                .then(this.updateDisplay);
+            const displayData = {};
+            addIfDefined(displayData, 'title', this.getAttribute('data-title'));
+            addIfDefined(displayData, 'checkboxLabel', this.getAttribute('data-checkbox-label'));
+            addIfDefined(displayData, 'detailsText', this.getAttribute('data-details-text'));
+            addIfDefined(displayData, 'detailsUri', this.getAttribute('data-details-uri'));
+            addIfDefined(displayData, 'infoSheetText', this.getAttribute('data-information-sheet-text'));
+            addIfDefined(displayData, 'infoSheetUri', this.getAttribute('data-information-sheet-uri'));
+
+            const fetchData = {};
+            addIfDefined(fetchData, 'devicePrice', this.getAttribute('data-device-price'));
+            addIfDefined(fetchData, 'deviceId', this.getAttribute('data-device-id'));
+            addIfDefined(fetchData, 'fetchUri', this.getAttribute('data-fetch-uri'));
+
+            if (this.allDisplayDataAvailable(displayData)) {
+                this.updateDisplay(displayData);
+            } else {
+                this.fetchPolicy(fetchData)
+                    .then((fetchedValues) => this.overwriteWithUserDefinedAttributes(fetchedValues, displayData))
+                    .then(this.checkIfPolicyDefined)
+                    .then(this.updateDisplay);
+            }
+        }
+
+        allDisplayDataAvailable(displayData) {
+            return displayData.title && displayData.checkboxLabel && displayData.detailsText && displayData.detailsUri && displayData.infoSheetUri && displayData.infoSheetText;
         }
 
         async fetchPolicy({fetchUri, devicePrice, deviceId}) {
-            if (!fetchUri) {
-                return {};
+            if (!(fetchUri && devicePrice && deviceId)) {
+                this.remove();
+                throw new Error("fetch data and display data incomplete");
             }
             try {
                 const url = new URL(fetchUri);
@@ -93,33 +106,21 @@
             }
         }
 
-        overwriteWithUserDefinedAttributes(fetchedValues, definedAttributes) {
+        overwriteWithUserDefinedAttributes(fetchedDisplayData, displayData) {
             const merge = (object1, object2) => {
                 return {...object1, ...object2}
             };
 
-            const addIfDefined = (object, name, property) => {
-                if (property) object[name] = property;
-            };
-
-            const userData = {};
-            addIfDefined(userData, 'title', definedAttributes.title);
-            addIfDefined(userData, 'checkboxLabel', definedAttributes.checkboxLabel);
-            addIfDefined(userData, 'detailsText', definedAttributes.detailsText);
-            addIfDefined(userData, 'detailsUri', definedAttributes.detailsUri);
-            addIfDefined(userData, 'infoSheetText', definedAttributes.infoSheetText);
-            addIfDefined(userData, 'infoSheetUri', definedAttributes.infoSheetUri);
-
-            return merge(fetchedValues, userData);
+            return merge(fetchedDisplayData, displayData);
         }
 
-        checkIfPolicyDefined(values) {
-            // TODO on error we should hide our complete component, just throwing an error is not enough
-            if (!values || !values.infoSheetUri) {
-                this.policySelectionContainer.innerHTML = `<div>Service ist momentan nicht verfügbar</div>`;
-                throw new Error("policy undefined");
+        checkIfPolicyDefined(displayData) {
+            if (!this.allDisplayDataAvailable(displayData)) {
+                this.remove();
+                throw new Error("display data incomplete");
+            } else {
+                return displayData;
             }
-            return values
         }
 
         updateDisplay({title, checkboxLabel, detailsText, detailsUri, infoSheetText, infoSheetUri, advantages = []}) {
@@ -136,6 +137,12 @@
                 this.advantagesList.appendChild(listElement);
             });
         }
+
+        disconnectedCallback() {
+            console.log("disconnected");
+        }
+
     }
+
     window.customElements.define('wg-policy-selection', PolicySelection);
 })();

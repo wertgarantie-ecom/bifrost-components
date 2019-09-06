@@ -1,9 +1,10 @@
 (function () {
     const template = document.createElement('template');
     template.innerHTML = `
-        <div id="policy-selection-container">
-            <div id="wg-header"></div>
-            <ul id="wg-advantages-list">
+
+        <div id="wertgarantie-selection-container">
+            <div id="wertgarantie-header"></div>
+            <ul id="wertgarantie-advantages-list">
                 <slot name="advantages"></slot>
             </ul>
             <ul>
@@ -24,36 +25,44 @@
 
     /*
     TODOs:
-     - do not display element on error or missing values
      - we need to provide auth information
-     - we need to send query params to midgard
      - let's style
      - what to do with multiple product offerings?
      - what to do with multiple documents?
      */
-    class PolicySelection extends HTMLElement {
+    class WertgarantiePolicySelection extends HTMLElement {
 
         constructor() {
             super();
             this.attachShadow({mode: 'open'});
             this.shadowRoot.appendChild(template.content.cloneNode(true));
             this.policySelectionContainer = this.shadowRoot.querySelector('#policy-selection-container');
-            this.wgHeader = this.shadowRoot.querySelector('#wg-header');
-            this.advantagesList = this.shadowRoot.querySelector('#wg-advantages-list');
+            this.wertgarantieHeader = this.shadowRoot.querySelector('#wertgarantie-header');
+            this.advantagesList = this.shadowRoot.querySelector('#wertgarantie-advantages-list');
             this.productDetails = this.shadowRoot.querySelector('#product-details');
             this.productInformationSheet = this.shadowRoot.querySelector('#product-information-sheet');
             this.checkboxOrderPolicy = this.shadowRoot.querySelector('#order');
             this.checkboxLabel = this.shadowRoot.querySelector('#order-label');
-
             this.overwriteWithUserDefinedAttributes = this.overwriteWithUserDefinedAttributes.bind(this);
             this.checkIfPolicyDefined = this.checkIfPolicyDefined.bind(this);
             this.updateDisplay = this.updateDisplay.bind(this);
+        }
+
+        set devicePrice(devicePrice) {
+            this.setAttribute("data-device-price", devicePrice);
+        }
+        
+        set deviceId(deviceId) {
+            this.setAttribute("data-device-id", deviceId);
         }
 
         connectedCallback() {
             const addIfDefined = (object, name, property) => {
                 if (property) object[name] = property;
             };
+
+            this._upgradeProperty('deviceId');
+            this._upgradeProperty('devicePrice');
 
             const displayData = {};
             addIfDefined(displayData, 'title', this.getAttribute('data-title'));
@@ -75,6 +84,14 @@
                     .then((fetchedValues) => this.overwriteWithUserDefinedAttributes(fetchedValues, displayData))
                     .then(this.checkIfPolicyDefined)
                     .then(this.updateDisplay);
+            }
+        }
+    
+        _upgradeProperty(prop) {
+            if (this[prop]) {
+                let value = this[prop];
+                delete this[prop];
+                this[prop] = value;
             }
         }
 
@@ -124,7 +141,7 @@
         }
 
         updateDisplay({title, checkboxLabel, detailsText, detailsUri, infoSheetText, infoSheetUri, advantages = []}) {
-            this.wgHeader.textContent = title;
+            this.wertgarantieHeader.textContent = title;
             this.checkboxLabel.textContent = checkboxLabel;
             this.productDetails.setAttribute('href', detailsUri);
             this.productDetails.textContent = detailsText;
@@ -136,13 +153,14 @@
                 listElement.innerText = advantage;
                 this.advantagesList.appendChild(listElement);
             });
+
+            this.policySelectionContainer.style.display = "block";
         }
 
         disconnectedCallback() {
             console.log("disconnected");
         }
-
     }
 
-    window.customElements.define('wg-policy-selection', PolicySelection);
+    window.customElements.define('wertgarantie-policy-selection', WertgarantiePolicySelection);
 })();

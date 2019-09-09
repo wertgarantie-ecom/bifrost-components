@@ -2,6 +2,25 @@
     const template = document.createElement('template');
     template.innerHTML =
         `
+        <style>
+            :host {
+                display: inline-block;
+            }
+
+            #wertgarantie-rating-stars {
+                --rating: 1.3;
+                --star-empty: #d3dbdb;
+                --star-filled: #ee8a18;
+                --percent: calc(var(--rating) / 5 * 100%);
+                display: inline-block;
+                font-family: Times, serif; /* make sure ★ appears correctly */
+                background: linear-gradient(90deg, var(--star-filled) var(--percent), var(--star-empty) var(--percent));
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                letter-spacing: 3px;
+            }
+
+        </style>
         <div class=wertgarantie-rating>
             <slot class="inline" name="prefix"></slot>
             <span id="rating"></span>
@@ -13,10 +32,12 @@
         constructor() {
             super();
             this.attachShadow({mode: 'open'});
-            const shadowStyle = document.createElement('style');
-            shadowStyle.innerText = '@import "' + this.getAttribute('data-wg-rating-style') + '"';
             this.shadowRoot.appendChild(template.content.cloneNode(true));
-            this.shadowRoot.appendChild(shadowStyle);
+            if (this.getAttribute('data-wg-rating-style')) {
+                const shadowStyle = document.createElement('style');
+                shadowStyle.innerText = '@import "' + this.getAttribute('data-wg-rating-style') + '"';
+                this.shadowRoot.appendChild(shadowStyle);
+            }
             this.ratingSpan = this.shadowRoot.querySelector('#rating');
             this.ratingStarsDiv = this.shadowRoot.querySelector('#wertgarantie-rating-stars');
             this.ratingLink = this.shadowRoot.querySelector('#rating-link');

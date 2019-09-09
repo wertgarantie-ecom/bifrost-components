@@ -1,6 +1,11 @@
 (function () {
     const template = document.createElement('template');
     template.innerHTML = `
+        <style>
+            :host {
+                font-size: 25px;
+            }
+        </style>
 
         <div id="wertgarantie-selection-container">
             <div id="wertgarantie-header"></div>
@@ -22,7 +27,6 @@
         </div>
     `;
 
-
     /*
     TODOs:
      - we need to provide auth information
@@ -35,8 +39,11 @@
         constructor() {
             super();
             this.attachShadow({mode: 'open'});
+            const shadowStyle = document.createElement('style');
+            shadowStyle.innerText = '@import "' + this.getAttribute('data-policy-selection-style') + '"';
             this.shadowRoot.appendChild(template.content.cloneNode(true));
-            this.policySelectionContainer = this.shadowRoot.querySelector('#policy-selection-container');
+            this.shadowRoot.appendChild(shadowStyle);
+            this.policySelectionContainer = this.shadowRoot.querySelector('#wertgarantie-selection-container');
             this.wertgarantieHeader = this.shadowRoot.querySelector('#wertgarantie-header');
             this.advantagesList = this.shadowRoot.querySelector('#wertgarantie-advantages-list');
             this.productDetails = this.shadowRoot.querySelector('#product-details');

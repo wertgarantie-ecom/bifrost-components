@@ -2,25 +2,29 @@
     const template = document.createElement('template');
     template.innerHTML = `
         <style>
-            :host {
-                font-size: 25px;
-            }
+        .default-color {
+        fill: #84bc34;
+        }
         </style>
 
         <div id="wertgarantie-selection-container">
-            <div id="wertgarantie-header"></div>
+            <h3 id="wertgarantie-header"></h3>
             <ul id="wertgarantie-advantages-list">
                 <slot name="advantages"></slot>
             </ul>
             <ul>
                 <li>
+                    <slot name="details-prefix"></slot>
                     <a id="product-details"></a>
                 </li>
                 <li>
+                    <slot name="information-prefix">
+                    <svg class="default-color" xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"/></svg>
+</slot>
                     <a id="product-information-sheet"></a>
                 </li>
             </ul>
-            <div class="checkboxOrderPolicy">
+            <div id="order-input">
                 <input type="checkbox" id="order">
                 <label id="order-label" for="order"></label>
             </div>
@@ -42,10 +46,12 @@
         constructor() {
             super();
             this.attachShadow({mode: 'open'});
-            const shadowStyle = document.createElement('style');
-            shadowStyle.innerText = '@import "' + this.getAttribute('data-policy-selection-style') + '"';
             this.shadowRoot.appendChild(template.content.cloneNode(true));
-            this.shadowRoot.appendChild(shadowStyle);
+            if (this.getAttribute('data-style')) {
+                const shadowStyle = document.createElement('style');
+                shadowStyle.innerText = '@import url("' + this.getAttribute('data-style') + '")';
+                this.shadowRoot.appendChild(shadowStyle);
+            }
             this.policySelectionContainer = this.shadowRoot.querySelector('#wertgarantie-selection-container');
             this.wertgarantieHeader = this.shadowRoot.querySelector('#wertgarantie-header');
             this.advantagesList = this.shadowRoot.querySelector('#wertgarantie-advantages-list');
@@ -61,7 +67,7 @@
         set devicePrice(devicePrice) {
             this.setAttribute("data-device-price", devicePrice);
         }
-        
+
         set deviceId(deviceId) {
             this.setAttribute("data-device-id", deviceId);
         }
@@ -96,7 +102,7 @@
                     .then(this.updateDisplay);
             }
         }
-    
+
         _upgradeProperty(prop) {
             if (this[prop]) {
                 let value = this[prop];

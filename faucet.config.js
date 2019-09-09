@@ -8,5 +8,5 @@ module.exports = {
     manifest: {
         target: "./dist/manifest.json"
     },
-    watchDirs: ["./components"]
+    watchDirs: ["./*"]
 };

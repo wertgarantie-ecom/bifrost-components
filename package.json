@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -p 6006 -s ./stories/assets",
     "build": "faucet --compact",
     "fingerprint": "faucet --fingerprint",
     "watch": "faucet -w",
-    "serve": "faucet -w --liveservice 9999",
+    "serve": "faucet --liveservice 9999",
     "build-storybook": "build-storybook"
   },
   "author": "arne.landwehr@innoq.com",

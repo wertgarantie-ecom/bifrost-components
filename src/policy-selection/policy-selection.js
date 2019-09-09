@@ -29,6 +29,9 @@
 
     /*
     TODOs:
+     - add policy-selection to storybook
+     - add documentation for our vaious components
+
      - we need to provide auth information
      - let's style
      - what to do with multiple product offerings?

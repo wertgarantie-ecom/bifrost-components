@@ -2,9 +2,6 @@
     const template = document.createElement('template');
     template.innerHTML = `
         <style>
-        .default-color {
-        fill: #84bc34;
-        }
         </style>
 
         <div id="wertgarantie-selection-container">
@@ -18,9 +15,7 @@
                     <a id="product-details"></a>
                 </li>
                 <li>
-                    <slot name="information-prefix">
-                    <svg class="default-color" xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16"><path fill-rule="evenodd" d="M12 5l-8 8-4-4 1.5-1.5L4 10l6.5-6.5L12 5z"/></svg>
-</slot>
+                    <slot name="information-prefix"></slot>
                     <a id="product-information-sheet"></a>
                 </li>
             </ul>
@@ -33,7 +28,6 @@
 
     /*
     TODOs:
-     - add policy-selection to storybook
      - add documentation for our vaious components
 
      - we need to provide auth information
@@ -168,6 +162,9 @@
                 const listElement = document.createElement('li');
                 listElement.innerText = advantage;
                 this.advantagesList.appendChild(listElement);
+                const slotElement = document.createElement('slot');
+                slotElement.setAttribute("name", "advantages-prefix");
+                listElement.appendChild(slotElement);
             });
 
             this.policySelectionContainer.style.display = "block";

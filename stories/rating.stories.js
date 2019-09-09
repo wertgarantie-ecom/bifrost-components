@@ -9,7 +9,22 @@ storiesOf('Components|Rating', module)
     .add('with-imported-css', () => '<wertgarantie-rating data-text="9999 Google Rezensionen" data-url="http://example.com" data-rating="3.5" data-wg-rating-style="rating.css"></wertgarantie-rating>');
 
 storiesOf('Components|Selection', module)
-    .add('base component with default values', () => ` 
+    .add('base component', () => ` 
+    <wertgarantie-policy-selection
+        data-title="title"
+        data-checkbox-label="order checkbox label"
+        data-details-text="details link text"
+        data-details-uri="http://www.example.com"
+        data-information-sheet-text="product information"
+        data-information-sheet-uri="http://www.example.com"
+        data-device-id="1234"
+        data-device-price="12"
+    >
+        <li slot="advantages">advantage 1</li>
+        <li slot="advantages">advantage 2</li>
+        <li slot="advantages">...</li>
+    </wertgarantie-policy-selection> `)
+    .add('with default values', () => ` 
     <wertgarantie-policy-selection
         data-title="Vergessen Sie nicht Ihren Rundumschutz"
         data-checkbox-label="Schutzpaket Premium für nur mtl. 9,95 € aktivieren"
@@ -20,11 +35,11 @@ storiesOf('Components|Selection', module)
         data-device-id="1234"
         data-device-price="12"
     >
-        <li slot="advantages">advantage 1</li>
-        <li slot="advantages">advantage 2</li>
-        <li slot="advantages">advantage 3</li>
+        <li slot="advantages">Schutz bei Displaybrüchen</li>
+        <li slot="advantages">Schutz bei Wasserschaden</li>
+        <li slot="advantages">Schutz bei Akku-Defekten</li>
     </wertgarantie-policy-selection> `)
-    .add('base component with embedded rating component', () => ` 
+    .add('with embedded rating component', () => ` 
     <wertgarantie-policy-selection
         data-title="Vergessen Sie nicht Ihren Rundumschutz"
         data-checkbox-label="Schutzpaket Premium für nur mtl. 9,95 € aktivieren"
@@ -39,8 +54,9 @@ storiesOf('Components|Selection', module)
             <wertgarantie-rating data-text="2.557 Google-Rezensionen" data-rating="2.4" data-url="http://www.innoq.com" >
             </wertgarantie-rating>
         </li>
-        <li slot="advantages">advantage 2</li>
-        <li slot="advantages">advantage 3</li>
+        <li slot="advantages">Schutz bei Displaybrüchen</li>
+        <li slot="advantages">Schutz bei Wasserschaden</li>
+        <li slot="advantages">Schutz bei Akku-Defekten</li>
     </wertgarantie-policy-selection> `)
     .add('base component with fetched values', () => ` 
     <wertgarantie-policy-selection
@@ -48,10 +64,6 @@ storiesOf('Components|Selection', module)
         data-device-id="1234"
         data-device-price="12"
     >
-    <li slot="advantages">
-         <wertgarantie-rating data-text="2.557 Google-Rezensionen" data-rating="2.4" data-url="http://www.innoq.com" >
-         </wertgarantie-rating>
-    </li>
     <li slot="advantages">Schutz bei Displaybrüchen</li>
 </wertgarantie-policy-selection> `)
     .add('component with external styling', () => ` 
@@ -68,13 +80,27 @@ storiesOf('Components|Selection', module)
     >
         <li slot="advantages">
             <i class="fa fa-check" style="color: #84bc34"></i>
+             Schutz bei Displaybrüchen
+         </li>
+        <li slot="advantages">
+            <i class="fa fa-check" style="color: #84bc34"></i>
+             Schutz bei Wasserschaden
+         </li>
+            <i slot="details-prefix" class="fa fa-plus" style="color: #84bc34"></i>
+            <i slot="information-prefix" class="fas fa-file-pdf" style="color: #84bc34"></i>
+    </wertgarantie-policy-selection> `)
+    .add('all in one', () => ` 
+    <wertgarantie-policy-selection
+        data-fetch-uri="http://localhost:3000/wertgarantie/policies"
+        data-device-id="1234"
+        data-device-price="12"
+        data-style="policy-selection.css"
+    >
+        <li slot="advantages">
             <wertgarantie-rating data-text="2.557 Google-Rezensionen" data-rating="2.4" data-url="http://www.innoq.com" >
             </wertgarantie-rating>
         </li>
-        <li slot="advantages">
-            <i class="fa fa-check" style="color: #84bc34"></i>
-             advantage 2
-         </li>
-            <i slot="details-prefix" class="fa fa-check" style="color: #84bc34"></i>
-<!--            <i slot="information-prefix" class="fas fa-file-pdf" style="color: #84bc34"></i>-->
+            <i slot="advantages-prefix" class="fa fa-plus" style="color: #84bc34"></i>
+            <i slot="details-prefix" class="fa fa-plus" style="color: #84bc34"></i>
+            <i slot="information-prefix" class="fas fa-file-pdf" style="color: #84bc34"></i>
     </wertgarantie-policy-selection> `);

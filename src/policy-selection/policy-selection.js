@@ -158,7 +158,6 @@
             this.advantagesList = this.shadowRoot.querySelector('#wertgarantie-advantages-list');
             this.productDetails = this.shadowRoot.querySelector('#product-details');
             this.productInformationSheet = this.shadowRoot.querySelector('#product-information-sheet');
-            this.checkboxOrderPolicy = this.shadowRoot.querySelector('#order');
             this.checkboxLabel = this.shadowRoot.querySelector('#order-label');
             this.overwriteWithUserDefinedAttributes = this.overwriteWithUserDefinedAttributes.bind(this);
             this.checkIfPolicyDefined = this.checkIfPolicyDefined.bind(this);
@@ -188,6 +187,9 @@
             addIfDefined(displayData, 'detailsUri', this.getAttribute('data-details-uri'));
             addIfDefined(displayData, 'infoSheetText', this.getAttribute('data-information-sheet-text'));
             addIfDefined(displayData, 'infoSheetUri', this.getAttribute('data-information-sheet-uri'));
+            if (this.getAttribute('data-advantages')) {
+                addIfDefined(displayData, 'advantages', this.getAttribute('data-advantages').split(';'));
+            }
 
             const fetchData = {};
             addIfDefined(fetchData, 'devicePrice', this.getAttribute('data-device-price'));

@@ -9,7 +9,7 @@ storiesOf('Components|Rating', module)
     .add('with-imported-css', () => '<wertgarantie-rating data-text="9999 Google Rezensionen" data-url="http://example.com" data-rating="3.5" data-wg-rating-style="rating.css"></wertgarantie-rating>');
 
 storiesOf('Components|Selection', module)
-    .add('base component', () => ` 
+    .add('base component', () => `
     <wertgarantie-policy-selection
         data-title="title"
         data-checkbox-label="order checkbox label"
@@ -17,13 +17,12 @@ storiesOf('Components|Selection', module)
         data-details-uri="http://www.example.com"
         data-information-sheet-text="product information"
         data-information-sheet-uri="http://www.example.com"
+        data-advantages="advantage1;advantage2"
         data-device-id="1234"
         data-device-price="12"
     >
-        <li slot="advantages">advantage 1</li>
-        <li slot="advantages">advantage 2</li>
-        <li slot="advantages">...</li>
-    </wertgarantie-policy-selection> `)
+    </wertgarantie-policy-selection>
+     `)
     .add('with default values', () => ` 
     <wertgarantie-policy-selection
         data-title="Vergessen Sie nicht Ihren Rundumschutz"
@@ -32,12 +31,10 @@ storiesOf('Components|Selection', module)
         data-details-uri="http://www.example.com"
         data-information-sheet-text="Produktinformationsblatt"
         data-information-sheet-uri="http://www.example.com"
+        data-advantages="Schutz bei Displaybrüchen;Schutz bei Wasserschaden;Schutz bei Akku-Defekten"
         data-device-id="1234"
         data-device-price="12"
     >
-        <li slot="advantages">Schutz bei Displaybrüchen</li>
-        <li slot="advantages">Schutz bei Wasserschaden</li>
-        <li slot="advantages">Schutz bei Akku-Defekten</li>
     </wertgarantie-policy-selection> `)
     .add('with embedded rating component', () => ` 
     <wertgarantie-policy-selection
@@ -47,14 +44,12 @@ storiesOf('Components|Selection', module)
         data-details-uri="http://www.example.com"
         data-information-sheet-text="Produktinformationsblatt"
         data-information-sheet-uri="http://www.example.com"
+        data-advantages="Schutz bei Displaybrüchen;Schutz bei Wasserschaden;Schutz bei Akku-Defekten"
         data-device-id="1234"
         data-device-price="12"
     >
             <wertgarantie-rating slot="wertgarantie-rating-component" data-text="2.557 Google-Rezensionen" data-rating="2.4" data-url="http://www.innoq.com" >
             </wertgarantie-rating>
-        <li slot="advantages">Schutz bei Displaybrüchen</li>
-        <li slot="advantages">Schutz bei Wasserschaden</li>
-        <li slot="advantages">Schutz bei Akku-Defekten</li>
     </wertgarantie-policy-selection> `)
     .add('base component with fetched values', () => ` 
     <wertgarantie-policy-selection
@@ -73,6 +68,7 @@ storiesOf('Components|Selection', module)
         data-details-uri="http://www.example.com"
         data-information-sheet-text="Produktinformationsblatt"
         data-information-sheet-uri="http://www.example.com"
+        data-advantages="Schutz bei Displaybrüchen;Schutz bei Wasserschaden;Schutz bei Akku-Defekten"
         data-device-id="1234"
         data-device-price="12"
     >

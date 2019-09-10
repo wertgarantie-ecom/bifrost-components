@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-<script src="https://kit.fontawesome.com/a076d05399.js"></script>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css">
 <style>
     .mobilcom {
         --wertgarantie-selection-font-family: "Open Sans", sans-serif;
 
         /* container  */
-        --wertgarantie-selection-container-background-color: #f2f2f2;
+        --wertgarantie-selection-container-background-color: white;
         --wertgarantie-selection-container-max-width: 800px; 
         --wertgarantie-selection-container-padding: 0 0 0 0;
         --wertgarantie-selection-container-font-weight: 400;
@@ -30,6 +29,9 @@
 
         /* links */
 
+        /* checkbox */
+        --wertgarantie-selection-checkbox-color: #21314d;
+
     }
 </style>
 <head>
@@ -37,7 +39,7 @@
     <title>Policy Selection</title>
 </head>
 <body>
-    <wertgarantie-policy-selection class="mobilcom"
+    <wertgarantie-policy-selection class="mobilcomd"
         data-fetch-uri="http://localhost:3000/wertgarantie/policies"
         data-checkbox-label="Schutzpaket Premium für nur mtl. 9,95 € aktivieren"
         data-details-text="Alle Details zum Tarif"

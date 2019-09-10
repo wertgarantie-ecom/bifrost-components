@@ -3,27 +3,34 @@
     template.innerHTML = `
         <style>
         :host {
-            font-family: var(--wertgarantie-selection-font-family, Roboto, sans-serif);
+            font-family: var(--wertgarantie-selection-font-family, Roboto),sans-serif;
         }
         
         #wertgarantie-selection-container {
             max-width: var(--wertgarantie-selection-container-max-width, 600px);
-            padding: var(--wertgarantie-selection-container-padding, 0 0 0 5%);
+            padding: var(--wertgarantie-selection-container-padding, 0 0 0 0);
             font-weight: var(--wertgarantie-selection-container-font-weight, 400);
-            background-color: var(--wertgarantie-selection-background-color, #f5f5f5);
+            background-color: var(--wertgarantie-selection-container-background-color, white);
             font-size: var(--wertgarantie-selection-container-font-size, 16px);
             color: var(--wertgarantie-selection-container-color, #575757);
             line-height: var(--wertgarantie-selection-container-line-height, 21px);
         }
         
         h2 {
-            font-family: var(--wertgarantie-selection-h2-font-family, inherit);
+            font-family: var(--wertgarantie-selection-h2-font-family, inherit),sans-serif;
             text-align: center;
             font-weight: var(--wertgarantie-selection-h2-font-weight, 400);
             padding: var(--wertgarantie-selection-h2-padding, 5px 0 0 0);
             font-size: var(--wertgarantie-selection-h2-font-size, 20px);
             line-height: var(--wertgarantie-selection-h2-line-height, 30px);
             color: var(--wertgarantie-selection-h2-color, #2574be); 
+        }
+        
+        ::slotted(*) {
+        }
+        
+        .center{
+         text-align: center;
         }
         
         li {
@@ -36,6 +43,10 @@
 
         #wertgarantie-advantages-list {
             list-style: none;
+        }
+        
+        ul {
+       padding-inline-start: 0;
         }
 
         .icon::before {
@@ -50,7 +61,7 @@
         }
     
         .icon-solid::before {
-            font-family: "Font Awesome 5 Free";
+            font-family: "Font Awesome 5 Free",sans-serif;
             font-weight: 900;
             color: var(--wertgarantie-selection-icon-color, #2574be);
         }
@@ -59,19 +70,26 @@
             content: "\\F00C";
         }
 
+        .icon-plus::before {
+            content: "\\F067";
+        }
+        
+        .icon-pdf::before {
+            content: "\\F1C1";
+        }
+        
         a {
-            color: #555555;
-            font-size: var(--wertgarantie-selection-a-font-size, 0.7em);
-            line-height: 18.2px;
+            color: var(--wertgarantie-selection-icon-color, #2574be);
             position: static;
-            text-decoration-color: #555555;
-            text-decoration-style: solid;
-            text-decoration-line: none;
+        }
+        
+        section {
+        margin: 0 35px 20px 35px;
         }
         
         
         #order-input {
-            color: #21314d;
+            color: var(--wertgarantie-selection-checkbox-color, #21314d );
             background-color: #f2f2f2;
             padding: 20px;
             font-size: 13px;
@@ -83,23 +101,35 @@
 
         <div id="wertgarantie-selection-container">
             <h2 id="wertgarantie-header"></h2>
+            <div id="information" class="center">
             <slot name="wertgarantie-rating-component"></slot>
+            </div>
+            <section>
             <ul id="wertgarantie-advantages-list">
             </ul>
             <ul>
                 <li>
+                <small>
+                <span class="icon icon-solid icon-plus">
                     <slot name="details-prefix"></slot>
-                    <small><a id="product-details"></a></small>
+                    <a id="product-details"></a>
+                </span>
+                </small>
                 </li>
                 <li>
+                <small>
+                <span class="icon icon-solid icon-pdf">
+                    <a id="product-information-sheet"></a>
                     <slot name="information-prefix"></slot>
-                    <small><a id="product-information-sheet"></a></small>
+                </span>
+                </small>
                 </li>
             </ul>
             <div id="order-input">
                 <input type="checkbox" id="order">
                 <label id="order-label" for="order"></label>
             </div>
+            </section>
         </div>
     `;
 

@@ -1,17 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<style>
+    .mobilcom-wg-rating-theme {
+        --wertgarantie-rating-font-family: "Open Sans", sans-serif;
+
+        --wertgarantie-rating-link-color: #84bc34;
+    }
+</style>
 <head>
     <meta charset="UTF-8">
     <title>Rating</title>
 </head>
 <body>
-    <wertgarantie-rating
-            data-text="2.557 Google-Rezensionen"
-            data-rating="2.4"
-            data-url="http://www.innoq.com"
+    <!-- data-rating="4.5" -->
+    <!-- data-text="2.557 Google-Rezensionen" -->
+    <wertgarantie-rating class="mobilcom-wg-rating-theme"
+            data-show-rating-number="true"
+            data-uri="http://www.innoq.com"
             data-fetch-uri="http://localhost:3000/wertgarantie/rating"
-            data-wg-rating-style="http://192.168.86.21:5000/stories/assets/rating.css">
+    >
     </wertgarantie-rating>
 </body>
 <script src="../../src/rating/rating.js"></script>

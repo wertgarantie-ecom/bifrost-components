@@ -20,12 +20,20 @@
                 letter-spacing: 3px;
             }
 
+            .wertgarantie-rating-container {
+                font-family: var(--wertgarantie-rating-font-family, Roboto), sans-serif;
+            }
+
+            .rating-link {
+                color: var(--wertgarantie-rating-link-color, #2574be);
+            }
+
         </style>
-        <div class=wertgarantie-rating>
+        <div class=wertgarantie-rating-container>
             <slot class="inline" name="prefix"></slot>
             <span id="rating"></span>
             <div id="wertgarantie-rating-stars"></div>
-            <a id="rating-link"></a>
+            <a class="rating-link"></a>
         </div>`;
 
     class WertgarantieRating extends HTMLElement {
@@ -40,28 +48,47 @@
             }
             this.ratingSpan = this.shadowRoot.querySelector('#rating');
             this.ratingStarsDiv = this.shadowRoot.querySelector('#wertgarantie-rating-stars');
-            this.ratingLink = this.shadowRoot.querySelector('#rating-link');
+            this.ratingLink = this.shadowRoot.querySelector('.rating-link');
+
             this.updateDisplay = this.updateDisplay.bind(this);
             this.overwriteWithUserDefinedAttributes = this.overwriteWithUserDefinedAttributes.bind(this);
+            this.checkIfRatingDefined = this.checkIfRatingDefined.bind(this);
         }
 
         connectedCallback() {
-            const definedAttributes = {
-                fetchUri: this.getAttribute('data-fetch-uri'),
-                rating: this.getAttribute('data-rating'),
-                text: this.getAttribute('data-text'),
-                uri: this.getAttribute('data-url'),
+            const addIfDefined = (object, name, property) => {
+                if (property) object[name] = property;
             };
 
-            this.fetchRating(definedAttributes.fetchUri)
-                .then((fetchedValues) => this.overwriteWithUserDefinedAttributes(fetchedValues, definedAttributes))
-                .then(this.checkIfRatingDefined)
-                .then(this.updateDisplay);
+            const displayData = {};
+            addIfDefined(displayData, 'rating', this.getAttribute('data-rating'));
+            addIfDefined(displayData, 'text', this.getAttribute('data-text'));
+            addIfDefined(displayData, 'uri', this.getAttribute('data-uri'));
+            addIfDefined(displayData, 'showRatingNumber', this.getAttribute('data-show-rating-number') === "false" ? false : true);
+
+            const fetchData = {};
+            addIfDefined(fetchData, 'fetchUri', this.getAttribute('data-fetch-uri'));
+
+            if (this.allDisplayDataAvailable(displayData)) {
+                this.updateDisplay(displayData);
+            } else {
+                this.fetchRating(fetchData.fetchUri)
+                    .then((fetchedValues) => this.overwriteWithUserDefinedAttributes(fetchedValues, displayData))
+                    .then(this.checkIfRatingDefined)
+                    .then(this.updateDisplay);
+            }
+        }
+
+        allDisplayDataAvailable(displayData) {
+            return displayData.rating && displayData.text && displayData.uri;
         }
 
         async fetchRating(fetchUri) {
             if (!fetchUri) {
-                return {};
+                this.remove();
+                throw new Error("fetch data and display data incomplete\n" + 
+                    "fetchUri: " + fetchUri
+                );
             }
             try {
                 const response = await fetch(fetchUri);
@@ -81,31 +108,26 @@
                 return {...object1, ...object2}
             };
 
-            const addIfDefined = (object, name, property) => {
-                if (property) object[name] = property;
-            };
-
-            const userData = {};
-            addIfDefined(userData, 'rating', definedAttributes.rating);
-            addIfDefined(userData, 'text', definedAttributes.text);
-            addIfDefined(userData, 'url', definedAttributes.url);
-
-            return merge(fetchedValues, userData);
+            return merge(fetchedValues, definedAttributes);
         }
 
-        checkIfRatingDefined(values) {
-            if (!values || !values.rating) {
-                throw new Error("rating undefined");
+        checkIfRatingDefined(displayData) {
+            if (!this.allDisplayDataAvailable(displayData)) {
+                this.remove();
+                throw new Error("display data incomplete");
+            } else {
+                return displayData;
             }
-            return values
         }
 
-        updateDisplay({rating, url, text}) {
+        updateDisplay({rating, uri, text, showRatingNumber}) {
             this.ratingStarsDiv.innerText = '★★★★★';
-            this.ratingSpan.innerText = rating;
+            if (showRatingNumber) {
+                this.ratingSpan.innerText = rating;
+            }
             this.ratingStarsDiv.style.setProperty("--rating", rating);
-            if (url) {
-                this.ratingLink.setAttribute('href', url);
+            if (uri) {
+                this.ratingLink.setAttribute('href', uri);
             }
             if (text) {
                 this.ratingLink.innerText = text;

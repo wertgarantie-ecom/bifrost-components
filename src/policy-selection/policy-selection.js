@@ -16,21 +16,18 @@
             line-height: var(--wertgarantie-selection-container-line-height, 21px);
         }
         
-        h2 {
-            font-family: var(--wertgarantie-selection-h2-font-family, inherit),sans-serif;
+        .wg-title {
+            font-family: var(--wertgarantie-selection-title-font-family, inherit),sans-serif;
             text-align: center;
-            font-weight: var(--wertgarantie-selection-h2-font-weight, 400);
-            padding: var(--wertgarantie-selection-h2-padding, 5px 0 0 0);
-            font-size: var(--wertgarantie-selection-h2-font-size, 20px);
-            line-height: var(--wertgarantie-selection-h2-line-height, 30px);
-            color: var(--wertgarantie-selection-h2-color, #2574be); 
-        }
-        
-        ::slotted(*) {
+            font-weight: var(--wertgarantie-selection-title-font-weight, 400);
+            padding: var(--wertgarantie-selection-title-padding, 5px 0 0 0);
+            font-size: var(--wertgarantie-selection-title-font-size, 20px);
+            line-height: var(--wertgarantie-selection-title-line-height, 30px);
+            color: var(--wertgarantie-selection-title-color, #2574be); 
         }
         
         .center{
-         text-align: center;
+            text-align: center;
         }
         
         li {
@@ -41,12 +38,8 @@
             margin: var(--wertgarantie-selection-li-margin, 0 0 4px 0);
         }
 
-        #wertgarantie-advantages-list {
-            list-style: none;
-        }
-        
         ul {
-       padding-inline-start: 0;
+            padding-inline-start: 0;
         }
 
         .icon::before {
@@ -78,57 +71,54 @@
             content: "\\F1C1";
         }
         
-        a {
+        a, a:visited {
             color: var(--wertgarantie-selection-icon-color, #2574be);
             position: static;
         }
-        
+
         section {
-        margin: 0 35px 20px 35px;
+            margin: 0 35px 20px 35px;
         }
         
         
         #order-input {
             color: var(--wertgarantie-selection-checkbox-color, #21314d );
             background-color: #f2f2f2;
-            padding: 20px;
-            font-size: 13px;
+            padding: 1.5em;
             font-weight: 700;
-            text-decoration-style: solid;
-            margin-bottom: 20px;
         }
         </style>
 
         <div id="wertgarantie-selection-container">
-            <h2 id="wertgarantie-header"></h2>
+            <h2 class="wg-title" id="wertgarantie-header"></h2>
             <div id="information" class="center">
-            <slot name="wertgarantie-rating-component"></slot>
+                <slot name="wertgarantie-rating-component"></slot>
             </div>
             <section>
-            <ul id="wertgarantie-advantages-list">
-            </ul>
-            <ul>
-                <li>
-                <small>
-                <span class="icon icon-solid icon-plus">
-                    <slot name="details-prefix"></slot>
-                    <a id="product-details"></a>
-                </span>
-                </small>
-                </li>
-                <li>
-                <small>
-                <span class="icon icon-solid icon-pdf">
-                    <a id="product-information-sheet"></a>
-                    <slot name="information-prefix"></slot>
-                </span>
-                </small>
-                </li>
-            </ul>
-            <div id="order-input">
-                <input type="checkbox" id="order">
-                <label id="order-label" for="order"></label>
-            </div>
+                <ul class="advantages-list" id="wertgarantie-advantages-list">
+                </ul>
+                <ul>
+                    <li>
+                    <small>
+                    <span class="icon icon-solid icon-plus">
+                        <slot name="details-prefix"></slot>
+                        <a id="product-details"></a>
+                    </span>
+                    </small>
+                    </li>
+                    <li>
+                    <small>
+                    <span class="icon icon-solid icon-pdf">
+                        <a id="product-information-sheet"></a>
+                        <slot name="information-prefix"></slot>
+                    </span>
+                    </small>
+                    </li>
+                </ul>
+                <div id="order-input">
+                    <input type="checkbox" id="order">
+                    <label id="order-label" for="order"></label>
+                </div>
             </section>
         </div>
     `;
@@ -221,7 +211,11 @@
         async fetchPolicy({fetchUri, devicePrice, deviceId}) {
             if (!(fetchUri && devicePrice && deviceId)) {
                 this.remove();
-                throw new Error("fetch data and display data incomplete");
+                throw new Error("fetch data and display data incomplete\n" + 
+                    "fetchUri: " + fetchUri + "\n" +
+                    "devicePrice: " + devicePrice + "\n" +
+                    "deviceId: " + deviceId
+                );
             }
             try {
                 const url = new URL(fetchUri);

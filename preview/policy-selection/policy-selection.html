@@ -7,7 +7,7 @@
 
         /* container  */
         --wertgarantie-selection-container-background-color: white;
-        --wertgarantie-selection-container-max-width: 800px;
+        --wertgarantie-selection-container-max-width: 600px;
         --wertgarantie-selection-container-padding: 0 0 0 0;
         --wertgarantie-selection-container-font-weight: 400;
         --wertgarantie-selection-container-font-size: 13px;
@@ -15,16 +15,16 @@
         --wertgarantie-selection-container-line-height: 22px;
 
         /* header */
-        --wertgarantie-selection-h2-font-family: qtype, Helvetica, Arial, sans-serif;
-        --wertgarantie-selection-h2-padding: 10px 0 0 0;
-        --wertgarantie-selection-h2-font-weight: 800;
-        --wertgarantie-selection-h2-font-size: 26px;
-        --wertgarantie-selection-h2-line-height: 31px;
-        --wertgarantie-selection-h2-color: #84bc34;
+        --wertgarantie-selection-title-font-family: qtype, Helvetica, Arial, sans-serif;
+        --wertgarantie-selection-title-padding: 10px 0 0 0;
+        --wertgarantie-selection-title-font-weight: 800;
+        --wertgarantie-selection-title-font-size: 18px;
+        --wertgarantie-selection-title-line-height: 24px;
+        --wertgarantie-selection-title-color: #84bc34;
 
-        /* list elements */
-        --wertgarantie-selection-li-margin: 0 0 8px 0;
-        --wertgarantie-selection-li-font-size: 16px;
+        /* advantages */
+        --wertgarantie-selection-advantages-margin: 0 0 8px 0;
+        --wertgarantie-selection-advantages-font-size: 100%;
         --wertgarantie-selection-icon-color: #84bc34;
 
         /* links */
@@ -33,23 +33,31 @@
         --wertgarantie-selection-checkbox-color: #21314d;
 
     }
+    .mobilcom-wg-rating-theme {
+        --wertgarantie-rating-font-family: "Open Sans", sans-serif;
+
+        --wertgarantie-rating-link-color: inherit;
+    }
+
 </style>
 <head>
     <meta charset="UTF-8">
     <title>Policy Selection</title>
 </head>
 <body>
-<wertgarantie-policy-selection class="mobilcomd"
+    <!-- data-advantages="Schutz bei Displaybrüchen;Schutz bei Wasserschaden;Schutz bei Akku-Defekten" -->
+<wertgarantie-policy-selection class="mobilcom"
                                data-fetch-uri="http://localhost:3000/wertgarantie/policies"
                                data-checkbox-label="Schutzpaket Premium für nur mtl. 9,95 € aktivieren"
                                data-details-text="Alle Details zum Tarif"
                                data-details-uri="http://www.example.com"
-                               data-advantages="Schutz bei Displaybrüchen;Schutz bei Wasserschaden;Schutz bei Akku-Defekten"
                                data-information-sheet-text="Produktinformationsblatt"
                                data-information-sheet-uri="http://www.example.com"
 >
-    <wertgarantie-rating data-text="2.557 Google-Rezensionen" data-rating="2.4" data-url="http://www.innoq.com"
-                         slot="wertgarantie-rating-component">
+    <wertgarantie-rating class="mobilcom-wg-rating-theme"
+                         data-fetch-uri="http://localhost:3000/wertgarantie/rating"
+                         slot="wertgarantie-rating-component"
+    >
     </wertgarantie-rating>
 </wertgarantie-policy-selection>
 </body>

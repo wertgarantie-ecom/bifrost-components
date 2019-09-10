@@ -1,3 +1,5 @@
-:host {
-    font-size: 60px;
+.mobilcom-wg-rating-theme {
+    --wertgarantie-rating-font-family: "Open Sans", sans-serif;
+
+    --wertgarantie-rating-link-color: inherit;
 }

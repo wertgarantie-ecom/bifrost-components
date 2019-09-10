@@ -2,21 +2,98 @@
     const template = document.createElement('template');
     template.innerHTML = `
         <style>
+        :host {
+            font-family: var(--wertgarantie-selection-font-family, Roboto, sans-serif);
+        }
+        
+        #wertgarantie-selection-container {
+            max-width: var(--wertgarantie-selection-container-max-width, 600px);
+            padding: var(--wertgarantie-selection-container-padding, 0 0 0 5%);
+            font-weight: var(--wertgarantie-selection-container-font-weight, 400);
+            background-color: var(--wertgarantie-selection-background-color, #f5f5f5);
+            font-size: var(--wertgarantie-selection-container-font-size, 16px);
+            color: var(--wertgarantie-selection-container-color, #575757);
+            line-height: var(--wertgarantie-selection-container-line-height, 21px);
+        }
+        
+        h2 {
+            font-family: var(--wertgarantie-selection-h2-font-family, inherit);
+            text-align: center;
+            font-weight: var(--wertgarantie-selection-h2-font-weight, 400);
+            padding: var(--wertgarantie-selection-h2-padding, 5px 0 0 0);
+            font-size: var(--wertgarantie-selection-h2-font-size, 20px);
+            line-height: var(--wertgarantie-selection-h2-line-height, 30px);
+            color: var(--wertgarantie-selection-h2-color, #2574be); 
+        }
+        
+        li {
+            color: var(--wertgarantie-selection-container-color, #575757);
+            font-size: var(--wertgarantie-selection-li-font-size, 13px);
+            line-height: var(--wertgarantie-selection-container-line-height, 21px);
+            list-style-type: none;
+            margin: var(--wertgarantie-selection-li-margin, 0 0 4px 0);
+        }
+
+        #wertgarantie-advantages-list {
+            list-style: none;
+        }
+
+        .icon::before {
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            display: inline-block; 
+            font-style: normal;
+            font-variant: normal;
+            text-rendering: auto;
+            line-height: 1;
+            margin-right: 0.5rem;
+        }
+    
+        .icon-solid::before {
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            color: var(--wertgarantie-selection-icon-color, #2574be);
+        }
+        
+        .icon-check::before {
+            content: "\\F00C";
+        }
+
+        a {
+            color: #555555;
+            font-size: var(--wertgarantie-selection-a-font-size, 0.7em);
+            line-height: 18.2px;
+            position: static;
+            text-decoration-color: #555555;
+            text-decoration-style: solid;
+            text-decoration-line: none;
+        }
+        
+        
+        #order-input {
+            color: #21314d;
+            background-color: #f2f2f2;
+            padding: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration-style: solid;
+            margin-bottom: 20px;
+        }
         </style>
 
         <div id="wertgarantie-selection-container">
-            <h3 id="wertgarantie-header"></h3>
+            <h2 id="wertgarantie-header"></h2>
+            <slot name="wertgarantie-rating-component"></slot>
             <ul id="wertgarantie-advantages-list">
-                <slot name="advantages"></slot>
             </ul>
             <ul>
                 <li>
                     <slot name="details-prefix"></slot>
-                    <a id="product-details"></a>
+                    <small><a id="product-details"></a></small>
                 </li>
                 <li>
                     <slot name="information-prefix"></slot>
-                    <a id="product-information-sheet"></a>
+                    <small><a id="product-information-sheet"></a></small>
                 </li>
             </ul>
             <div id="order-input">
@@ -160,11 +237,11 @@
 
             advantages.forEach((advantage) => {
                 const listElement = document.createElement('li');
-                listElement.innerText = advantage;
+                const spanElement = document.createElement('span');
+                spanElement.innerText = advantage;
+                spanElement.classList.add('icon', 'icon-solid', 'icon-check');
+                listElement.appendChild(spanElement);
                 this.advantagesList.appendChild(listElement);
-                const slotElement = document.createElement('slot');
-                slotElement.setAttribute("name", "advantages-prefix");
-                listElement.appendChild(slotElement);
             });
 
             this.policySelectionContainer.style.display = "block";

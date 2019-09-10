@@ -1,25 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css">
+<style>
+    .mobilcom {
+        --wertgarantie-selection-font-family: "Open Sans", sans-serif;
+
+        /* container  */
+        --wertgarantie-selection-container-background-color: #f2f2f2;
+        --wertgarantie-selection-container-max-width: 800px; 
+        --wertgarantie-selection-container-padding: 0 0 0 0;
+        --wertgarantie-selection-container-font-weight: 400;
+        --wertgarantie-selection-container-font-size: 13px;
+        --wertgarantie-selection-container-color: #21314d;
+        --wertgarantie-selection-container-line-height: 22px;
+
+        /* header */
+        --wertgarantie-selection-h2-font-family: qtype, Helvetica, Arial, sans-serif;
+        --wertgarantie-selection-h2-padding: 10px 0 0 0;
+        --wertgarantie-selection-h2-font-weight: 800;
+        --wertgarantie-selection-h2-font-size: 26px;
+        --wertgarantie-selection-h2-line-height: 31px;
+        --wertgarantie-selection-h2-color: #84bc34;
+
+        /* list elements */
+        --wertgarantie-selection-li-margin: 0 0 8px 0;
+        --wertgarantie-selection-li-font-size: 16px;
+        --wertgarantie-selection-icon-color: #84bc34;
+
+        /* links */
+
+    }
+</style>
 <head>
     <meta charset="UTF-8">
     <title>Policy Selection</title>
 </head>
 <body>
-    <wertgarantie-policy-selection
+    <wertgarantie-policy-selection class="mobilcom"
         data-fetch-uri="http://localhost:3000/wertgarantie/policies"
         data-checkbox-label="Schutzpaket Premium für nur mtl. 9,95 € aktivieren"
         data-details-text="Alle Details zum Tarif"
         data-details-uri="http://www.example.com"
         data-information-sheet-text="Produktinformationsblatt"
         data-information-sheet-uri="http://www.example.com"
-        data-policy-selection-style="./policy-selection.css"
     >
+    <wertgarantie-rating data-text="2.557 Google-Rezensionen" data-rating="2.4" data-url="http://www.innoq.com" slot="wertgarantie-rating-component">
+    </wertgarantie-rating>
+
         <li slot="advantages">
-            <wertgarantie-rating data-text="2.557 Google-Rezensionen" data-rating="2.4" data-url="http://www.innoq.com" >
-            </wertgarantie-rating>
         </li>
-        <li slot="advantages">Schutz bei Displaybrüchen</li>
+        <!-- <li slot="advantages">Schutz bei Displaybrüchen</li> -->
     </wertgarantie-policy-selection>
 </body>
 <script>

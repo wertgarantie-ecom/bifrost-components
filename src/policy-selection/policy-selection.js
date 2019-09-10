@@ -39,7 +39,7 @@
         }
 
         ul {
-            padding-inline-start: 0;
+            padding-inline-start: 1.5em;
         }
 
         .icon::before {
@@ -50,7 +50,7 @@
             font-variant: normal;
             text-rendering: auto;
             line-height: 1;
-            margin-right: 0.5rem;
+            margin:0 0.5rem 0 -1.6em;
         }
     
         .icon-solid::before {

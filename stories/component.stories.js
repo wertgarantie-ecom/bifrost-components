@@ -50,10 +50,8 @@ storiesOf('Components|Selection', module)
         data-device-id="1234"
         data-device-price="12"
     >
-        <li slot="advantages">
-            <wertgarantie-rating data-text="2.557 Google-Rezensionen" data-rating="2.4" data-url="http://www.innoq.com" >
+            <wertgarantie-rating slot="wertgarantie-rating-component" data-text="2.557 Google-Rezensionen" data-rating="2.4" data-url="http://www.innoq.com" >
             </wertgarantie-rating>
-        </li>
         <li slot="advantages">Schutz bei Displaybrüchen</li>
         <li slot="advantages">Schutz bei Wasserschaden</li>
         <li slot="advantages">Schutz bei Akku-Defekten</li>
@@ -66,8 +64,9 @@ storiesOf('Components|Selection', module)
     >
     <li slot="advantages">Schutz bei Displaybrüchen</li>
 </wertgarantie-policy-selection> `)
-    .add('component with external styling', () => ` 
+    .add('component with external theme', () => ` 
     <wertgarantie-policy-selection
+        class="mobilcom-theme"
         data-title="Vergessen Sie nicht Ihren Rundumschutz"
         data-checkbox-label="Schutzpaket Premium für nur mtl. 9,95 € aktivieren"
         data-details-text="Alle Details zum Tarif"
@@ -76,31 +75,15 @@ storiesOf('Components|Selection', module)
         data-information-sheet-uri="http://www.example.com"
         data-device-id="1234"
         data-device-price="12"
-        data-style="policy-selection.css"
     >
-        <li slot="advantages">
-            <i class="fa fa-check" style="color: #84bc34"></i>
-             Schutz bei Displaybrüchen
-         </li>
-        <li slot="advantages">
-            <i class="fa fa-check" style="color: #84bc34"></i>
-             Schutz bei Wasserschaden
-         </li>
-            <i slot="details-prefix" class="fa fa-plus" style="color: #84bc34"></i>
-            <i slot="information-prefix" class="fas fa-file-pdf" style="color: #84bc34"></i>
     </wertgarantie-policy-selection> `)
     .add('all in one', () => ` 
     <wertgarantie-policy-selection
+        class="mobilcom-theme"
         data-fetch-uri="http://localhost:3000/wertgarantie/policies"
         data-device-id="1234"
         data-device-price="12"
-        data-style="policy-selection.css"
     >
-        <li slot="advantages">
-            <wertgarantie-rating data-text="2.557 Google-Rezensionen" data-rating="2.4" data-url="http://www.innoq.com" >
+            <wertgarantie-rating slot="wertgarantie-rating-component" data-text="2.557 Google-Rezensionen" data-rating="2.4" data-url="http://www.innoq.com" >
             </wertgarantie-rating>
-        </li>
-            <i slot="advantages-prefix" class="fa fa-plus" style="color: #84bc34"></i>
-            <i slot="details-prefix" class="fa fa-plus" style="color: #84bc34"></i>
-            <i slot="information-prefix" class="fas fa-file-pdf" style="color: #84bc34"></i>
     </wertgarantie-policy-selection> `);

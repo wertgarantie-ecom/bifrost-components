@@ -10,7 +10,7 @@
             #wertgarantie-rating-stars {
                 --rating: 1.3;
                 --star-empty: #d3dbdb;
-                --star-filled: #ee8a18;
+                --star-filled: var(--wertgarantie-rating-stars-color, #ee8a18);
                 --percent: calc(var(--rating) / 5 * 100%);
                 display: inline-block;
                 font-family: Times, serif; /* make sure ★ appears correctly */
@@ -22,6 +22,7 @@
 
             .wertgarantie-rating-container {
                 font-family: var(--wertgarantie-rating-font-family, Roboto), sans-serif;
+                font-size: var(--wertgarantie-rating-font-size, 16px);
             }
 
             .rating-link {

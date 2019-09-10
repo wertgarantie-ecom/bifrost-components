@@ -90,7 +90,7 @@ storiesOf('Components|Selection', module)
         >
             <wertgarantie-rating    slot="wertgarantie-rating-component" 
                                     data-text="2.557 Google-Rezensionen" 
-                                    data-rating="3.8" 
+                                    data-rating="4.7" 
                                     data-uri="http://www.innoq.com"
                                     class="mobilcom-wg-rating-theme"
             >

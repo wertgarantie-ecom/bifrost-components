@@ -1,6 +1,10 @@
 import {storiesOf} from '@storybook/html';
 import '../src/rating/rating.js';
 import '../src/policy-selection/policy-selection.js';
+import ratingBaseComponentWithDefaultValues from './documentation/ratingBaseComponentWithDefaultValues.md';
+import ratingBaseComponentWithoutRatingNumber from './documentation/ratingBaseComponentWithoutRatingNumber.md';
+import ratingComponentWithFetchedValues from './documentation/ratingComponentWithFetchedValues.md';
+import ratingComponentWithExternalStyling from './documentation/ratingComponentWithExternalStyling.md';
 
 
 storiesOf('Components|Rating', module)
@@ -8,14 +12,30 @@ storiesOf('Components|Rating', module)
         `<wertgarantie-rating   data-text="9999 Google Rezensionen"
                                 data-uri="http://example.com" 
                                 data-rating="4.7">
-        </wertgarantie-rating>`)
-    .add('with fetched values', () => `<wertgarantie-rating data-fetch-uri="http://localhost:3000/wertgarantie/rating"></wertgarantie-rating>`)
+        </wertgarantie-rating>`, { 
+            notes: { markdown: ratingBaseComponentWithDefaultValues },
+        })
+    .add('base component without rating number', () => 
+        `<wertgarantie-rating data-show-rating-number="false" 
+                              data-text="9999 Google Rezensionen"
+                              data-uri="http://example.com" 
+                              data-rating="4.7">
+        </wertgarantie-rating>`, { 
+            notes: { markdown: ratingBaseComponentWithoutRatingNumber },
+        })
+    .add('with fetched values', () => 
+        `<wertgarantie-rating data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/rating">
+        </wertgarantie-rating>`, { 
+            notes: { markdown: ratingComponentWithFetchedValues },
+        })
     .add('with external styling', () => 
         `<wertgarantie-rating   data-text="9999 Google Rezensionen"
                                 data-uri="http://example.com"
                                 data-rating="4.5"
                                 class="mobilcom-wg-rating-theme">
-        </wertgarantie-rating>`);
+        </wertgarantie-rating>`, { 
+            notes: { markdown: ratingComponentWithExternalStyling },
+        });
 
 storiesOf('Components|Selection', module)
     .add('base component', () => `

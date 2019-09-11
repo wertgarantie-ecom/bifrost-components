@@ -1,25 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-<style>
-    .mobilcom-wg-rating-theme {
-        --wertgarantie-rating-font-family: "Open Sans", sans-serif;
-        --wertgarantie-rating-font-size: 20px;
-
-    }
-</style>
+<link rel="stylesheet" href="../../stories/assets/rating.css">
 <head>
     <meta charset="UTF-8">
     <title>Rating</title>
 </head>
 <body>
-    <!-- data-rating="4.5" -->
-    <!-- data-text="2.557 Google-Rezensionen" -->
+    <!-- data-fetch-uri="http://localhost:3000/wertgarantie/rating" -->
     <wertgarantie-rating class="mobilcom-wg-rating-theme"
-            data-show-rating-number="true"
-            data-uri="http://www.innoq.com"
-            data-fetch-uri="http://localhost:3000/wertgarantie/rating"
-    >
+            data-show-rating-number="false"
+            data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/rating"
+            >
     </wertgarantie-rating>
 </body>
 <script src="../../src/rating/rating.js"></script>

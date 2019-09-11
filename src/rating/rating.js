@@ -31,7 +31,6 @@
 
         </style>
         <div class=wertgarantie-rating-container>
-            <slot class="inline" name="prefix"></slot>
             <span id="rating"></span>
             <div id="wertgarantie-rating-stars"></div>
             <a class="rating-link"></a>
@@ -42,11 +41,7 @@
             super();
             this.attachShadow({mode: 'open'});
             this.shadowRoot.appendChild(template.content.cloneNode(true));
-            if (this.getAttribute('data-wg-rating-style')) {
-                const shadowStyle = document.createElement('style');
-                shadowStyle.innerText = '@import url("' + this.getAttribute('data-wg-rating-style') + '")';
-                this.shadowRoot.appendChild(shadowStyle);
-            }
+            this.container = this.shadowRoot.querySelector(".wertgarantie-rating-container");
             this.ratingSpan = this.shadowRoot.querySelector('#rating');
             this.ratingStarsDiv = this.shadowRoot.querySelector('#wertgarantie-rating-stars');
             this.ratingLink = this.shadowRoot.querySelector('.rating-link');

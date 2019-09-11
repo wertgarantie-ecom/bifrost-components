@@ -1,52 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css">
-<style>
-    .mobilcom {
-        --wertgarantie-selection-font-family: "Open Sans", sans-serif;
-
-        /* container  */
-        --wertgarantie-selection-container-background-color: white;
-        --wertgarantie-selection-container-max-width: 600px;
-        --wertgarantie-selection-container-padding: 0 0 0 0;
-        --wertgarantie-selection-container-font-weight: 400;
-        --wertgarantie-selection-container-font-size: 13px;
-        --wertgarantie-selection-container-color: #21314d;
-        --wertgarantie-selection-container-line-height: 22px;
-
-        /* header */
-        --wertgarantie-selection-title-font-family: qtype, Helvetica, Arial, sans-serif;
-        --wertgarantie-selection-title-padding: 10px 0 0 0;
-        --wertgarantie-selection-title-font-weight: 800;
-        --wertgarantie-selection-title-font-size: 18px;
-        --wertgarantie-selection-title-line-height: 24px;
-        --wertgarantie-selection-title-color: #84bc34;
-
-        /* advantages */
-        --wertgarantie-selection-advantages-margin: 0 0 8px 0;
-        --wertgarantie-selection-advantages-font-size: 100%;
-        --wertgarantie-selection-icon-color: #84bc34;
-
-        /* links */
-
-        /* checkbox */
-        --wertgarantie-selection-checkbox-color: #21314d;
-
-    }
-    .mobilcom-wg-rating-theme {
-        --wertgarantie-rating-font-family: "Open Sans", sans-serif;
-
-        --wertgarantie-rating-link-color: inherit;
-    }
-
-</style>
+<link rel="stylesheet" href="../../stories/assets/policy-selection.css">
+<link rel="stylesheet" href="../../stories/assets/rating.css">
 <head>
     <meta charset="UTF-8">
     <title>Policy Selection</title>
 </head>
 <body>
     <!-- data-advantages="Schutz bei Displaybrüchen;Schutz bei Wasserschaden;Schutz bei Akku-Defekten" -->
-<wertgarantie-policy-selection class="mobilcom"
+<wertgarantie-policy-selection class="mobilcom-theme"
                                data-fetch-uri="http://localhost:3000/wertgarantie/policies"
                                data-checkbox-label="Schutzpaket Premium für nur mtl. 9,95 € aktivieren"
                                data-details-text="Alle Details zum Tarif"

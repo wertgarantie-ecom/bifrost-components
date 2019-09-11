@@ -9,7 +9,7 @@ storiesOf('Components|Rating', module)
                                 data-uri="http://example.com" 
                                 data-rating="4.7">
         </wertgarantie-rating>`)
-    .add('with fetched values', () => `<wertgarantie-rating data-fetch-uri="http://localhost:3000/wertgarantie/rating"></wertgarantie-rating>`)
+    .add('with fetched values', () => `<wertgarantie-rating data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/rating"></wertgarantie-rating>`)
     .add('with external styling', () => 
         `<wertgarantie-rating   data-text="9999 Google Rezensionen"
                                 data-uri="http://example.com"
@@ -62,7 +62,7 @@ storiesOf('Components|Selection', module)
     </wertgarantie-policy-selection> `)
     .add('base component with fetched values', () => ` 
     <wertgarantie-policy-selection
-        data-fetch-uri="http://localhost:3000/wertgarantie/policies"
+        data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/policies"
         data-device-id="1234"
         data-device-price="12"
     >
@@ -84,7 +84,7 @@ storiesOf('Components|Selection', module)
     .add('all in one', () => ` 
         <wertgarantie-policy-selection
             class="mobilcom-theme"
-            data-fetch-uri="http://localhost:3000/wertgarantie/policies"
+            data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/policies"
             data-device-id="1234"
             data-device-price="12"
         >

@@ -7,7 +7,7 @@ Current styling options via css properties are:
 ```
 .mobilcom-wg-rating-theme {
     --wertgarantie-rating-font-family: "Open Sans", sans-serif;
-    --wertgarantie-rating-font-size: 10px;
+    --wertgarantie-rating-font-size: 20px;
 }
 ```
 

@@ -1,6 +1,7 @@
 # Selection Component with external theme, embedded rating component and fetched values
 
 This is an example that wires all the shown possibilities before together with the following code: 
+
 ```
 <wertgarantie-policy-selection
             class="mobilcom-theme"
@@ -9,16 +10,16 @@ This is an example that wires all the shown possibilities before together with t
             data-device-price="12"
 >
     <wertgarantie-rating slot="wertgarantie-rating-component" 
-                            data-text="2.557 Google-Rezensionen" 
-                            data-rating="4.7" 
-                            data-uri="http://www.innoq.com"
+                            data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/rating"
                             class="mobilcom-wg-rating-theme"
     >
     </wertgarantie-rating>
 </wertgarantie-policy-selection>
 ```
 
+
 The `styling` that is used here, is the following:
+
 ```
 .mobilcom-theme {
     --wertgarantie-selection-font-family: "Open Sans", sans-serif;

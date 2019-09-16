@@ -121,9 +121,7 @@ storiesOf('Components|Selection', module)
             data-device-price="12"
         >
             <wertgarantie-rating slot="wertgarantie-rating-component" 
-                                 data-text="2.557 Google-Rezensionen" 
-                                 data-rating="4.7" 
-                                 data-uri="http://www.innoq.com"
+                                 data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/rating"
                                  class="mobilcom-wg-rating-theme"
             >
             </wertgarantie-rating>

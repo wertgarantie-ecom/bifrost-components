@@ -30,8 +30,59 @@
                 text-align: center;
             }
 
+            .show-details {
+                margin: auto;
+                width: 50%;
+                padding: 1.2em 0 0 0;
+            }
+
+            .show-details__button {
+                border: none;
+                background: none;
+                height: 100%;
+                font-weight: inherit;
+                font-family: inherit;
+                color: inherit;
+                outline: none
+            }
+            
+            .advantages__icon::before, .show-details__button::before {
+                -moz-osx-font-smoothing: grayscale;
+                -webkit-font-smoothing: antialiased;
+                display: inline-block; 
+                font-style: normal;
+                font-variant: normal;
+                text-rendering: auto;
+                line-height: 1;
+                margin:0 0.5rem 0 -1.6em;
+                font-family: "Font Awesome 5 Free",sans-serif;
+                font-weight: 900;
+            }
+
+            .show-details__button--expanded::before {
+                content: "\\F102";
+            }
+
+            .show-details__button--collapsed::before {
+                content: "\\F103";
+            }
+
             .product {
                 margin: 0 35px 20px 35px;
+                visibility: hidden;
+                opacity: 0;
+                max-height: 0;
+                transition: all 0.4s;
+                transform-origin: left top;
+                transform: scaleY(0);
+            }
+
+            .product--expanded {
+                visibility: visible;
+                opacity: 1;
+                max-height: 100%;
+                transition: all 0.4s;
+                transform: scaleY(1);
             }
             
             .advantages {
@@ -51,19 +102,6 @@
 
             .advantages__item--excluded {
                 color: var(--wertgarantie-selection-advantage-excluded-text-color, lightgrey);
-            }
-
-            .advantages__icon::before {
-                -moz-osx-font-smoothing: grayscale;
-                -webkit-font-smoothing: antialiased;
-                display: inline-block; 
-                font-style: normal;
-                font-variant: normal;
-                text-rendering: auto;
-                line-height: 1;
-                margin:0 0.5rem 0 -1.6em;
-                font-family: "Font Awesome 5 Free",sans-serif;
-                font-weight: 900;
             }
         
             .advantages__icon--included::before {
@@ -108,7 +146,10 @@
             <div class="wg-rating" id="information">
                 <slot name="wertgarantie-rating-component"></slot>
             </div>
-            <section class="product">
+            <div class="show-details">
+                <button class="show-details__button show-details__button--collapsed" id="details-dropdown-button">Details anzeigen</button>
+            </div>
+            <section class="product product--collapsed" id="product-section">
                 <ul class="advantages" id="wertgarantie-advantages-list">
                 </ul>
                 <ul class="advantages">
@@ -116,7 +157,7 @@
                         <small class="product-information">
                             <span class="advantages__icon advantages__icon--included advantages__icon--plus">
                                 <slot name="details-prefix"></slot>
-                                <a class="product-information__link" id="product-details"></a>
+                                <a class="product-information__link" id="product-details-link"></a>
                             </span>
                         </small>
                     </li>
@@ -152,14 +193,17 @@
             super();
             this.attachShadow({mode: 'open'});
             this.shadowRoot.appendChild(template.content.cloneNode(true));
+            this.showDetailsButton = this.shadowRoot.querySelector("#details-dropdown-button");
+            this.productSection = this.shadowRoot.querySelector("#product-section");
             this.wertgarantieHeader = this.shadowRoot.querySelector('#wertgarantie-header');
             this.advantagesList = this.shadowRoot.querySelector('#wertgarantie-advantages-list');
-            this.productDetails = this.shadowRoot.querySelector('#product-details');
+            this.productDetailsLink = this.shadowRoot.querySelector('#product-details-link');
             this.productInformationSheet = this.shadowRoot.querySelector('#product-information-sheet');
             this.checkboxLabel = this.shadowRoot.querySelector('#order-label');
             this.overwriteWithUserDefinedAttributes = this.overwriteWithUserDefinedAttributes.bind(this);
             this.checkIfPolicyDefined = this.checkIfPolicyDefined.bind(this);
             this.updateDisplay = this.updateDisplay.bind(this);
+            this.toggleProductSection = this.toggleProductSection.bind(this);
         }
 
         set devicePrice(devicePrice) {
@@ -171,6 +215,8 @@
         }
 
         connectedCallback() {
+            this.showDetailsButton.addEventListener("click", this.toggleProductSection);
+
             const addIfDefined = (object, name, property) => {
                 if (property) object[name] = property;
             };
@@ -261,11 +307,23 @@
             }
         }
 
+        toggleProductSection() {
+            if (this.showDetailsButton.classList.toggle("show-details__button--expanded")) {
+                this.showDetailsButton.innerText = "Details ausblenden";
+                // this.productSection.style.display = "inline-block";
+            }
+            if (this.showDetailsButton.classList.toggle("show-details__button--collapsed")) {
+                this.showDetailsButton.innerText = "Details einblenden";
+                // this.productSection.style.display = "none";
+            }
+            this.productSection.classList.toggle("product--expanded");
+        }
+
         updateDisplay({title, checkboxLabel, detailsText, detailsUri, infoSheetText, infoSheetUri, advantages = []}) {
             this.wertgarantieHeader.textContent = title;
             this.checkboxLabel.textContent = checkboxLabel;
-            this.productDetails.setAttribute('href', detailsUri);
-            this.productDetails.textContent = detailsText;
+            this.productDetailsLink.setAttribute('href', detailsUri);
+            this.productDetailsLink.textContent = detailsText;
             this.productInformationSheet.setAttribute('href', infoSheetUri);
             this.productInformationSheet.textContent = infoSheetText;
 
@@ -280,8 +338,7 @@
                 listElement.appendChild(spanElement);
                 this.advantagesList.appendChild(listElement);
             });
-
-            this.policySelectionContainer.style.display = "block";
+            // this.productSection.style.display = "none";
         }
 
         disconnectedCallback() {

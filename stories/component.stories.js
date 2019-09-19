@@ -131,6 +131,7 @@ storiesOf('Components|Selection', module)
     .add('everything with different styling', () => ` 
         <wertgarantie-policy-selection
             class="jura-theme"
+            data-title="Unser <strong>Komplettschutz</strong> für den Schadensfall"
             data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/policies"
             data-device-id="1234"
             data-device-price="12"
@@ -144,3 +145,4 @@ storiesOf('Components|Selection', module)
         </wertgarantie-policy-selection> `, { 
             notes: { markdown: selectionComponentAllInOne },
         });
+        

@@ -27,10 +27,6 @@
                 margin: 30%;
             }
 
-            .head-section__order-checkbox {
-                height: 50px;
-                width: 50px;
-            }
             
             .head-section__information {
                 grid-column-start: 2;

@@ -127,4 +127,20 @@ storiesOf('Components|Selection', module)
             </wertgarantie-rating>
         </wertgarantie-policy-selection> `, { 
             notes: { markdown: selectionComponentAllInOne },
+        })
+    .add('everything with different styling', () => ` 
+        <wertgarantie-policy-selection
+            class="jura-theme"
+            data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/policies"
+            data-device-id="1234"
+            data-device-price="12"
+        >
+            <wertgarantie-rating slot="wertgarantie-rating-component" 
+                                 data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/rating"
+                                 data-show-rating-number="false"
+                                 class="jura-wg-rating-theme"
+            >
+            </wertgarantie-rating>
+        </wertgarantie-policy-selection> `, { 
+            notes: { markdown: selectionComponentAllInOne },
         });

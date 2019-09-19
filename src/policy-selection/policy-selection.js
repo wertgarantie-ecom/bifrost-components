@@ -8,42 +8,54 @@
             
             .wg-selection-container {
                 max-width: var(--wertgarantie-selection-container-max-width, 600px);
-                padding: var(--wertgarantie-selection-container-padding, 0 0 0 0);
                 font-weight: var(--wertgarantie-selection-container-font-weight, 400);
-                background-color: var(--wertgarantie-selection-container-background-color, #f5f5f5);
                 font-size: var(--wertgarantie-selection-container-font-size, 16px);
                 color: var(--wertgarantie-selection-container-color, #575757);
-                line-height: var(--wertgarantie-selection-container-line-height, 21px);
+            }
+
+            .head-section {
+                background-image: var(--wertgarantie-selection-head-section-background-image, linear-gradient(to right, #f5f5f5, #f5f5f5));
+                color: var(--wertgarantie-selection-head-section-text-color, #2574be);
+                display: grid;
+                grid-template-columns: 10% 90%;
+            }
+
+            .head-section__order {
+                min-width: 100px;
+                grid-column-start: 1;
+                align-self: center;
+                margin: 30%;
+            }
+
+            .head-section__order-checkbox {
+                height: 50px;
+                width: 50px;
+            }
+            
+            .head-section__information {
+                grid-column-start: 2;
+                padding-bottom: 0.5rem;
+            }
+
+            .head-section__item {
+                padding-top: 0.5em;
             }
             
             .wg-title {
                 font-family: var(--wertgarantie-selection-title-font-family, inherit),sans-serif;
-                text-align: center;
                 font-weight: var(--wertgarantie-selection-title-font-weight, 400);
-                padding: var(--wertgarantie-selection-title-padding, 5px 0 0 0);
                 font-size: var(--wertgarantie-selection-title-font-size, 20px);
-                line-height: var(--wertgarantie-selection-title-line-height, 30px);
-                color: var(--wertgarantie-selection-title-color, #2574be); 
-            }
-            
-            .wg-rating {
-                text-align: center;
-            }
-
-            .show-details {
-                margin: auto;
-                width: 50%;
-                padding: 1.2em 0 0 0;
+                text-transform: var(--wertgarantie-selection-title-text-transform); 
+                margin: 0.5rem 0 0 0;
             }
 
             .show-details__button {
                 border: none;
                 background: none;
-                height: 100%;
-                font-weight: inherit;
-                font-family: inherit;
-                color: inherit;
-                outline: none
+                outline: none;
+                color: var(--wertgarantie-selection-show-details-button-text-color, inherit);
+                font-size: var(--wertgarantie-selection-show-details-button-font-size);
+                font-weight: var(--wertgarantie-selection-show-details-button-font-weight);
             }
             
             .advantages__icon::before, .show-details__button::before {
@@ -53,10 +65,13 @@
                 font-style: normal;
                 font-variant: normal;
                 text-rendering: auto;
-                line-height: 1;
-                margin:0 0.5rem 0 -1.6em;
+                margin:0 0.5rem 0 -0.4rem;
                 font-family: "Font Awesome 5 Free",sans-serif;
-                font-weight: 900;
+                font-weight: 700;
+            }
+
+            .show-details__button::before {
+                color: var(--wertgarantie-selection-show-details-button-arrow-color, inherit);
             }
 
             .show-details__button--expanded::before {
@@ -67,17 +82,18 @@
                 content: "\\F103";
             }
 
-            .product {
-                margin: 0 35px 20px 35px;
+            .product-details {
+                padding: 0.7em;
                 visibility: hidden;
                 opacity: 0;
                 max-height: 0;
                 transition: all 0.4s;
                 transform-origin: left top;
                 transform: scaleY(0);
+                background-color: var(--wertgarantie-selection-product-details-section-background-color, white);
             }
 
-            .product--expanded {
+            .product-details--expanded {
                 visibility: visible;
                 opacity: 1;
                 max-height: 100%;
@@ -131,25 +147,27 @@
             .product-information__link, .product-information__link:visited {
                 color: var(--wertgarantie-selection-product-info-link-color, #2574be);
                 position: static;
+                text-decoration: none;
             }
             
-            #order-input {
-                color: var(--wertgarantie-selection-checkbox-color, #21314d );
-                background-color: #f2f2f2;
-                padding: 1.5em;
-                font-weight: 700;
-            }
         </style>
 
-        <div class="wg-selection-container" id="wertgarantie-selection-container">
-            <h2 class="wg-title" id="wertgarantie-header"></h2>
-            <div class="wg-rating" id="information">
-                <slot name="wertgarantie-rating-component"></slot>
-            </div>
-            <div class="show-details">
-                <button class="show-details__button show-details__button--collapsed" id="details-dropdown-button">Details anzeigen</button>
-            </div>
-            <section class="product product--collapsed" id="product-section">
+        <div class="wg-selection-container">
+            <section class="head-section">
+                <div class="head-section__order">
+                    <input type="checkbox" class="head-section__order-checkbox" id="order">
+                </div>
+                <div class="head-section__information">
+                    <h2 class="wg-title head-section__item" id="wertgarantie-header"></h2>
+                    <div class="head-section__item" id="information">
+                        <slot name="wertgarantie-rating-component"></slot>
+                    </div>
+                    <div class="show-details head-section__item">
+                        <button class="show-details__button show-details__button--collapsed" id="details-dropdown-button">Details anzeigen</button>
+                    </div>
+                </div>
+            </section>
+            <section class="product-details" id="product-section">
                 <ul class="advantages" id="wertgarantie-advantages-list">
                 </ul>
                 <ul class="advantages">
@@ -170,10 +188,6 @@
                         </small>
                     </li>
                 </ul>
-                <div id="order-input">
-                    <input type="checkbox" id="order">
-                    <label id="order-label" for="order"></label>
-                </div>
             </section>
         </div>
     `;
@@ -199,7 +213,6 @@
             this.advantagesList = this.shadowRoot.querySelector('#wertgarantie-advantages-list');
             this.productDetailsLink = this.shadowRoot.querySelector('#product-details-link');
             this.productInformationSheet = this.shadowRoot.querySelector('#product-information-sheet');
-            this.checkboxLabel = this.shadowRoot.querySelector('#order-label');
             this.overwriteWithUserDefinedAttributes = this.overwriteWithUserDefinedAttributes.bind(this);
             this.checkIfPolicyDefined = this.checkIfPolicyDefined.bind(this);
             this.updateDisplay = this.updateDisplay.bind(this);
@@ -226,7 +239,6 @@
 
             const displayData = {};
             addIfDefined(displayData, 'title', this.getAttribute('data-title'));
-            addIfDefined(displayData, 'checkboxLabel', this.getAttribute('data-checkbox-label'));
             addIfDefined(displayData, 'detailsText', this.getAttribute('data-details-text'));
             addIfDefined(displayData, 'detailsUri', this.getAttribute('data-details-uri'));
             addIfDefined(displayData, 'infoSheetText', this.getAttribute('data-information-sheet-text'));
@@ -259,7 +271,7 @@
         }
 
         allDisplayDataAvailable(displayData) {
-            return displayData.title && displayData.checkboxLabel && displayData.detailsText && displayData.detailsUri && displayData.infoSheetUri && displayData.infoSheetText;
+            return displayData.title && displayData.detailsText && displayData.detailsUri && displayData.infoSheetUri && displayData.infoSheetText;
         }
 
         async fetchPolicy({fetchUri, devicePrice, deviceId}) {
@@ -310,18 +322,15 @@
         toggleProductSection() {
             if (this.showDetailsButton.classList.toggle("show-details__button--expanded")) {
                 this.showDetailsButton.innerText = "Details ausblenden";
-                // this.productSection.style.display = "inline-block";
             }
             if (this.showDetailsButton.classList.toggle("show-details__button--collapsed")) {
                 this.showDetailsButton.innerText = "Details einblenden";
-                // this.productSection.style.display = "none";
             }
-            this.productSection.classList.toggle("product--expanded");
+            this.productSection.classList.toggle("product-details--expanded");
         }
 
-        updateDisplay({title, checkboxLabel, detailsText, detailsUri, infoSheetText, infoSheetUri, advantages = []}) {
-            this.wertgarantieHeader.textContent = title;
-            this.checkboxLabel.textContent = checkboxLabel;
+        updateDisplay({title, detailsText, detailsUri, infoSheetText, infoSheetUri, advantages = []}) {
+            this.wertgarantieHeader.innerHTML = title;
             this.productDetailsLink.setAttribute('href', detailsUri);
             this.productDetailsLink.textContent = detailsText;
             this.productInformationSheet.setAttribute('href', infoSheetUri);
@@ -338,7 +347,6 @@
                 listElement.appendChild(spanElement);
                 this.advantagesList.appendChild(listElement);
             });
-            // this.productSection.style.display = "none";
         }
 
         disconnectedCallback() {

@@ -1,35 +1,77 @@
 .mobilcom-theme {
-    --wertgarantie-selection-font-family: "Open Sans", sans-serif;
-    
-    /* container  */
-    --wertgarantie-selection-container-background-color: white;
-    --wertgarantie-selection-container-max-width: 600px;
-    --wertgarantie-selection-container-padding: 0 0 0 0;
+    --wertgarantie-selection-container-max-width: 570px;
     --wertgarantie-selection-container-font-weight: 400;
-    --wertgarantie-selection-container-font-size: 13px;
+    --wertgarantie-selection-container-font-size: 15px;
     --wertgarantie-selection-container-color: #21314d;
-    --wertgarantie-selection-container-line-height: 22px;
     
+    /* header-section */
+    --wertgarantie-selection-head-section-text-color: #84bc34;
+    --wertgarantie-selection-head-section-background-image: linear-gradient(to right, rgba(242, 242, 242, 1), rgba(242, 242, 242, 1));
+
     /* header */
     --wertgarantie-selection-title-font-family: qtype, Helvetica, Arial, sans-serif;
-    --wertgarantie-selection-title-padding: 10px 0 0 0;
     --wertgarantie-selection-title-font-weight: 800;
-    --wertgarantie-selection-title-font-size: 18px;
-    --wertgarantie-selection-title-line-height: 24px;
-    --wertgarantie-selection-title-color: #84bc34;
+    --wertgarantie-selection-title-font-size: 15px;
+    --wertgarantie-selection-title-text-transform: uppercase;
+
+    --wertgarantie-selection-show-details-button-font-size: 12px;
+    --wertgarantie-selection-show-details-button-font-weight: 400;
+    --wertgarantie-selection-show-details-button-text-color: var(--wertgarantie-selection-container-color);
+    --wertgarantie-selection-show-details-button-arrow-color: #84bc34;
+
+    /* product details section */
+    --wertgarantie-selection-product-details-section-background-color: white;
     
     /* advantages */
     --wertgarantie-selection-advantage-included-text-color: var(--wertgarantie-selection-container-color);
-    --wertgarantie-selection-advantage-excluded-text-color: lightgrey;
-    --wertgarantie-selection-advantages-margin: 0 0 8px 0;
-    --wertgarantie-selection-advantages-font-size: 100%;
+    --wertgarantie-selection-advantage-excluded-text-color: #f2f2f2;
+    --wertgarantie-selection-advantage-margin: 0 0 0 0;
+    --wertgarantie-selection-advantage-font-size: 12px;
     --wertgarantie-selection-advantage-included-icon-color: #84bc34;
-    --wertgarantie-selection-advantage-excluded-icon-color: rgb(158, 158, 158);
+    --wertgarantie-selection-advantage-excluded-icon-color: lightgrey;
 
     /* links */
     --wertgarantie-selection-product-info-link-color: #84bc34;
 
     /* checkbox */
-    --wertgarantie-selection-checkbox-color: #21314d;
+    --wertgarantie-selection-checkbox-color: #84bc34;
+}
+
+
+.jura-theme {
+    --wertgarantie-selection-container-max-width: 500px;
+    --wertgarantie-selection-container-font-weight: 400;
+    --wertgarantie-selection-container-font-size: 13px;
+    --wertgarantie-selection-container-color: #292929;
+    
+    /* header-section */
+    --wertgarantie-selection-head-section-background-image: linear-gradient(to right, rgba(183, 2, 2, 1), rgba(183, 2, 2, 0.6));
+    --wertgarantie-selection-head-section-text-color: white;
+
+    /* header */
+    --wertgarantie-selection-title-font-family: qtype, Helvetica, Arial, sans-serif;
+    --wertgarantie-selection-title-font-weight: 100;
+    --wertgarantie-selection-title-font-size: 15px;
+    --wertgarantie-selection-title-text-transform: uppercase;
+
+    --wertgarantie-selection-show-details-button-font-size: 10px;
+    --wertgarantie-selection-show-details-button-font-weight: 100;
+
+    /* product details section */
+    --wertgarantie-selection-product-details-section-background-color: rgb(245, 245, 245);
+    
+    /* advantages */
+    --wertgarantie-selection-advantage-included-text-color: var(--wertgarantie-selection-container-color);
+    --wertgarantie-selection-advantage-excluded-text-color: lightgrey;
+    --wertgarantie-selection-advantage-margin: 0 0 0 0;
+    --wertgarantie-selection-advantage-font-size: 10px;
+    --wertgarantie-selection-advantage-included-icon-color: var(--wertgarantie-selection-container-color);
+    --wertgarantie-selection-advantage-excluded-icon-color: lightgrey;
+
+    /* links */
+    --wertgarantie-selection-product-info-link-color: #b70202;
+
+    /* checkbox */
+    --wertgarantie-selection-checkbox-color: var(--wertgarantie-selection-container-color);
 
 }

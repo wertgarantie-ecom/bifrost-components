@@ -6,8 +6,17 @@
             :host {
                 display: inline-block;
             }
+            
+            .rating {
+                font-family: var(--wertgarantie-rating-font-family, Roboto), sans-serif;
+                font-size: var(--wertgarantie-rating-font-size, 16px);
+            }
 
-            #wertgarantie-rating-stars {
+            .rating__number {
+                color: var(--wertgarantie-rating-number-color, #2574be);
+            }
+            
+            .rating__stars {
                 --rating: 1.3;
                 --star-empty: #d3dbdb;
                 --star-filled: var(--wertgarantie-rating-stars-color, #ee8a18);
@@ -20,20 +29,17 @@
                 letter-spacing: 3px;
             }
 
-            .wertgarantie-rating-container {
-                font-family: var(--wertgarantie-rating-font-family, Roboto), sans-serif;
-                font-size: var(--wertgarantie-rating-font-size, 16px);
-            }
-
-            .rating-link {
+            .rating__link {
                 color: var(--wertgarantie-rating-link-color, #2574be);
+                text-decoration: none;
+                font-weight: var(--wertgarantie-rating-link-font-weight, 400);
             }
 
         </style>
-        <div class=wertgarantie-rating-container>
-            <span id="rating"></span>
-            <div id="wertgarantie-rating-stars"></div>
-            <a class="rating-link"></a>
+        <div class="rating">
+            <span class="rating__number" id="rating"></span>
+            <div class="rating__stars" id="wertgarantie-rating-stars"></div>
+            <a class="rating__link"></a>
         </div>`;
 
     class WertgarantieRating extends HTMLElement {
@@ -41,10 +47,10 @@
             super();
             this.attachShadow({mode: 'open'});
             this.shadowRoot.appendChild(template.content.cloneNode(true));
-            this.container = this.shadowRoot.querySelector(".wertgarantie-rating-container");
-            this.ratingSpan = this.shadowRoot.querySelector('#rating');
-            this.ratingStarsDiv = this.shadowRoot.querySelector('#wertgarantie-rating-stars');
-            this.ratingLink = this.shadowRoot.querySelector('.rating-link');
+            this.container = this.shadowRoot.querySelector(".rating");
+            this.ratingSpan = this.shadowRoot.querySelector('.rating__number');
+            this.ratingStarsDiv = this.shadowRoot.querySelector('.rating__stars');
+            this.ratingLink = this.shadowRoot.querySelector('.rating__link');
 
             this.updateDisplay = this.updateDisplay.bind(this);
             this.overwriteWithUserDefinedAttributes = this.overwriteWithUserDefinedAttributes.bind(this);

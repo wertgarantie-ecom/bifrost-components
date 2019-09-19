@@ -1,4 +1,12 @@
 .mobilcom-wg-rating-theme {
     --wertgarantie-rating-font-family: "Open Sans", sans-serif;
-    --wertgarantie-rating-font-size: 15px;
+    --wertgarantie-rating-font-size: 12px;
+    --wertgarantie-rating-number-color: #21314d;
+}
+
+.jura-wg-rating-theme {
+    --wertgarantie-rating-font-family: "Open Sans", sans-serif;
+    --wertgarantie-rating-font-size: 0.7em;
+    --wertgarantie-rating-link-color: white;
+    --wertgarantie-rating-stars-color: orange;
 }

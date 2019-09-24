@@ -6,7 +6,11 @@
 
 .jura-wg-rating-theme {
     --wertgarantie-rating-font-family: "Open Sans", sans-serif;
-    --wertgarantie-rating-font-size: 0.7em;
-    --wertgarantie-rating-link-color: white;
+    --wertgarantie-rating-font-size: 10px;
+    
+    --wertgarantie-rating-stars-font-size: 15px;
     --wertgarantie-rating-stars-color: orange;
+
+    --wertgarantie-rating-link-color: white;
+
 }

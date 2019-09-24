@@ -39,32 +39,32 @@
 
 
 .jura-theme {
-    --wertgarantie-selection-container-max-width: 500px;
+    --wertgarantie-selection-container-max-width: 550px;
     --wertgarantie-selection-container-font-weight: 400;
     --wertgarantie-selection-container-font-size: 13px;
     --wertgarantie-selection-container-color: #292929;
     
     /* header-section */
-    --wertgarantie-selection-head-section-background-image: linear-gradient(to right, rgba(183, 2, 2, 1), rgba(183, 2, 2, 0.6));
+    --wertgarantie-selection-head-section-background-image: linear-gradient(to right, rgba(183, 2, 2, 1), rgba(183, 2, 2, 0.65));
     --wertgarantie-selection-head-section-text-color: white;
 
     /* header */
     --wertgarantie-selection-title-font-family: qtype, Helvetica, Arial, sans-serif;
-    --wertgarantie-selection-title-font-weight: 100;
-    --wertgarantie-selection-title-font-size: 15px;
+    --wertgarantie-selection-title-font-weight: 200;
+    --wertgarantie-selection-title-font-size: 18px;
     --wertgarantie-selection-title-text-transform: uppercase;
 
-    --wertgarantie-selection-show-details-button-font-size: 10px;
+    --wertgarantie-selection-show-details-button-font-size: 12px;
     --wertgarantie-selection-show-details-button-font-weight: 100;
 
     /* product details section */
     --wertgarantie-selection-product-details-section-background-color: rgb(245, 245, 245);
-    
+
     /* advantages */
     --wertgarantie-selection-advantage-included-text-color: var(--wertgarantie-selection-container-color);
     --wertgarantie-selection-advantage-excluded-text-color: lightgrey;
     --wertgarantie-selection-advantage-margin: 0 0 0 0;
-    --wertgarantie-selection-advantage-font-size: 10px;
+    --wertgarantie-selection-advantage-font-size: 13px;
     --wertgarantie-selection-advantage-included-icon-color: var(--wertgarantie-selection-container-color);
     --wertgarantie-selection-advantage-excluded-icon-color: lightgrey;
 

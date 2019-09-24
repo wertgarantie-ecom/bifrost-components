@@ -4,6 +4,7 @@
         <style>
             :host {
                 font-family: var(--wertgarantie-selection-font-family, Roboto),sans-serif;
+                transition: all 0.6s;
             }
             
             .wg-selection-container {
@@ -17,24 +18,45 @@
                 background-image: var(--wertgarantie-selection-head-section-background-image, linear-gradient(to right, #f5f5f5, #f5f5f5));
                 color: var(--wertgarantie-selection-head-section-text-color, #2574be);
                 display: grid;
-                grid-template-columns: 10% 90%;
+                grid-template-columns: 12% 60% 28%;
+                padding: 0.7rem;
             }
 
-            .head-section__order {
+            .head-section__item {
+                padding-top: 0.5em;
+            }
+
+            .head-section__left {
                 min-width: 100px;
                 grid-column-start: 1;
                 align-self: center;
                 margin: 30%;
             }
 
+            .head-section__order-checkbox {
+                zoom: 1.3;
+            }
             
-            .head-section__information {
+            .head-section__middle {
+                align-self: center;
                 grid-column-start: 2;
-                padding-bottom: 0.5rem;
+                grid-column-end: 2;
+                
             }
 
-            .head-section__item {
-                padding-top: 0.5em;
+            .head-section__right {
+                height: 100%;
+                grid-column-start: 3;
+                grid-column-end: 3;
+                padding-right: 0.7rem;
+                position: relative
+            }
+            
+            .head-section__right--down {
+                position: absolute;
+                bottom: 0.5em;
+                right: 0.5em;
+                text-align: right;
             }
             
             .wg-title {
@@ -145,21 +167,26 @@
                 position: static;
                 text-decoration: none;
             }
-            
         </style>
 
         <div class="wg-selection-container">
             <section class="head-section">
-                <div class="head-section__order">
+                <div class="head-section__left">
                     <input type="checkbox" class="head-section__order-checkbox" id="order">
                 </div>
-                <div class="head-section__information">
-                    <h2 class="wg-title head-section__item" id="wertgarantie-header"></h2>
+                <div class="head-section__middle">
+                    <h2 class="wg-title" id="wertgarantie-header"></h2>
                     <div class="head-section__item" id="information">
                         <slot name="wertgarantie-rating-component"></slot>
                     </div>
                     <div class="show-details head-section__item">
                         <button class="show-details__button show-details__button--collapsed" id="details-dropdown-button">Details anzeigen</button>
+                    </div>
+                </div>
+                <div class="head-section__right">
+                    <div class="head-section__right--down">
+                        <strong id="price-display">ab X,XX €</strong><br/>
+                        <small id="payment-interval">pro Monat</small>
                     </div>
                 </div>
             </section>
@@ -209,6 +236,8 @@
             this.advantagesList = this.shadowRoot.querySelector('#wertgarantie-advantages-list');
             this.productDetailsLink = this.shadowRoot.querySelector('#product-details-link');
             this.productInformationSheet = this.shadowRoot.querySelector('#product-information-sheet');
+            this.priceDisplay = this.shadowRoot.querySelector('#price-display');
+            this.paymentInterval = this.shadowRoot.querySelector('#payment-interval');
             this.overwriteWithUserDefinedAttributes = this.overwriteWithUserDefinedAttributes.bind(this);
             this.checkIfPolicyDefined = this.checkIfPolicyDefined.bind(this);
             this.updateDisplay = this.updateDisplay.bind(this);
@@ -239,6 +268,10 @@
             addIfDefined(displayData, 'detailsUri', this.getAttribute('data-details-uri'));
             addIfDefined(displayData, 'infoSheetText', this.getAttribute('data-information-sheet-text'));
             addIfDefined(displayData, 'infoSheetUri', this.getAttribute('data-information-sheet-uri'));
+            addIfDefined(displayData, 'paymentInterval', this.getAttribute('data-payment-interval'));
+            addIfDefined(displayData, 'price', this.getAttribute('data-price'));
+            addIfDefined(displayData, 'currency', this.getAttribute('data-currency'));
+            addIfDefined(displayData, 'priceFormatted', this.getAttribute('data-price-formatted'));
             if (this.getAttribute('data-advantages')) {
                 addIfDefined(displayData, 'advantages', this.getAttribute('data-advantages').split(';'));
             }
@@ -267,7 +300,9 @@
         }
 
         allDisplayDataAvailable(displayData) {
-            return displayData.title && displayData.detailsText && displayData.detailsUri && displayData.infoSheetUri && displayData.infoSheetText;
+            return displayData.title && displayData.detailsText && displayData.detailsUri 
+            && displayData.infoSheetUri && displayData.infoSheetText && displayData.paymentInterval
+            && displayData.price && displayData.currency && displayData.priceFormatted;
         }
 
         async fetchPolicy({fetchUri, devicePrice, deviceId}) {
@@ -325,12 +360,14 @@
             this.productSection.classList.toggle("product-details--expanded");
         }
 
-        updateDisplay({title, detailsText, detailsUri, infoSheetText, infoSheetUri, advantages = []}) {
+        updateDisplay({title, detailsText, detailsUri, infoSheetText, infoSheetUri, priceFormatted, paymentInterval, advantages = []}) {
             this.wertgarantieHeader.innerHTML = title;
             this.productDetailsLink.setAttribute('href', detailsUri);
             this.productDetailsLink.textContent = detailsText;
             this.productInformationSheet.setAttribute('href', infoSheetUri);
             this.productInformationSheet.textContent = infoSheetText;
+            this.priceDisplay.textContent = priceFormatted;
+            this.paymentInterval.textContent = "pro " + paymentInterval;
 
             advantages.forEach((advantage) => {
                 const listElement = document.createElement('li');

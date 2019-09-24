@@ -22,11 +22,12 @@
                 --star-filled: var(--wertgarantie-rating-stars-color, #ee8a18);
                 --percent: calc(var(--rating) / 5 * 100%);
                 display: inline-block;
-                font-family: Times, serif; /* make sure ★ appears correctly */
+                font-family: Arial, serif; /* make sure ★ appears correctly */
                 background: linear-gradient(90deg, var(--star-filled) var(--percent), var(--star-empty) var(--percent));
                 -webkit-background-clip: text;
                 -webkit-text-fill-color: transparent;
                 letter-spacing: 3px;
+                font-size: var(--wertgarantie-rating-stars-font-size, inherit);
             }
 
             .rating__link {

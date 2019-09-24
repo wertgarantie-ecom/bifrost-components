@@ -17,7 +17,8 @@ import selectionComponentAllInOne from './documentation/selectionComponent/selec
 
 storiesOf('Components|Rating', module)
     .add('base component with default values', () => 
-        `<wertgarantie-rating    data-text="9999 Google Rezensionen"
+        `<wertgarantie-rating    
+                            data-text="9999 Google Rezensionen"
                             data-uri="http://example.com" 
                             data-rating="4.7">
         </wertgarantie-rating>`, { 
@@ -52,11 +53,14 @@ storiesOf('Components|Selection', module)
     .add('base component', () => `
         <wertgarantie-policy-selection
             data-title="title"
-            data-checkbox-label="order checkbox label"
             data-details-text="details link text"
             data-details-uri="http://www.example.com"
             data-information-sheet-text="product information"
             data-information-sheet-uri="http://www.example.com"
+            data-payment-interval="Monat"
+            data-price="9,95"
+            data-currency="€"
+            data-price-formatted="ab 9,95 €"
             data-advantages="advantage1;advantage2"
         >
         </wertgarantie-policy-selection>`, { 
@@ -65,11 +69,14 @@ storiesOf('Components|Selection', module)
     .add('with default values', () => ` 
         <wertgarantie-policy-selection
             data-title="Vergessen Sie nicht Ihren Rundumschutz"
-            data-checkbox-label="Schutzpaket Premium für nur mtl. 9,95 € aktivieren"
             data-details-text="Alle Details zum Tarif"
             data-details-uri="http://www.example.com"
             data-information-sheet-text="Produktinformationsblatt"
             data-information-sheet-uri="http://www.example.com"
+            data-payment-interval="Monat"
+            data-price="9,95"
+            data-currency="€"
+            data-price-formatted="ab 9,95 €"
             data-advantages="Schutz bei Displaybrüchen;Schutz bei Wasserschaden;Schutz bei Akku-Defekten"
         >
         </wertgarantie-policy-selection> `, { 
@@ -78,11 +85,14 @@ storiesOf('Components|Selection', module)
     .add('with embedded rating component', () => ` 
         <wertgarantie-policy-selection
             data-title="Vergessen Sie nicht Ihren Rundumschutz"
-            data-checkbox-label="Schutzpaket Premium für nur mtl. 9,95 € aktivieren"
             data-details-text="Alle Details zum Tarif"
             data-details-uri="http://www.example.com"
             data-information-sheet-text="Produktinformationsblatt"
             data-information-sheet-uri="http://www.example.com"
+            data-payment-interval="Monat"
+            data-price="9,95"
+            data-currency="€"
+            data-price-formatted="ab 9,95 €"
             data-advantages="Schutz bei Displaybrüchen;Schutz bei Wasserschaden;Schutz bei Akku-Defekten"
         >
             <wertgarantie-rating slot="wertgarantie-rating-component" data-text="2.557 Google-Rezensionen" data-rating="4.2" data-uri="http://www.innoq.com" >
@@ -108,6 +118,10 @@ storiesOf('Components|Selection', module)
             data-details-uri="http://www.example.com"
             data-information-sheet-text="Produktinformationsblatt"
             data-information-sheet-uri="http://www.example.com"
+            data-payment-interval="Monat"
+            data-price="9,95"
+            data-currency="€"
+            data-price-formatted="ab 9,95 €"
             data-advantages="Schutz bei Displaybrüchen;Schutz bei Wasserschaden;Schutz bei Akku-Defekten"
         >
         </wertgarantie-policy-selection> `, { 

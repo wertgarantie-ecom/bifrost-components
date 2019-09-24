@@ -198,7 +198,7 @@
                         <small class="product-information">
                             <span class="advantages__icon advantages__icon--included advantages__icon--plus">
                                 <slot name="details-prefix"></slot>
-                                <a class="product-information__link" id="product-details-link"></a>
+                                <a target="_blank" class="product-information__link" id="product-details-link"></a>
                             </span>
                         </small>
                     </li>
@@ -206,7 +206,7 @@
                         <small class="product-information">
                             <span class="advantages__icon advantages__icon--included advantages__icon--pdf">
                                 <slot name="information-prefix"></slot>
-                                <a class="product-information__link" id="product-information-sheet"></a>
+                                <a target="_blank" class="product-information__link" id="product-information-sheet"></a>
                             </span>
                         </small>
                     </li>

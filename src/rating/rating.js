@@ -40,7 +40,7 @@
         <div class="rating">
             <span class="rating__number" id="rating"></span>
             <div class="rating__stars" id="wertgarantie-rating-stars"></div>
-            <a class="rating__link"></a>
+            <a target="_blank" class="rating__link"></a>
         </div>`;
 
     class WertgarantieRating extends HTMLElement {

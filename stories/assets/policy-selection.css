@@ -1,8 +1,11 @@
 .mobilcom-theme {
+    --wertgarantie-selection-font-family: qtype, Helvetica, Arial, sans-serif;
+
     --wertgarantie-selection-container-max-width: 570px;
     --wertgarantie-selection-container-font-weight: 400;
     --wertgarantie-selection-container-font-size: 15px;
-    --wertgarantie-selection-container-color: #21314d;
+    --wertgarantie-selection-container-text-color: #21314d;
+    --wertgarantie-selection-container-background-color: rgb(242, 242, 242);
     
     /* header-section */
     --wertgarantie-selection-head-section-text-color: #84bc34;
@@ -14,14 +17,12 @@
     --wertgarantie-selection-title-font-size: 15px;
     --wertgarantie-selection-title-text-transform: uppercase;
 
+    /* show details button */
     --wertgarantie-selection-show-details-button-font-size: 12px;
     --wertgarantie-selection-show-details-button-font-weight: 400;
     --wertgarantie-selection-show-details-button-text-color: var(--wertgarantie-selection-container-color);
     --wertgarantie-selection-show-details-button-arrow-color: #84bc34;
 
-    /* product details section */
-    --wertgarantie-selection-product-details-section-background-color: white;
-    
     /* advantages */
     --wertgarantie-selection-advantage-included-text-color: var(--wertgarantie-selection-container-color);
     --wertgarantie-selection-advantage-excluded-text-color: #f2f2f2;
@@ -33,16 +34,17 @@
     /* links */
     --wertgarantie-selection-product-info-link-color: #84bc34;
 
-    /* checkbox */
-    --wertgarantie-selection-checkbox-color: #84bc34;
+    /* selection button header color */
+    --wertgarantie-selection-button-header-color: #84bc34;
 }
 
 
 .jura-theme {
-    --wertgarantie-selection-container-max-width: 550px;
+    --wertgarantie-selection-container-max-width: 500px;
     --wertgarantie-selection-container-font-weight: 400;
-    --wertgarantie-selection-container-font-size: 13px;
-    --wertgarantie-selection-container-color: #292929;
+    --wertgarantie-selection-container-font-size: 15px;
+    --wertgarantie-selection-container-text-color: #292929;
+    --wertgarantie-selection-container-background-color: rgb(235, 233, 233);
     
     /* header-section */
     --wertgarantie-selection-head-section-background-image: linear-gradient(to right, rgba(183, 2, 2, 1), rgba(183, 2, 2, 0.65));
@@ -57,21 +59,18 @@
     --wertgarantie-selection-show-details-button-font-size: 12px;
     --wertgarantie-selection-show-details-button-font-weight: 100;
 
-    /* product details section */
-    --wertgarantie-selection-product-details-section-background-color: rgb(245, 245, 245);
-
     /* advantages */
     --wertgarantie-selection-advantage-included-text-color: var(--wertgarantie-selection-container-color);
     --wertgarantie-selection-advantage-excluded-text-color: lightgrey;
     --wertgarantie-selection-advantage-margin: 0 0 0 0;
-    --wertgarantie-selection-advantage-font-size: 13px;
+    --wertgarantie-selection-advantage-font-size: 15px;
     --wertgarantie-selection-advantage-included-icon-color: var(--wertgarantie-selection-container-color);
     --wertgarantie-selection-advantage-excluded-icon-color: lightgrey;
 
     /* links */
     --wertgarantie-selection-product-info-link-color: #b70202;
 
-    /* checkbox */
-    --wertgarantie-selection-checkbox-color: var(--wertgarantie-selection-container-color);
+    /* selection button header color */
+    --wertgarantie-selection-button-header-color: #b70202;
 
 }

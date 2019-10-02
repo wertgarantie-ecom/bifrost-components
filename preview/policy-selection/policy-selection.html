@@ -8,40 +8,61 @@
     <title>Policy Selection</title>
 </head>
 <body>
-    <!-- data-details-uri="http://www.example.com" -->
-    <!-- data-advantages="Schutz bei Displaybrüchen;Schutz bei Wasserschaden;Schutz bei Akku-Defekten" -->
-    <!-- data-details-text="Alle Details zum Tarif" -->
-    <!-- data-information-sheet-text="Produktinformationsblatt" -->
-    <!-- data-information-sheet-uri="http://www.example.com" -->
-    <!-- data-checkbox-label="Schutzpaket Premium für nur mtl. 9,95 € aktivieren" -->
-    <!-- data-payment-interval="Monat" -->
-    <!-- data-price="9,95" -->
-    <!-- data-currency="€" -->
-    <!-- data-price-formatted="ab 9,95 €" -->
-    <!-- class="mobilcom-theme" -->
-    <!-- data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/policies" -->
+    <!-- data-fetch-uri="http://localhost:3000/wertgarantie/policies" -->
     <wertgarantie-policy-selection 
-                            class="jura-theme"    
-                            data-fetch-uri="http://localhost:3000/wertgarantie/policies"
+                            class="default"
+                            data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/policies"
                             data-title="Unser <strong>Komplettschutz</strong> für den Schadensfall"
     >
 
 
-    <!-- data-uri="http://example.com" -->
-    <!-- data-text="9999 Google Rezensionen" -->
-    <!-- data-rating="4.5" -->
     <!-- data-fetch-uri="http://localhost:3000/wertgarantie/rating" -->
-    <wertgarantie-rating class="jura-wg-rating-theme"
+        <wertgarantie-rating
+                            data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/rating"
+                            slot="wertgarantie-rating-component" 
+        >
+        </wertgarantie-rating>
+    </wertgarantie-policy-selection>
+    <br/><br/>
+    <!-- data-fetch-uri="http://localhost:3000/wertgarantie/policies" -->
+    <wertgarantie-policy-selection 
+                            class="jura-theme"    
+                            data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/policies"
+                            data-title="Unser <strong>Komplettschutz</strong> für den Schadensfall"
+    >
+
+
+    <!-- data-fetch-uri="http://localhost:3000/wertgarantie/rating" -->
+        <wertgarantie-rating class="jura-wg-rating-theme"
                             data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/rating"
                             data-show-rating-number="false"
                             slot="wertgarantie-rating-component" 
         >
-    </wertgarantie-rating>
-</wertgarantie-policy-selection>
+        </wertgarantie-rating>
+    </wertgarantie-policy-selection>
+    <br/><br/>
+    <wertgarantie-policy-selection 
+                            class="mobilcom-theme"    
+                            data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/policies"
+                            data-title="Unser <strong>Komplettschutz</strong> für den Schadensfall"
+    >
+
+
+    <!-- data-fetch-uri="http://localhost:3000/wertgarantie/rating" -->
+        <wertgarantie-rating class="mobilcom-wg-rating-theme"
+                            data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/rating"
+                            slot="wertgarantie-rating-component" 
+        >
+        </wertgarantie-rating>
+    </wertgarantie-policy-selection>
 </body>
 <script>
-    document.querySelector('wertgarantie-policy-selection').devicePrice = 11111;
-    document.querySelector('wertgarantie-policy-selection').deviceId = "234897548957";
+    document.querySelector('.default').devicePrice = 11111;
+    document.querySelector('.default').deviceId = "234897548957";
+    document.querySelector('.jura-theme').devicePrice = 11111;
+    document.querySelector('.jura-theme').deviceId = "234897548957";
+    document.querySelector('.mobilcom-theme').devicePrice = 11111;
+    document.querySelector('.mobilcom-theme').deviceId = "234897548957";
 </script>
 <script src="../../src/policy-selection/policy-selection.js"></script>
 <script src="../../src/rating/rating.js"></script>

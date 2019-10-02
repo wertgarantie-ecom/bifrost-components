@@ -4,14 +4,14 @@
         <style>
             :host {
                 font-family: var(--wertgarantie-selection-font-family, Roboto),sans-serif;
-                transition: all 0.6s;
             }
             
             .wg-selection-container {
+                background-color: var(--wertgarantie-selection-container-background-color, white);
                 max-width: var(--wertgarantie-selection-container-max-width, 600px);
                 font-weight: var(--wertgarantie-selection-container-font-weight, 400);
                 font-size: var(--wertgarantie-selection-container-font-size, 16px);
-                color: var(--wertgarantie-selection-container-color, #575757);
+                color: var(--wertgarantie-selection-container-text-color, #575757);
             }
 
             .head-section {
@@ -19,7 +19,7 @@
                 color: var(--wertgarantie-selection-head-section-text-color, #2574be);
                 display: grid;
                 grid-template-columns: 12% 60% 28%;
-                padding: 0.7rem;
+                padding: 0.7em;
             }
 
             .head-section__item {
@@ -48,15 +48,19 @@
                 height: 100%;
                 grid-column-start: 3;
                 grid-column-end: 3;
-                padding-right: 0.7rem;
+                padding-right: 0.7em;
                 position: relative
             }
             
-            .head-section__right--down {
+            .price-info {
                 position: absolute;
                 bottom: 0.5em;
                 right: 0.5em;
                 text-align: right;
+            }
+
+            .price-info__small {
+                font-size: 0.6em;
             }
             
             .wg-title {
@@ -64,7 +68,7 @@
                 font-weight: var(--wertgarantie-selection-title-font-weight, 400);
                 font-size: var(--wertgarantie-selection-title-font-size, 20px);
                 text-transform: var(--wertgarantie-selection-title-text-transform); 
-                margin: 0.5rem 0 0 0;
+                margin: 0.3em 0 0 0;
             }
 
             .show-details__button {
@@ -75,6 +79,10 @@
                 font-size: var(--wertgarantie-selection-show-details-button-font-size);
                 font-weight: var(--wertgarantie-selection-show-details-button-font-weight);
             }
+
+            .show-details__button:hover {
+                cursor: pointer;
+            }
             
             .advantages__icon::before, .show-details__button::before {
                 -moz-osx-font-smoothing: grayscale;
@@ -83,7 +91,7 @@
                 font-style: normal;
                 font-variant: normal;
                 text-rendering: auto;
-                margin:0 0.5rem 0 -0.4rem;
+                margin:0 0.5em 0 -0.4em;
                 font-family: "Font Awesome 5 Free",sans-serif;
                 font-weight: 700;
             }
@@ -108,7 +116,6 @@
                 transition: all 0.4s;
                 transform-origin: left top;
                 transform: scaleY(0);
-                background-color: var(--wertgarantie-selection-product-details-section-background-color, white);
             }
 
             .product-details--expanded {
@@ -127,7 +134,7 @@
             .advantages__item {
                 font-size: var(--wertgarantie-selection-advantage-font-size, 13px);
                 line-height: var(--wertgarantie-selection-container-line-height, 21px);
-                margin: var(--wertgarantie-selection-advantage-margin, 0 0 4px 0);
+                margin: var(--wertgarantie-selection-advantage-margin, 0 0 0.3em 0);
             }
 
             .advantages__item--included {
@@ -167,10 +174,43 @@
                 position: static;
                 text-decoration: none;
             }
+
+            .product-selection {
+                padding: 0.7em;
+                display: flex;
+                justify-content: space-around;
+            }
+
+            .product-selection__button {
+                border: none;
+                outline: none;
+                width: 40%;
+                margin: 0.4em;
+                padding: 0.6em;
+                font-size: inherit;
+                opacity: 0.4;
+                transition: all 0.6s;
+                color: inherit;
+            }
+
+            .product-selection__button:hover {
+                cursor: pointer;
+            }
+
+            .product-selection__button-header {
+                font-weight: 700;
+                color: var(--wertgarantie-selection-button-header-color, #2574be);
+                border-radius: 10px;
+            }
+
+            .product-selection__button--selected {
+                opacity: 1;
+                box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+            }
         </style>
 
         <div class="wg-selection-container">
-            <section class="head-section">
+            <div class="head-section">
                 <div class="head-section__left">
                     <input type="checkbox" class="head-section__order-checkbox" id="order">
                 </div>
@@ -184,20 +224,20 @@
                     </div>
                 </div>
                 <div class="head-section__right">
-                    <div class="head-section__right--down">
+                    <div class="price-info">
+                        <small class="price-info__small" id="payment-interval">pro Monat</small><br/>
                         <strong id="price-display">ab X,XX €</strong><br/>
-                        <small id="payment-interval">pro Monat</small>
+                        <small class="price-info__small" id="tax-display">inkl. x,xx€ VerSt</small>
                     </div>
                 </div>
-            </section>
-            <section class="product-details" id="product-section">
-                <ul class="advantages" id="wertgarantie-advantages-list">
-                </ul>
+            </div>
+            <div class="product-details" id="product-section">
+                <ul class="advantages" id="wertgarantie-services-list"></ul>
+                <ul class="advantages" id="wertgarantie-advantages-list"></ul>
                 <ul class="advantages">
                     <li class="advantages__item">
                         <small class="product-information">
                             <span class="advantages__icon advantages__icon--included advantages__icon--plus">
-                                <slot name="details-prefix"></slot>
                                 <a target="_blank" class="product-information__link" id="product-details-link"></a>
                             </span>
                         </small>
@@ -205,24 +245,24 @@
                     <li class="advantages__item">
                         <small class="product-information">
                             <span class="advantages__icon advantages__icon--included advantages__icon--pdf">
-                                <slot name="information-prefix"></slot>
                                 <a target="_blank" class="product-information__link" id="product-information-sheet"></a>
                             </span>
                         </small>
                     </li>
                 </ul>
-            </section>
+            </div>
+            <div class="product-selection" id="product-selection">
+            </div>
         </div>
     `;
 
     /*
     TODOs:
      - add documentation for our vaious components
+     - what to do with multiple documents?
 
      - we need to provide auth information
-     - let's style
      - what to do with multiple product offerings?
-     - what to do with multiple documents?
      */
     class WertgarantiePolicySelection extends HTMLElement {
 
@@ -233,13 +273,18 @@
             this.showDetailsButton = this.shadowRoot.querySelector("#details-dropdown-button");
             this.productSection = this.shadowRoot.querySelector("#product-section");
             this.wertgarantieHeader = this.shadowRoot.querySelector('#wertgarantie-header');
+            this.servicesList = this.shadowRoot.querySelector('#wertgarantie-services-list');
             this.advantagesList = this.shadowRoot.querySelector('#wertgarantie-advantages-list');
             this.productDetailsLink = this.shadowRoot.querySelector('#product-details-link');
             this.productInformationSheet = this.shadowRoot.querySelector('#product-information-sheet');
             this.priceDisplay = this.shadowRoot.querySelector('#price-display');
+            this.taxDisplay = this.shadowRoot.querySelector('#tax-display');
             this.paymentInterval = this.shadowRoot.querySelector('#payment-interval');
+            this.productSelection = this.shadowRoot.querySelector('#product-selection');
+
             this.overwriteWithUserDefinedAttributes = this.overwriteWithUserDefinedAttributes.bind(this);
-            this.checkIfPolicyDefined = this.checkIfPolicyDefined.bind(this);
+            this.setupDisplay = this.setupDisplay.bind(this);
+            this.createSelectionButton = this.createSelectionButton.bind(this);
             this.updateDisplay = this.updateDisplay.bind(this);
             this.toggleProductSection = this.toggleProductSection.bind(this);
         }
@@ -264,31 +309,16 @@
 
             const displayData = {};
             addIfDefined(displayData, 'title', this.getAttribute('data-title'));
-            addIfDefined(displayData, 'detailsText', this.getAttribute('data-details-text'));
-            addIfDefined(displayData, 'detailsUri', this.getAttribute('data-details-uri'));
-            addIfDefined(displayData, 'infoSheetText', this.getAttribute('data-information-sheet-text'));
-            addIfDefined(displayData, 'infoSheetUri', this.getAttribute('data-information-sheet-uri'));
-            addIfDefined(displayData, 'paymentInterval', this.getAttribute('data-payment-interval'));
-            addIfDefined(displayData, 'price', this.getAttribute('data-price'));
-            addIfDefined(displayData, 'currency', this.getAttribute('data-currency'));
-            addIfDefined(displayData, 'priceFormatted', this.getAttribute('data-price-formatted'));
-            if (this.getAttribute('data-advantages')) {
-                addIfDefined(displayData, 'advantages', this.getAttribute('data-advantages').split(';'));
-            }
 
             const fetchData = {};
             addIfDefined(fetchData, 'devicePrice', this.getAttribute('data-device-price'));
             addIfDefined(fetchData, 'deviceId', this.getAttribute('data-device-id'));
             addIfDefined(fetchData, 'fetchUri', this.getAttribute('data-fetch-uri'));
 
-            if (this.allDisplayDataAvailable(displayData)) {
-                this.updateDisplay(displayData);
-            } else {
-                this.fetchPolicy(fetchData)
-                    .then((fetchedValues) => this.overwriteWithUserDefinedAttributes(fetchedValues, displayData))
-                    .then(this.checkIfPolicyDefined)
-                    .then(this.updateDisplay);
-            }
+            this.fetchPolicy(fetchData)
+                .then((fetchedValues) => this.overwriteWithUserDefinedAttributes(fetchedValues, displayData)) // title can still be overwritten
+                .then(this.allDisplayDataAvailable) // check if display data is complete
+                .then(this.setupDisplay);
         }
 
         _upgradeProperty(prop) {
@@ -300,15 +330,25 @@
         }
 
         allDisplayDataAvailable(displayData) {
-            return displayData.title && displayData.detailsText && displayData.detailsUri 
-            && displayData.infoSheetUri && displayData.infoSheetText && displayData.paymentInterval
-            && displayData.price && displayData.currency && displayData.priceFormatted;
+            let isComplete = true;
+            displayData.products.forEach(data => {
+                if (!(data.name && data.detailsText && data.detailsUri 
+                    && data.infoSheetUri && data.infoSheetText && data.paymentInterval
+                    && data.price && data.currency && data.priceFormatted && data.tax)) {
+                        isComplete = false;
+                    }
+            });
+            if (!isComplete) {
+                this.remove();
+                throw new Error("display data incomplete");
+            }
+            return displayData;
         }
 
         async fetchPolicy({fetchUri, devicePrice, deviceId}) {
             if (!(fetchUri && devicePrice && deviceId)) {
                 this.remove();
-                throw new Error("fetch data and display data incomplete\n" + 
+                throw new Error("fetch data incomplete\n" + 
                     "fetchUri: " + fetchUri + "\n" +
                     "devicePrice: " + devicePrice + "\n" +
                     "deviceId: " + deviceId
@@ -337,17 +377,7 @@
             const merge = (object1, object2) => {
                 return {...object1, ...object2}
             };
-
             return merge(fetchedDisplayData, displayData);
-        }
-
-        checkIfPolicyDefined(displayData) {
-            if (!this.allDisplayDataAvailable(displayData)) {
-                this.remove();
-                throw new Error("display data incomplete");
-            } else {
-                return displayData;
-            }
         }
 
         toggleProductSection() {
@@ -360,26 +390,88 @@
             this.productSection.classList.toggle("product-details--expanded");
         }
 
-        updateDisplay({title, detailsText, detailsUri, infoSheetText, infoSheetUri, priceFormatted, paymentInterval, advantages = []}) {
-            this.wertgarantieHeader.innerHTML = title;
-            this.productDetailsLink.setAttribute('href', detailsUri);
-            this.productDetailsLink.textContent = detailsText;
-            this.productInformationSheet.setAttribute('href', infoSheetUri);
-            this.productInformationSheet.textContent = infoSheetText;
-            this.priceDisplay.textContent = priceFormatted;
-            this.paymentInterval.textContent = "pro " + paymentInterval;
+        setupDisplay(displayData) {
+            displayData.products.forEach((product) => {
+                product.title = displayData.title;
+                this.createSelectionButton(product);
+            });
+            this.productSelection.firstChild.nextSibling.classList.add("product-selection__button--selected");
+            this.updateDisplay(displayData.products[0]);
+        }
 
-            advantages.forEach((advantage) => {
-                const listElement = document.createElement('li');
-                listElement.classList.add('advantages__item', 'advantages__item--included')
-                
-                const spanElement = document.createElement('span');
-                spanElement.innerText = advantage;
-                spanElement.classList.add('advantages__icon', 'advantages__icon--included', 'advantages__icon--check');
-                
-                listElement.appendChild(spanElement);
+        createSelectionButton(product) {
+            const productButton = document.createElement('button');
+            productButton.classList.add("product-selection__button")
+
+            // add headline button headline
+            const productButtonHeader = document.createElement('p');
+            productButtonHeader.classList.add("product-selection__button-header")
+            productButtonHeader.textContent = product.name;
+            // append headline to button
+            productButton.appendChild(productButtonHeader);
+
+            // create info box for button with price details
+            const priceInfoDiv = document.createElement('div');
+            priceInfoDiv.classList.add("price-info__border");
+
+            const priceSpan = document.createElement('strong');
+            priceSpan.textContent = product.priceFormatted;
+            priceSpan.appendChild(document.createElement('br'));
+            
+            const payInterval = document.createElement('small');
+            payInterval.classList.add("price-info__small");
+            payInterval.textContent = "pro " + product.paymentInterval;
+            
+            // wire everything together in correct order
+            priceInfoDiv.appendChild(priceSpan);
+            priceInfoDiv.appendChild(payInterval);
+            productButton.appendChild(priceInfoDiv);
+
+            productButton.addEventListener("click", () => {
+                this.productSelection.querySelectorAll(".product-selection__button").forEach(button => button.classList.remove("product-selection__button--selected"));
+                productButton.classList.add("product-selection__button--selected");
+                this.updateDisplay(product);
+            });
+            this.productSelection.appendChild(productButton);
+        }
+
+        updateDisplay(product) {
+            this.wertgarantieHeader.innerHTML = product.title;
+            this.productDetailsLink.setAttribute('href', product.detailsUri);
+            this.productDetailsLink.textContent = product.detailsText;
+            this.productInformationSheet.setAttribute('href', product.infoSheetUri);
+            this.productInformationSheet.textContent = product.infoSheetText;
+            this.priceDisplay.textContent = product.priceFormatted;
+            this.taxDisplay.textContent = "inkl. " + product.tax + product.currency + " VerSt";
+            this.paymentInterval.textContent = "pro " + product.paymentInterval;
+            
+
+            // still uncertain what this should look like? separate lists? 
+            // resolve diffs between the products and mark 
+            // advantages / services that are not available in product a but in product b? 
+            // --> icons and css classes already available: advantages__icon--included, advantages__icon--ban
+            this.advantagesList.innerHTML = '';
+            this.servicesList.innerHTML = '';
+
+            product.services.forEach((service) => {
+                const listElement = this.createListElement(service);
+                this.servicesList.appendChild(listElement);
+            })
+
+            product.advantages.forEach((advantage) => {
+                const listElement = this.createListElement(advantage);
                 this.advantagesList.appendChild(listElement);
             });
+        }
+
+        createListElement(listItem) {
+            const listElement = document.createElement('li');
+            listElement.classList.add('advantages__item', 'advantages__item--included');
+            const spanElement = document.createElement('span');
+            spanElement.innerText = listItem;
+            spanElement.classList.add('advantages__icon', 'advantages__icon--included', 'advantages__icon--check');
+            listElement.appendChild(spanElement);
+            return listElement;
         }
 
         disconnectedCallback() {

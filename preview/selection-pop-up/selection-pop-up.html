@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../stories/assets/rating.css">
+    <title>Selection Pop-Up</title>
+    <style>
+        :root {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        [class*="col-"] {
+            width: 100%;
+        }
+/* 
+        @media only screen and (min-width: 320px) {
+            .col-s-1 {width: 8.33%;}
+            .col-s-2 {width: 16.66%;}
+            .col-s-3 {width: 25%;}
+            .col-s-4 {width: 33.33%;}
+            .col-s-5 {width: 41.66%;}
+            .col-s-6 {width: 50%;}
+            .col-s-7 {width: 58.33%;}
+            .col-s-8 {width: 66.66%;}
+            .col-s-9 {width: 75%;}
+            .col-s-10 {width: 83.33%;}
+            .col-s-11 {width: 91.66%;}
+            .col-s-12 {width: 100%;}
+        } */
+
+
+        @media only screen and (min-width: 320px) {
+            .col-s-1 {width: 4.33%;}
+            .col-s-2 {width: 12.66%;}
+            .col-s-3 {width: 21%;}
+            .col-s-4 {width: 29.33%;}
+            .col-s-5 {width: 37.66%;}
+            .col-s-6 {width: 46%;}
+            .col-s-7 {width: 54.33%;}
+            .col-s-8 {width: 62.66%;}
+            .col-s-9 {width: 71%;}
+            .col-s-10 {width: 79.33%;}
+            .col-s-11 {width: 87.66%;}
+            .col-s-12 {width: 96%;}
+        }
+
+        /* @media only screen and (min-width: 768px) {
+            .col-1 {width: 8.33%;}
+            .col-2 {width: 16.66%;}
+            .col-3 {width: 25%;}
+            .col-4 {width: 33.33%;}
+            .col-5 {width: 41.66%;}
+            .col-6 {width: 50%;}
+            .col-7 {width: 58.33%;}
+            .col-8 {width: 66.66%;}
+            .col-9 {width: 75%;}
+            .col-10 {width: 83.33%;}
+            .col-11 {width: 91.66%;}
+            .col-12 {width: 100%;}
+        } */
+
+
+        @media only screen and (min-width: 768px) {
+            .col-1 {width: 4.33%;}
+            .col-2 {width: 12.66%;}
+            .col-3 {width: 21%;}
+            .col-4 {width: 29.33%;}
+            .col-5 {width: 37.66%;}
+            .col-6 {width: 46%;}
+            .col-7 {width: 54.33%;}
+            .col-8 {width: 62.66%;}
+            .col-9 {width: 71%;}
+            .col-10 {width: 79.33%;}
+            .col-11 {width: 87.66%;}
+            .col-12 {width: 96%;}
+        }
+
+        .modal {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .content {
+            background-color: rgb(244, 244, 244);
+            margin: 5% auto;
+            padding: 3em;
+            width: 80%;
+            height: 100%;
+            animation-name: openModal;
+            animation-duration: 1s;
+        }
+
+        @keyframes openModal {
+            from{opacity: 0}
+            to{opacity: 1}
+        }
+
+        .head {
+            display: inline-block;
+        }
+
+        .head__title {
+            font-size: 1.5em;
+            padding-right: 2em;
+            text-transform: uppercase;
+        }
+
+        .head__subtitle {
+            padding: 3em 0 3em 0;
+        }
+
+        .closeBtn {
+            color: white;
+            background-color: rgb(10, 10, 10);
+            width: 2%;
+            min-width: 20px;
+            padding: 0.8em;
+            float: right;
+            text-align: center;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+
+        .wg-rating {
+            font-size: 0.2em;
+        }
+
+        .selection {
+            width: 100%;
+            display: block;
+        }
+
+        .selection__product {
+            float: left;
+            padding: 2%;
+        }
+
+        .selection__product--light {
+            background-image: linear-gradient(to bottom right, rgb(244, 244, 244), rgb(220, 220, 220));
+        }
+
+        .selection__product--dark {
+            background-color: rgb(10, 10, 10);
+            color: rgb(244, 244, 244);
+        }
+
+    </style>
+</head>
+<body>
+    <button id="openBtn">Klick mich</button>
+
+    <div class="modal">
+        <div class="content">
+            <span class="closeBtn">&times;</span>
+            <div class="head">
+                <strong class="head__title">Wird oft dazugebucht</strong>
+                    <!-- wird slot -->
+                    <wertgarantie-rating 
+                        data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/rating"
+                        data-show-rating-number="false"
+                        slot="wertgarantie-rating-component">
+                    </wertgarantie-rating>
+
+                <p class="head__subtitle"><small>Wählen Sie den Schutz, der Ihren Bedürfnissen am besten entpsricht:</small></p>
+            </div>
+            <div class="selection">
+                <div class="selection__product selection__product--light col-s-12 col-6">
+                    <div class="price_info">
+                        <small class="price-info__small" id="payment-interval">monatlich</small><br/>
+                        <strong id="price-display">ab X,XX €</strong><br/>
+                        <small class="price-info__small" id="tax-display">(inkl. x,xx€ VerSt**)</small>
+                    </div>
+                </div>
+                <div class="selection__product selection__product--dark col-s-12 col-6">
+                    <div class="price_info">
+                        <small class="price-info__small" id="payment-interval">monatlich</small><br/>
+                        <strong id="price-display">ab X,XX €</strong><br/>
+                        <small class="price-info__small" id="tax-display">(inkl. x,xx€ VerSt**)</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <wertgarantie-selection-pop-up>
+        <wertgarantie-rating 
+            data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/rating"
+            data-show-rating-number="false"
+            slot="wertgarantie-rating-component">
+        </wertgarantie-rating>
+    </wertgarantie-selection-pop-up>
+
+
+    <script src="../../src/rating/rating.js"></script>
+    <script>
+        var modal = document.getElementsByClassName("modal")[0];
+        var openBtn = document.querySelector("#openBtn");
+        openBtn.addEventListener('click', function() {
+            modal.style.display = 'block';
+        })
+
+        var closeBtn = document.querySelector(".closeBtn");
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+        })
+    </script>
+</body>
+</html>

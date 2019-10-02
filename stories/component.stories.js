@@ -5,12 +5,7 @@ import ratingComponentWithDefaultValues from './documentation/ratingComponent/ra
 import ratingComponentWithoutRatingNumber from './documentation/ratingComponent/ratingComponentWithoutRatingNumber.md';
 import ratingComponentWithFetchedValues from './documentation/ratingComponent/ratingComponentWithFetchedValues.md';
 import ratingComponentWithExternalStyling from './documentation/ratingComponent/ratingComponentWithExternalStyling.md';
-import selectionBaseComponent from './documentation/selectionComponent/selectionBaseComponent.md';
-import selectionComponentWithDefaultValues from './documentation/selectionComponent/selectionComponentWithDefaultValues.md';
-import selectionComponentWithEmbeddedRatingComponent from './documentation/selectionComponent/selectionComponentWithEmbeddedRatingComponent.md';
-import selectionComponentWithFetchedValues from './documentation/selectionComponent/selectionComponentWithFetchedValues.md';
-import selectionComponentWithExternalTheme from './documentation/selectionComponent/selectionComponentWithExternalTheme.md';
-import selectionComponentAllInOne from './documentation/selectionComponent/selectionComponentAllInOne.md';
+import selectionComponent from './documentation/selectionComponent/selectionComponent.md';
 
 
 /* Rating Component */
@@ -50,84 +45,16 @@ storiesOf('Components|Rating', module)
 /* Selection Component */
 
 storiesOf('Components|Selection', module)
-    .add('base component', () => `
-        <wertgarantie-policy-selection
-            data-title="title"
-            data-details-text="details link text"
-            data-details-uri="http://www.example.com"
-            data-information-sheet-text="product information"
-            data-information-sheet-uri="http://www.example.com"
-            data-payment-interval="Monat"
-            data-price="9,95"
-            data-currency="€"
-            data-price-formatted="ab 9,95 €"
-            data-advantages="advantage1;advantage2"
-        >
-        </wertgarantie-policy-selection>`, { 
-            notes: { markdown: selectionBaseComponent },
-        })
-    .add('with default values', () => ` 
-        <wertgarantie-policy-selection
-            data-title="Vergessen Sie nicht Ihren Rundumschutz"
-            data-details-text="Alle Details zum Tarif"
-            data-details-uri="http://www.example.com"
-            data-information-sheet-text="Produktinformationsblatt"
-            data-information-sheet-uri="http://www.example.com"
-            data-payment-interval="Monat"
-            data-price="9,95"
-            data-currency="€"
-            data-price-formatted="ab 9,95 €"
-            data-advantages="Schutz bei Displaybrüchen;Schutz bei Wasserschaden;Schutz bei Akku-Defekten"
-        >
-        </wertgarantie-policy-selection> `, { 
-            notes: { markdown: selectionComponentWithDefaultValues },
-        })
-    .add('with embedded rating component', () => ` 
-        <wertgarantie-policy-selection
-            data-title="Vergessen Sie nicht Ihren Rundumschutz"
-            data-details-text="Alle Details zum Tarif"
-            data-details-uri="http://www.example.com"
-            data-information-sheet-text="Produktinformationsblatt"
-            data-information-sheet-uri="http://www.example.com"
-            data-payment-interval="Monat"
-            data-price="9,95"
-            data-currency="€"
-            data-price-formatted="ab 9,95 €"
-            data-advantages="Schutz bei Displaybrüchen;Schutz bei Wasserschaden;Schutz bei Akku-Defekten"
-        >
-            <wertgarantie-rating slot="wertgarantie-rating-component" data-text="2.557 Google-Rezensionen" data-rating="4.2" data-uri="http://www.innoq.com" >
-            </wertgarantie-rating>
-        </wertgarantie-policy-selection> `, { 
-            notes: { markdown: selectionComponentWithEmbeddedRatingComponent },
-        })
-    .add('base component with fetched values', () => ` 
+    .add('default styling', () => ` 
         <wertgarantie-policy-selection
             data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/policies"
             data-device-id="1234"
             data-device-price="12"
         >
         </wertgarantie-policy-selection> `, { 
-            notes: { markdown: selectionComponentWithFetchedValues },
+            notes: { markdown: selectionComponent },
         })
-    .add('component with external theme', () => ` 
-        <wertgarantie-policy-selection
-            class="mobilcom-theme"
-            data-title="Vergessen Sie nicht Ihren Rundumschutz"
-            data-checkbox-label="Schutzpaket Premium für nur mtl. 9,95 € aktivieren"
-            data-details-text="Alle Details zum Tarif"
-            data-details-uri="http://www.example.com"
-            data-information-sheet-text="Produktinformationsblatt"
-            data-information-sheet-uri="http://www.example.com"
-            data-payment-interval="Monat"
-            data-price="9,95"
-            data-currency="€"
-            data-price-formatted="ab 9,95 €"
-            data-advantages="Schutz bei Displaybrüchen;Schutz bei Wasserschaden;Schutz bei Akku-Defekten"
-        >
-        </wertgarantie-policy-selection> `, { 
-            notes: { markdown: selectionComponentWithExternalTheme },
-        })
-    .add('all in one', () => ` 
+    .add('external styling 1', () => ` 
         <wertgarantie-policy-selection
             class="mobilcom-theme"
             data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/policies"
@@ -140,9 +67,9 @@ storiesOf('Components|Selection', module)
             >
             </wertgarantie-rating>
         </wertgarantie-policy-selection> `, { 
-            notes: { markdown: selectionComponentAllInOne },
+            notes: { markdown: selectionComponent },
         })
-    .add('everything with different styling', () => ` 
+    .add('external styling 2', () => ` 
         <wertgarantie-policy-selection
             class="jura-theme"
             data-title="Unser <strong>Komplettschutz</strong> für den Schadensfall"
@@ -157,6 +84,6 @@ storiesOf('Components|Selection', module)
             >
             </wertgarantie-rating>
         </wertgarantie-policy-selection> `, { 
-            notes: { markdown: selectionComponentAllInOne },
+            notes: { markdown: selectionComponent },
         });
         

@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../stories/assets/rating.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css">
     <title>Selection Pop-Up</title>
     <style>
+
         :root {
             font-family: Arial, Helvetica, sans-serif;
         }
@@ -13,22 +15,6 @@
         [class*="col-"] {
             width: 100%;
         }
-/* 
-        @media only screen and (min-width: 320px) {
-            .col-s-1 {width: 8.33%;}
-            .col-s-2 {width: 16.66%;}
-            .col-s-3 {width: 25%;}
-            .col-s-4 {width: 33.33%;}
-            .col-s-5 {width: 41.66%;}
-            .col-s-6 {width: 50%;}
-            .col-s-7 {width: 58.33%;}
-            .col-s-8 {width: 66.66%;}
-            .col-s-9 {width: 75%;}
-            .col-s-10 {width: 83.33%;}
-            .col-s-11 {width: 91.66%;}
-            .col-s-12 {width: 100%;}
-        } */
-
 
         @media only screen and (min-width: 320px) {
             .col-s-1 {width: 4.33%;}
@@ -44,22 +30,6 @@
             .col-s-11 {width: 87.66%;}
             .col-s-12 {width: 96%;}
         }
-
-        /* @media only screen and (min-width: 768px) {
-            .col-1 {width: 8.33%;}
-            .col-2 {width: 16.66%;}
-            .col-3 {width: 25%;}
-            .col-4 {width: 33.33%;}
-            .col-5 {width: 41.66%;}
-            .col-6 {width: 50%;}
-            .col-7 {width: 58.33%;}
-            .col-8 {width: 66.66%;}
-            .col-9 {width: 75%;}
-            .col-10 {width: 83.33%;}
-            .col-11 {width: 91.66%;}
-            .col-12 {width: 100%;}
-        } */
-
 
         @media only screen and (min-width: 768px) {
             .col-1 {width: 4.33%;}
@@ -77,7 +47,7 @@
         }
 
         .modal {
-            display: none;
+            /* display: none; */
             width: 100%;
             height: 100%;
             position: fixed;
@@ -85,15 +55,13 @@
             left: 0;
             top: 0;
             overflow: auto;
-            background-color: rgba(0, 0, 0, 0.1);
+            background-color: rgba(0, 0, 0, 0.3);
         }
 
         .content {
             background-color: rgb(244, 244, 244);
             margin: 5% auto;
-            padding: 3em;
             width: 80%;
-            height: 100%;
             animation-name: openModal;
             animation-duration: 1s;
         }
@@ -104,6 +72,7 @@
         }
 
         .head {
+            padding: 3em 3em 0.5em 3em;
             display: inline-block;
         }
 
@@ -114,12 +83,12 @@
         }
 
         .head__subtitle {
-            padding: 3em 0 3em 0;
+            padding: 3em 0 1.5em 0;
         }
 
         .closeBtn {
             color: white;
-            background-color: rgb(10, 10, 10);
+            background-color: rgb(32, 32, 32);
             width: 2%;
             min-width: 20px;
             padding: 0.8em;
@@ -127,30 +96,125 @@
             text-align: center;
             cursor: pointer;
             font-size: 1.2em;
+            margin: 2em;
         }
 
-        .wg-rating {
-            font-size: 0.2em;
+        .products {
+            display: flex;
         }
 
-        .selection {
-            width: 100%;
-            display: block;
+        .product {
+            padding: 3em;
         }
 
-        .selection__product {
-            float: left;
-            padding: 2%;
+        .product--light {
+            background-image: linear-gradient(to bottom right, rgb(244, 244, 244),  rgb(235, 235, 235), rgb(220, 220, 220));
         }
 
-        .selection__product--light {
-            background-image: linear-gradient(to bottom right, rgb(244, 244, 244), rgb(220, 220, 220));
-        }
-
-        .selection__product--dark {
-            background-color: rgb(10, 10, 10);
+        .product--dark {
+            background-color: rgb(32, 32, 32);
             color: rgb(244, 244, 244);
         }
+
+        .product__title {
+            padding-top: 5em;
+            max-width: 75%;
+            text-transform: uppercase;
+        }
+
+        .product__advantages {
+            list-style-type: none;
+            /* padding-inline-start: em; */
+        }
+
+        .product__advantages--two-columns {
+            columns: 2;
+        }
+
+        .advantage {
+            margin-right: 1em;
+            font-size: 0.9em;
+            padding-top: 0.9em;
+        }
+
+        .advantage--included {
+            color: var(--wertgarantie-selection-advantage-included-text-color, inherit);
+        }
+
+        .advantage--excluded {
+            color: var(--wertgarantie-selection-advantage-excluded-text-color, rgb(161, 161, 161));
+        }
+
+        .advantage__icon::before {
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            display: inline-block; 
+            font-style: normal;
+            font-variant: normal;
+            text-rendering: auto;
+            font-family: "Font Awesome 5 Free", sans-serif;
+            font-weight: 700;
+        }
+
+        .advantage__icon--head::before {
+            margin:0 0.5em 0 -1.5em;
+        }
+
+        .advantage__icon--details::before {
+            margin:0 0.5em 0 -1.8em;
+        }
+
+        .advantage__icon--included::before {
+            content: "\F00C";
+        }
+
+        .advantage__icon--excluded::before {
+            content: "\F05E";
+        }
+
+        .product__details {
+        }
+
+        .hr-light {
+            border-top: 1px solid rgb(32, 32, 32);
+            margin: 2.3em 0 2.3em 0;
+        }
+
+        .hr-dark {
+            border-top: 1px solid rgb(244, 244, 244);
+            margin: 2.3em 0 2.3em 0;
+        }
+
+        .button-section {
+            width: 100%;
+            padding: 3em;
+        }
+
+        .button-section__half {
+            width: 50%;
+        }
+
+        .button {
+            cursor: pointer;
+            background: none;
+            outline: none;
+            padding: 1.5em 3em 1.5em 3em;
+            font-size: 0.9em;
+        }
+
+        .button--dark {
+            background-color: rgb(32, 32, 32);
+            color: rgb(244, 244, 244);
+            border: none;
+        }
+
+        .button--light {
+            background-color: rgb(244, 244, 244);
+            color: rgb(32, 32, 32);
+            border: 2px solid rgb(32, 32, 32);
+        }
+
+
 
     </style>
 </head>
@@ -171,21 +235,161 @@
 
                 <p class="head__subtitle"><small>Wählen Sie den Schutz, der Ihren Bedürfnissen am besten entpsricht:</small></p>
             </div>
-            <div class="selection">
-                <div class="selection__product selection__product--light col-s-12 col-6">
-                    <div class="price_info">
-                        <small class="price-info__small" id="payment-interval">monatlich</small><br/>
-                        <strong id="price-display">ab X,XX €</strong><br/>
-                        <small class="price-info__small" id="tax-display">(inkl. x,xx€ VerSt**)</small>
+            <div class="products">
+                <div class="product product--light col-s-12 col-6">
+                    <div class="product__head">
+                        <div class="price_info">
+                            <small class="price-info__small" id="payment-interval">monatlich</small><br/>
+                            <strong id="price-display">ab X,XX €</strong><br/>
+                            <small class="price-info__small" id="tax-display">(inkl. x,xx€ VerSt**)</small>
+                        </div>
+                        <h2 class="product__title">Smartphone Komplettschutz Basis</h2>
+                        <ul class="product__advantages product__advantages--two-columns">
+                            <li class="advantage advantage--included">
+                                <span class="advantage__icon advantage__icon--head advantage__icon--included">Für private und berufliche Nutzung</span>
+                            </li>
+                            <li class="advantage advantage--included">
+                                <span class="advantage__icon advantage__icon--head advantage__icon--included">Weltweiter Schutz</span>
+                            </li>
+                            <li class="advantage advantage--included">
+                                <span class="advantage__icon advantage__icon--head advantage__icon--included">Unsachgemäße Handhabung</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="product__details">
+                        <hr class="hr-light">
+                        <ul class="product__advantages">
+                            <li class="advantage advantage--excluded">
+                                <span class="advantage__icon advantage__icon--details advantage__icon--excluded">
+                                    Cyberschutz bei Missbrauch von Online-Accounts und Zahlungsdaten
+                                </span>
+                            </li>
+                            <li class="advantage advantage--excluded">
+                                <span class="advantage__icon advantage__icon--details advantage__icon--excluded">
+                                    Diebstahlschutz
+                                </span>
+                            </li>
+                            <li class="advantage advantage--excluded">
+                                <span class="advantage__icon advantage__icon--details advantage__icon--excluded">
+                                    Keine Selbstbeteiligung im Schadensfall
+                                </span>
+                            </li>
+                            <li class="advantage advantage--included">
+                                <span class="advantage__icon advantage__icon--details advantage__icon--included">
+                                    Volle Kostenübernahme bei Reparaturen (inkl. Fall- und Sturzschäden, Displaybrücken und Bruchschäden, 
+                                    Bedienfehlern, Motor-Lagerschäden, Wasserschäden, Elektronikschäden, Verkalkung, Verschleiß, uvm.)
+                                </span>
+                            </li>
+                            <li class="advantage advantage--included">
+                                <span class="advantage__icon advantage__icon--details advantage__icon--included">
+                                    Bei Totalschaden zählt der Zeitwert
+                                </span>
+                            </li>
+                            <li class="advantage advantage--included">
+                                <span class="advantage__icon advantage__icon--details advantage__icon--included">
+                                    Für private und berufliche Nutzung
+                                </span>
+                            </li>
+                            <li class="advantage advantage--included">
+                                <span class="advantage__icon advantage__icon--details advantage__icon--included">
+                                    Weltweiter Schutz
+                                </span>
+                            </li>
+                            <li class="advantage advantage--included">
+                                <span class="advantage__icon advantage__icon--details advantage__icon--included">
+                                    Geräte bis 12 Monate nach Kaufdatum gelten als Neugeräte
+                                </span>
+                            </li>
+                            <li class="advantage advantage--included">
+                                <span class="advantage__icon advantage__icon--details advantage__icon--included">
+                                    Unsachgemäße Handhabung (beispielsweise durch abweichende Benutzung von der Gebrauchsanwendung)
+                                </span>
+                            </li>
+                        </ul>
+                        <p>Mehr zum Produkt auf <a href="www.example.com">www.example.com</a>.</p>
                     </div>
                 </div>
-                <div class="selection__product selection__product--dark col-s-12 col-6">
-                    <div class="price_info">
-                        <small class="price-info__small" id="payment-interval">monatlich</small><br/>
-                        <strong id="price-display">ab X,XX €</strong><br/>
-                        <small class="price-info__small" id="tax-display">(inkl. x,xx€ VerSt**)</small>
+                <div class="product product--dark col-s-12 col-6">
+                    <div class="product__head">
+                        <div class="price_info">
+                            <small class="price-info__small" id="payment-interval">monatlich</small><br/>
+                            <strong id="price-display">ab X,XX €</strong><br/>
+                            <small class="price-info__small" id="tax-display">(inkl. x,xx€ VerSt**)</small>
+                        </div>
+                        <h2 class="product__title">Smartphone Komplettschutz Premium</h2>
+                        <ul class="product__advantages product__advantages--two-columns">
+                            <li class="advantage advantage--included">
+                                <span class="advantage__icon advantage__icon--head advantage__icon--included">Für private und berufliche Nutzung</span>
+                            </li>
+                            <li class="advantage advantage--included">
+                                <span class="advantage__icon advantage__icon--head advantage__icon--included">Weltweiter Schutz</span>
+                            </li>
+                            <li class="advantage advantage--included">
+                                <span class="advantage__icon advantage__icon--head advantage__icon--included">Unsachgemäße Handhabung</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="product__details">
+                        <hr class="hr-dark">
+                        <ul class="product__advantages">
+                            <li class="advantage advantage--included">
+                                <span class="advantage__icon advantage__icon--details advantage__icon--included">
+                                    Cyberschutz bei Missbrauch von Online-Accounts und Zahlungsdaten
+                                </span>
+                            </li>
+                            <li class="advantage advantage--included">
+                                <span class="advantage__icon advantage__icon--details advantage__icon--included">
+                                    Diebstahlschutz
+                                </span>
+                            </li>
+                            <li class="advantage advantage--included">
+                                <span class="advantage__icon advantage__icon--details advantage__icon--included">
+                                    Keine Selbstbeteiligung im Schadensfall
+                                </span>
+                            </li>
+                            <li class="advantage advantage--included">
+                                <span class="advantage__icon advantage__icon--details advantage__icon--included">
+                                    Volle Kostenübernahme bei Reparaturen (inkl. Fall- und Sturzschäden, Displaybrücken und Bruchschäden, 
+                                    Bedienfehlern, Motor-Lagerschäden, Wasserschäden, Elektronikschäden, Verkalkung, Verschleiß, uvm.)
+                                </span>
+                            </li>
+                            <li class="advantage advantage--included">
+                                <span class="advantage__icon advantage__icon--details advantage__icon--included">
+                                    Bei Totalschaden zählt der Zeitwert
+                                </span>
+                            </li>
+                            <li class="advantage advantage--included">
+                                <span class="advantage__icon advantage__icon--details advantage__icon--included">
+                                    Für private und berufliche Nutzung
+                                </span>
+                            </li>
+                            <li class="advantage advantage--included">
+                                <span class="advantage__icon advantage__icon--details advantage__icon--included">
+                                    Weltweiter Schutz
+                                </span>
+                            </li>
+                            <li class="advantage advantage--included">
+                                <span class="advantage__icon advantage__icon--details advantage__icon--included">
+                                    Geräte bis 12 Monate nach Kaufdatum gelten als Neugeräte
+                                </span>
+                            </li>
+                            <li class="advantage advantage--included">
+                                <span class="advantage__icon advantage__icon--details advantage__icon--included">
+                                    Unsachgemäße Handhabung (beispielsweise durch abweichende Benutzung von der Gebrauchsanwendung)
+                                </span>
+                            </li>
+                        </ul>
+
+                        <p>Mehr zum Produkt auf <a href="www.example.com">www.example.com</a>.</p>
+
                     </div>
                 </div>
+            </div>
+            <div class="button-section">
+                <div class="button-section__half">
+                    <button class="button button--dark">Details anzeigen</button>
+                </div>
+
             </div>
         </div>
     </div>

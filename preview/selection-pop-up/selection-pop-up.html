@@ -61,7 +61,7 @@
         .content {
             background-color: rgb(244, 244, 244);
             margin: 5% auto;
-            width: 80%;
+            width: 70%;
             animation-name: openModal;
             animation-duration: 1s;
         }
@@ -99,6 +99,24 @@
             margin: 2em;
         }
 
+        .product__details {
+            padding: 0.7em;
+            visibility: hidden;
+            opacity: 0;
+            max-height: 0;
+            transition: all 0.4s;
+            transform-origin: left top;
+            transform: scaleY(0);
+        }
+
+        .product__details--expanded {
+            visibility: visible;
+            opacity: 1;
+            max-height: 100%;
+            transition: all 0.4s;
+            transform: scaleY(1);
+        }
+
         .products {
             display: flex;
         }
@@ -116,6 +134,10 @@
             color: rgb(244, 244, 244);
         }
 
+        .checkbox-container {
+            float: left;
+        }
+
         .product__title {
             padding-top: 5em;
             max-width: 75%;
@@ -124,7 +146,6 @@
 
         .product__advantages {
             list-style-type: none;
-            /* padding-inline-start: em; */
         }
 
         .product__advantages--two-columns {
@@ -172,9 +193,6 @@
             content: "\F05E";
         }
 
-        .product__details {
-        }
-
         .hr-light {
             border-top: 1px solid rgb(32, 32, 32);
             margin: 2.3em 0 2.3em 0;
@@ -183,6 +201,12 @@
         .hr-dark {
             border-top: 1px solid rgb(244, 244, 244);
             margin: 2.3em 0 2.3em 0;
+        }
+
+        .product-info-link {
+            padding-top: 2em;
+            align-self: center;
+            text-align: center;
         }
 
         .button-section {
@@ -215,7 +239,6 @@
         }
 
 
-
     </style>
 </head>
 <body>
@@ -238,12 +261,15 @@
             <div class="products">
                 <div class="product product--light col-s-12 col-6">
                     <div class="product__head">
-                        <div class="price_info">
-                            <small class="price-info__small" id="payment-interval">monatlich</small><br/>
+                        <div>
+                            <small id="payment-interval">monatlich</small><br/>
                             <strong id="price-display">ab X,XX €</strong><br/>
-                            <small class="price-info__small" id="tax-display">(inkl. x,xx€ VerSt**)</small>
+                            <small id="tax-display">(inkl. x,xx€ VerSt**)</small>
                         </div>
-                        <h2 class="product__title">Smartphone Komplettschutz Basis</h2>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="premium" />
+                        </div>
+                        <h3 class="product__title">Smartphone Komplettschutz Basis</h3>
                         <ul class="product__advantages product__advantages--two-columns">
                             <li class="advantage advantage--included">
                                 <span class="advantage__icon advantage__icon--head advantage__icon--included">Für private und berufliche Nutzung</span>
@@ -306,17 +332,20 @@
                                 </span>
                             </li>
                         </ul>
-                        <p>Mehr zum Produkt auf <a href="www.example.com">www.example.com</a>.</p>
+                        <p class="product-info-link"><strong>Mehr zum Produkt auf <a href="www.example.com">www.example.com</a>.</strong></p>
                     </div>
                 </div>
                 <div class="product product--dark col-s-12 col-6">
                     <div class="product__head">
-                        <div class="price_info">
-                            <small class="price-info__small" id="payment-interval">monatlich</small><br/>
+                        <div>
+                            <small id="payment-interval">monatlich</small><br/>
                             <strong id="price-display">ab X,XX €</strong><br/>
-                            <small class="price-info__small" id="tax-display">(inkl. x,xx€ VerSt**)</small>
+                            <small id="tax-display">(inkl. x,xx€ VerSt**)</small>
                         </div>
-                        <h2 class="product__title">Smartphone Komplettschutz Premium</h2>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="premium" />
+                        </div>
+                        <h3 class="product__title">Smartphone Komplettschutz Premium</h3>
                         <ul class="product__advantages product__advantages--two-columns">
                             <li class="advantage advantage--included">
                                 <span class="advantage__icon advantage__icon--head advantage__icon--included">Für private und berufliche Nutzung</span>
@@ -380,14 +409,14 @@
                             </li>
                         </ul>
 
-                        <p>Mehr zum Produkt auf <a href="www.example.com">www.example.com</a>.</p>
+                        <p class="product-info-link"><strong>Mehr zum Produkt auf <a href="www.example.com">www.example.com</a>.</strong></p>
 
                     </div>
                 </div>
             </div>
             <div class="button-section">
                 <div class="button-section__half">
-                    <button class="button button--dark">Details anzeigen</button>
+                    <button class="button button--dark" id="details-button">Details anzeigen</button>
                 </div>
 
             </div>
@@ -414,6 +443,14 @@
         closeBtn.addEventListener('click', function() {
             modal.style.display = 'none';
         })
+
+        var detailsBtn = document.getElementById('details-button');
+        var detailsSections = document.querySelectorAll('.product__details');
+        detailsBtn.addEventListener('click', function() {
+            // select details section and expand it
+            detailsSections.forEach(section => section.classList.toggle('product__details--expanded'));
+
+        });
     </script>
 </body>
 </html>

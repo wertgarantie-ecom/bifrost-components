@@ -12,42 +12,8 @@
             font-family: Arial, Helvetica, sans-serif;
         }
 
-        [class*="col-"] {
-            width: 100%;
-        }
-
-        @media only screen and (min-width: 320px) {
-            .col-s-1 {width: 4.33%;}
-            .col-s-2 {width: 12.66%;}
-            .col-s-3 {width: 21%;}
-            .col-s-4 {width: 29.33%;}
-            .col-s-5 {width: 37.66%;}
-            .col-s-6 {width: 46%;}
-            .col-s-7 {width: 54.33%;}
-            .col-s-8 {width: 62.66%;}
-            .col-s-9 {width: 71%;}
-            .col-s-10 {width: 79.33%;}
-            .col-s-11 {width: 87.66%;}
-            .col-s-12 {width: 96%;}
-        }
-
-        @media only screen and (min-width: 768px) {
-            .col-1 {width: 4.33%;}
-            .col-2 {width: 12.66%;}
-            .col-3 {width: 21%;}
-            .col-4 {width: 29.33%;}
-            .col-5 {width: 37.66%;}
-            .col-6 {width: 46%;}
-            .col-7 {width: 54.33%;}
-            .col-8 {width: 62.66%;}
-            .col-9 {width: 71%;}
-            .col-10 {width: 79.33%;}
-            .col-11 {width: 87.66%;}
-            .col-12 {width: 96%;}
-        }
-
         .modal {
-            /* display: none; */
+            display: none;
             width: 100%;
             height: 100%;
             position: fixed;
@@ -73,7 +39,20 @@
 
         .head {
             padding: 3em 3em 0.5em 3em;
+            display: grid;
+            grid-template-columns: 75% 25%;
+        }
+
+        .head__left {
+            grid-column-start: 1;
+            grid-column-end: 1;
             display: inline-block;
+        }
+
+        .head__right {
+            grid-column-start: 2;
+            grid-column-end: 2;
+            position: relative;
         }
 
         .head__title {
@@ -81,22 +60,120 @@
             padding-right: 2em;
             text-transform: uppercase;
         }
+        
+        .closeBtn {
+            color: white;
+            background-color: rgb(32, 32, 32);
+            padding: 0.8em 1.2em 0.8em 1.2em;
+            text-align: center;
+            cursor: pointer;
+            font-size: 1.2em;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
 
         .head__subtitle {
             padding: 3em 0 1.5em 0;
         }
 
-        .closeBtn {
-            color: white;
+        .products {
+            display: flex;
+        }
+
+        .product {
+            padding: 2em 3em 2em 3em;
+        }
+
+        .product--light {
+            background-image: linear-gradient(to bottom right, rgb(244, 244, 244),  rgb(235, 235, 235), rgb(220, 220, 220));
+        }
+
+        .product--dark {
             background-color: rgb(32, 32, 32);
-            width: 2%;
-            min-width: 20px;
-            padding: 0.8em;
-            float: right;
-            text-align: center;
-            cursor: pointer;
-            font-size: 1.2em;
-            margin: 2em;
+            color: rgb(244, 244, 244);
+        }
+
+        .checkbox-container {
+            float: left;
+        }
+
+        .product__base-info--top {
+            display: grid;
+            grid-template-columns: 50% 50%;
+        }
+
+        .product__base-info--top-left {
+            grid-column-start: 1;
+            grid-column-end: 1;
+        }
+
+        .product__base-info--top-right {
+            grid-column-start: 2;
+            grid-column-end: 2;
+            position: relative;
+        }
+
+        .radio-container {
+            top: 0;
+            right: 0;
+            position: absolute;
+        }
+
+        .product__selection {
+            display: none;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .radio-circle {
+            display: inline-block;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+        }
+
+        .product__selection:checked + .radio-circle::after {
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            display: inline-block; 
+            font-style: normal;
+            font-variant: normal;
+            text-rendering: auto;
+            font-family: "Font Awesome 5 Free", sans-serif;
+            font-weight: 700;
+            content: "\F00C";
+            position: absolute;
+            top: 13%;
+            left: 13%;
+        }
+
+        .radio-circle:hover {
+            background-color: rgb(128, 128, 128)
+        }
+        
+        .radio-circle--light {
+            background-color: rgb(182, 182, 182);
+        }
+        
+        .radio-circle--dark {
+            background-color: rgb(100, 100, 100);
+        }
+        
+        .product__title {
+            padding-top: 5em;
+            max-width: 75%;
+            text-transform: uppercase;
+        }
+
+        .product__advantages {
+            list-style-type: none;
+        }
+
+        .product__advantages--two-columns {
+            columns: 2;
         }
 
         .product__details {
@@ -115,41 +192,6 @@
             max-height: 100%;
             transition: all 0.4s;
             transform: scaleY(1);
-        }
-
-        .products {
-            display: flex;
-        }
-
-        .product {
-            padding: 3em;
-        }
-
-        .product--light {
-            background-image: linear-gradient(to bottom right, rgb(244, 244, 244),  rgb(235, 235, 235), rgb(220, 220, 220));
-        }
-
-        .product--dark {
-            background-color: rgb(32, 32, 32);
-            color: rgb(244, 244, 244);
-        }
-
-        .checkbox-container {
-            float: left;
-        }
-
-        .product__title {
-            padding-top: 5em;
-            max-width: 75%;
-            text-transform: uppercase;
-        }
-
-        .product__advantages {
-            list-style-type: none;
-        }
-
-        .product__advantages--two-columns {
-            columns: 2;
         }
 
         .advantage {
@@ -209,6 +251,16 @@
             text-align: center;
         }
 
+        .terms {
+            text-align: center;
+            padding: 2em;
+        }
+
+        .award-image-block {
+            display: inline-block;
+            padding: 2em;
+        }
+
         .button-section {
             width: 100%;
             padding: 3em;
@@ -238,7 +290,7 @@
             border: 2px solid rgb(32, 32, 32);
         }
 
-
+        
     </style>
 </head>
 <body>
@@ -246,28 +298,36 @@
 
     <div class="modal">
         <div class="content">
-            <span class="closeBtn">&times;</span>
             <div class="head">
-                <strong class="head__title">Wird oft dazugebucht</strong>
+                <div class="head__left">
+                    <strong class="head__title">Wird oft dazugebucht</strong>
                     <!-- wird slot -->
                     <wertgarantie-rating 
                         data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/rating"
                         data-show-rating-number="false"
                         slot="wertgarantie-rating-component">
                     </wertgarantie-rating>
-
-                <p class="head__subtitle"><small>Wählen Sie den Schutz, der Ihren Bedürfnissen am besten entpsricht:</small></p>
+                </div>
+                <div class="head__right">
+                    <span class="closeBtn">&times;</span>
+                </div>
+                <p class="head__subtitle">Wählen Sie den Schutz, der Ihren Bedürfnissen am besten entpsricht:</p>
             </div>
-            <div class="products">
+            <section class="products">
                 <div class="product product--light col-s-12 col-6">
-                    <div class="product__head">
-                        <div>
-                            <small id="payment-interval">monatlich</small><br/>
-                            <strong id="price-display">ab X,XX €</strong><br/>
-                            <small id="tax-display">(inkl. x,xx€ VerSt**)</small>
-                        </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="premium" />
+                    <div class="product__base-info">
+                        <div class="product__base-info--top">
+                            <div class="product__base-info--top-left">
+                                <small id="payment-interval">monatlich</small><br/>
+                                <strong id="price-display">ab X,XX €</strong><br/>
+                                <small id="tax-display">(inkl. x,xx€ VerSt**)</small>
+                            </div>
+                            <div class="product__base-info--top-right">
+                                <label class="radio-container">
+                                    <input class="product__selection" type="radio" name="product-id"/>
+                                    <span class="radio-circle radio-circle--light"></span>
+                                </label>
+                            </div>
                         </div>
                         <h3 class="product__title">Smartphone Komplettschutz Basis</h3>
                         <ul class="product__advantages product__advantages--two-columns">
@@ -337,24 +397,31 @@
                 </div>
                 <div class="product product--dark col-s-12 col-6">
                     <div class="product__head">
-                        <div>
-                            <small id="payment-interval">monatlich</small><br/>
-                            <strong id="price-display">ab X,XX €</strong><br/>
-                            <small id="tax-display">(inkl. x,xx€ VerSt**)</small>
-                        </div>
-                        <div class="checkbox-container">
-                            <input type="checkbox" id="premium" />
+                        <div class="product__base-info">
+                            <div class="product__base-info--top">
+                                <div class="product__base-info--top-left">
+                                    <small id="payment-interval">monatlich</small><br/>
+                                    <strong id="price-display">ab X,XX €</strong><br/>
+                                    <small id="tax-display">(inkl. x,xx€ VerSt**)</small>
+                                </div>
+                                <div class="product__base-info--top-right">
+                                    <label class="radio-container">
+                                        <input class="product__selection" type="radio" name="product-id"/>
+                                        <span class="radio-circle radio-circle--dark"></span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                         <h3 class="product__title">Smartphone Komplettschutz Premium</h3>
                         <ul class="product__advantages product__advantages--two-columns">
                             <li class="advantage advantage--included">
-                                <span class="advantage__icon advantage__icon--head advantage__icon--included">Für private und berufliche Nutzung</span>
+                                <span class="advantage__icon advantage__icon--head advantage__icon--included">Schutz vor Diebstahl</span>
                             </li>
                             <li class="advantage advantage--included">
-                                <span class="advantage__icon advantage__icon--head advantage__icon--included">Weltweiter Schutz</span>
+                                <span class="advantage__icon advantage__icon--head advantage__icon--included">Schutz vor Wasserschäden</span>
                             </li>
                             <li class="advantage advantage--included">
-                                <span class="advantage__icon advantage__icon--head advantage__icon--included">Unsachgemäße Handhabung</span>
+                                <span class="advantage__icon advantage__icon--head advantage__icon--included">Schutz vor Displaybrücken</span>
                             </li>
                         </ul>
                     </div>
@@ -413,13 +480,33 @@
 
                     </div>
                 </div>
-            </div>
-            <div class="button-section">
+            </section>
+            <section class="terms">
+                <div>
+                    <strong>Bedingungen</strong><br/><br/>
+                    <small>Informationsblatt zu Versicherungsprodukten: <a href="www.example.com">www.example.com</a></small><br/>
+                    <small>Allgemeine Versicherungsbedingungen: <a href="www.example.com">www.example.com</a></small><br/>
+                </div>
+                <p>Versicherung ist Vertrauenssache, deshalb setzt "PARTNERSHOP" neben <strong>500.000 zufriedener Kunden</strong> auf die <strong>wertgarantie</strong>, den <strong>Testsieger in Sachen Sicherheit</strong></p>
+                
+                <div class="award-image-block">
+                    <img src="https://www.wertgarantie.de/portaldata/4/resources/Icons/tuev-logo.png" alt="tuev-logo">
+                    <img src="https://www.wertgarantie.de/Portaldata/4/Resources/logos/test-bild-wertgarantie-109-01.png" alt="test-bild">
+                </div>
+                <section>
+                    <wertgarantie-rating 
+                        data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/rating"
+                        data-show-rating-number="false"
+                        slot="wertgarantie-rating-component">
+                    </wertgarantie-rating>
+                </section>
+            </section>
+            <section class="button-section">
                 <div class="button-section__half">
                     <button class="button button--dark" id="details-button">Details anzeigen</button>
                 </div>
 
-            </div>
+            </section>
         </div>
     </div>
     <wertgarantie-selection-pop-up>

@@ -60,11 +60,11 @@
     --wertgarantie-selection-show-details-button-font-weight: 100;
 
     /* advantages */
-    --wertgarantie-selection-advantage-included-text-color: var(--wertgarantie-selection-container-color);
+    --wertgarantie-selection-advantage-included-text-color: var(--wertgarantie-selection-container-text-color);
     --wertgarantie-selection-advantage-excluded-text-color: lightgrey;
     --wertgarantie-selection-advantage-margin: 0 0 0 0;
     --wertgarantie-selection-advantage-font-size: 15px;
-    --wertgarantie-selection-advantage-included-icon-color: var(--wertgarantie-selection-container-color);
+    --wertgarantie-selection-advantage-included-icon-color: var(--wertgarantie-selection-container-text-color);
     --wertgarantie-selection-advantage-excluded-icon-color: lightgrey;
 
     /* links */

@@ -5,16 +5,17 @@
 
         :host {
             font-family: Arial, Helvetica, sans-serif;
+            font-size: 0.8em;
         }
 
         .modal {
             /* display: none; */
             width: 100%;
             height: 100%;
-            position: fixed;
+            position: absolute;
             z-index: 1;
-            left: 0;
             top: 0;
+            left: 0;
             overflow: auto;
             background-color: rgba(0, 0, 0, 0.3);
         }
@@ -22,7 +23,7 @@
         .content {
             background-color: rgb(244, 244, 244);
             margin: 5% auto;
-            width: 70%;
+            width: 65%;
             animation-name: openModal;
             animation-duration: 1s;
         }
@@ -42,6 +43,7 @@
             grid-column-start: 1;
             grid-column-end: 1;
             display: inline-block;
+            font-size: 0.8em;
         }
 
         .head__right {
@@ -74,11 +76,16 @@
 
         .products {
             display: flex;
+            position: relative;
+            padding-bottom: 1em;
+            align-content: center;
         }
 
         .product {
+            width: 50%;
             padding: 2em 3em 0 3em;
             cursor: pointer;
+            -webkit-transition: all 0.6s;
         }
 
         .product--light {
@@ -90,10 +97,23 @@
             color: rgb(244, 244, 244);
         }
 
-        .product__base-info {
-            height: 300px;
+        .product--selected {
+            opacity: 2;
+            box-shadow: 2px 3px 6px rgba(0, 0, 0, .5);
+            z-index: 3;
+            width: 60%;
+            overflow: visible;
         }
-        
+
+        .product--unselected {
+            opacity: 0.2;
+            z-index: 2;
+        }
+
+        .product__base-info {
+            padding-bottom: 0.3em;
+        }
+
         .product__base-info--top {
             display: grid;
             grid-template-columns: 50% 50%;
@@ -143,8 +163,8 @@
             font-weight: 700;
             content: "\\F00C";
             position: absolute;
-            top: 13%;
-            left: 13%;
+            top: 18%;
+            left: 18%;
         }
         
         .radio-circle--light {
@@ -159,6 +179,7 @@
             padding-top: 5em;
             max-width: 75%;
             text-transform: uppercase;
+            min-height: 2.5em;
         }
 
         .product__advantages {
@@ -166,12 +187,12 @@
             padding-left: 1.5em;
         }
 
-        .product__advantages--top3 {
-            columns: 2;
+        product__advantages--top3 {
+            padding-left: 2.5em;
         }
 
         .product__details {
-            padding: 0.7em;
+            padding-bottom: 0.7em;
             visibility: hidden;
             opacity: 0;
             max-height: 0;
@@ -181,7 +202,6 @@
         }
 
         .advantage {
-            margin-right: 1em;
             font-size: 0.9em;
             padding-top: 0.9em;
         }
@@ -203,14 +223,7 @@
             text-rendering: auto;
             font-family: "Font Awesome 5 Free", sans-serif;
             font-weight: 700;
-        }
-
-        .advantage__icon--head::before {
             margin:0 0.5em 0 -1.5em;
-        }
-
-        .advantage__icon--details::before {
-            margin:0 0.5em 0 -1.8em;
         }
 
         .advantage__icon--included::before {
@@ -222,7 +235,7 @@
         }
 
         .details-hr {
-            margin: 2.3em 0 2.3em 0;
+            margin: 1em 0 1em 0;
         }
 
         .details-hr--light {
@@ -241,11 +254,11 @@
 
         .terms {
             text-align: center;
-            padding: 2em;
+            padding: 2em 3em;
             visibility: hidden;
             opacity: 0;
             max-height: 0;
-            transition: all 0.4s;
+            transition: height 0.6s;
             transform-origin: left top;
             transform: scaleY(0);
         }
@@ -254,7 +267,7 @@
             visibility: visible;
             opacity: 1;
             max-height: 100%;
-            transition: all 0.4s;
+            // transition: all 0.6s;
             transform: scaleY(1);
         }
 
@@ -262,9 +275,10 @@
             display: inline-block;
             padding: 2em;
         }
-
+        
         .award-image {
             vertical-align: text-top;
+            max-height: 80px;
         }
 
         .button-section {
@@ -279,18 +293,18 @@
             outline: none;
             padding: 1.5em 3em 1.5em 3em;
             font-size: 0.9em;
+            border: 2px solid rgb(32, 32, 32);
+            transition: all 0.4s;
         }
 
         .button--dark {
             background-color: rgb(32, 32, 32);
             color: rgb(244, 244, 244);
-            border: none;
         }
 
         .button--light {
             background-color: rgb(244, 244, 244);
             color: rgb(32, 32, 32);
-            border: 2px solid rgb(32, 32, 32);
         }
 
         .order-button {
@@ -319,8 +333,8 @@
                     <strong>Bedingungen</strong><br/><br/>
                     <small>Informationsblatt zu Versicherungsprodukten: <a href="www.example.com">www.example.com</a></small><br/>
                     <small>Allgemeine Versicherungsbedingungen: <a href="www.example.com">www.example.com</a></small><br/>
+                    <p>Versicherung ist Vertrauenssache, deshalb setzt "PARTNERSHOP" neben <strong>500.000 zufriedener Kunden</strong> auf die <strong>Wertgarantie</strong>, den <strong>Testsieger in Sachen Sicherheit</strong></p>
                 </div>
-                <p>Versicherung ist Vertrauenssache, deshalb setzt "PARTNERSHOP" neben <strong>500.000 zufriedener Kunden</strong> auf die <strong>Wertgarantie</strong>, den <strong>Testsieger in Sachen Sicherheit</strong></p>
                 
                 <div class="award-image-block">
                     <a target="_blank" href="https://www.certipedia.com/quality_marks/9105052129"><img class="award-image" src="https://www.wertgarantie.de/portaldata/4/resources/Icons/tuev-logo.png" alt="tuev-logo"></a>
@@ -348,34 +362,33 @@
     `;
 
     let productTemplate = `
-        <div class="product">
-            <div class="product__base-info">
-                <div class="product__base-info--top">
-                    <div class="product__base-info--top-left">
-                        <small class="payment-interval">monatlich</small><br/>
-                        <strong class="price-display">ab X,XX €</strong><br/>
-                        <small class="tax-display">(inkl. x,xx€ VerSt**)</small>
-                    </div>
-                    <div class="product__base-info--top-right">
-                        <label class="radio-container">
-                            <input class="product__selection" type="radio" name="product-id"/>
-                            <span class="radio-circle"></span>
-                        </label>
-                    </div>
+        <div class="product__base-info">
+            <div class="product__base-info--top">
+                <div class="product__base-info--top-left">
+                    <small class="payment-interval">monatlich</small><br/>
+                    <strong class="price-display">ab X,XX €</strong><br/>
+                    <small class="tax-display">(inkl. x,xx€ VerSt**)</small>
                 </div>
-                <div class="product__base-info--bottom">
-                    <h3 class="product__title">Smartphone Komplettschutz Basis</h3>
-                    <ul class="product__advantages product__advantages--top3">
+                <div class="product__base-info--top-right">
+                    <label class="radio-container">
+                        <input class="product__selection" type="radio" name="product-id"/>
+                        <span class="radio-circle"></span>
+                    </label>
                 </div>
-                </ul>
             </div>
-            <div class="product__details">
-                <hr class="details-hr">
-                <ul class="product__advantages product__advantages--details">
-                </ul>
-                <p class="product-info-link"><strong>Mehr zum Produkt auf <a href="www.example.com">www.example.com</a>.</strong></p>
+            <div class="product__base-info--bottom">
+                <h3 class="product__title">Smartphone Komplettschutz Basis</h3>
+                <ul class="product__advantages product__advantages--top3">
             </div>
-        </div>`;
+            </ul>
+        </div>
+        <div class="product__details">
+            <hr class="details-hr">
+            <ul class="product__advantages product__advantages--details">
+            </ul>
+            <p class="product-info-link"><strong>Mehr zum Produkt auf <a href="www.example.com">www.example.com</a>.</strong></p>
+        </div>
+        `;
 
     class WertgarantieSelectionPopUp extends HTMLElement {
 
@@ -489,15 +502,16 @@
         setupDisplay(displayData) {
             displayData.products.forEach((product, idx) => {
                 let newProductDiv = document.createElement('div');
+                newProductDiv.classList.add('product');
                 newProductDiv.innerHTML = productTemplate;
                 
                 // Set alternating light and dark styling for products
                 if (idx % 2 === 0) {
-                    newProductDiv.querySelector('.product').classList.add('product--light');
+                    newProductDiv.classList.add('product--light');
                     newProductDiv.querySelector('.radio-circle').classList.add('radio-circle--light')
                     newProductDiv.querySelector('.details-hr').classList.add('details-hr--light')
                 } else {
-                    newProductDiv.querySelector('.product').classList.add('product--dark');
+                    newProductDiv.classList.add('product--dark');
                     newProductDiv.querySelector('.radio-circle').classList.add('radio-circle--dark')
                     newProductDiv.querySelector('.details-hr').classList.add('details-hr--dark')
                 }
@@ -515,7 +529,7 @@
                     listElement.classList.add('advantage', 'advantage--included');
                     
                     const spanElement = document.createElement('span');
-                    spanElement.classList.add('advantage__icon', 'advantage__icon--head', 'advantage__icon--included');
+                    spanElement.classList.add('advantage__icon', 'advantage__icon--included');
                     spanElement.textContent = advantage;
 
                     listElement.appendChild(spanElement);
@@ -529,7 +543,7 @@
                     listElement.classList.add('advantage', 'advantage--excluded');
                     
                     const spanElement = document.createElement('span');
-                    spanElement.classList.add('advantage__icon', 'advantage__icon--details', 'advantage__icon--excluded');
+                    spanElement.classList.add('advantage__icon', 'advantage__icon--excluded');
                     spanElement.textContent = excludedAdvantage;
 
                     listElement.appendChild(spanElement);
@@ -542,7 +556,7 @@
                     listElement.classList.add('advantage', 'advantage--included');
                     
                     const spanElement = document.createElement('span');
-                    spanElement.classList.add('advantage__icon', 'advantage__icon--details', 'advantage__icon--included');
+                    spanElement.classList.add('advantage__icon', 'advantage__icon--included');
                     spanElement.textContent = advantage;
 
                     listElement.appendChild(spanElement);
@@ -553,6 +567,18 @@
                 newProductDiv.addEventListener('click', () => {
                     newProductDiv.querySelector(".product__selection").checked = true;
                     this.orderBtn.style.display = "inline-block";
+                    console.log("Id of the clicked product: " + newProductDiv.querySelector('.product__selection').value);
+                    this.productSection.querySelectorAll('.product').forEach(productDiv => {
+                        if (productDiv.querySelector('.product__selection').value === newProductDiv.querySelector('.product__selection').value) {
+                            productDiv.classList.remove('product--unselected');
+                            productDiv.classList.add('product--selected');
+                            console.log("needs to be selected");
+                        } else {
+                            productDiv.classList.add('product--unselected');
+                            productDiv.classList.remove('product--selected');
+                            console.log("needs to be unselected");
+                        }
+                    });
                 });
                 this.productSection.appendChild(newProductDiv);
 

@@ -12,6 +12,7 @@
 
     <!-- data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/policies"> -->
     <wertgarantie-selection-pop-up id="selection"
+        class="default"
         data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/dummyPolicies">
 
         <wertgarantie-rating 
@@ -29,35 +30,5 @@
     </script>
     <script src="../../src/rating/rating.js"></script>
     <script src="../../src/selection-pop-up/selection-pop-up.js"></script>
-    <!-- <script>
-        var modal = document.getElementsByClassName("modal")[0];
-        var openBtn = document.querySelector("#openBtn");
-        openBtn.addEventListener('click', function() {
-            modal.style.display = 'block';
-        })
-
-        var closeBtn = document.querySelector(".closeBtn");
-        closeBtn.addEventListener('click', function() {
-            modal.style.display = 'none';
-        })
-
-        var detailsBtn = document.getElementById('details-button');
-        var detailsSections = document.querySelectorAll('.product__details');
-        var terms = document.querySelector('.terms');
-        detailsBtn.addEventListener('click', function() {
-            // select details section and expand it
-            detailsSections.forEach(section => section.classList.toggle('product__details--expanded'));
-            terms.classList.toggle('terms--expanded');
-        });
-
-        var products = document.querySelectorAll('.product');
-        products.forEach((product, idx) => {
-            product.addEventListener('click', function() {
-                console.log("clicked product " + (idx + 1));
-                product.querySelectorAll(".product__selection")[0].checked = true;
-                document.querySelector('.order-button').style.display = 'inline-block';
-            })
-        });
-    </script> -->
 </body>
 </html>

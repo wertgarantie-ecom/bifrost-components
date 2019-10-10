@@ -17,7 +17,7 @@
 
 .default {
     --wertgarantie-rating-font-family: "Open Sans", sans-serif;
-    --wertgarantie-rating-font-size: 1em;
+    --wertgarantie-rating-font-size: 1.1em;
     
     --wertgarantie-rating-stars-font-size: 15px;
     --wertgarantie-rating-stars-color: orange;

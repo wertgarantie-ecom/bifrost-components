@@ -9,7 +9,7 @@ storiesOf('Components|Pop-Up', module)
         data-device-id="1234"
         data-device-price="12">
 
-        <wertgarantie-rating 
+        <wertgarantie-rating class="default"
             data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/rating"
             data-show-rating-number="false"
             slot="wertgarantie-rating-component">

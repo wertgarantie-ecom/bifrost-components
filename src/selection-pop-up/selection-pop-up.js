@@ -78,7 +78,6 @@
             display: flex;
             position: relative;
             padding-bottom: 1em;
-            align-content: center;
         }
 
         .product {
@@ -102,6 +101,7 @@
             box-shadow: 2px 3px 6px rgba(0, 0, 0, .5);
             z-index: 3;
             width: 60%;
+            // padding-right: 5em;
             overflow: visible;
         }
 
@@ -185,6 +185,11 @@
         .product__advantages {
             list-style-type: none;
             padding-left: 1.5em;
+            -webkit-transition: all 0.6s;
+        }
+
+        .product__advantages--selected {
+            padding-right: 15%;
         }
 
         product__advantages--top3 {
@@ -310,6 +315,17 @@
         .order-button {
             display: none;
         }
+
+        // Rating Component: 
+        .wg-rating-default {
+            --wertgarantie-rating-font-family: "Open Sans", sans-serif;
+            --wertgarantie-rating-font-size: 1.1em;
+            
+            --wertgarantie-rating-stars-font-size: 15px;
+            --wertgarantie-rating-stars-color: orange;
+        
+            --wertgarantie-rating-link-color: rgb(134, 134, 134);
+        }
     
     </style>
 
@@ -341,10 +357,9 @@
                     <a target="_blank" href="https://www.wertgarantie.de/Home.aspx#"><img class="award-image" src="https://www.wertgarantie.de/Portaldata/4/Resources/logos/test-bild-wertgarantie-109-01.png" alt="test-bild"></a>
                 </div>
                 <section>
-                    <wertgarantie-rating 
+                    <wertgarantie-rating class="wg-rating-default"
                         data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/rating"
-                        data-show-rating-number="false"
-                        slot="wertgarantie-rating-component">
+                        data-show-rating-number="false">
                     </wertgarantie-rating>
                 </section>
             </section>
@@ -572,11 +587,17 @@
                         if (productDiv.querySelector('.product__selection').value === newProductDiv.querySelector('.product__selection').value) {
                             productDiv.classList.remove('product--unselected');
                             productDiv.classList.add('product--selected');
+                            productDiv.querySelectorAll('.product__advantages').forEach(advantageList => {
+                                advantageList.classList.add('product__advantages--selected');
+                            })
                             console.log("needs to be selected");
                         } else {
                             productDiv.classList.add('product--unselected');
                             productDiv.classList.remove('product--selected');
                             console.log("needs to be unselected");
+                            productDiv.querySelectorAll('.product__advantages').forEach(advantageList => {
+                                advantageList.classList.remove('product__advantages--selected');
+                            })
                         }
                     });
                 });

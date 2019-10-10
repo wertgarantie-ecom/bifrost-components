@@ -344,7 +344,7 @@
                 <div class="head__right">
                     <span class="closeBtn" id="closeBtn">&times;</span>
                 </div>
-                <p class="head__subtitle">Wählen Sie den Schutz, der Ihren Bedürfnissen am besten entpsricht:</p>
+                <p class="head__subtitle">Wählen Sie den Schutz, der Ihren Bedürfnissen am besten entspricht:</p>
             </div>
             <section class="products" id="products">
             </section>

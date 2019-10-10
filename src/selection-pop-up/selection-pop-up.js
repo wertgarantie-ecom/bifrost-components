@@ -105,6 +105,14 @@
             overflow: visible;
         }
 
+        .product--selected-light {
+            margin-right: -10%;
+        }
+
+        .product--selected-dark {
+            margin-left: -10%;
+        }
+
         .product--unselected {
             opacity: 0.2;
             z-index: 2;
@@ -186,10 +194,6 @@
             list-style-type: none;
             padding-left: 1.5em;
             -webkit-transition: all 0.6s;
-        }
-
-        .product__advantages--selected {
-            padding-right: 15%;
         }
 
         product__advantages--top3 {
@@ -583,21 +587,20 @@
                     newProductDiv.querySelector(".product__selection").checked = true;
                     this.orderBtn.style.display = "inline-block";
                     console.log("Id of the clicked product: " + newProductDiv.querySelector('.product__selection').value);
-                    this.productSection.querySelectorAll('.product').forEach(productDiv => {
+                    this.productSection.querySelectorAll('.product').forEach((productDiv, idx) => {
                         if (productDiv.querySelector('.product__selection').value === newProductDiv.querySelector('.product__selection').value) {
                             productDiv.classList.remove('product--unselected');
                             productDiv.classList.add('product--selected');
-                            productDiv.querySelectorAll('.product__advantages').forEach(advantageList => {
-                                advantageList.classList.add('product__advantages--selected');
-                            })
-                            console.log("needs to be selected");
+                            if (idx % 2 === 0) {
+                                productDiv.classList.add('product--selected-light');
+                            } else {
+                                productDiv.classList.add('product--selected-dark');
+                            }
                         } else {
                             productDiv.classList.add('product--unselected');
                             productDiv.classList.remove('product--selected');
-                            console.log("needs to be unselected");
-                            productDiv.querySelectorAll('.product__advantages').forEach(advantageList => {
-                                advantageList.classList.remove('product__advantages--selected');
-                            })
+                            productDiv.classList.remove('product--selected-light');
+                            productDiv.classList.remove('product--selected-dark');
                         }
                     });
                 });

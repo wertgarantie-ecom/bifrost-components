@@ -114,11 +114,11 @@
             overflow: visible;
         }
 
-        .product--selected-light {
+        .product--selected-left {
             margin-right: -10%;
         }
 
-        .product--selected-dark {
+        .product--selected-right {
             margin-left: -10%;
         }
 
@@ -593,26 +593,65 @@
                 newProductDiv.addEventListener('click', () => {
                     newProductDiv.querySelector(".product__selection").checked = true;
                     this.orderBtn.style.display = "inline-block";
-                    this.productSection.querySelectorAll('.product').forEach((productDiv, idx) => {
-                        if (productDiv.querySelector('.product__selection').value === newProductDiv.querySelector('.product__selection').value) {
-                            productDiv.classList.remove('product--unselected');
-                            productDiv.classList.add('product--selected');
-                            if (idx % 2 === 0) {
-                                productDiv.classList.add('product--selected-light');
-                            } else {
-                                productDiv.classList.add('product--selected-dark');
-                            }
-                        } else {
-                            productDiv.classList.add('product--unselected');
-                            productDiv.classList.remove('product--selected');
-                            productDiv.classList.remove('product--selected-light');
-                            productDiv.classList.remove('product--selected-dark');
-                        }
-                    });
+                    this.highlightProduct(newProductDiv);
                 });
+
+                newProductDiv.addEventListener('mouseover', () => {
+                    this.highlightProduct(newProductDiv);
+                });
+
+                newProductDiv.addEventListener('mouseleave', () => {
+                    this.restoreHighlighting();
+                });
+
                 this.productSection.appendChild(newProductDiv);
 
             });
+        }
+
+        highlightProduct(newProductDiv) {
+            this.productSection.querySelectorAll('.product').forEach((productDiv, idx) => {
+                if (productDiv.querySelector('.product__selection').value === newProductDiv.querySelector('.product__selection').value) {
+                    productDiv.classList.remove('product--unselected');
+                    productDiv.classList.add('product--selected');
+                    if (idx % 2 === 0) {
+                        productDiv.classList.add('product--selected-left');
+                    } else {
+                        productDiv.classList.add('product--selected-right');
+                    }
+                } else {
+                    productDiv.classList.add('product--unselected');
+                    productDiv.classList.remove('product--selected');
+                    productDiv.classList.remove('product--selected-left');
+                    productDiv.classList.remove('product--selected-right');
+                }
+            });
+        }
+
+        restoreHighlighting() {
+            let checked = false;
+            this.productSection.querySelectorAll('.product').forEach((productDiv, idx) => {
+                productDiv.classList.add('product--unselected');
+                productDiv.classList.remove('product--selected');
+                productDiv.classList.remove('product--selected-left');
+                productDiv.classList.remove('product--selected-right');
+
+                if (productDiv.querySelector(".product__selection").checked) {
+                    checked = true;
+                    productDiv.classList.remove('product--unselected');
+                    productDiv.classList.add('product--selected');
+                    if (idx % 2 === 0) {
+                        productDiv.classList.add('product--selected-left');
+                    } else {
+                        productDiv.classList.add('product--selected-right');
+                    }
+                }
+            });
+            if (!checked) {
+                this.productSection.querySelectorAll('.product').forEach(productDiv => {
+                    productDiv.classList.remove('product--unselected');
+                });
+            }
         }
     }
     window.customElements.define('wertgarantie-selection-pop-up', WertgarantieSelectionPopUp);

@@ -347,7 +347,7 @@
             <section class="terms" id="terms">
                 <div>
                     <strong>Bedingungen</strong><br/><br/>
-                    <small><a class="wg-link" href="www.example.com">wInformationsblatt zu Versicherungsprodukten</a></small><br/>
+                    <small><a class="wg-link" href="www.example.com">Informationsblatt zu Versicherungsprodukten</a></small><br/>
                     <small><a class="wg-link" href="www.example.com">Allgemeine Versicherungsbedingungen</a></small><br/>
                     <p>Versicherung ist Vertrauenssache, deshalb setzt "PARTNERSHOP" neben <strong>500.000 zufriedener Kunden</strong> auf die <strong>Wertgarantie</strong>, den <strong>Testsieger in Sachen Sicherheit</strong></p>
                 </div>

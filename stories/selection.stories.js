@@ -8,7 +8,7 @@ import selectionComponent from './documentation/selectionComponent/selectionComp
 storiesOf('Components|Selection', module)
     .add('default styling', () => ` 
         <wertgarantie-policy-selection
-            data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/policies"
+            data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/policies"
             data-device-id="1234"
             data-device-price="12"
         >
@@ -18,12 +18,12 @@ storiesOf('Components|Selection', module)
     .add('external styling 1', () => ` 
         <wertgarantie-policy-selection
             class="mobilcom-theme"
-            data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/policies"
+            data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/policies"
             data-device-id="1234"
             data-device-price="12"
         >
             <wertgarantie-rating slot="wertgarantie-rating-component" 
-                                 data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/rating"
+                                 data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"
                                  class="mobilcom-wg-rating-theme"
             >
             </wertgarantie-rating>
@@ -34,12 +34,12 @@ storiesOf('Components|Selection', module)
         <wertgarantie-policy-selection
             class="jura-theme"
             data-title="Unser <strong>Komplettschutz</strong> für den Schadensfall"
-            data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/policies"
+            data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/policies"
             data-device-id="1234"
             data-device-price="12"
         >
             <wertgarantie-rating slot="wertgarantie-rating-component" 
-                                 data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/rating"
+                                 data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"
                                  data-show-rating-number="false"
                                  class="jura-wg-rating-theme"
             >

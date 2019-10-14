@@ -23,7 +23,7 @@ storiesOf('Components|Rating', module)
         notes: { markdown: ratingComponentWithoutRatingNumber },
     })
 .add('with fetched values', () => 
-    `<wertgarantie-rating data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/rating">
+    `<wertgarantie-rating data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating">
     </wertgarantie-rating>`, { 
         notes: { markdown: ratingComponentWithFetchedValues },
     })

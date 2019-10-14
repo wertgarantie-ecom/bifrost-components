@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../stories/assets/rating.css">
+    <link rel="stylesheet" href="../../stories/assets/css/rating.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css">
     <title>Selection Pop-Up</title>
 </head>
@@ -27,6 +27,11 @@
         var selection = document.querySelector("#selection");
         selection.devicePrice = 1000;
         selection.deviceId = 1234512345;
+
+        var openBtn = document.querySelector('#openBtn');
+        openBtn.addEventListener('click', () => {
+            selection.open();
+        })
     </script>
     <script src="../../src/rating/rating.js"></script>
     <script src="../../src/selection-pop-up/selection-pop-up.js"></script>

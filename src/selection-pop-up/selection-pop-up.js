@@ -9,7 +9,7 @@
         }
 
         .modal {
-            /* display: none; */
+            // display: none;
             width: 100%;
             height: 100%;
             position: absolute;
@@ -82,26 +82,35 @@
 
         .product {
             width: 50%;
-            padding: 2em 3em 0 3em;
             cursor: pointer;
             -webkit-transition: all 0.6s;
         }
 
-        .product--light {
-            background-image: linear-gradient(to bottom right, rgb(244, 244, 244),  rgb(235, 235, 235), rgb(220, 220, 220));
+        .product__head--background {
+            color: white;
         }
 
-        .product--dark {
-            background-color: rgb(32, 32, 32);
-            color: rgb(244, 244, 244);
+        .product__head--background-one {
+            background-image: 
+                linear-gradient(to bottom right, rgba(0,0,0,0), #000),
+                linear-gradient(to top right, #006EFF, rgba(81,61,61,0)), 
+                url('https://files.slack.com/files-pri/T040Z7Y71-FPE02DACX/e-mountainbike.png');
+            background-size: cover;
+        }
+
+        .product__head--background-two {
+            background-image:
+                linear-gradient(to bottom right, rgba(81,61,61,0), rgba(255, 145, 0, 0.6)),
+                linear-gradient(to top right, rgba(0,0,0,0), #000),
+                url('https://files.slack.com/files-pri/T040Z7Y71-FPC4AEAJU/bulls-e-bikes-2019.png');
+            background-size: cover;
         }
 
         .product--selected {
-            opacity: 2;
-            box-shadow: 2px 3px 6px rgba(0, 0, 0, .5);
+            opacity: 1;
+            // box-shadow: 1px 0 6px rgba(0, 0, 0, .5);
             z-index: 3;
             width: 60%;
-            // padding-right: 5em;
             overflow: visible;
         }
 
@@ -119,7 +128,8 @@
         }
 
         .product__base-info {
-            padding-bottom: 0.3em;
+            opacity: 1;
+            padding: 2em 3em 2em 3em;
         }
 
         .product__base-info--top {
@@ -158,6 +168,7 @@
             height: 22px;
             border-radius: 50%;
             cursor: pointer;
+            background-color: rgb(70, 70, 70);
         }
 
         .product__selection:checked + .radio-circle::after {
@@ -173,14 +184,6 @@
             position: absolute;
             top: 18%;
             left: 18%;
-        }
-        
-        .radio-circle--light {
-            background-color: rgb(211, 211, 211);
-        }
-        
-        .radio-circle--dark {
-            background-color: rgb(70, 70, 70);
         }
         
         .product__title {
@@ -201,13 +204,14 @@
         }
 
         .product__details {
-            padding-bottom: 0.7em;
+            padding: 0 3em 0.7em 3em;
             visibility: hidden;
             opacity: 0;
             max-height: 0;
             transition: all 0.4s;
             transform-origin: left top;
             transform: scaleY(0);
+            background-color: #f7f7f7;
         }
 
         .advantage {
@@ -243,18 +247,6 @@
             content: "\\F05E";
         }
 
-        .details-hr {
-            margin: 1em 0 1em 0;
-        }
-
-        .details-hr--light {
-            border-top: 1px solid rgb(32, 32, 32);
-        }
-
-        .details-hr--dark {
-            border-top: 1px solid rgb(244, 244, 244);
-        }
-
         .product-info-link {
             padding-top: 2em;
             align-self: center;
@@ -276,8 +268,13 @@
             visibility: visible;
             opacity: 1;
             max-height: 100%;
-            // transition: all 0.6s;
+            transition: all 0.6s;
             transform: scaleY(1);
+        }
+
+        .wg-link {
+            text-decoration: none;
+            color: #39f;
         }
 
         .award-image-block {
@@ -338,7 +335,6 @@
             <div class="head">
                 <div class="head__left">
                     <strong class="head__title">Wird oft dazugebucht</strong>
-                    <!-- wird slot -->
                     <slot name="wertgarantie-rating-component"></slot>
                 </div>
                 <div class="head__right">
@@ -351,8 +347,8 @@
             <section class="terms" id="terms">
                 <div>
                     <strong>Bedingungen</strong><br/><br/>
-                    <small>Informationsblatt zu Versicherungsprodukten: <a href="www.example.com">www.example.com</a></small><br/>
-                    <small>Allgemeine Versicherungsbedingungen: <a href="www.example.com">www.example.com</a></small><br/>
+                    <small><a class="wg-link" href="www.example.com">wInformationsblatt zu Versicherungsprodukten</a></small><br/>
+                    <small><a class="wg-link" href="www.example.com">Allgemeine Versicherungsbedingungen</a></small><br/>
                     <p>Versicherung ist Vertrauenssache, deshalb setzt "PARTNERSHOP" neben <strong>500.000 zufriedener Kunden</strong> auf die <strong>Wertgarantie</strong>, den <strong>Testsieger in Sachen Sicherheit</strong></p>
                 </div>
                 
@@ -361,7 +357,8 @@
                     <a target="_blank" href="https://www.wertgarantie.de/Home.aspx#"><img class="award-image" src="https://www.wertgarantie.de/Portaldata/4/Resources/logos/test-bild-wertgarantie-109-01.png" alt="test-bild"></a>
                 </div>
                 <section>
-                    <wertgarantie-rating class="wg-rating-default"
+                    <wertgarantie-rating 
+                        class="wg-rating-default"
                         data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/rating"
                         data-show-rating-number="false">
                     </wertgarantie-rating>
@@ -372,7 +369,7 @@
                     <button class="button button--dark" id="detailsBtn">Details anzeigen</button>
                 </div>
                 <div>
-                    <button class="button button--light" id="cancelOrder">Ich möchte das Produkt nicht absichern</button>
+                    <button class="button button--light" id="cancelOrder">Ich möchte nicht absichern</button>
                     <button class="button button--dark order-button" id="orderBtn">Beides in den Warenkorb</button>
                 </div>
             </section>
@@ -381,31 +378,32 @@
     `;
 
     let productTemplate = `
-        <div class="product__base-info">
-            <div class="product__base-info--top">
-                <div class="product__base-info--top-left">
-                    <small class="payment-interval">monatlich</small><br/>
-                    <strong class="price-display">ab X,XX €</strong><br/>
-                    <small class="tax-display">(inkl. x,xx€ VerSt**)</small>
+        <div class="product__head--background">
+            <div class="product__base-info">
+                <div class="product__base-info--top">
+                    <div class="product__base-info--top-left">
+                        <small class="payment-interval">monatlich</small><br/>
+                        <strong class="price-display">ab X,XX €</strong><br/>
+                        <small class="tax-display">(inkl. x,xx€ VerSt**)</small>
+                    </div>
+                    <div class="product__base-info--top-right">
+                        <label class="radio-container">
+                            <input class="product__selection" type="radio" name="product-id"/>
+                            <span class="radio-circle"></span>
+                        </label>
+                    </div>
                 </div>
-                <div class="product__base-info--top-right">
-                    <label class="radio-container">
-                        <input class="product__selection" type="radio" name="product-id"/>
-                        <span class="radio-circle"></span>
-                    </label>
+                <div class="product__base-info--bottom">
+                    <h3 class="product__title">Smartphone Komplettschutz Basis</h3>
+                    <ul class="product__advantages product__advantages--top3">
                 </div>
+                </ul>
             </div>
-            <div class="product__base-info--bottom">
-                <h3 class="product__title">Smartphone Komplettschutz Basis</h3>
-                <ul class="product__advantages product__advantages--top3">
-            </div>
-            </ul>
         </div>
         <div class="product__details">
-            <hr class="details-hr">
             <ul class="product__advantages product__advantages--details">
             </ul>
-            <p class="product-info-link"><strong>Mehr zum Produkt auf <a href="www.example.com">www.example.com</a>.</strong></p>
+            <p class="product-info-link"><strong>Mehr zum <a target="_blank" class="wg-link info-sheet-link">Produkt</a> und der <a target="_blank" class="wg-link" href="http://www.example.com/">Wertgarantie</a>.</strong></p>
         </div>
         `;
 
@@ -426,6 +424,8 @@
             this.allDisplayDataAvailable = this.allDisplayDataAvailable.bind(this);
             this.setupDisplay = this.setupDisplay.bind(this);
             this.expandDetailsAndTermsSections = this.expandDetailsAndTermsSections.bind(this);
+            this.open = this.open.bind(this);
+            this.close = this.close.bind(this);
         }
 
         set devicePrice(devicePrice) {
@@ -436,9 +436,17 @@
             this.setAttribute("data-device-id", deviceId);
         }
 
+        open() {
+            this.modal.style.display = 'block';
+        }
+
+        close() {
+            this.modal.style.display = 'none';
+        }
+
         connectedCallback() {
             // setup event listeners
-            this.closeBtn.addEventListener('click', () => this.modal.style.display = 'none');
+            this.closeBtn.addEventListener('click', this.close);
             this.detailsBtn.addEventListener('click', this.expandDetailsAndTermsSections);
                 
             this._upgradeProperty('deviceId');
@@ -527,12 +535,10 @@
                 // Set alternating light and dark styling for products
                 if (idx % 2 === 0) {
                     newProductDiv.classList.add('product--light');
-                    newProductDiv.querySelector('.radio-circle').classList.add('radio-circle--light')
-                    newProductDiv.querySelector('.details-hr').classList.add('details-hr--light')
+                    newProductDiv.querySelector('.product__head--background').classList.add('product__head--background-one');
                 } else {
                     newProductDiv.classList.add('product--dark');
-                    newProductDiv.querySelector('.radio-circle').classList.add('radio-circle--dark')
-                    newProductDiv.querySelector('.details-hr').classList.add('details-hr--dark')
+                    newProductDiv.querySelector('.product__head--background').classList.add('product__head--background-two');
                 }
 
                 // Update price display
@@ -541,6 +547,7 @@
                 newProductDiv.querySelector('.tax-display').textContent = product.taxFormatted;
                 newProductDiv.querySelector('.product__title').textContent = product.name;
                 newProductDiv.querySelector(".product__selection").value = product.id;
+                newProductDiv.querySelector('.info-sheet-link').href = product.infoSheetUri;
 
                 // Assemble Top 3 advantages to product head
                 product.top_3.forEach(advantage => {
@@ -586,7 +593,6 @@
                 newProductDiv.addEventListener('click', () => {
                     newProductDiv.querySelector(".product__selection").checked = true;
                     this.orderBtn.style.display = "inline-block";
-                    console.log("Id of the clicked product: " + newProductDiv.querySelector('.product__selection').value);
                     this.productSection.querySelectorAll('.product').forEach((productDiv, idx) => {
                         if (productDiv.querySelector('.product__selection').value === newProductDiv.querySelector('.product__selection').value) {
                             productDiv.classList.remove('product--unselected');

@@ -14,4 +14,5 @@ storiesOf('Components|Pop-Up', module)
             data-show-rating-number="false"
             slot="wertgarantie-rating-component">
         </wertgarantie-rating>
-    </wertgarantie-selection-pop-up>`);
+    </wertgarantie-selection-pop-up>
+    `);

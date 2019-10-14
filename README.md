@@ -8,8 +8,8 @@ npm run storybook
 npm run build
 ```
 
-## Usage 
-Install this library as npm package inside of your project with for example version 1.0.3:
-```
-npm i -D git+ssh://git@gitlab.innoq.com:innoq/skilldb-component-library.git#1.0.3
-```
+## Storybook
+https://wertgarantie-ecom.github.io/bifrost-components/
+
+## Circle CI Deployment Status
+[![CircleCI](https://circleci.com/gh/wertgarantie-ecom/bifrost-components/tree/master.svg?style=svg)](https://circleci.com/gh/wertgarantie-ecom/bifrost-components/tree/master)

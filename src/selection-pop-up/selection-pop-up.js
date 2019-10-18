@@ -23,7 +23,7 @@
         .content {
             background-color: rgb(244, 244, 244);
             margin: 5% auto;
-            width: 65%;
+            width: 75%;
             animation-name: openModal;
             animation-duration: 1s;
         }
@@ -246,13 +246,7 @@
             content: "\\F05E";
         }
 
-        .product-info-link {
-            padding-top: 2em;
-            align-self: center;
-            text-align: center;
-        }
-
-        .terms {
+        .product__details-footer {
             text-align: center;
             padding: 2em 3em;
             visibility: hidden;
@@ -263,7 +257,7 @@
             transform: scaleY(0);
         }
 
-        .product__details--expanded, .terms--expanded {
+        .product__details--expanded, .product__details-footer--expanded {
             visibility: visible;
             opacity: 1;
             max-height: 100%;
@@ -271,9 +265,25 @@
             transform: scaleY(1);
         }
 
+        .product__terms {
+            margin-top: 3em;
+            font-size: 0.8em;
+            display: flex;
+        }
+
+        .product-further-info {
+            padding-left: 3em;
+            position: absolute;
+            bottom: 0;
+        }
+
         .wg-link {
             text-decoration: none;
             color: #39f;
+        }
+
+        wg-infosheet-link {
+            font-size: 8px;
         }
 
         .award-image-block {
@@ -287,10 +297,11 @@
         }
 
         .button-section {
-            padding: 3em;
+            padding: 0 3em 3em 3em;
             display: flex;
             justify-content: space-between;
         }
+
 
         .button {
             cursor: pointer;
@@ -343,11 +354,8 @@
             </div>
             <section class="products" id="products">
             </section>
-            <section class="terms" id="terms">
+            <section class="product__details-footer">
                 <div>
-                    <strong>Bedingungen</strong><br/><br/>
-                    <small><a class="wg-link" href="www.example.com">Informationsblatt zu Versicherungsprodukten</a></small><br/>
-                    <small><a class="wg-link" href="www.example.com">Allgemeine Versicherungsbedingungen</a></small><br/>
                     <p>Versicherung ist Vertrauenssache, deshalb setzt "PARTNERSHOP" neben <strong>500.000 zufriedener Kunden</strong> auf die <strong>Wertgarantie</strong>, den <strong>Testsieger in Sachen Sicherheit</strong></p>
                 </div>
                 
@@ -358,7 +366,7 @@
                 <section>
                     <wertgarantie-rating 
                         class="wg-rating-default"
-                        data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/rating"
+                        data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"
                         data-show-rating-number="false">
                     </wertgarantie-rating>
                 </section>
@@ -402,7 +410,16 @@
         <div class="product__details">
             <ul class="product__advantages product__advantages--details">
             </ul>
-            <p class="product-info-link"><strong>Mehr zum <a target="_blank" class="wg-link info-sheet-link">Produkt</a> und der <a target="_blank" class="wg-link" href="http://www.example.com/">Wertgarantie</a>.</strong></p>
+            <div class="product__terms">
+                <div class="box--left">
+                    <p><strong>Bedingungen</strong></p>
+                    <a class="wg-link wg-infosheet-link wg-product-info-sheet" href="http://www.example.com">Informationsblatt zu Versicherungsprodukten</a><br/>
+                    <a class="wg-link wg-infosheet-link wg-avb" href="http://www.example.com">Allgemeine Versicherungsbedingungen</a>
+                </div>
+                <div class="box--right">
+                    <p class="product-further-info"><strong>Mehr zum <a target="_blank" class="wg-link info-sheet-link">Produkt</a> und der <a target="_blank" class="wg-link" href="http://www.example.com/">Wertgarantie</a>.</strong></p>
+                </div>
+            </div>
         </div>
         `;
 
@@ -416,13 +433,13 @@
             this.closeBtn = this.shadowRoot.querySelector('#closeBtn');
             this.productSection = this.shadowRoot.querySelector('#products');
             this.detailsBtn = this.shadowRoot.querySelector('#detailsBtn');
-            this.terms = this.shadowRoot.querySelector('#terms');
+            this.productDetailsFooter = this.shadowRoot.querySelector('.product__details-footer');
             this.orderBtn = this.shadowRoot.querySelector('#orderBtn');
 
             // method binding:
             this.allDisplayDataAvailable = this.allDisplayDataAvailable.bind(this);
             this.setupDisplay = this.setupDisplay.bind(this);
-            this.expandDetailsAndTermsSections = this.expandDetailsAndTermsSections.bind(this);
+            this.expandDetailsSections = this.expandDetailsSections.bind(this);
             this.open = this.open.bind(this);
             this.close = this.close.bind(this);
         }
@@ -446,7 +463,7 @@
         connectedCallback() {
             // setup event listeners
             this.closeBtn.addEventListener('click', this.close);
-            this.detailsBtn.addEventListener('click', this.expandDetailsAndTermsSections);
+            this.detailsBtn.addEventListener('click', this.expandDetailsSections);
                 
             this._upgradeProperty('deviceId');
             this._upgradeProperty('devicePrice');
@@ -465,12 +482,12 @@
                 .then(this.setupDisplay);
         }
 
-        expandDetailsAndTermsSections() {
+        expandDetailsSections() {
             const detailsSections = this.shadowRoot.querySelectorAll('.product__details');
             detailsSections.forEach(section => {
                 section.classList.toggle('product__details--expanded');
             });
-            this.terms.classList.toggle('terms--expanded');
+            this.productDetailsFooter.classList.toggle('product__details-footer--expanded');
         }
 
         _upgradeProperty(prop) {
@@ -589,6 +606,11 @@
                     newProductDiv.querySelector('.product__advantages--details').appendChild(listElement);
                 })
 
+                newProductDiv.querySelector('.wg-product-info-sheet').setAttribute('href', product.infoSheetUri);
+                newProductDiv.querySelector('.wg-avb').setAttribute('href', product.detailsDocUri);
+
+
+                // add listeners
                 newProductDiv.addEventListener('click', () => {
                     if (newProductDiv.querySelector(".product__selection").checked) {
                         newProductDiv.querySelector(".product__selection").checked = false;

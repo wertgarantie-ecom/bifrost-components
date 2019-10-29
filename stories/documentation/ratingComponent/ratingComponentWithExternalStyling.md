@@ -5,9 +5,10 @@ The rating component can be styled by adding a class to `<wertgarantie-rating>` 
 Current styling options via css properties are: 
 
 ```
-.mobilcom-wg-rating-theme {
+.wg-rating-theme1 {
     --wertgarantie-rating-font-family: "Open Sans", sans-serif;
-    --wertgarantie-rating-font-size: 20px;
+    --wertgarantie-rating-font-size: 12px;
+    --wertgarantie-rating-number-color: #21314d;
 }
 ```
 
@@ -15,7 +16,7 @@ Current styling options via css properties are:
 
 ## Example with styling from above 
 ```
-<wertgarantie-rating class="mobilcom-wg-rating-theme">
+<wertgarantie-rating class="wg-rating-theme1">
                      data-text="9999 Google Rezensionen"
                      data-uri="http://example.com"
                      data-rating="4.5"

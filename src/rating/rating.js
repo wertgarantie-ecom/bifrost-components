@@ -124,6 +124,7 @@
         }
 
         updateDisplay({rating, uri, text, showRatingNumber}) {
+            rating = Math.round(rating * 10) / 10;
             this.ratingStarsDiv.innerText = '★★★★★';
             if (showRatingNumber) {
                 this.ratingSpan.innerText = rating;

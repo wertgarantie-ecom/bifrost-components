@@ -31,7 +31,13 @@ storiesOf('Components|Rating', module)
     `<wertgarantie-rating   data-text="9999 Google Rezensionen"
                             data-uri="http://example.com"
                             data-rating="4.5"
-                            class="mobilcom-wg-rating-theme">
+                            class="wg-rating-theme1">
+    </wertgarantie-rating>
+    <br/><br/>
+    <wertgarantie-rating   data-text="9999 Google Rezensionen"
+                            data-uri="http://example.com"
+                            data-rating="4.5"
+                            class="default">
     </wertgarantie-rating>`, { 
         notes: { markdown: ratingComponentWithExternalStyling },
     });

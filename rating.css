@@ -16,6 +16,16 @@
 }
 
 .default {
+    --wertgarantie-rating-font-family: "Open Sans", sans-serif;
+    --wertgarantie-rating-font-size: 0.7rem;
+    --wertgarantie-rating-text-color: rgb(134, 134, 134);
+    
+    --wertgarantie-rating-stars-font-size: 15px;
+    --wertgarantie-rating-stars-color: orange;
+}
+
+
+.example {
     --wertgarantie-rating-font-family: "Comic Sans MS", sans-serif;
     --wertgarantie-rating-font-size: 1.8rem;
     --wertgarantie-rating-font-weight: 800;

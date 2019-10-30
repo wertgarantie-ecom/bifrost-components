@@ -10,7 +10,7 @@ defaults: &defaults
 
 
 jobs:
-  test:
+  build:
     <<: *defaults
     steps:
       - checkout

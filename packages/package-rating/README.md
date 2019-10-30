@@ -75,6 +75,9 @@ The component can be styled by providing a stylesheet with CSS properties. Avail
 * `--wertgarantie-rating-stars-color`
 
 ### Example
+
+Provide a css file with the following code:
+
 ```css
 .default {
     --wertgarantie-rating-font-family: "Comic Sans MS", sans-serif;

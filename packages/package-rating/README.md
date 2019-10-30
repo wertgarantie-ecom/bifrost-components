@@ -78,7 +78,7 @@ The component can be styled by providing a stylesheet with CSS properties. Avail
 ```css
 .default {
     --wertgarantie-rating-font-family: "Comic Sans MS", sans-serif;
-    --wertgarantie-rating-font-size: 1.7rem;
+    --wertgarantie-rating-font-size: 1.8rem;
     --wertgarantie-rating-font-weight: 800;
     --wertgarantie-rating-text-color: rgb(134, 134, 134);
     

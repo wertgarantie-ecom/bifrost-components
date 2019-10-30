@@ -14,20 +14,9 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "package.json" }}
-            - v1-dependencies-
-
       - run: npm ci
       - run: npm run build
       - run: npm run build-storybook
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-
       - persist_to_workspace:
           root: ~/repo
           paths: .

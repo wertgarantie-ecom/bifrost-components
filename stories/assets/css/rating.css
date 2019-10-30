@@ -1,27 +1,26 @@
-.mobilcom-wg-rating-theme {
+.wg-rating-theme1 {
     --wertgarantie-rating-font-family: "Open Sans", sans-serif;
     --wertgarantie-rating-font-size: 12px;
-    --wertgarantie-rating-number-color: #21314d;
+    --wertgarantie-rating-text-color: #21314d;
 }
 
-.jura-wg-rating-theme {
+.wg-rating-theme2 {
     --wertgarantie-rating-font-family: "Open Sans", sans-serif;
     --wertgarantie-rating-font-size: 10px;
     
     --wertgarantie-rating-stars-font-size: 15px;
     --wertgarantie-rating-stars-color: orange;
 
-    --wertgarantie-rating-link-color: white;
+    --wertgarantie-rating-text-color: white;
 
 }
 
 .default {
-    --wertgarantie-rating-font-family: "Open Sans", sans-serif;
-    --wertgarantie-rating-font-size: 1.1em;
+    --wertgarantie-rating-font-family: "Comic Sans MS", sans-serif;
+    --wertgarantie-rating-font-size: 1.7rem;
+    --wertgarantie-rating-font-weight: 800;
+    --wertgarantie-rating-text-color: rgb(134, 134, 134);
     
-    --wertgarantie-rating-stars-font-size: 15px;
-    --wertgarantie-rating-stars-color: orange;
-    
-    --wertgarantie-rating-link-color: rgb(134, 134, 134);
-
+    --wertgarantie-rating-stars-font-size: 30px;
+    --wertgarantie-rating-stars-color: green;
 }

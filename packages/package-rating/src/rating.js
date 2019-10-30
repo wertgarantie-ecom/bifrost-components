@@ -13,7 +13,8 @@
             }
 
             .rating__number {
-                color: var(--wertgarantie-rating-number-color, #2574be);
+                color: var(--wertgarantie-rating-text-color, #2574be);
+                font-weight: var(--wertgarantie-rating-font-weight, 400)
             }
             
             .rating__stars {
@@ -31,9 +32,9 @@
             }
 
             .rating__link {
-                color: var(--wertgarantie-rating-link-color, #2574be);
+                color: var(--wertgarantie-rating-text-color, #2574be);
                 text-decoration: none;
-                font-weight: var(--wertgarantie-rating-link-font-weight, 400);
+                font-weight: var(--wertgarantie-rating-font-weight, 400);
             }
 
         </style>

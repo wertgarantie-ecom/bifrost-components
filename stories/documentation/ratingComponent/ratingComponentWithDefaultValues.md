@@ -2,6 +2,12 @@
 
 ## Custom Element:
 
+<wertgarantie-rating    
+                    data-text="9999 Google Rezensionen"
+                    data-uri="http://example.com" 
+                    data-rating="4.7">
+</wertgarantie-rating>
+
 ```
 <wertgarantie-rating></wertgarantie-rating>
 ```
@@ -19,4 +25,3 @@ Note, that all three attributes must be set for the component to show data, unle
                      data-uri="http://example.com" 
                      data-rating="4.7">
 </wertgarantie-rating>```
-

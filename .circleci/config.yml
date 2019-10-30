@@ -39,7 +39,7 @@ jobs:
       - gh-pages/deploy:
           build-dir: storybook-static
           ssh-fingerprints: '52:13:49:84:36:e7:20:b0:fc:26:d4:5d:0a:b9:fa:fa'
-  deploy:
+  publish-npm:
     <<: *defaults
     steps:
       - attach_workspace:
@@ -67,4 +67,7 @@ workflows:
             - build
   build:
     jobs:
-      - build
+      - build:
+          filters:
+            branches:
+              ignore: master

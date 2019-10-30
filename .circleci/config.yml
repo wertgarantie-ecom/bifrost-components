@@ -1,16 +1,70 @@
+version: 2
+
 orbs:
   gh-pages: sugarshin/gh-pages@0.0.6
 
-version: 2.1
+defaults: &defaults
+  working_directory: ~/repo
+  docker:
+    - image: circleci/node:8.9.1
+
+
 jobs:
-  build:
-    docker:
-      - image: node:latest
+  test:
+    <<: *defaults
     steps:
       - checkout
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+
       - run: npm install
       - run: npm run build
       - run: npm run build-storybook
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      - persist_to_workspace:
+          root: ~/repo
+          paths: .
+  gh-pages:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
       - gh-pages/deploy:
           build-dir: storybook-static
           ssh-fingerprints: '52:13:49:84:36:e7:20:b0:fc:26:d4:5d:0a:b9:fa:fa'
+  deploy:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run:
+          name: Authenticate with registry
+          command: echo “//registry.npmjs.org/:_authToken=$NPM_TOKEN > ~/repo/.npmrc
+      - run:
+          name: Publish package
+          command: lerna publish from-git
+
+workflows:
+  version: 2
+  build_and_publish:
+    jobs:
+      - build:
+          filters:
+            branches:
+              only: master
+      - gh-pages:
+          requires:
+            - build
+      - publish-npm:
+          requires:
+            - build
+  build:
+    jobs:
+      - build

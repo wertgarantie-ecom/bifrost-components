@@ -1,0 +1,30 @@
+{
+  "name": "wertgarantie-rating",
+  "version": "0.0.1",
+  "description": "wertgarantie web component to display google review ratings",
+  "main": "rating.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "faucet --compact",
+    "fingerprint": "faucet --fingerprint",
+    "watch": "faucet -w",
+    "serve": "faucet --liveservice 9999"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wertgarantie-ecom/bifrost-components.git"
+  },
+  "keywords": [
+    "e-commerce",
+    "webcomponent",
+    "wertgarantie",
+    "rating",
+    "google"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wertgarantie-ecom/bifrost-components/issues"
+  },
+  "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme"
+}

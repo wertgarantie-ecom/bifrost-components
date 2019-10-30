@@ -1,6 +1,6 @@
 import {storiesOf} from '@storybook/html';
-import '../src/rating/rating.js';
-import '../src/selection-pop-up/selection-pop-up.js';
+import '../packages/package-rating/src/rating.js';
+import '../packages/package-selection-popup/src/selection-popup.js';
 
 storiesOf('Components|Pop-Up', module)
 .add("Popup default", () => `

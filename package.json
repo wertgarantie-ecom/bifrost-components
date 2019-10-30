@@ -6,11 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 6006 -s ./stories/assets/*",
-    "build": "faucet --compact",
-    "fingerprint": "faucet --fingerprint",
-    "watch": "faucet -w",
-    "serve": "faucet --liveservice 9999",
-    "build-storybook": "build-storybook -s ./stories/assets/*"
+    "build-storybook": "build-storybook -s ./stories/assets/*",
+    "build": "lerna run build"
   },
   "author": "arne.landwehr@innoq.com",
   "license": "ISC",
@@ -25,6 +22,7 @@
     "faucet-pipeline-esnext": "^2.0.8",
     "faucet-pipeline-js": "^2.0.8",
     "faucet-pipeline-jsmin": "^2.0.8",
+    "lerna": "^3.18.3",
     "live-server": "^1.2.1"
   },
   "browserslist": [
@@ -32,5 +30,10 @@
     "> 1%",
     "maintained node versions",
     "not dead"
-  ]
+  ],
+  "dependencies": {
+    "wertgarantie-rating": "file:packages/package-rating",
+    "wertgarantie-selection-embedded": "file:packages/package-selection-embedded",
+    "wertgarantie-selection-popup": "file:packages/package-selection-popup"
+  }
 }

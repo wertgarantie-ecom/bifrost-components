@@ -1,5 +1,5 @@
 import {storiesOf} from '@storybook/html';
-import '../src/rating/rating.js';
+import '../packages/package-rating/src/rating.js';
 import ratingComponentWithDefaultValues from './documentation/ratingComponent/ratingComponentWithDefaultValues.md';
 import ratingComponentWithoutRatingNumber from './documentation/ratingComponent/ratingComponentWithoutRatingNumber.md';
 import ratingComponentWithFetchedValues from './documentation/ratingComponent/ratingComponentWithFetchedValues.md';

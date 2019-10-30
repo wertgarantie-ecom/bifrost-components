@@ -1,6 +1,6 @@
 import {storiesOf} from '@storybook/html';
-import '../src/rating/rating.js';
-import '../src/policy-selection/policy-selection.js';
+import '../packages/package-rating/src/rating.js';
+import '../packages/package-selection-embedded/src/selection-embedded.js';
 import selectionComponent from './documentation/selectionComponent/selectionComponent.md';
 
 /* Selection Component */

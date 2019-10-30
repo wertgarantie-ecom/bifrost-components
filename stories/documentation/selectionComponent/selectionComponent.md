@@ -28,7 +28,7 @@ This section displays buttons for the different products offered. Clicking them 
 
 
 ## Embed Selection Component
-The online shop needs to include Wertgarantie's `policy-selection.js` - once published there will be a link here - in order to use the custom element `<wertgarantie-policy-selection>` and embed it where it wants to.
+The online shop needs to include Wertgarantie's `selection-embedded.js` - once published there will be a link here - in order to use the custom element `<wertgarantie-policy-selection>` and embed it where it wants to.
 
 Here is an example code:
 

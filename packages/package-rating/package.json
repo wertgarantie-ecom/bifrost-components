@@ -26,5 +26,6 @@
   "bugs": {
     "url": "https://github.com/wertgarantie-ecom/bifrost-components/issues"
   },
-  "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme"
+  "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme",
+  "gitHead": "f03d8c58379ba27eede5732cdc172336cb06dad8"
 }

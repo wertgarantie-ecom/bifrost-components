@@ -79,7 +79,7 @@ The component can be styled by providing a stylesheet with CSS properties. Avail
 Provide a css file with the following code:
 
 ```css
-.default {
+.example {
     --wertgarantie-rating-font-family: "Comic Sans MS", sans-serif;
     --wertgarantie-rating-font-size: 1.8rem;
     --wertgarantie-rating-font-weight: 800;
@@ -89,9 +89,9 @@ Provide a css file with the following code:
     --wertgarantie-rating-stars-color: green;
 }
 ```
-<wertgarantie-rating class="default" data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"></wertgarantie-rating>
+<wertgarantie-rating class="example" data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"></wertgarantie-rating>
 ```html
-<wertgarantie-rating class="default"
+<wertgarantie-rating class="example"
                      data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"
                      data-show-rating-number="false">
 </wertgarantie-rating>

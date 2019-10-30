@@ -1,4 +1,4 @@
-version: 2
+version: 2.1
 
 orbs:
   gh-pages: sugarshin/gh-pages@0.0.6

@@ -6,7 +6,7 @@ orbs:
 defaults: &defaults
   working_directory: ~/repo
   docker:
-    - image: circleci/node:latest
+    - image: circleci/node:latest-browsers
 
 
 jobs:

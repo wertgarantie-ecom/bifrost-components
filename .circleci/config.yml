@@ -37,7 +37,7 @@ jobs:
           at: ~/repo
       - run:
           name: Authenticate with registry
-          command: echo “//registry.npmjs.org/:_authToken=$NPM_TOKEN > ~/repo/.npmrc
+          command: npm run login
       - run:
           name: Publish package
           command: ./node_modules/.bin/lerna publish --yes from-package

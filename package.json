@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "start-storybook -p 6006 -s ./stories/assets/*",
+    "login": "npm-cli-login",
     "build-storybook": "build-storybook -s ./stories/assets/*",
     "build": "lerna run build"
   },
@@ -33,6 +34,7 @@
     "not dead"
   ],
   "dependencies": {
+    "npm-cli-login": "^0.1.1",
     "showdown": "^1.9.0",
     "wertgarantie-rating": "file:packages/package-rating",
     "wertgarantie-selection-embedded": "file:packages/package-selection-embedded",

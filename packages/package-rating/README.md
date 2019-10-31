@@ -5,6 +5,7 @@ This web component can be used to embed Wertgarantie's google rating into any we
 * [Install / Include](#install)
 * [Configuration](#configure-the-rating-component)
 * [Styling](#styling)
+* [Living Styleguide](https://wertgarantie-ecom.github.io/bifrost-components/?path=/story/components-rating--documentation)
 
 ## Install
 Include this package either via npm:
@@ -15,7 +16,7 @@ npm install wertgarantie-rating
 
 Or directly include it into your web page
 ```html
-<script src="https://cdn.jsdelivr.net/npm/wertgarantie-rating/src/rating.js" type="text/javascript">
+<script src="https://cdn.jsdelivr.net/npm/wertgarantie-rating/dist/rating.min.js" type="text/javascript">
 ```
 
 Once the JavaScript file is included the following tag is available
@@ -89,10 +90,13 @@ Provide a css file with the following code:
     --wertgarantie-rating-stars-color: green;
 }
 ```
-<wertgarantie-rating class="example" data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"></wertgarantie-rating>
+<wertgarantie-rating class="example" 
+                     data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating">
+</wertgarantie-rating>
 ```html
 <wertgarantie-rating class="example"
-                     data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"
-                     data-show-rating-number="false">
+                     data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating">
 </wertgarantie-rating>
 ```
+
+<script src="https://cdn.jsdelivr.net/npm/wertgarantie-rating/dist/rating.min.js" type="text/javascript">

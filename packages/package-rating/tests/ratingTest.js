@@ -10,6 +10,11 @@ module.exports = {
     "Should not display rating component with incomplete data": function(browser) {
         browser
             .url("file://" + process.cwd() + "/packages/package-rating/testPages/ratingTest.html")
-            .expect.elements('#rating-failure').count.to.equal(0);
+            .expect.elements('#rating-incomplete-data-failure').count.to.equal(0);
+    },
+    "Should not display rating component with invalid fetch uri": function(browser) {
+        browser
+            .url("file://" + process.cwd() + "/packages/package-rating/testPages/ratingTest.html")
+            .expect.elements('#rating-invalid-fetch-uri').count.to.equal(0);
     }
 }

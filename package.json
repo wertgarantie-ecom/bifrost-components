@@ -4,7 +4,7 @@
   "description": "midgard component lib",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "nightwatch",
     "storybook": "start-storybook -p 6006 -s ./stories/assets/*",
     "login": "npm-cli-login",
     "build-storybook": "build-storybook -s ./stories/assets/*",
@@ -17,6 +17,7 @@
     "@storybook/addon-notes": "5.2.0",
     "@storybook/html": "5.2.0",
     "babel-loader": "8.0.6",
+    "chromedriver": "^78.0.1",
     "donny": "0.1.0",
     "eslint": "6.4.0",
     "eslint-config-google": "0.14.0",
@@ -25,6 +26,7 @@
     "faucet-pipeline-jsmin": "2.0.8",
     "lerna": "3.18.3",
     "live-server": "1.2.1",
+    "nightwatch": "^1.2.4",
     "storybook-readme": "^5.0.8"
   },
   "browserslist": [
@@ -34,6 +36,7 @@
     "not dead"
   ],
   "dependencies": {
+    "@webcomponents/webcomponentsjs": "^2.3.0",
     "npm-cli-login": "^0.1.1",
     "showdown": "^1.9.0",
     "wertgarantie-rating": "file:packages/package-rating",

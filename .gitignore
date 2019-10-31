@@ -6,3 +6,6 @@ storybook-static/
 
 .vscode/
 .npmrc
+
+geckodriver.log
+tests_output/

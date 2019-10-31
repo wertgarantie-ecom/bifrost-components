@@ -20,6 +20,12 @@ jobs:
       - persist_to_workspace:
           root: ~/repo
           paths: .
+  test:
+    <<: *defaults
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run: npm test
   gh-pages:
     <<: *defaults
     steps:
@@ -50,12 +56,17 @@ workflows:
           filters:
             branches:
               only: master
+      - test:
+          requires:
+            - build
       - gh-pages:
           requires:
             - build
+            - test
       - publish-npm:
           requires:
             - build
+            - test
   build:
     jobs:
       - build:

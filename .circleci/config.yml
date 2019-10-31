@@ -57,11 +57,9 @@ workflows:
       - gh-pages:
           requires:
             - build
-            - test
       - publish-npm:
           requires:
             - build
-            - test
   build:
     jobs:
       - build:

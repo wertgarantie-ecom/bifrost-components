@@ -1,6 +1,6 @@
 import {storiesOf} from '@storybook/html';
 
-import RatingReadme from '../packages/package-rating/README.md';
+import RatingReadme from './documentation/ratingComponent/ratingComponent.md';
 
 import showdown from 'showdown';
 showdown.setFlavor('github');

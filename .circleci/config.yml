@@ -15,17 +15,12 @@ jobs:
     steps:
       - checkout
       - run: npm ci
+      - run: npm test
       - run: npm run build
       - run: npm run build-storybook
       - persist_to_workspace:
           root: ~/repo
           paths: .
-  test:
-    <<: *defaults
-    steps:
-      - attach_workspace:
-          at: ~/repo
-      - run: npm test
   gh-pages:
     <<: *defaults
     steps:

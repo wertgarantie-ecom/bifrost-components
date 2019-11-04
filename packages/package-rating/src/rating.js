@@ -68,6 +68,7 @@
             addIfDefined(displayData, 'rating', this.getAttribute('data-rating'));
             addIfDefined(displayData, 'text', this.getAttribute('data-text'));
             addIfDefined(displayData, 'uri', this.getAttribute('data-uri'));
+            addIfDefined(displayData, 'ratingsTotal', this.getAttribute('data-ratings-total'));
             addIfDefined(displayData, 'showRatingNumber', this.getAttribute('data-show-rating-number') === "false" ? false : true);
 
             const fetchData = {};
@@ -84,7 +85,7 @@
         }
 
         allDisplayDataAvailable(displayData) {
-            return displayData.rating && displayData.text && displayData.uri;
+            return displayData.rating && displayData.text && displayData.ratingsTotal && displayData.uri;
         }
 
         async fetchRating(fetchUri) {
@@ -124,7 +125,7 @@
             }
         }
 
-        updateDisplay({rating, uri, text, showRatingNumber}) {
+        updateDisplay({rating, uri, ratingsTotal, text, showRatingNumber}) {
             rating = Math.round(rating * 10) / 10;
             this.ratingStarsDiv.innerText = '★★★★★';
             if (showRatingNumber) {
@@ -135,7 +136,7 @@
                 this.ratingLink.setAttribute('href', uri);
             }
             if (text) {
-                this.ratingLink.innerText = text;
+                this.ratingLink.innerText = ratingsTotal + " " + text;
             }
         }
     }

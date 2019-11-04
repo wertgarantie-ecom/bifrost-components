@@ -38,24 +38,27 @@ If you want to fetch the real google ratings from Wertgarantie's backend for fro
 
 ### Provide data manually
 Another way to configure the component is to provide all of the following three attributes:
-* data-text (e. g. "5000 Reviews on Google")
-* data-uri (the link behind the `data-text`)
+* data-text (e. g. "Reviews on Google")
+* data-ratings-total (e. g. 5000)
+* data-uri (the link behind the `data-ratings-total` + `data-text`)
 * data-rating (the rating number itself, e. g. 3.5)
 
-<wertgarantie-rating data-text="5000 Reviews on Google"
+<wertgarantie-rating data-text="Reviews on Google"
+                     data-ratings-total="5000"
                      data-uri="https://www.google.de/"
                      data-rating="3.5">
 </wertgarantie-rating>
 
 ```html
-<wertgarantie-rating data-text="5000 Reviews on Google"
+<wertgarantie-rating data-text="Reviews on Google"
+                     data-ratings-total="5000"
                      data-uri="https://www.google.de/"
                      data-rating="3.5">
 </wertgarantie-rating>
 ```
 
 ### Noteworthy
-<strong>Note</strong> that you either have to provide `data-fetch-uri` or <i>all</i> three attributes for manual data providing
+<strong>Note</strong> that you either have to provide `data-fetch-uri` or <i>all</i> four attributes for manual data providing
 
 The attribute `data-show-rating-number` can be set to false in order to hide the number and just show the stars:
 <wertgarantie-rating data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating" data-show-rating-number="false"></wertgarantie-rating>

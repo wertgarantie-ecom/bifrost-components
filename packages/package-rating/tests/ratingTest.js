@@ -16,5 +16,12 @@ module.exports = {
         browser
             .url("file://" + process.cwd() + "/packages/package-rating/testPages/ratingTest.html")
             .expect.elements('#rating-invalid-fetch-uri').count.to.equal(0);
+    },
+    "Should have different text and not show rating number": function(browser) {
+        browser
+            .url("file://" + process.cwd() + "/packages/package-rating/testPages/ratingTest.html")
+            .waitForElementVisible('#rating-fetch-success')
+            .expect.elements('#rating-modified-text').text.to.contain('Google Rezensionen');
+        
     }
 }

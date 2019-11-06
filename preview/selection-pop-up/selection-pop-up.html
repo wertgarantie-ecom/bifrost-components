@@ -4,20 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../stories/assets/css/rating.css">
+    <!-- <link rel="stylesheet" href="../../stories/assets/css/selection-popup.css"> -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css">
     <title>Selection Pop-Up</title>
 </head>
 <body>
     <button id="openBtn">Klick mich</button>
 
-    <!-- data-fetch-uri="http://localhost:3000/wertgarantie/dummyPolicies"> -->
+    <!-- data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/dummyPolicies"> -->
     <wertgarantie-selection-pop-up id="selection"
-    data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/dummyPolicies">
+    class="default-popup"
+    data-fetch-uri="http://localhost:3000/wertgarantie/dummyPolicies">
         
     <!-- data-fetch-uri="http://localhost:3000/wertgarantie/rating" -->
-    <wertgarantie-rating 
-    data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"
+        <wertgarantie-rating 
             class="default"
+            data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"
             data-show-rating-number="false"
             slot="wertgarantie-rating-component">
         </wertgarantie-rating>
@@ -27,7 +29,7 @@
     <script>
         var selection = document.querySelector("#selection");
         selection.devicePrice = 1000;
-        selection.deviceId = 1234512345;
+        selection.deviceClass = "1dfd4549-9bdc-4285-9047-e5088272dade";
 
         var openBtn = document.querySelector('#openBtn');
         openBtn.addEventListener('click', () => {

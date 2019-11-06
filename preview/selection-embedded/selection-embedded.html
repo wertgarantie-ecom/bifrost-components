@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css">
-<link rel="stylesheet" href="../../stories/assets/css/policy-selection.css">
+<link rel="stylesheet" href="../../stories/assets/css/selection-embedded.css">
 <link rel="stylesheet" href="../../stories/assets/css/rating.css">
 <head>
     <meta charset="UTF-8">
@@ -10,7 +10,7 @@
 <body>
     <!-- data-fetch-uri="http://localhost:3000/wertgarantie/policies" -->
     <wertgarantie-policy-selection 
-                            class="default"
+                            class="default-embedded"
                             data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/policies"
                             data-title="Unser <strong>Komplettschutz</strong> für den Schadensfall"
     >
@@ -18,6 +18,7 @@
 
     <!-- data-fetch-uri="http://localhost:3000/wertgarantie/rating" -->
         <wertgarantie-rating
+                            class="wg-rating-theme3"
                             data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"
                             slot="wertgarantie-rating-component" 
         >
@@ -26,14 +27,14 @@
     <br/><br/>
     <!-- data-fetch-uri="http://localhost:3000/wertgarantie/policies" -->
     <wertgarantie-policy-selection 
-                            class="jura-theme"    
+                            class="example-theme2"    
                             data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/policies"
                             data-title="Unser <strong>Komplettschutz</strong> für den Schadensfall"
     >
 
 
     <!-- data-fetch-uri="http://localhost:3000/wertgarantie/rating" -->
-        <wertgarantie-rating class="jura-wg-rating-theme"
+        <wertgarantie-rating class="wg-rating-theme2"
                             data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"
                             data-show-rating-number="false"
                             slot="wertgarantie-rating-component" 
@@ -42,14 +43,14 @@
     </wertgarantie-policy-selection>
     <br/><br/>
     <wertgarantie-policy-selection 
-                            class="mobilcom-theme"    
+                            class="example-theme1"    
                             data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/policies"
                             data-title="Unser <strong>Komplettschutz</strong> für den Schadensfall"
     >
 
 
     <!-- data-fetch-uri="http://localhost:3000/wertgarantie/rating" -->
-        <wertgarantie-rating class="mobilcom-wg-rating-theme"
+        <wertgarantie-rating class="wg-rating-theme1"
                             data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"
                             slot="wertgarantie-rating-component" 
         >
@@ -57,12 +58,12 @@
     </wertgarantie-policy-selection>
 </body>
 <script>
-    document.querySelector('.default').devicePrice = 11111;
-    document.querySelector('.default').deviceId = "234897548957";
-    document.querySelector('.jura-theme').devicePrice = 11111;
-    document.querySelector('.jura-theme').deviceId = "234897548957";
-    document.querySelector('.mobilcom-theme').devicePrice = 11111;
-    document.querySelector('.mobilcom-theme').deviceId = "234897548957";
+    document.querySelector('.default-embedded').devicePrice = 11111;
+    document.querySelector('.default-embedded').deviceId = "234897548957";
+    document.querySelector('.example-theme2').devicePrice = 11111;
+    document.querySelector('.example-theme2').deviceId = "234897548957";
+    document.querySelector('.example-theme1').devicePrice = 11111;
+    document.querySelector('.example-theme1').deviceId = "234897548957";
 </script>
 <script src="../../packages/package-selection-embedded/src/selection-embedded.js"></script>
 <script src="../../packages/package-rating/src/rating.js"></script>

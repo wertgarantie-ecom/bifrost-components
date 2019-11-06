@@ -4,7 +4,7 @@
     <style>
 
         :host {
-            font-family: Arial, Helvetica, sans-serif;
+            font-family: var(--wertgarantie-popup-font-family, Arial, Helvetica), sans-serif;
             font-size: 0.8em;
         }
 
@@ -21,7 +21,7 @@
         }
 
         .content {
-            background-color: rgb(244, 244, 244);
+            background-color: var(--wertgarantie-popup-background-color, rgb(244, 244, 244));
             margin: 5% auto;
             width: 75%;
             animation-name: openModal;
@@ -60,7 +60,7 @@
         
         .closeBtn {
             color: white;
-            background-color: rgb(32, 32, 32);
+            background-color: var(--wertgarantie-popup-dark-button-background-color, rgb(32, 32, 32));
             padding: 0.8em 1.2em 0.8em 1.2em;
             text-align: center;
             cursor: pointer;
@@ -89,26 +89,27 @@
         .product__head--background {
             color: white;
         }
-
-        .product__head--background-one {
-            background-image: 
+        
+        .product__head--background-even {
+            --image-link: linear-gradient(to top right, #006EFF, rgba(81,61,61,0));
+            background-image: var(--wertgarantie-popup-product-background-even, 
                 linear-gradient(to bottom right, rgba(0,0,0,0), #000),
-                linear-gradient(to top right, #006EFF, rgba(81,61,61,0)), 
-                url('https://files.slack.com/files-pri/T040Z7Y71-FPE02DACX/e-mountainbike.png');
+                linear-gradient(to top right, #006EFF, rgba(81,61,61,0))),
+                var(--image-link);
             background-size: cover;
         }
 
-        .product__head--background-two {
-            background-image:
+        .product__head--background-odd {
+            --image-link: linear-gradient(to top right, rgba(0,0,0,0), #000);
+            background-image: var(--wertgarantie-popup-product-background-odd,
                 linear-gradient(to bottom right, rgba(81,61,61,0), rgba(255, 145, 0, 0.6)),
-                linear-gradient(to top right, rgba(0,0,0,0), #000),
-                url('https://files.slack.com/files-pri/T040Z7Y71-FPC4AEAJU/bulls-e-bikes-2019.png');
+                linear-gradient(to top right, rgba(0,0,0,0), #000)),
+                var(--image-link);
             background-size: cover;
         }
 
         .product--selected {
             opacity: 1;
-            // box-shadow: 1px 0 6px rgba(0, 0, 0, .5);
             z-index: 3;
             width: 60%;
             background-color: #f7f7f7;
@@ -302,42 +303,30 @@
             justify-content: space-between;
         }
 
-
         .button {
             cursor: pointer;
             background: none;
             outline: none;
             padding: 1.5em 3em 1.5em 3em;
             font-size: 0.9em;
-            border: 2px solid rgb(32, 32, 32);
+            border: 2px solid var(--wertgarantie-popup-dark-button-background-color, rgb(32, 32, 32));
             transition: all 0.4s;
         }
 
         .button--dark {
-            background-color: rgb(32, 32, 32);
-            color: rgb(244, 244, 244);
+            background-color: var(--wertgarantie-popup-dark-button-background-color, rgb(32, 32, 32));
+            color: var(--wertgarantie-popup-dark-button-text-color, rgb(244, 244, 244));
         }
 
         .button--light {
-            background-color: rgb(244, 244, 244);
-            color: rgb(32, 32, 32);
+            background-color: var(--wertgarantie-popup-light-button-background-color, rgb(244, 244, 244));
+            color: var(--wertgarantie-popup-light-button-text-color, rgb(32, 32, 32));
         }
 
         .order-button {
             display: none;
         }
 
-        // Rating Component: 
-        .wg-rating-default {
-            --wertgarantie-rating-font-family: "Open Sans", sans-serif;
-            --wertgarantie-rating-font-size: 1.1em;
-            
-            --wertgarantie-rating-stars-font-size: 15px;
-            --wertgarantie-rating-stars-color: orange;
-        
-            --wertgarantie-rating-link-color: rgb(134, 134, 134);
-        }
-    
     </style>
 
     <div class="modal" id="modal">
@@ -408,6 +397,7 @@
             </div>
         </div>
         <div class="product__details">
+            <h3>Details</h3>
             <ul class="product__advantages product__advantages--details">
             </ul>
             <div class="product__terms">
@@ -448,8 +438,8 @@
             this.setAttribute("data-device-price", devicePrice);
         }
 
-        set deviceId(deviceId) {
-            this.setAttribute("data-device-id", deviceId);
+        set deviceClass(deviceClass) {
+            this.setAttribute("data-device-class", deviceClass);
         }
 
         open() {
@@ -465,7 +455,7 @@
             this.closeBtn.addEventListener('click', this.close);
             this.detailsBtn.addEventListener('click', this.expandDetailsSections);
                 
-            this._upgradeProperty('deviceId');
+            this._upgradeProperty('deviceClass');
             this._upgradeProperty('devicePrice');
 
             const addIfDefined = (object, name, property) => {
@@ -474,7 +464,7 @@
 
             const fetchData = {};
             addIfDefined(fetchData, 'devicePrice', this.getAttribute('data-device-price'));
-            addIfDefined(fetchData, 'deviceId', this.getAttribute('data-device-id'));
+            addIfDefined(fetchData, 'deviceClass', this.getAttribute('data-device-class'));
             addIfDefined(fetchData, 'fetchUri', this.getAttribute('data-fetch-uri'));
 
             this.fetchPolicy(fetchData)
@@ -514,20 +504,20 @@
             return displayData;
         }
 
-        async fetchPolicy({fetchUri, devicePrice, deviceId}) {
-            if (!(fetchUri && devicePrice && deviceId)) {
+        async fetchPolicy({fetchUri, devicePrice, deviceClass}) {
+            if (!(fetchUri && devicePrice && deviceClass)) {
                 this.remove();
                 throw new Error("fetch data incomplete\n" + 
                     "fetchUri: " + fetchUri + "\n" +
                     "devicePrice: " + devicePrice + "\n" +
-                    "deviceId: " + deviceId
+                    "deviceClass: " + deviceClass
                 );
             }
             try {
                 const url = new URL(fetchUri);
                 const queryParams = {
                     devicePrice: devicePrice,
-                    deviceId: deviceId
+                    deviceClass: deviceClass
                 };
                 Object.keys(queryParams).forEach(key => url.searchParams.append(key, queryParams[key]));
                 const response = await fetch(url);
@@ -548,13 +538,16 @@
                 newProductDiv.classList.add('product');
                 newProductDiv.innerHTML = productTemplate;
                 
+                if(product.imageLink) {
+                    newProductDiv.querySelector('.product__head--background').style.setProperty('--image-link', 'url("' + product.imageLink + '")');
+                }
                 // Set alternating light and dark styling for products
                 if (idx % 2 === 0) {
                     newProductDiv.classList.add('product--light');
-                    newProductDiv.querySelector('.product__head--background').classList.add('product__head--background-one');
+                    newProductDiv.querySelector('.product__head--background').classList.add('product__head--background-even');
                 } else {
                     newProductDiv.classList.add('product--dark');
-                    newProductDiv.querySelector('.product__head--background').classList.add('product__head--background-two');
+                    newProductDiv.querySelector('.product__head--background').classList.add('product__head--background-odd');
                 }
 
                 // Update price display
@@ -562,7 +555,7 @@
                 newProductDiv.querySelector('.price-display').textContent = product.priceFormatted;
                 newProductDiv.querySelector('.tax-display').textContent = product.taxFormatted;
                 newProductDiv.querySelector('.product__title').textContent = product.name;
-                newProductDiv.querySelector(".product__selection").value = product.id;
+                newProductDiv.querySelector('.product__selection').value = product.id;
                 newProductDiv.querySelector('.info-sheet-link').href = product.infoSheetUri;
 
                 // Assemble Top 3 advantages to product head

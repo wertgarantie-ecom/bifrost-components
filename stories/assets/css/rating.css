@@ -15,6 +15,14 @@
 
 }
 
+wg-rating-theme3 {
+    --wertgarantie-rating-font-family: "Open Sans", sans-serif;
+    --wertgarantie-rating-text-color: #2574be;
+    
+    --wertgarantie-rating-stars-font-size: 15px;
+    --wertgarantie-rating-stars-color: orange;
+}
+
 .default {
     --wertgarantie-rating-font-family: "Open Sans", sans-serif;
     --wertgarantie-rating-font-size: 0.7rem;

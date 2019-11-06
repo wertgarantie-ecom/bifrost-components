@@ -1,0 +1,12 @@
+.default-popup {
+    /* general styling */
+    --wertgarantie-popup-font-family: Open Sans;
+    --wertgarantie-popup-background-color: rgb(244, 244, 244);
+
+    /* button colors */
+    --wertgarantie-popup-light-button-background-color: rgb(244, 244, 244);
+    --wertgarantie-popup-light-button-text-color: rgb(32, 32, 32);
+    --wertgarantie-popup-dark-button-background-color: rgb(32, 32, 32);
+    --wertgarantie-popup-dark-button-text-color: rgb(244, 244, 244);
+
+}

@@ -17,14 +17,14 @@ storiesOf('Components|Selection', module)
         })
     .add('external styling 1', () => ` 
         <wertgarantie-policy-selection
-            class="mobilcom-theme"
+            class="example-theme1"
             data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/policies"
             data-device-id="1234"
             data-device-price="12"
         >
             <wertgarantie-rating slot="wertgarantie-rating-component" 
                                  data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"
-                                 class="mobilcom-wg-rating-theme"
+                                 class="wg-rating-theme1"
             >
             </wertgarantie-rating>
         </wertgarantie-policy-selection> `, { 
@@ -32,7 +32,7 @@ storiesOf('Components|Selection', module)
         })
     .add('external styling 2', () => ` 
         <wertgarantie-policy-selection
-            class="jura-theme"
+            class="example-theme2"
             data-title="Unser <strong>Komplettschutz</strong> für den Schadensfall"
             data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/policies"
             data-device-id="1234"
@@ -41,7 +41,7 @@ storiesOf('Components|Selection', module)
             <wertgarantie-rating slot="wertgarantie-rating-component" 
                                  data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"
                                  data-show-rating-number="false"
-                                 class="jura-wg-rating-theme"
+                                 class="wg-rating-theme2"
             >
             </wertgarantie-rating>
         </wertgarantie-policy-selection> `, { 

@@ -1,4 +1,4 @@
-.mobilcom-theme {
+.example-theme1{
     --wertgarantie-selection-font-family: qtype, Helvetica, Arial, sans-serif;
 
     --wertgarantie-selection-container-max-width: 570px;
@@ -39,7 +39,7 @@
 }
 
 
-.jura-theme {
+.example-theme2 {
     --wertgarantie-selection-container-max-width: 500px;
     --wertgarantie-selection-container-font-weight: 400;
     --wertgarantie-selection-container-font-size: 15px;

@@ -1,7 +1,7 @@
 {
-  "name": "midgard-component-lib",
+  "name": "bifrost-components",
   "version": "1.0.0",
-  "description": "midgard component lib",
+  "description": "wertgarantie cross selling web components",
   "main": "index.js",
   "scripts": {
     "test": "nightwatch",
@@ -26,7 +26,7 @@
     "faucet-pipeline-jsmin": "2.0.8",
     "lerna": "3.18.3",
     "live-server": "1.2.1",
-    "nightwatch": "^1.2.4",
+    "nightwatch": "1.2.4",
     "storybook-readme": "^5.0.8"
   },
   "browserslist": [

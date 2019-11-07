@@ -35,14 +35,14 @@ Here is an example code:
 ```
 <wertgarantie-policy-selection
     class="{your-class-name}"
-    data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/policies"
+    data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/policies"
     data-device-id="1234"
     data-device-price="12">
 
     <wertgarantie-rating 
         slot="wertgarantie-rating-component" 
         class="{your-class-name}"
-        data-fetch-uri="https://midgard-bff.herokuapp.com/wertgarantie/rating">
+        data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating">
     </wertgarantie-rating>
 </wertgarantie-policy-selection>
 ```

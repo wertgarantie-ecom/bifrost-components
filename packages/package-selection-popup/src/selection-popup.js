@@ -454,7 +454,7 @@
             // setup event listeners
             this.closeBtn.addEventListener('click', this.close);
             this.detailsBtn.addEventListener('click', this.expandDetailsSections);
-                
+
             this._upgradeProperty('deviceClass');
             this._upgradeProperty('devicePrice');
 
@@ -494,8 +494,8 @@
                 if (!(data.name && data.detailsDocText && data.detailsDocUri && data.advantages && data.top_3
                     && data.excludedAdvantages && data.infoSheetUri && data.infoSheetText && data.paymentInterval
                     && data.price && data.currency && data.priceFormatted && data.tax)) {
-                        isComplete = false;
-                    }
+                    isComplete = false;
+                }
             });
             if (!isComplete) {
                 this.remove();
@@ -507,7 +507,7 @@
         async fetchPolicy({fetchUri, devicePrice, deviceClass}) {
             if (!(fetchUri && devicePrice && deviceClass)) {
                 this.remove();
-                throw new Error("fetch data incomplete\n" + 
+                throw new Error("fetch data incomplete\n" +
                     "fetchUri: " + fetchUri + "\n" +
                     "devicePrice: " + devicePrice + "\n" +
                     "deviceClass: " + deviceClass
@@ -537,8 +537,8 @@
                 let newProductDiv = document.createElement('div');
                 newProductDiv.classList.add('product');
                 newProductDiv.innerHTML = productTemplate;
-                
-                if(product.imageLink) {
+
+                if (product.imageLink) {
                     newProductDiv.querySelector('.product__head--background').style.setProperty('--image-link', 'url("' + product.imageLink + '")');
                 }
                 // Set alternating light and dark styling for products
@@ -562,7 +562,7 @@
                 product.top_3.forEach(advantage => {
                     const listElement = document.createElement('li');
                     listElement.classList.add('advantage', 'advantage--included');
-                    
+
                     const spanElement = document.createElement('span');
                     spanElement.classList.add('advantage__icon', 'advantage__icon--included');
                     spanElement.textContent = advantage;
@@ -576,7 +576,7 @@
                 product.excludedAdvantages.forEach(excludedAdvantage => {
                     const listElement = document.createElement('li');
                     listElement.classList.add('advantage', 'advantage--excluded');
-                    
+
                     const spanElement = document.createElement('span');
                     spanElement.classList.add('advantage__icon', 'advantage__icon--excluded');
                     spanElement.textContent = excludedAdvantage;
@@ -589,7 +589,7 @@
                 product.advantages.forEach(advantage => {
                     const listElement = document.createElement('li');
                     listElement.classList.add('advantage', 'advantage--included');
-                    
+
                     const spanElement = document.createElement('span');
                     spanElement.classList.add('advantage__icon', 'advantage__icon--included');
                     spanElement.textContent = advantage;
@@ -660,8 +660,7 @@
             productDiv.classList.add('product--selected');
             if (idx % 2 === 0) {
                 productDiv.classList.add('product--selected-left');
-            }
-            else {
+            } else {
                 productDiv.classList.add('product--selected-right');
             }
         }
@@ -673,5 +672,6 @@
             productDiv.classList.remove('product--selected-right');
         }
     }
+
     window.customElements.define('wertgarantie-selection-pop-up', WertgarantieSelectionPopUp);
 })();

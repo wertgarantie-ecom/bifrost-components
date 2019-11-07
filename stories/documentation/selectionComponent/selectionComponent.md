@@ -39,17 +39,11 @@ Here is an example code:
     data-device-id="1234"
     data-device-price="12">
 
-    <wertgarantie-rating 
-        slot="wertgarantie-rating-component" 
-        class="{your-class-name}"
-        data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating">
-    </wertgarantie-rating>
 </wertgarantie-policy-selection>
+<script>window.wertgarantieSelectionPopUpOpen()</script>
 ```
-
+Be aware that the selection component is not directly visible (it's even not defined) and must be opened by calling `window.wertgarantieSelectionPopUpOpen()`.
 Notice, that in order to fetch data from the Wertgarantie server, as a shop you need to provide its uri as `data-fetch-uri` as well as the shop's product's price and device id with `data-device-price` and `data-device-id`, so the server can return the insurance product(s).
-
-In order to embed the rating component within the selection component, make sure to set the slot attribute `slot="wertgarantie-rating-component"`. This way, the selection component knows exactly where to put it in the header.
 
 ## Custom Styling
 

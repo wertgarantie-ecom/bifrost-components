@@ -9,34 +9,25 @@
     <title>Selection Pop-Up</title>
 </head>
 <body>
-    <button id="openBtn">Klick mich</button>
+<button id="openBtn">Klick mich</button>
 
-    <!-- data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/dummyPolicies"> -->
-    <wertgarantie-selection-pop-up id="selection"
-    class="default-popup"
-    data-fetch-uri="http://localhost:3000/wertgarantie/dummyPolicies">
-        
-    <!-- data-fetch-uri="http://localhost:3000/wertgarantie/rating" -->
-        <wertgarantie-rating 
-            class="default"
-            data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"
-            data-show-rating-number="false"
-            slot="wertgarantie-rating-component">
-        </wertgarantie-rating>
-    </wertgarantie-selection-pop-up>
+<wertgarantie-selection-pop-up id="selection"
+                               class="default-popup"
+                               data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/dummyPolicies">
+</wertgarantie-selection-pop-up>
 
 
-    <script>
-        var selection = document.querySelector("#selection");
-        selection.devicePrice = 1000;
-        selection.deviceClass = "1dfd4549-9bdc-4285-9047-e5088272dade";
+<script>
+    var selection = document.querySelector("#selection");
+    selection.devicePrice = 1000;
+    selection.deviceClass = "1dfd4549-9bdc-4285-9047-e5088272dade";
 
-        var openBtn = document.querySelector('#openBtn');
-        openBtn.addEventListener('click', () => {
-            selection.open();
-        })
-    </script>
-    <script src="../../packages/package-rating/src/rating.js"></script>
-    <script src="../../packages/package-selection-popup/src/selection-popup.js"></script>
+    var openBtn = document.querySelector('#openBtn');
+    openBtn.addEventListener('click', () => {
+        window.wertgarantieSelectionPopUpOpen();
+    })
+</script>
+<script src="../../packages/package-rating/src/rating.js"></script>
+<script src="../../packages/package-selection-popup/src/selection-popup.js"></script>
 </body>
 </html>

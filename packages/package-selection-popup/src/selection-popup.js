@@ -334,7 +334,11 @@
             <div class="head">
                 <div class="head__left">
                     <strong class="head__title">Wird oft dazugebucht</strong>
-                    <slot name="wertgarantie-rating-component"></slot>
+                    <wertgarantie-rating 
+                        class="wg-rating-default"
+                        data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"
+                        data-show-rating-number="false">
+                    </wertgarantie-rating>
                 </div>
                 <div class="head__right">
                     <span class="closeBtn" id="closeBtn">&times;</span>
@@ -352,13 +356,6 @@
                     <a target="_blank" href="https://www.certipedia.com/quality_marks/9105052129"><img class="award-image" src="https://www.wertgarantie.de/portaldata/4/resources/Icons/tuev-logo.png" alt="tuev-logo"></a>
                     <a target="_blank" href="https://www.wertgarantie.de/Home.aspx#"><img class="award-image" src="https://www.wertgarantie.de/Portaldata/4/Resources/logos/test-bild-wertgarantie-109-01.png" alt="test-bild"></a>
                 </div>
-                <section>
-                    <wertgarantie-rating 
-                        class="wg-rating-default"
-                        data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"
-                        data-show-rating-number="false">
-                    </wertgarantie-rating>
-                </section>
             </section>
             <section class="button-section">
                 <div>
@@ -570,7 +567,7 @@
                     listElement.appendChild(spanElement);
 
                     newProductDiv.querySelector('.product__advantages--top3').appendChild(listElement);
-                })
+                });
 
                 // Assemble Product Details
                 product.excludedAdvantages.forEach(excludedAdvantage => {
@@ -584,7 +581,7 @@
                     listElement.appendChild(spanElement);
 
                     newProductDiv.querySelector('.product__advantages--details').appendChild(listElement);
-                })
+                });
 
                 product.advantages.forEach(advantage => {
                     const listElement = document.createElement('li');
@@ -597,7 +594,7 @@
                     listElement.appendChild(spanElement);
 
                     newProductDiv.querySelector('.product__advantages--details').appendChild(listElement);
-                })
+                });
 
                 newProductDiv.querySelector('.wg-product-info-sheet').setAttribute('href', product.infoSheetUri);
                 newProductDiv.querySelector('.wg-avb').setAttribute('href', product.detailsDocUri);
@@ -673,5 +670,12 @@
         }
     }
 
-    window.customElements.define('wertgarantie-selection-pop-up', WertgarantieSelectionPopUp);
+    window.wertgarantieSelectionPopUpOpen = () => {
+        const name = 'wertgarantie-selection-pop-up';
+        if (customElements.get(name)) {
+            document.querySelector(name).open();
+        } else {
+            customElements.define(name, WertgarantieSelectionPopUp);
+        }
+    }
 })();

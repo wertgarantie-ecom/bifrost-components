@@ -1,6 +1,5 @@
-.default-popup {
+.example1 {
     /* general styling */
-    --wertgarantie-popup-font-family: Open Sans;
     --wertgarantie-popup-background-color: rgb(244, 244, 244);
 
     /* button colors */
@@ -9,4 +8,54 @@
     --wertgarantie-popup-dark-button-background-color: rgb(32, 32, 32);
     --wertgarantie-popup-dark-button-text-color: rgb(244, 244, 244);
 
+    /* background image color fading for every second product */
+    --wertgarantie-popup-product-background-even:
+        linear-gradient(to bottom right, rgba(0,0,0,0), #000),
+        linear-gradient(to top right, #006EFF, rgba(81,61,61,0));
+
+    /* background image color fading for every second product */
+    --wertgarantie-popup-product-background-odd:
+        linear-gradient(to bottom right, rgba(81,61,61,0), rgba(255, 145, 0, 0.6)),
+        linear-gradient(to top right, rgba(0,0,0,0), #000);
+
+    /* text color of advantages that are included and excluded */ 
+    --wertgarantie-selection-advantage-included-text-color: inherit;
+    --wertgarantie-selection-advantage-excluded-text-color: rgb(161, 161, 161);
+}
+
+.example2 {
+    /* general styling */
+    --wertgarantie-popup-font-family: Tahoma, Geneva, sans-serif;
+    --wertgarantie-popup-background-color: rgb(213, 214, 116);
+
+    /* button colors */
+    --wertgarantie-popup-light-button-background-color: rgb(254, 255, 208);
+    --wertgarantie-popup-light-button-text-color: rgb(37, 37, 37);
+    --wertgarantie-popup-dark-button-background-color: rgb(37, 37, 37);
+    --wertgarantie-popup-dark-button-text-color: rgb(254, 255, 208);
+
+    /* background image color fading for every second product */
+    --wertgarantie-popup-product-background-even:
+        linear-gradient(to bottom right, rgba(0,0,0,0), #000),
+        linear-gradient(to top right, rgb(192, 137, 17), rgba(81,61,61,0));
+
+    /* background image color fading for every second product */
+    --wertgarantie-popup-product-background-odd:
+        linear-gradient(to bottom right, rgba(81,61,61,0), rgba(190, 70, 0, 0.6)),
+        linear-gradient(to top right, rgba(0,0,0,0), #000);
+
+    /* text color of advantages that are included and excluded */ 
+    --wertgarantie-selection-advantage-included-text-color: inherit;
+    --wertgarantie-selection-advantage-excluded-text-color: rgb(180, 180, 147);
+}
+
+.example-button {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 15px;
+    cursor: pointer;
+    background: none;
+    outline: none;
+    padding: 1.5em 3em 1.5em 3em;
+    border: 2px solid var(--wertgarantie-popup-dark-button-background-color, rgb(32, 32, 32));
+    transition: all 0.4s;
 }

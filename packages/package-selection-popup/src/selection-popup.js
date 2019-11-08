@@ -9,7 +9,7 @@
         }
 
         .modal {
-            // display: none;
+            display: none;
             width: 100%;
             height: 100%;
             position: absolute;
@@ -77,7 +77,6 @@
         .products {
             display: flex;
             position: relative;
-            padding-bottom: 1em;
         }
 
         .product {
@@ -91,20 +90,20 @@
         }
         
         .product__head--background-even {
-            --image-link: linear-gradient(to top right, #006EFF, rgba(81,61,61,0));
+            --image-link-even: linear-gradient(to top right, #006EFF, rgba(81,61,61,0));
             background-image: var(--wertgarantie-popup-product-background-even, 
                 linear-gradient(to bottom right, rgba(0,0,0,0), #000),
                 linear-gradient(to top right, #006EFF, rgba(81,61,61,0))),
-                var(--image-link);
+                var(--image-link-even);
             background-size: cover;
         }
 
         .product__head--background-odd {
-            --image-link: linear-gradient(to top right, rgba(0,0,0,0), #000);
+            --image-link-odd: linear-gradient(to top right, rgba(0,0,0,0), #000);
             background-image: var(--wertgarantie-popup-product-background-odd,
                 linear-gradient(to bottom right, rgba(81,61,61,0), rgba(255, 145, 0, 0.6)),
                 linear-gradient(to top right, rgba(0,0,0,0), #000)),
-                var(--image-link);
+                var(--image-link-odd);
             background-size: cover;
         }
 
@@ -118,7 +117,7 @@
         .product--selected-left {
             margin-right: -10%;
         }
-
+        
         .product--selected-right {
             margin-left: -10%;
         }
@@ -191,7 +190,7 @@
             padding-top: 5em;
             max-width: 75%;
             text-transform: uppercase;
-            min-height: 2.5em;
+            min-height: 3em;
         }
 
         .product__advantages {
@@ -205,7 +204,6 @@
         }
 
         .product__details {
-            padding: 0 3em 0.7em 3em;
             visibility: hidden;
             opacity: 0;
             max-height: 0;
@@ -264,18 +262,17 @@
             max-height: 100%;
             transition: all 0.6s;
             transform: scaleY(1);
+            padding: 0 3em 1.7em 3em;
         }
 
         .product__terms {
             margin-top: 3em;
             font-size: 0.8em;
-            display: flex;
         }
 
         .product-further-info {
-            padding-left: 3em;
-            position: absolute;
-            bottom: 0;
+            text-align: center;
+            padding-top: 1em;
         }
 
         .wg-link {
@@ -304,11 +301,12 @@
         }
 
         .button {
+            font-family: var(--wertgarantie-popup-font-family, Arial, Helvetica), sans-serif;
+            font-size: 0.9em;
             cursor: pointer;
             background: none;
             outline: none;
             padding: 1.5em 3em 1.5em 3em;
-            font-size: 0.9em;
             border: 2px solid var(--wertgarantie-popup-dark-button-background-color, rgb(32, 32, 32));
             transition: all 0.4s;
         }
@@ -325,6 +323,15 @@
 
         .order-button {
             display: none;
+        }
+
+        .wg-rating-default {
+            --wertgarantie-rating-font-family: var(--wertgarantie-embedded-rating-font-family, "Open Sans", sans-serif);
+            --wertgarantie-rating-font-size: 0.7rem;
+            --wertgarantie-rating-text-color: rgb(134, 134, 134);
+            
+            --wertgarantie-rating-stars-font-size: 15px;
+            --wertgarantie-rating-stars-color: orange;
         }
 
     </style>
@@ -398,13 +405,13 @@
             <ul class="product__advantages product__advantages--details">
             </ul>
             <div class="product__terms">
-                <div class="box--left">
+                <div>
                     <p><strong>Bedingungen</strong></p>
                     <a class="wg-link wg-infosheet-link wg-product-info-sheet" href="http://www.example.com">Informationsblatt zu Versicherungsprodukten</a><br/>
                     <a class="wg-link wg-infosheet-link wg-avb" href="http://www.example.com">Allgemeine Versicherungsbedingungen</a>
                 </div>
-                <div class="box--right">
-                    <p class="product-further-info"><strong>Mehr zum <a target="_blank" class="wg-link info-sheet-link">Produkt</a> und der <a target="_blank" class="wg-link" href="http://www.example.com/">Wertgarantie</a>.</strong></p>
+                <div style="text-align: center; padding-top: 1em;">
+                    <p><strong>Mehr zum <a target="_blank" class="wg-link info-sheet-link">Produkt</a> und der <a target="_blank" class="wg-link" href="http://www.example.com/">Wertgarantie</a>.</strong></p>
                 </div>
             </div>
         </div>
@@ -535,15 +542,16 @@
                 newProductDiv.classList.add('product');
                 newProductDiv.innerHTML = productTemplate;
 
-                if (product.imageLink) {
-                    newProductDiv.querySelector('.product__head--background').style.setProperty('--image-link', 'url("' + product.imageLink + '")');
-                }
                 // Set alternating light and dark styling for products
                 if (idx % 2 === 0) {
-                    newProductDiv.classList.add('product--light');
+                    if(product.imageLink) {
+                        newProductDiv.querySelector('.product__head--background').style.setProperty('--image-link-even', 'url("' + product.imageLink + '")');
+                    }
                     newProductDiv.querySelector('.product__head--background').classList.add('product__head--background-even');
                 } else {
-                    newProductDiv.classList.add('product--dark');
+                    if(product.imageLink) {
+                        newProductDiv.querySelector('.product__head--background').style.setProperty('--image-link-odd', 'url("' + product.imageLink + '")');
+                    }
                     newProductDiv.querySelector('.product__head--background').classList.add('product__head--background-odd');
                 }
 

@@ -4,7 +4,6 @@ import '../packages/package-selection-popup/src/selection-popup.js';
 import './displayPopUp.js';
 
 import PopupReadme from './documentation/popupComponent/popupComponent.md';
-import ExternalStylingReadme from './documentation/popupComponent/externalStylingReadme.md';
 
 import showdown from 'showdown';
 

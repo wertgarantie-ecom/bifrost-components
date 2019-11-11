@@ -37,7 +37,7 @@
   ],
   "dependencies": {
     "npm-cli-login": "^0.1.1",
-    "showdown": "^1.9.0",
+    "showdown": "^1.9.1",
     "wertgarantie-rating": "file:packages/package-rating",
     "wertgarantie-selection-embedded": "file:packages/package-selection-embedded",
     "wertgarantie-selection-popup": "file:packages/package-selection-popup"

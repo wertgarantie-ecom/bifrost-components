@@ -455,7 +455,8 @@
             this.modal.style.display = 'none';
         }
 
-        connectedCallback() {
+
+        initComponent(configuredData) {
             // setup event listeners
             this.closeBtn.addEventListener('click', this.close);
             this.detailsBtn.addEventListener('click', this.expandDetailsSections);
@@ -473,6 +474,9 @@
             addIfDefined(fetchData, 'fetchUri', this.getAttribute('data-fetch-uri'));
 
             this.fetchPolicy(fetchData)
+                .then(fetchedData => {
+                    return {...fetchedData, ...configuredData};
+                })
                 .then(this.allDisplayDataAvailable) // check if display data is complete
                 .then(this.setupDisplay);
         }
@@ -679,12 +683,18 @@
         }
     }
 
-    window.wertgarantieSelectionPopUpOpen = () => {
+    window.wertgarantieSelectionPopUpOpen = (configuredData = {}) => {
         const name = 'wertgarantie-selection-pop-up';
-        if (customElements.get(name)) {
-            document.querySelector(name).open();
-        } else {
+        if (!customElements.get(name)) {
             customElements.define(name, WertgarantieSelectionPopUp);
+            customElements.whenDefined(name).then(() => {
+                const popup = document.querySelector(name);
+                popup.initComponent(configuredData);
+                popup.open();
+            });
+        } else {
+            const popup = document.querySelector(name);
+            popup.open();
         }
     }
 })();

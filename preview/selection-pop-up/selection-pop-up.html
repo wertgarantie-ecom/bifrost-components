@@ -24,7 +24,46 @@
 
     var openBtn = document.querySelector('#openBtn');
     openBtn.addEventListener('click', () => {
-        window.wertgarantieSelectionPopUpOpen();
+        const data = {
+            "title":
+                "Vergessen Sie nicht Ihren Rundumschutz", "products":
+                [{
+                    "id": 11,
+                    "name": "Schutzpaket Basis",
+                    "top_3": ["Für private und berufliche Nutzung", "Unsachgemäße Handhabung", "Weltweiter Schutz"],
+                    "advantages": ["Volle Kostenübernahme bei Reparaturen (inkl. Fall- und Sturzschäden, Displaybrücken und Bruchschäden, Bedienfehlern, Motor-Lagerschäden, Wasserschäden, Elektronikschäden, Verkalkung, Verschleiß, uvm.)", "Bei Totalschaden zählt der Zeitwert", "Für private und berufliche Nutzung", "Weltweiter Schutz", "Geräte bis 12 Monate nach Kaufdatum gelten als Neugeräte", "Unsachgemäße Handhabung (beispielsweise durch abweichende Benutzung von der Gebrauchsanwendung)"],
+                    "excludedAdvantages": ["Cyberschutz bei Missbrauch von Online-Accounts und Zahlungsdaten", "Diebstahlschutz", "Keine Selbstbeteiligung im Schadensfall", "einfacher Diebstahl"],
+                    "infoSheetText": "Informationsblatt für Versicherungsprodukte",
+                    "infoSheetUri": "https://stage-api.wertgarantie.com/download/b5cf7159-264e-4f0a-a6df-485f62afb814",
+                    "detailsDocText": "Allgemeine Versicherungsbedingungen",
+                    "detailsDocUri": "https://stage-api.wertgarantie.com/download/76c4e67c-89bf-4bd4-a1d2-b6470ed07629",
+                    "paymentInterval": "monatl.",
+                    "price": "9,95",
+                    "currency": "€",
+                    "priceFormatted": "ab 9,95 €",
+                    "tax": "1,59",
+                    "taxFormatted": "(inkl. 1,59€ VerSt**)",
+                    "imageLink": "https://wertgarantie-bifrost.s3.eu-central-1.amazonaws.com/utah-mountain-biking-bike-biking-71104.jpeg"
+                }, {
+                    "id": 14,
+                    "name": "Schutzpaket Premium inkl. Diebstahlschutz",
+                    "top_3": ["Schutz vor Diebstahl", "Schutz vor Displaybrücken", "Schutz vor Wasserschäden"],
+                    "advantages": ["Cyberschutz bei Missbrauch von Online-Accounts und Zahlungsdaten", "Diebstahlschutz", "Keine Selbstbeteiligung im Schadensfall", "Volle Kostenübernahme bei Reparaturen (inkl. Fall- und Sturzschäden, Displaybrücken und Bruchschäden, Bedienfehlern, Motor-Lagerschäden, Wasserschäden, Elektronikschäden, Verkalkung, Verschleiß, uvm.)", "Bei Totalschaden zählt der Zeitwert", "Für private und berufliche Nutzung", "Weltweiter Schutz", "Geräte bis 12 Monate nach Kaufdatum gelten als Neugeräte", "Unsachgemäße Handhabung (beispielsweise durch abweichende Benutzung von der Gebrauchsanwendung)", "einfacher Diebstahl"],
+                    "excludedAdvantages": [],
+                    "infoSheetText": "Informationsblatt für Versicherungsprodukte",
+                    "infoSheetUri": "https://stage-api.wertgarantie.com/download/b17f85d5-58c1-416c-869f-85ff572afd9c",
+                    "detailsDocText": "Allgemeine Versicherungsbedingungen",
+                    "detailsDocUri": "https://stage-api.wertgarantie.com/download/49b77b3d-a949-4fa9-8c51-34edadfa959d",
+                    "paymentInterval": "monatl.",
+                    "price": "11,95",
+                    "currency": "€",
+                    "priceFormatted": "ab 11,95 €",
+                    "tax": "1,91",
+                    "taxFormatted": "(inkl. 1,91€ VerSt**)",
+                    "imageLink": "https://wertgarantie-bifrost.s3.eu-central-1.amazonaws.com/eBike-HP.jpeg"
+                }]
+        };
+        window.wertgarantieSelectionPopUpOpen(data);
     })
 </script>
 <script src="../../packages/package-rating/src/rating.js"></script>

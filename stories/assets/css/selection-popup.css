@@ -7,6 +7,8 @@
     --wertgarantie-popup-light-button-text-color: rgb(32, 32, 32);
     --wertgarantie-popup-dark-button-background-color: rgb(32, 32, 32);
     --wertgarantie-popup-dark-button-text-color: rgb(244, 244, 244);
+    --wertgarantie-popup-dark-disabled-button-background-color: rgb(100, 100, 100);
+    --wertgarantie-popup-dark-disabled-button-text-color: rgb(220, 220, 220);
 
     /* background image color fading for every second product */
     --wertgarantie-popup-product-background-even:
@@ -33,7 +35,9 @@
     --wertgarantie-popup-light-button-text-color: rgb(37, 37, 37);
     --wertgarantie-popup-dark-button-background-color: rgb(37, 37, 37);
     --wertgarantie-popup-dark-button-text-color: rgb(254, 255, 208);
-
+    
+    --wertgarantie-popup-dark-disabled-button-background-color: rgb(100, 100, 100);
+    --wertgarantie-popup-dark-disabled-button-text-color: rgb(220, 220, 220);
     /* background image color fading for every second product */
     --wertgarantie-popup-product-background-even:
         linear-gradient(to bottom right, rgba(0,0,0,0), #000),

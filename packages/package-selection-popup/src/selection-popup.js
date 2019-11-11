@@ -322,8 +322,10 @@
             color: var(--wertgarantie-popup-light-button-text-color, rgb(32, 32, 32));
         }
 
-        .order-button {
-            display: none;
+        .order-button--inactive {
+            background-color: var(--wertgarantie-popup-dark-disabled-button-background-color, rgb(100, 100, 100));
+            color: var(--wertgarantie-popup-dark-disabled-button-text-color, rgb(220, 220, 220));
+            border: 2px solid var(--wertgarantie-popup-disabled-dark-button-background-color, rgb(100, 100, 100));
         }
 
         .wg-rating-default {
@@ -371,7 +373,7 @@
                 </div>
                 <div>
                     <button class="button button--light" id="cancelOrder">Ich möchte nicht absichern</button>
-                    <button class="button button--dark order-button" id="orderBtn">Beides in den Warenkorb</button>
+                    <button class="button button--dark order-button--inactive" id="orderBtn">Beides in den Warenkorb</button>
                 </div>
             </section>
         </div>
@@ -431,6 +433,7 @@
             this.productDetailsFooter = this.shadowRoot.querySelector('.product__details-footer');
             this.orderBtn = this.shadowRoot.querySelector('#orderBtn');
 
+            this.initialized = false;
             // method binding:
             this.allDisplayDataAvailable = this.allDisplayDataAvailable.bind(this);
             this.setupDisplay = this.setupDisplay.bind(this);
@@ -460,6 +463,8 @@
             // setup event listeners
             this.closeBtn.addEventListener('click', this.close);
             this.detailsBtn.addEventListener('click', this.expandDetailsSections);
+            this.orderBtn.disabled = true;
+            this.orderBtn.addEventListener('click', () => console.log('Order button has been klicked'));
 
             this._upgradeProperty('deviceClass');
             this._upgradeProperty('devicePrice');
@@ -479,6 +484,8 @@
                 })
                 .then(this.allDisplayDataAvailable) // check if display data is complete
                 .then(this.setupDisplay);
+            
+            this.initialized = true;
         }
 
         expandDetailsSections() {
@@ -620,7 +627,8 @@
                         this.restoreHighlighting(newProductDiv);
                     } else {
                         newProductDiv.querySelector(".product__selection").checked = true;
-                        this.orderBtn.style.display = "inline-block";
+                        this.orderBtn.disabled = false;
+                        this.orderBtn.classList.remove('order-button--inactive')
                         this.highlightProduct(newProductDiv);
                     }
                 });
@@ -661,7 +669,8 @@
                 this.productSection.querySelectorAll('.product').forEach(productDiv => {
                     productDiv.classList.remove('product--unselected');
                 });
-                this.orderBtn.style.display = "none";
+                this.orderBtn.disabled = true;
+                this.orderBtn.classList.add('order-button--inactive')
             }
         }
 
@@ -683,18 +692,18 @@
         }
     }
 
-    window.wertgarantieSelectionPopUpOpen = (configuredData = {}) => {
+    window.wertgarantieSelectionPopUpOpen = (popupId, configuredData = {}) => {
         const name = 'wertgarantie-selection-pop-up';
         if (!customElements.get(name)) {
             customElements.define(name, WertgarantieSelectionPopUp);
-            customElements.whenDefined(name).then(() => {
-                const popup = document.querySelector(name);
-                popup.initComponent(configuredData);
-                popup.open();
-            });
-        } else {
-            const popup = document.querySelector(name);
-            popup.open();
         }
+        customElements.whenDefined(name).then(() => {
+            const popup = document.querySelector(popupId);
+            if (!popup.initialized) {
+                popup.initComponent(configuredData);
+                popup.initialized = true;
+            }
+            popup.open();
+        });
     }
 })();

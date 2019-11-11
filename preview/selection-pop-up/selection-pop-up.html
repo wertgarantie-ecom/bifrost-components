@@ -9,21 +9,27 @@
     <title>Selection Pop-Up</title>
 </head>
 <body>
-<button class="example-button" id="openBtn">Klick mich</button>
+<button class="example-button" id="openBtn1">Klick mich für Beispiel 1</button>
 
-<wertgarantie-selection-pop-up id="selection"
+<wertgarantie-selection-pop-up id="selection1"
+                               class="example1"
+                               data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/dummyPolicies">
+</wertgarantie-selection-pop-up>
+
+<button class="example-button" id="openBtn2">Klick mich für Beispiel 2</button>
+
+<wertgarantie-selection-pop-up id="selection2"
                                class="example2"
                                data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/dummyPolicies">
 </wertgarantie-selection-pop-up>
 
-
 <script>
-    var selection = document.querySelector("#selection");
-    selection.devicePrice = 1000;
-    selection.deviceClass = "1dfd4549-9bdc-4285-9047-e5088272dade";
+    var selection1 = document.querySelector("#selection1");
+    selection1.devicePrice = 1000;
+    selection1.deviceClass = "1dfd4549-9bdc-4285-9047-e5088272dade";
 
-    var openBtn = document.querySelector('#openBtn');
-    openBtn.addEventListener('click', () => {
+    var openBtn1 = document.querySelector('#openBtn1');
+    openBtn1.addEventListener('click', () => {
         const data = {
             "title":
                 "Vergessen Sie nicht Ihren Rundumschutz", "products":
@@ -63,7 +69,16 @@
                     "imageLink": "https://wertgarantie-bifrost.s3.eu-central-1.amazonaws.com/eBike-HP.jpeg"
                 }]
         };
-        window.wertgarantieSelectionPopUpOpen(data);
+        window.wertgarantieSelectionPopUpOpen('#' + selection1.id, data);
+    });
+
+    var selection2 = document.querySelector("#selection2");
+    selection2.devicePrice = 1000;
+    selection2.deviceClass = "1dfd4549-9bdc-4285-9047-e5088272dade";
+
+    var openBtn2 = document.querySelector('#openBtn2');
+    openBtn2.addEventListener('click', () => {
+        window.wertgarantieSelectionPopUpOpen('#' + selection2.id);
     })
 </script>
 <script src="../../packages/package-rating/src/rating.js"></script>

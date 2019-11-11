@@ -205,6 +205,7 @@
 
         .product__details {
             visibility: hidden;
+            overflow: auto;
             opacity: 0;
             max-height: 0;
             transition: all 0.4s;

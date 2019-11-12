@@ -4,7 +4,7 @@
   "description": "wertgarantie cross selling web components",
   "main": "index.js",
   "scripts": {
-    "test": "nightwatch",
+    "test": "npm run build && nightwatch",
     "storybook": "start-storybook -p 6006 -s ./stories/assets/*",
     "login": "npm-cli-login",
     "build-storybook": "build-storybook -s ./stories/assets/*",

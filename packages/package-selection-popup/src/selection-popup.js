@@ -1,4 +1,4 @@
-import '../../package-rating/dist/rating.min.js'
+import '../../package-rating/src/rating.js'
 
 (function () {
     const template = document.createElement('template');

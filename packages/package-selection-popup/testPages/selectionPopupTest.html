@@ -3,33 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../../stories/assets/css/rating.css">
-    <link rel="stylesheet" href="../../stories/assets/css/selection-popup.css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css">
-    <title>Selection Pop-Up</title>
+    <title>Document</title>
+    <link rel="stylesheet" href="../../../stories/assets/css/selection-popup.css">
 </head>
 <body>
-<button class="example-button" id="openBtn1">Klick mich für Beispiel 1</button>
 
-<wertgarantie-selection-pop-up id="selection1"
-                               class="example1"
-                               data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/dummyPolicies">
-</wertgarantie-selection-pop-up>
+    <button id="default-component-button">Default Component</button>
+    <wertgarantie-selection-pop-up id="default-component"
+        data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/dummyPolicies">
+    </wertgarantie-selection-pop-up>
 
-<button class="example-button" id="openBtn2">Klick mich für Beispiel 2</button>
 
-<wertgarantie-selection-pop-up id="selection2"
-                               class="example2"
-                               data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/dummyPolicies">
-</wertgarantie-selection-pop-up>
+    <button id="invalid-fetch-uri-button">Invalid Fetch Uri</button>
+    <wertgarantie-selection-pop-up id="invalid-fetch-uri"
+        class="example1"
+        data-fetch-uri="https://www.google.com">
+    </wertgarantie-selection-pop-up>
 
-<script>
-    var selection1 = document.querySelector("#selection1");
-    selection1.devicePrice = 1000;
-    selection1.deviceClass = "1dfd4549-9bdc-4285-9047-e5088272dade";
 
-    var openBtn1 = document.querySelector('#openBtn1');
-    openBtn1.addEventListener('click', () => {
+    <button id="incomplete-displayData-button">Incomplete display data</button>
+    <wertgarantie-selection-pop-up id="incomplete-displayData"
+        class="example1"
+        data-fetch-uri="https://www.google.com">
+    </wertgarantie-selection-pop-up>
+
+
+    <script src="../dist/selection-popup.min.js"></script>
+    <script>
+        var defaultComponent = document.querySelector("#default-component");
+        defaultComponent.devicePrice = 1000;
+        defaultComponent.deviceClass = "1dfd4549-9bdc-4285-9047-e5088272dade";
+
+        var defaultComponentBtn = document.querySelector('#default-component-button');
+        defaultComponentBtn.addEventListener('click', () => {
+            window.wertgarantieSelectionPopUpOpen('#' + defaultComponent.id);
+        });
+
+
+        var invalidFetchUri = document.querySelector("#invalid-fetch-uri");
+        invalidFetchUri.devicePrice = 1000;
+        invalidFetchUri.deviceClass = "1dfd4549-9bdc-4285-9047-e5088272dade";
+
+        var invalidFetchUriBtn = document.querySelector('#invalid-fetch-uri-button');
+        invalidFetchUriBtn.addEventListener('click', () => {
+            window.wertgarantieSelectionPopUpOpen('#' + invalidFetchUri.id);
+        });
+
         const data = {
             "title":
                 "Vergessen Sie nicht Ihren Rundumschutz", "products":
@@ -61,25 +80,24 @@
                     "detailsDocText": "Allgemeine Versicherungsbedingungen",
                     "detailsDocUri": "https://stage-api.wertgarantie.com/download/49b77b3d-a949-4fa9-8c51-34edadfa959d",
                     "paymentInterval": "monatl.",
-                    "currency": "€",
+                    "price": "11,95",
                     "priceFormatted": "ab 11,95 €",
                     "tax": "1,91",
                     "taxFormatted": "(inkl. 1,91€ VerSt**)",
                     "imageLink": "https://wertgarantie-bifrost.s3.eu-central-1.amazonaws.com/eBike-HP.jpeg"
                 }]
         };
-        window.wertgarantieSelectionPopUpOpen('#' + selection1.id, data);
-    });
 
-    var selection2 = document.querySelector("#selection2");
-    selection2.devicePrice = 1000;
-    selection2.deviceClass = "1dfd4549-9bdc-4285-9047-e5088272dade";
+        var incompletedisplayData = document.querySelector("#incomplete-displayData");
+        incompletedisplayData.devicePrice = 1000;
+        incompletedisplayData.deviceClass = "1dfd4549-9bdc-4285-9047-e5088272dade";
 
-    var openBtn2 = document.querySelector('#openBtn2');
-    openBtn2.addEventListener('click', () => {
-        window.wertgarantieSelectionPopUpOpen('#' + selection2.id);
-    })
-</script>
-<script src="../../packages/package-selection-popup/dist/selection-popup.min.js"></script>
+        var incompletedisplayDataBtn = document.querySelector('#incomplete-displayData-button');
+        incompletedisplayDataBtn.addEventListener('click', () => {
+            window.wertgarantieSelectionPopUpOpen('#' + incompletedisplayData.id, data);
+        });
+
+
+    </script>
 </body>
 </html>

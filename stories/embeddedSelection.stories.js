@@ -5,7 +5,7 @@ import selectionComponent from './documentation/selectionComponent/selectionComp
 
 /* Selection Component */
 
-storiesOf('Components|Selection', module)
+storiesOf('Components|Embedded Selection', module)
     .add('default styling', () => ` 
         <wertgarantie-policy-selection
             data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/policies"

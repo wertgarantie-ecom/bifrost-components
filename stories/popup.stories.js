@@ -1,5 +1,4 @@
 import {storiesOf} from '@storybook/html';
-import '../packages/package-rating/src/rating.js';
 import '../packages/package-selection-popup/src/selection-popup.js';
 
 import PopupReadme from './documentation/popupComponent/popupComponent.md';

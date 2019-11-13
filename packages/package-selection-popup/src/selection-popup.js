@@ -1,4 +1,4 @@
-import '../../package-rating/src/rating.js'
+import '../../package-rating/dist/rating.min.js'
 
 (function () {
     const template = document.createElement('template');
@@ -328,6 +328,7 @@ import '../../package-rating/src/rating.js'
             background-color: var(--wertgarantie-popup-dark-disabled-button-background-color, rgb(100, 100, 100));
             color: var(--wertgarantie-popup-dark-disabled-button-text-color, rgb(220, 220, 220));
             border: 2px solid var(--wertgarantie-popup-disabled-dark-button-background-color, rgb(100, 100, 100));
+            opacity: 0.5;
         }
 
         .wg-rating-default {
@@ -460,7 +461,6 @@ import '../../package-rating/src/rating.js'
             this.modal.style.display = 'none';
         }
 
-
         initComponent(configuredData) {
             // setup event listeners
             this.closeBtn.addEventListener('click', this.close);
@@ -508,13 +508,17 @@ import '../../package-rating/src/rating.js'
 
         allDisplayDataAvailable(displayData) {
             let isComplete = true;
-            displayData.products.forEach(data => {
-                if (!(data.name && data.detailsDocText && data.detailsDocUri && data.advantages && data.top_3
-                    && data.excludedAdvantages && data.infoSheetUri && data.infoSheetText && data.paymentInterval
-                    && data.price && data.currency && data.priceFormatted && data.tax)) {
-                    isComplete = false;
-                }
-            });
+            if (Object.entries(displayData).length === 0 && displayData.constructor === Object) {
+                isComplete = false;
+            } else {
+                displayData.products.forEach(data => {
+                    if (!(data.name && data.detailsDocText && data.detailsDocUri && data.advantages && data.top_3
+                        && data.excludedAdvantages && data.infoSheetUri && data.infoSheetText && data.paymentInterval
+                        && data.price && data.currency && data.priceFormatted && data.tax)) {
+                        isComplete = false;
+                    }
+                });
+            }
             if (!isComplete) {
                 this.remove();
                 throw new Error("display data incomplete");
@@ -701,11 +705,13 @@ import '../../package-rating/src/rating.js'
         }
         customElements.whenDefined(name).then(() => {
             const popup = document.querySelector(popupId);
-            if (!popup.initialized) {
-                popup.initComponent(configuredData);
-                popup.initialized = true;
+            if (popup) {
+                if (!popup.initialized) {
+                    popup.initComponent(configuredData);
+                    popup.initialized = true;
+                } 
+                popup.open();
             }
-            popup.open();
         });
     }
 })();

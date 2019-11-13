@@ -140,6 +140,7 @@
             }
         }
     }
-
-    window.customElements.define('wertgarantie-rating', WertgarantieRating);
+    if (!window.customElements.get('wertgarantie-rating')) {
+        window.customElements.define('wertgarantie-rating', WertgarantieRating);
+    }
 })();

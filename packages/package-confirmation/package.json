@@ -1,0 +1,29 @@
+{
+  "name": "package-confirmation",
+  "version": "0.0.1",
+  "description": "Confirmation component for Wertgarantie e-commerce push",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "faucet --compact",
+    "fingerprint": "faucet --fingerprint",
+    "watch": "faucet -w",
+    "serve": "faucet --liveservice 9999"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/wertgarantie-ecom/bifrost-components.git"
+  },
+  "keywords": [
+    "wertgarantie",
+    "confirmation",
+    "webcomponent",
+    "e-commerce"
+  ],
+  "author": "henning.nobbe@innoq.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wertgarantie-ecom/bifrost-components/issues"
+  },
+  "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme"
+}

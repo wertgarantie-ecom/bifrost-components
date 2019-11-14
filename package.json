@@ -40,6 +40,7 @@
     "showdown": "^1.9.1",
     "wertgarantie-rating": "file:packages/package-rating",
     "wertgarantie-selection-embedded": "file:packages/package-selection-embedded",
-    "wertgarantie-selection-popup": "file:packages/package-selection-popup"
+    "wertgarantie-selection-popup": "file:packages/package-selection-popup",
+    "wertgarantie-confirmation": "file:packages/package-confirmation"
   }
 }

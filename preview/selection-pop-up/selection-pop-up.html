@@ -10,17 +10,24 @@
 </head>
 <body>
 <button class="example-button" id="openBtn1">Klick mich für Beispiel 1</button>
-
+<!-- data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/dummyPolicies" -->
 <wertgarantie-selection-pop-up id="selection1"
                                class="example1"
-                               data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/dummyPolicies">
+                               data-fetch-uri="http://localhost:3000/wertgarantie/dummyPolicies">
 </wertgarantie-selection-pop-up>
 
 <button class="example-button" id="openBtn2">Klick mich für Beispiel 2</button>
-
+<!-- data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/dummyPolicies" -->
 <wertgarantie-selection-pop-up id="selection2"
                                class="example2"
-                               data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/dummyPolicies">
+                               data-fetch-uri="http://localhost:3000/wertgarantie/dummyPolicies">
+</wertgarantie-selection-pop-up>
+
+<button class="example-button" id="openBtn3">Klick mich für Beispiel 3</button>
+<!-- data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/dummyPolicies" -->
+<wertgarantie-selection-pop-up id="selection3"
+                               class="example1"
+                               data-fetch-uri="http://localhost:3000/wertgarantie/dummyPolicies">
 </wertgarantie-selection-pop-up>
 
 <script>
@@ -49,7 +56,7 @@
                     "priceFormatted": "ab 9,95 €",
                     "tax": "1,59",
                     "taxFormatted": "(inkl. 1,59€ VerSt**)",
-                    "imageLink": "https://wertgarantie-bifrost.s3.eu-central-1.amazonaws.com/utah-mountain-biking-bike-biking-71104.jpeg"
+                    "imageLink": "https://wertgarantie-bifrost.s3.eu-central-1.amazonaws.com/Basis.png"
                 }, {
                     "id": 14,
                     "name": "Schutzpaket Premium inkl. Diebstahlschutz",
@@ -66,7 +73,7 @@
                     "priceFormatted": "ab 11,95 €",
                     "tax": "1,91",
                     "taxFormatted": "(inkl. 1,91€ VerSt**)",
-                    "imageLink": "https://wertgarantie-bifrost.s3.eu-central-1.amazonaws.com/eBike-HP.jpeg"
+                    "imageLink": "https://wertgarantie-bifrost.s3.eu-central-1.amazonaws.com/Premium.png"
                 }]
         };
         window.wertgarantieSelectionPopUpOpen('#' + selection1.id, data);
@@ -79,6 +86,15 @@
     var openBtn2 = document.querySelector('#openBtn2');
     openBtn2.addEventListener('click', () => {
         window.wertgarantieSelectionPopUpOpen('#' + selection2.id);
+    })
+
+    var selection3 = document.querySelector("#selection3");
+    selection3.devicePrice = 1000;
+    selection3.deviceClass = "bike";
+
+    var openBtn3 = document.querySelector('#openBtn3');
+    openBtn3.addEventListener('click', () => {
+        window.wertgarantieSelectionPopUpOpen('#' + selection3.id);
     })
 </script>
 <script src="../../packages/package-selection-popup/dist/selection-popup.min.js"></script>

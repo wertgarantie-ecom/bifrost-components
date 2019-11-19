@@ -11,16 +11,19 @@
 <body>
 <button class="example-button" id="openBtn1">Klick mich für Beispiel 1</button>
 
+<!-- data-bifrost-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie" -->
 <wertgarantie-selection-pop-up id="selection1"
                                class="example1"
-                               data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/dummyPolicies">
+                               data-bifrost-uri="http://localhost:3000/wertgarantie"
+                               data-client-id="f1eea02c-f9bd-11e9-a37a-b3513bff18fd">
 </wertgarantie-selection-pop-up>
 
 <button class="example-button" id="openBtn2">Klick mich für Beispiel 2</button>
 
+<!-- data-bifrost-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie" -->
 <wertgarantie-selection-pop-up id="selection2"
                                class="example2"
-                               data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/dummyPolicies">
+                               data-bifrost-uri="http://localhost:3000/wertgarantie">
 </wertgarantie-selection-pop-up>
 
 <script>
@@ -75,6 +78,7 @@
     var selection2 = document.querySelector("#selection2");
     selection2.devicePrice = 1000;
     selection2.deviceClass = "1dfd4549-9bdc-4285-9047-e5088272dade";
+    selection2.clientId = "f1eea02c-f9bd-11e9-a37a-b3513bff18fd";
 
     var openBtn2 = document.querySelector('#openBtn2');
     openBtn2.addEventListener('click', () => {
@@ -82,5 +86,6 @@
     })
 </script>
 <script src="../../packages/package-selection-popup/dist/selection-popup.min.js"></script>
+<!-- <script src="../../packages/package-selection-popup/src/selection-popup.js"></script> -->
 </body>
 </html>

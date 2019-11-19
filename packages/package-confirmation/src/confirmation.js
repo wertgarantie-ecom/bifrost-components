@@ -153,6 +153,16 @@
                 background-size: cover;
             }
 
+            .product__price-info--small {
+                font-size: 0.7em;
+                opacity: 0.7;
+            }
+
+            .product__price-info--strong {
+                font-weight: 700;
+                font-size: 0.9em;
+            }
+
             .product__title {
                 padding-top: 6em;
                 text-transform: uppercase;
@@ -165,6 +175,7 @@
             }
 
             .product__advantage {
+                opacity: 0.8;
                 font-size: 0.8em;
                 padding-top: 0.7em;
             }
@@ -185,10 +196,8 @@
             }
 
             .product-link {
-                font-size: 0.6em;
+                font-size: 0.65em;
             }
-
-            
     
         </style>
 
@@ -252,14 +261,14 @@
                     </div>
                 </div>
                 <div class="confirmation__footer">
-                    <p><strong>Mehr zum <a target="_blank" class="wg-link">Produkt</a> und der <a target="_blank" class="wg-link" href="http://www.example.com/">Wertgarantie</a>.</strong></p>
+                    <strong>Mehr zum <a target="_blank" class="wg-link">Produkt</a> und der <a target="_blank" class="wg-link" href="http://www.example.com/">Wertgarantie</a>.</strong>
                 </div>
             </section>
             <div class="product product--even">
                 <div>
-                    <small>monatlich</small><br/>
-                    <strong>X,XX €</strong><br/>
-                    <small>(inkl. x,xx€ VerSt**)</small>
+                    <span class="product__price-info--small">monatlich</span><br/>
+                    <span class="product__price-info--strong">X,XX €</span><br/>
+                    <span class="product__price-info--small">(inkl. x,xx€ VerSt**)</span>
                 </div>
                 <div>
                     <div class="product__title">Fahrrad Komplettschutz Basis</div>

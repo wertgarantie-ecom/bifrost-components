@@ -18,7 +18,7 @@ module.exports = {
             .url("file://" + process.cwd() + "/packages/package-selection-popup/testPages/selectionPopupTest.html")
             .waitForElementVisible('#invalid-fetch-uri-button', 1000)
             .click('#invalid-fetch-uri-button')
-            .pause(1500)
+            .pause(2000)
             .expect.element('#invalid-fetch-uri').not.to.be.present;
     },
     "Should not display popup component with invalid fetch uri": function(browser) {

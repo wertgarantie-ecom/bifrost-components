@@ -12,26 +12,31 @@
 <button class="example-button" id="openBtn1">Klick mich für Beispiel 1</button>
 <wertgarantie-selection-pop-up id="selection1"
                                class="example1"
-                               data-bifrost-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/dummyPolicies">
+                               data-shop-product-name="Phone X"
+                               data-bifrost-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie">
 </wertgarantie-selection-pop-up>
 
 <button class="example-button" id="openBtn2">Klick mich für Beispiel 2</button>
 <wertgarantie-selection-pop-up id="selection2"
                                class="example2"
-                               data-bifrost-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/dummyPolicies">
+                               data-shop-product-name="Phone X"
+                               data-bifrost-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie">
 </wertgarantie-selection-pop-up>
 
 <button class="example-button" id="openBtn3">Klick mich für Beispiel 3</button>
 <wertgarantie-selection-pop-up id="selection3"
                                class="example1"
-                               data-bifrost-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/dummyPolicies">
+                               data-shop-product-name="Bike X"
+                               data-bifrost-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie">
 </wertgarantie-selection-pop-up>
-<!-- data-bifrost-uri="http://localhost:3000/wertgarantie/dummyPolicies"> -->
+<!-- data-bifrost-uri="http://localhost:3000/wertgarantie"> -->
+<!-- data-bifrost-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie"> -->
 
 <script>
     var selection1 = document.querySelector("#selection1");
     selection1.devicePrice = 1000;
     selection1.deviceClass = "1dfd4549-9bdc-4285-9047-e5088272dade";
+    selection1.clientId = "f1eea02c-f9bd-11e9-a37a-b3513bff18fd";
 
     var openBtn1 = document.querySelector('#openBtn1');
     openBtn1.addEventListener('click', () => {
@@ -90,6 +95,7 @@
     var selection3 = document.querySelector("#selection3");
     selection3.devicePrice = 1000;
     selection3.deviceClass = "bike";
+    selection3.clientId = "f1eea02c-f9bd-11e9-a37a-b3513bff18fd";
 
     var openBtn3 = document.querySelector('#openBtn3');
     openBtn3.addEventListener('click', () => {

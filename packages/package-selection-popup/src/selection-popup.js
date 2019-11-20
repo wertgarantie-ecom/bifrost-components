@@ -459,6 +459,10 @@ import '../../package-rating/src/rating.js'
             this.setAttribute("data-client-id", clientId);
         }
 
+        set shopProductName(shopProductName) {
+            this.setAttribute("data-shop-product-name", shopProductName);
+        }
+
         open() {
             this.modal.style.display = 'block';
         }
@@ -471,6 +475,7 @@ import '../../package-rating/src/rating.js'
             this._upgradeProperty('deviceClass');
             this._upgradeProperty('devicePrice');
             this._upgradeProperty('clientId');
+            this._upgradeProperty('shopProductName');
 
             // setup event listeners
             this.closeBtn.addEventListener('click', this.close);
@@ -482,19 +487,12 @@ import '../../package-rating/src/rating.js'
                 if (property) object[name] = property;
             };
 
-            console.log("Initialization:");
-            console.log("----------------------------------------------------");
-            console.log("Price: " + this.getAttribute('data-device-price'));
-            console.log("Class: " + this.getAttribute('data-device-class'));
-            console.log("Bifrost: " + this.getAttribute('data-bifrost-uri'));
-            console.log("ClientId: " + this.getAttribute('data-client-id'));
-            console.log("----------------------------------------------------");
-
             const fetchData = {};
             addIfDefined(fetchData, 'devicePrice', this.getAttribute('data-device-price'));
             addIfDefined(fetchData, 'deviceClass', this.getAttribute('data-device-class'));
             addIfDefined(fetchData, 'bifrostUri', this.getAttribute('data-bifrost-uri'));
             addIfDefined(fetchData, 'clientId', this.getAttribute('data-client-id'));
+            addIfDefined(fetchData, 'shopProductName', this.getAttribute('data-shop-product-name'));
 
             this.fetchPolicy(fetchData)
                 .then(fetchedData => {
@@ -542,14 +540,15 @@ import '../../package-rating/src/rating.js'
             return displayData;
         }
 
-        async fetchPolicy({bifrostUri, devicePrice, deviceClass, clientId}) {
-            if (!(bifrostUri && devicePrice && deviceClass, clientId)) {
+        async fetchPolicy({bifrostUri, devicePrice, deviceClass, clientId, shopProductName}) {
+            if (!(bifrostUri && devicePrice && deviceClass, clientId && shopProductName)) {
                 this.remove();
                 throw new Error("fetch data incomplete\n" +
                     "bifrostUri: " + bifrostUri + "\n" +
                     "clientId: " + clientId + "\n" +
                     "devicePrice: " + devicePrice + "\n" +
-                    "deviceClass: " + deviceClass
+                    "deviceClass: " + deviceClass + "\n" +
+                    "shopProductName: " + shopProductName
                 );
             }
             try {

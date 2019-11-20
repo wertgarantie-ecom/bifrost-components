@@ -443,6 +443,8 @@ import '../../package-rating/src/rating.js'
             this.expandDetailsSections = this.expandDetailsSections.bind(this);
             this.open = this.open.bind(this);
             this.close = this.close.bind(this);
+            this.addProductToOrder = this.addProductToOrder.bind(this);
+            this.getSelectedProduct = this.getSelectedProduct.bind(this);
         }
 
         set devicePrice(devicePrice) {
@@ -451,6 +453,14 @@ import '../../package-rating/src/rating.js'
 
         set deviceClass(deviceClass) {
             this.setAttribute("data-device-class", deviceClass);
+        }
+
+        set clientId(clientId) {
+            this.setAttribute("data-client-id", clientId);
+        }
+
+        set shopProductName(shopProductName) {
+            this.setAttribute("data-shop-product-name", shopProductName);
         }
 
         open() {
@@ -462,23 +472,35 @@ import '../../package-rating/src/rating.js'
         }
 
         initComponent(configuredData) {
+            this._upgradeProperty('deviceClass');
+            this._upgradeProperty('devicePrice');
+            this._upgradeProperty('clientId');
+            this._upgradeProperty('shopProductName');
+
             // setup event listeners
             this.closeBtn.addEventListener('click', this.close);
             this.detailsBtn.addEventListener('click', this.expandDetailsSections);
             this.orderBtn.disabled = true;
-            this.orderBtn.addEventListener('click', () => console.log('Order button has been klicked'));
-
-            this._upgradeProperty('deviceClass');
-            this._upgradeProperty('devicePrice');
+            this.orderBtn.addEventListener('click', this.addProductToOrder);
 
             const addIfDefined = (object, name, property) => {
                 if (property) object[name] = property;
             };
 
+            console.log("Initialization:");
+            console.log("----------------------------------------------------");
+            console.log("Price: " + this.getAttribute('data-device-price'));
+            console.log("Class: " + this.getAttribute('data-device-class'));
+            console.log("Bifrost: " + this.getAttribute('data-bifrost-uri'));
+            console.log("ClientId: " + this.getAttribute('data-client-id'));
+            console.log("----------------------------------------------------");
+
             const fetchData = {};
             addIfDefined(fetchData, 'devicePrice', this.getAttribute('data-device-price'));
             addIfDefined(fetchData, 'deviceClass', this.getAttribute('data-device-class'));
-            addIfDefined(fetchData, 'fetchUri', this.getAttribute('data-fetch-uri'));
+            addIfDefined(fetchData, 'bifrostUri', this.getAttribute('data-bifrost-uri'));
+            addIfDefined(fetchData, 'clientId', this.getAttribute('data-client-id'));
+            addIfDefined(fetchData, 'shopProductName', this.getAttribute('data-shop-product-name'));
 
             this.fetchPolicy(fetchData)
                 .then(fetchedData => {
@@ -526,17 +548,19 @@ import '../../package-rating/src/rating.js'
             return displayData;
         }
 
-        async fetchPolicy({fetchUri, devicePrice, deviceClass}) {
-            if (!(fetchUri && devicePrice && deviceClass)) {
+        async fetchPolicy({bifrostUri, devicePrice, deviceClass, clientId, shopProductName}) {
+            if (!(bifrostUri && devicePrice && deviceClass, clientId && shopProductName)) {
                 this.remove();
                 throw new Error("fetch data incomplete\n" +
-                    "fetchUri: " + fetchUri + "\n" +
+                    "bifrostUri: " + bifrostUri + "\n" +
+                    "clientId: " + clientId + "\n" +
                     "devicePrice: " + devicePrice + "\n" +
-                    "deviceClass: " + deviceClass
+                    "deviceClass: " + deviceClass + "\n" +
+                    "shopProductName: " + shopProductName
                 );
             }
             try {
-                const url = new URL(fetchUri);
+                const url = new URL(bifrostUri + '/dummyPolicies');
                 const queryParams = {
                     devicePrice: devicePrice,
                     deviceClass: deviceClass
@@ -695,6 +719,54 @@ import '../../package-rating/src/rating.js'
             productDiv.classList.remove('product--selected');
             productDiv.classList.remove('product--selected-left');
             productDiv.classList.remove('product--selected-right');
+        }
+
+        async addProductToOrder() {
+            const bifrostUri = this.getAttribute('data-bifrost-uri');
+            const clientId = this.getAttribute('data-client-id');
+            const currency = "EUR"
+            // fetch uri with different path for POST call to set cookie
+            const selectedProduct = this.getSelectedProduct();
+            if (!(bifrostUri && this.getAttribute('data-device-price') && this.getAttribute('data-device-class') && selectedProduct && clientId)) {
+                this.remove();
+                throw new Error("order data incomplete: \n" +
+                    "bifrostUri: " + bifrostUri + "\n" +
+                    "devicePrice: " + this.getAttribute('data-device-price') + "\n" +
+                    "deviceClass: " + this.getAttribute('data-device-class') + "\n" +
+                    "clientId: " + clientId + "\n" +
+                    "selectedProduct: " + selectedProduct
+                );
+            }
+            const queryParams = {
+                devicePrice: this.getAttribute('data-device-price'),
+                deviceClass: this.getAttribute('data-device-class'),
+                productId: selectedProduct,
+                deviceCurrency: currency
+            }
+            try {
+                const response = await fetch(bifrostUri + '/shoppingCart/' + clientId, {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                      'content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(queryParams)
+                });
+                if (response.status !== 200) {
+                    console.error('fetch failed:', response);
+                    return {};
+                }
+                console.log(await response.json());
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        getSelectedProduct() {
+            console.log("Get selected product:");
+            var productId = this.productSection.querySelector('.product--selected').querySelector('.product__selection').value;
+            console.log(productId);
+            return productId;
         }
     }
 

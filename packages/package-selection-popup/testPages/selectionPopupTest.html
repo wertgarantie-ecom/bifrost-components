@@ -10,21 +10,24 @@
 
     <button id="default-component-button">Default Component</button>
     <wertgarantie-selection-pop-up id="default-component"
-        data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/dummyPolicies">
+        data-shop-product-name="Phone X"
+        data-bifrost-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie">
     </wertgarantie-selection-pop-up>
 
 
     <button id="invalid-fetch-uri-button">Invalid Fetch Uri</button>
     <wertgarantie-selection-pop-up id="invalid-fetch-uri"
         class="example1"
-        data-fetch-uri="https://www.google.com">
+        data-shop-product-name="Phone X"
+        data-bifrost-uri="https://www.google.com">
     </wertgarantie-selection-pop-up>
 
 
     <button id="incomplete-displayData-button">Incomplete display data</button>
     <wertgarantie-selection-pop-up id="incomplete-displayData"
         class="example1"
-        data-fetch-uri="https://www.google.com">
+        data-shop-product-name="Phone X"
+        data-bifrost-uri="https://www.google.com">
     </wertgarantie-selection-pop-up>
 
 
@@ -33,6 +36,7 @@
         var defaultComponent = document.querySelector("#default-component");
         defaultComponent.devicePrice = 1000;
         defaultComponent.deviceClass = "1dfd4549-9bdc-4285-9047-e5088272dade";
+        defaultComponent.clientId = "f1eea02c-f9bd-11e9-a37a-b3513bff18fd";
 
         var defaultComponentBtn = document.querySelector('#default-component-button');
         defaultComponentBtn.addEventListener('click', () => {
@@ -43,6 +47,7 @@
         var invalidFetchUri = document.querySelector("#invalid-fetch-uri");
         invalidFetchUri.devicePrice = 1000;
         invalidFetchUri.deviceClass = "1dfd4549-9bdc-4285-9047-e5088272dade";
+        invalidFetchUri.clientId = "f1eea02c-f9bd-11e9-a37a-b3513bff18fd";
 
         var invalidFetchUriBtn = document.querySelector('#invalid-fetch-uri-button');
         invalidFetchUriBtn.addEventListener('click', () => {
@@ -91,6 +96,7 @@
         var incompletedisplayData = document.querySelector("#incomplete-displayData");
         incompletedisplayData.devicePrice = 1000;
         incompletedisplayData.deviceClass = "1dfd4549-9bdc-4285-9047-e5088272dade";
+        incompletedisplayData.clientId = "f1eea02c-f9bd-11e9-a37a-b3513bff18fd";
 
         var incompletedisplayDataBtn = document.querySelector('#incomplete-displayData-button');
         incompletedisplayDataBtn.addEventListener('click', () => {

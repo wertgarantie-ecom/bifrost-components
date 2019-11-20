@@ -487,6 +487,14 @@ import '../../package-rating/src/rating.js'
                 if (property) object[name] = property;
             };
 
+            console.log("Initialization:");
+            console.log("----------------------------------------------------");
+            console.log("Price: " + this.getAttribute('data-device-price'));
+            console.log("Class: " + this.getAttribute('data-device-class'));
+            console.log("Bifrost: " + this.getAttribute('data-bifrost-uri'));
+            console.log("ClientId: " + this.getAttribute('data-client-id'));
+            console.log("----------------------------------------------------");
+
             const fetchData = {};
             addIfDefined(fetchData, 'devicePrice', this.getAttribute('data-device-price'));
             addIfDefined(fetchData, 'deviceClass', this.getAttribute('data-device-class'));

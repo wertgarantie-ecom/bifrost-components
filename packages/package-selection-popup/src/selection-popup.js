@@ -487,14 +487,6 @@ import '../../package-rating/src/rating.js'
                 if (property) object[name] = property;
             };
 
-            console.log("Initialization:");
-            console.log("----------------------------------------------------");
-            console.log("Price: " + this.getAttribute('data-device-price'));
-            console.log("Class: " + this.getAttribute('data-device-class'));
-            console.log("Bifrost: " + this.getAttribute('data-bifrost-uri'));
-            console.log("ClientId: " + this.getAttribute('data-client-id'));
-            console.log("----------------------------------------------------");
-
             const fetchData = {};
             addIfDefined(fetchData, 'devicePrice', this.getAttribute('data-device-price'));
             addIfDefined(fetchData, 'deviceClass', this.getAttribute('data-device-class'));
@@ -727,36 +719,53 @@ import '../../package-rating/src/rating.js'
             const currency = "EUR"
             // fetch uri with different path for POST call to set cookie
             const selectedProduct = this.getSelectedProduct();
-            if (!(bifrostUri && this.getAttribute('data-device-price') && this.getAttribute('data-device-class') && selectedProduct && clientId)) {
+            if (!(bifrostUri && this.getAttribute('data-device-price') && this.getAttribute('data-device-class') && this.getAttribute('data-shop-product-name') && selectedProduct && clientId)) {
                 this.remove();
                 throw new Error("order data incomplete: \n" +
                     "bifrostUri: " + bifrostUri + "\n" +
                     "devicePrice: " + this.getAttribute('data-device-price') + "\n" +
                     "deviceClass: " + this.getAttribute('data-device-class') + "\n" +
                     "clientId: " + clientId + "\n" +
-                    "selectedProduct: " + selectedProduct
+                    "selectedProduct: " + selectedProduct + "\n",
+                    "shopProductName: " + this.getAttribute('data-shop-product-name')
                 );
             }
             const queryParams = {
                 devicePrice: this.getAttribute('data-device-price'),
                 deviceClass: this.getAttribute('data-device-class'),
                 productId: selectedProduct,
-                deviceCurrency: currency
+                deviceCurrency: currency,
+                shopProductName: this.getAttribute('data-shop-product-name')
             }
+            console.log(queryParams);
             try {
                 const response = await fetch(bifrostUri + '/shoppingCart/' + clientId, {
                     method: 'POST',
-                    mode: 'cors',
+                    credentials: 'include',
                     headers: {
                       'content-Type': 'application/json'
                     },
                     body: JSON.stringify(queryParams)
                 });
                 if (response.status !== 200) {
-                    console.error('fetch failed:', response);
+                    console.error('Adding product to shopping cart failed:', response);
                     return {};
                 }
                 console.log(await response.json());
+                document.cookie = "wertgarantie-product-selected=true;path='/'";
+                var fadeTarget = this.modal;
+                var fadeEffect = setInterval(function () {
+                    if (!fadeTarget.style.opacity) {
+                        fadeTarget.style.opacity = 1;
+                    }
+                    if (fadeTarget.style.opacity > 0) {
+                        fadeTarget.style.opacity -= 0.1;
+                    } else {
+                        clearInterval(fadeEffect);
+                        fadeTarget.remove();
+                    }
+                }, 60);
+                
             } catch (error) {
                 console.error('Error:', error);
             }

@@ -26,25 +26,37 @@ Once the JavaScript file is included the following tag is available
 ## Configure the selection popup
 
 ### Fetch Data
-The popup component currently shows data only if a `data-fetch-uri` is set as an attribute. The component will fetch a JSON object from this server.
-It also needs the attributes `deviceClass` and `devicePrice` which can be set via the attributes within the html tag or via JavaScript
+The popup component currently shows data only if a `data-bifrost-uri` is set as an attribute. The component will fetch a JSON object from this server.
+It also needs the following attributes:
+* `data-device-class`
+* `data-device-price`
+* `data-shop-product-name`
+* `data-client-id` (Client ID specifically for the partner shop)
+
+which can be set via the attributes within the html tag or via JavaScript
 ```javascript
 document.querySelector('wertgarantie-selection-pop-up').deviceClass = ${deviceClass};
 document.querySelector('wertgarantie-selection-pop-up').devicePrice = ${devicePrice};
+document.querySelector('wertgarantie-selection-pop-up').shopProductName = ${shopProductName};
+document.querySelector('wertgarantie-selection-pop-up').clientId = ${clientId};
 ```
 
 <button class="example-button" onclick="openPopup('basic-popup')">Click me to see the default popup</button>
 
 <wertgarantie-selection-pop-up 
         id="basic-popup"
-        data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/dummyPolicies"
+        data-bifrost-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie"
+        data-client-id="37382522-d7ce-439a-8d78-abc0a0970cbd"
+        data-shop-product-name="Super Phone"
         data-device-class="1dfd4549-9bdc-4285-9047-e5088272dade"
         data-device-price="800">
 </wertgarantie-selection-pop-up>
 
 ```html
 <wertgarantie-selection-pop-up 
-        data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/dummyPolicies"
+        data-bifrost-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie"
+        data-client-id="37382522-d7ce-439a-8d78-abc0a0970cbd"
+        data-shop-product-name="Super Phone"
         data-device-class="1dfd4549-9bdc-4285-9047-e5088272dade"
         data-device-price="800">
 </wertgarantie-selection-pop-up>
@@ -103,7 +115,9 @@ Provide a css file with the following code:
 
 <wertgarantie-selection-pop-up id="popup-styling-example"
         class="example2"
-        data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/dummyPolicies"
+        data-bifrost-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie"
+        data-client-id="37382522-d7ce-439a-8d78-abc0a0970cbd"
+        data-shop-product-name="Super Phone"
         data-device-class="1dfd4549-9bdc-4285-9047-e5088272dade"
         data-device-price="800">
 </wertgarantie-selection-pop-up>
@@ -111,7 +125,9 @@ Provide a css file with the following code:
 ```html
 <wertgarantie-selection-pop-up
         class="example"
-        data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/dummyPolicies"
+        data-bifrost-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie"
+        data-client-id="37382522-d7ce-439a-8d78-abc0a0970cbd"
+        data-shop-product-name="Super Phone"
         data-device-class="1dfd4549-9bdc-4285-9047-e5088272dade"
         data-device-price="800">
 </wertgarantie-selection-pop-up>

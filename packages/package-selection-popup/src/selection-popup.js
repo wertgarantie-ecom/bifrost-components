@@ -752,7 +752,6 @@ import '../../package-rating/src/rating.js'
                     return {};
                 }
                 console.log(await response.json());
-                document.cookie = "wertgarantie-product-selected=true;path='/'";
                 var fadeTarget = this.modal;
                 var fadeEffect = setInterval(function () {
                     if (!fadeTarget.style.opacity) {

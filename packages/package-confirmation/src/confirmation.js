@@ -17,7 +17,10 @@
             .info {
                 flex: 2;
                 padding: 1em;
-                width: 66%;
+            }
+
+            .product__panel {
+                flex: 1;
             }
 
             .header {
@@ -127,16 +130,19 @@
             }
 
             .product {
-                flex: 1;
-                display: flex;
+                display: none;
                 flex-direction: column;
                 justify-content: space-between;
                 padding: 1em;
                 color: white;
             }
 
+            .product--selected {
+                display: block;
+            }
+
             .product--even {
-                --image-link-even: url('https://wertgarantie-bifrost.s3.eu-central-1.amazonaws.com/utah-mountain-biking-bike-biking-71104.jpeg');
+                --image-link-even: linear-gradient(to top right, #006EFF, rgba(81,61,61,0));
                 background-image: var(--wertgarantie-popup-product-background-even, 
                     linear-gradient(to bottom right, rgba(0,0,0,0), #000),
                     linear-gradient(to top right, #006EFF, rgba(81,61,61,0))),
@@ -175,7 +181,6 @@
             }
 
             .product__advantage {
-                opacity: 0.8;
                 font-size: 0.8em;
                 padding-top: 0.7em;
             }
@@ -212,30 +217,6 @@
                     </div>
                 </div>
                 <div class="product__tabs"> 
-                    <div class="tab tab--selected">
-                        <div>
-                            Fahrrad 1
-                        </div>
-                        <div class="remove-product">
-                            &times;
-                        </div>
-                    </div>
-                    <div class="tab">
-                        <div>
-                            Fahrrad 2
-                        </div>
-                        <div>
-                            &times;
-                        </div>
-                    </div>
-                    <div class="tab">
-                        <div>
-                            Fahrrad 3
-                        </div>
-                        <div>
-                            &times;
-                        </div>
-                    </div>
                 </div>
                 <div class="confirmation__header">
                     Bitte bestätige noch kurz:
@@ -264,42 +245,178 @@
                     <strong>Mehr zum <a target="_blank" class="wg-link">Produkt</a> und der <a target="_blank" class="wg-link" href="http://www.example.com/">Wertgarantie</a>.</strong>
                 </div>
             </section>
-            <div class="product product--even">
-                <div>
-                    <span class="product__price-info--small">monatlich</span><br/>
-                    <span class="product__price-info--strong">X,XX €</span><br/>
-                    <span class="product__price-info--small">(inkl. x,xx€ VerSt**)</span>
-                </div>
-                <div>
-                    <div class="product__title">Fahrrad Komplettschutz Basis</div>
-                    <ul class="product__advantages">
-                        <li class="product__advantage"><span class="advantage__icon"></span>Advantage 1</li>
-                        <li class="product__advantage"><span class="advantage__icon"></span>Advantage 2</li>
-                        <li class="product__advantage"><span class="advantage__icon"></span>Advantage 3</li>
-                    </ul>
-                </div>
-                <div>
-                    <small class="product-link"><a class="wg-link" href="http://www.example.com">Informationsblatt zu Versicherungsprodukten</a></small><br/>
-                    <small class="product-link"><a class="wg-link" href="http://www.example.com">Allgemeine Versicherungsbedingungen</a></small>
-                </div>
+            <div class="product__panel">
             </div>
         </div>
     `;
 
-    // const productTabTemplate = `
-    //     <div>
-    //         Fahrrad Y
-    //     </div>
-    //     <div>
-    //         X
-    //     </div>
-    // `;
+const productTabTemplate = 
+    `<div class="tab__name">
+    </div>
+    <div class="tab__remove">
+        &times;
+    </div>`;
+
+const productDivTemplate = 
+    `<div>
+        <span class="payment-interval product__price-info--small">monatlich</span><br/>
+        <span class="product-price product__price-info--strong">X,XX €</span><br/>
+        <span class="product-tax product__price-info--small">(inkl. x,xx€ VerSt**)</span>
+    </div>
+    <div>
+        <div class="product__title">Fahrrad Komplettschutz Basis</div>
+        <ul class="product__advantages">
+        </ul>
+    </div>
+    <div>
+        <small class="product-link"><a class="wg-link" href="http://www.example.com">Informationsblatt zu Versicherungsprodukten</a></small><br/>
+        <small class="product-link"><a class="wg-link" href="http://www.example.com">Allgemeine Versicherungsbedingungen</a></small>
+    </div>`
 
     class WertgarantieConfirmation extends HTMLElement {
         constructor() {
             super();
             this.attachShadow({mode: 'open'});
             this.shadowRoot.appendChild(template.content.cloneNode(true));
+            // element selectors
+            this.productTabs = this.shadowRoot.querySelector('.product__tabs');
+            this.productPanel = this.shadowRoot.querySelector('.product__panel');
+
+            // method binding
+            this.fetchShoppingCartData = this.fetchShoppingCartData.bind(this);
+            this.productDataAvailable = this.productDataAvailable.bind(this);
+            this.prepareTabs = this.prepareTabs.bind(this);
+            this.fetchProductData = this.fetchProductData.bind(this);
+            this.prepareProductPanels = this.prepareProductPanels.bind(this);
+            this.connectTabsAndProductPanels = this.connectTabsAndProductPanels.bind(this);
+        }
+
+        set clientId(clientId) {
+            this.setAttribute("data-client-id", clientId);
+        }
+
+        set bifrostUri(bifrostUri) {
+            this.setAttribute("data-bifrost-uri", bifrostUri);
+        }
+
+        connectedCallback() {
+            this.fetchShoppingCartData()
+            .then(this.productDataAvailable)
+            .then(this.prepareTabs)
+            .then(this.fetchProductData)
+            .then(this.prepareProductPanels)
+            .then(this.connectTabsAndProductPanels);
+        }
+
+        async fetchShoppingCartData() {
+            try {
+                const response = await fetch(this.getAttribute('data-bifrost-uri') + '/shoppingCart/' + this.getAttribute('data-client-id'), {
+                    method: 'GET',
+                    credentials: 'include'
+                });
+                var responseJson = await response.json();
+                return responseJson;
+            } catch (e) {
+                console.error("Error while fetching shoppingCartData: ", e)
+                return {};
+            }
+        }
+
+        productDataAvailable(fetchedShoppingCart) {
+            if (!fetchedShoppingCart || fetchedShoppingCart.constructor !== Object || Object.entries(fetchedShoppingCart).length === 0) {
+                this.remove();
+                throw new Error("No product selection has been made for this client id")
+            }
+            return fetchedShoppingCart;
+        }
+
+        prepareTabs(fetchedShoppingCart) {
+            fetchedShoppingCart.products.forEach((product, idx) => {
+                // erstelle Tab pro produkt mit Produkt-Namen.
+                const productTab = document.createElement('div');
+                productTab.classList.add('tab');
+                if (idx == 0) {
+                    productTab.classList.add('tab--selected');
+                }
+                productTab.innerHTML = productTabTemplate;
+                productTab.querySelector('.tab__name').innerHTML = product.shopProductName;
+
+                this.productTabs.appendChild(productTab);
+            });
+            return fetchedShoppingCart;
+        }
+
+        async fetchProductData(fetchedShoppingCart) {
+            var products = [];
+            for (var i = 0; i < fetchedShoppingCart.products.length; i++) {
+                var productDetail = await this.fetchProduct(fetchedShoppingCart.products[i]);
+                products.push(productDetail);
+            }
+            return products;
+        }
+
+        prepareProductPanels(products) {
+            products.forEach((product, idx) => {
+                // erstelle product-panel pro produkt mit Versicherungsproduktdaten 
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('product');
+                if (idx === 0) {
+                    productDiv.classList.add('product--selected')
+                }
+                if (idx % 2 === 0) {
+                    productDiv.classList.add('product--even');
+                    productDiv.style.setProperty("--image-link-even", "url('" + product.imageLink + "')");
+                } else {
+                    productDiv.classList.add('product--odd');
+                    productDiv.style.setProperty("--image-link-odd", "url('" + product.imageLink + "')");
+                }
+                productDiv.innerHTML = productDivTemplate;
+                productDiv.querySelector('.payment-interval').textContent = product.paymentInterval;
+                productDiv.querySelector('.product-price').textContent = product.price + product.currency;
+                productDiv.querySelector('.product-tax').textContent = product.taxFormatted;
+
+                productDiv.querySelector('.product__title').textContent = product.name;
+
+                product.top_3.forEach(advantage => {
+                    const listElement = document.createElement('li');
+                    listElement.classList.add('product__advantage');
+                    const spanElement = document.createElement('span');
+                    spanElement.classList.add('advantage__icon');
+                    spanElement.textContent = advantage;
+                    listElement.appendChild(spanElement);
+                    productDiv.querySelector('.product__advantages').appendChild(listElement);
+                })
+                this.productPanel.appendChild(productDiv);
+            });
+        }
+
+        async fetchProduct(product) {
+            const url = new URL(this.getAttribute('data-bifrost-uri')  + '/product');
+            const queryParams = {
+                deviceClass: product.deviceClass,
+                devicePrice: product.devicePrice,
+                productId: product.productId,
+                clientId: this.getAttribute('data-client-id')
+            }
+            Object.keys(queryParams).forEach(key => url.searchParams.append(key, queryParams[key]));
+            const response = await fetch(url);
+            return await response.json();
+        }
+
+        connectTabsAndProductPanels() {
+            var tabs = this.productTabs.querySelectorAll('.tab');
+            var productPanels = this.productPanel.querySelectorAll('.product');
+
+            tabs.forEach((tab, idx) => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach(tab => tab.classList.remove('tab--selected'))
+                    tab.classList.add('tab--selected');
+
+                    productPanels.forEach(panel => panel.classList.remove('product--selected'));
+
+                    productPanels[idx].classList.add('product--selected');
+                })
+            });
         }
     }
 

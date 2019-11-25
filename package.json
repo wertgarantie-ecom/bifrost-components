@@ -24,7 +24,7 @@
     "faucet-pipeline-esnext": "2.0.8",
     "faucet-pipeline-js": "2.0.8",
     "faucet-pipeline-jsmin": "2.0.8",
-    "lerna": "3.18.3",
+    "lerna": "^3.18.3",
     "live-server": "1.2.1",
     "nightwatch": "1.2.4",
     "storybook-readme": "^5.0.8"

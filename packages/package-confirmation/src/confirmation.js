@@ -237,12 +237,15 @@
                         </div>
                         <div class="confirmation__text">
                             Ich akzeptiere die Allgemeinen Versicherungsbedingungen (AVB) und die Bestimmungen zum Datenschutz. 
-                            Das gesetzliche Widerrufsrecht, das Produktinformationsblatt (IPID) und die Vermittler-Erstinformation habe ich zur 
-                            Kenntnis genommen und alle Dokumente heruntergeladen. Mit der Bestätigung der Checkbox erkläre ich mich damit einverstanden, 
-                            dass mir alle vorstehenden Unterlagen an meine E-Mail-Adresse übermittelt werden. Der Übertragung meiner Daten an Wertgarantie 
-                            stimme ich zu. Der Betrag wird separat per Rechnung bezahlt.
+                            Das gesetzliche Widerrufsrecht, das Produktinformationsblatt (IPID) und die Vermittler-Erstinformation 
+                            habe ich zur Kenntnis genommen und alle Dokumente heruntergeladen. Mit der Bestätigung der Checkbox 
+                            erkläre ich mich damit einverstanden, dass mir alle vorstehenden Unterlagen an meine E-Mail-Adresse übermittelt werden. 
+                            Der Übertragung meiner Daten an Wertgarantie stimme ich zu. Der Betrag wird separat per Rechnung bezahlt. 
                         </div>
                     </div>
+                </div>
+                <div class="confirmation__footer">
+                    <strong>Nach dem Kauf erhalten Sie sowohl Ihr Zertifikat als auch die Rechnung der Wertgarantie per E-Mail.</strong>
                 </div>
                 <div class="confirmation__footer">
                     <strong>Mehr zum <a target="_blank" class="wg-link">Produkt</a> und der <a target="_blank" class="wg-link" href="http://www.example.com/">Wertgarantie</a>.</strong>

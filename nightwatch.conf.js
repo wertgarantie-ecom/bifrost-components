@@ -2,6 +2,7 @@ module.exports = {
     "src_folders": [
         "packages/package-rating/tests",
         "packages/package-selection-popup/tests"
+        // "packages/package-confirmation/tests"
     ],
     "webdriver": {
         "start_process": true,

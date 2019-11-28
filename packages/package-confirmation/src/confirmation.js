@@ -82,7 +82,16 @@
                 font-weight: 700;
                 display: flex;
                 justify-content: space-between;
+                vertical-align: middle;
+            }
+            
+            .tab__name {
+                flex: 4;
+            }
+            
+            .tab__remove {
                 cursor: pointer;
+                flex: 0.5;
             }
 
             .tab:hover {
@@ -213,7 +222,7 @@
                         <i class="shield"></i>
                     </div>
                     <div class="header__title">
-                        <span class="header__title__text">Herzlichen Glückwunsch, du hast den bestmöglichen Schutz für dein Bike ausgewählt.</span>
+                        <span class="header__title__text">Herzlichen Glückwunsch, du hast den besten Schutz für deinen Einkauf ausgewählt.</span>
                     </div>
                 </div>
                 <div class="product__tabs"> 
@@ -221,24 +230,18 @@
                 <div class="confirmation__header">
                     Bitte bestätige noch kurz:
                 </div>
-                <div class="confirmation__row">
-                    <div class="confirmation__checkbox">
-                        <input type="checkbox" />
-                    </div>
-                    <div class="confirmation__text">
-                        Ich akzeptiere die Allgemeinen Versicherungsbedingungen (AVB) und die Bestimmungen zum Datenschutz. 
-                        Das gesetzliche Widerrufsrecht, das Produktinformationsblatt (IPID) und die Vermittler-Erstinformation habe ich zur 
-                        Kenntnis genommen und alle Dokumente heruntergeladen. Mit der Bestätigung der Checkbox erkläre ich mich damit einverstanden, 
-                        dass mir alle vorstehenden Unterlagen an meine E-Mail-Adresse übermittelt werden. Der Übertragung meiner Daten an Wertgarantie 
-                        stimme ich zu. Der Betrag wird separat per Rechnung bezahlt.
-                    </div>
-                </div>
-                <div class="confirmation__row">
-                    <div class="confirmation__checkbox">
-                        <input type="checkbox" />
-                    </div>
-                    <div class="confirmation__text">
-                        Ich bestätige, dass ich ein Fahrradschloss mit einem Mindestkaufpreis von 49,00 € zur Sicherung meines Fahrrads nutzen werde.
+                <div class="confirmation__input">
+                    <div class="confirmation__row">
+                        <div class="confirmation__checkbox">
+                            <input type="checkbox" />
+                        </div>
+                        <div class="confirmation__text">
+                            Ich akzeptiere die Allgemeinen Versicherungsbedingungen (AVB) und die Bestimmungen zum Datenschutz. 
+                            Das gesetzliche Widerrufsrecht, das Produktinformationsblatt (IPID) und die Vermittler-Erstinformation habe ich zur 
+                            Kenntnis genommen und alle Dokumente heruntergeladen. Mit der Bestätigung der Checkbox erkläre ich mich damit einverstanden, 
+                            dass mir alle vorstehenden Unterlagen an meine E-Mail-Adresse übermittelt werden. Der Übertragung meiner Daten an Wertgarantie 
+                            stimme ich zu. Der Betrag wird separat per Rechnung bezahlt.
+                        </div>
                     </div>
                 </div>
                 <div class="confirmation__footer">
@@ -273,6 +276,14 @@ const productDivTemplate =
         <small class="product-link"><a class="wg-link" href="http://www.example.com">Allgemeine Versicherungsbedingungen</a></small>
     </div>`
 
+const bikeLockConfirmationTemplate = 
+    `<div class="confirmation__checkbox">
+        <input type="checkbox" />
+    </div>
+    <div class="confirmation__text">
+        Ich bestätige, dass ich ein Fahrradschloss mit einem Mindestkaufpreis von 49,00 € zur Sicherung meines Fahrrads nutzen werde.
+    </div>`
+
     class WertgarantieConfirmation extends HTMLElement {
         constructor() {
             super();
@@ -289,6 +300,8 @@ const productDivTemplate =
             this.fetchProductData = this.fetchProductData.bind(this);
             this.prepareProductPanels = this.prepareProductPanels.bind(this);
             this.connectTabsAndProductPanels = this.connectTabsAndProductPanels.bind(this);
+            this.deleteProductOrder = this.deleteProductOrder.bind(this);
+            this.refreshDisplay = this.refreshDisplay.bind(this);
         }
 
         set clientId(clientId) {
@@ -323,7 +336,7 @@ const productDivTemplate =
         }
 
         productDataAvailable(fetchedShoppingCart) {
-            if (!fetchedShoppingCart || fetchedShoppingCart.constructor !== Object || Object.entries(fetchedShoppingCart).length === 0) {
+            if (!fetchedShoppingCart || fetchedShoppingCart.constructor !== Object || Object.entries(fetchedShoppingCart).length === 0 || fetchedShoppingCart.products.length === 0) {
                 this.remove();
                 throw new Error("No product selection has been made for this client id")
             }
@@ -341,9 +354,56 @@ const productDivTemplate =
                 productTab.innerHTML = productTabTemplate;
                 productTab.querySelector('.tab__name').innerHTML = product.shopProductName;
 
+                // selektiere X
+                var removeTabBtn = productTab.querySelector('.tab__remove');
+                
+                // lege click listener auf X
+                removeTabBtn.addEventListener('click', () => {
+                    this.deleteProductOrder(product)
+                    .then(this.refreshDisplay)
+                    .then(this.productDataAvailable)
+                    .then(this.prepareTabs)
+                    .then(this.fetchProductData)
+                    .then(this.prepareProductPanels)
+                    .then(this.connectTabsAndProductPanels);
+                });
+
                 this.productTabs.appendChild(productTab);
             });
             return fetchedShoppingCart;
+        }
+
+        refreshDisplay(result) {
+            var panel = this.productPanel.lastElementChild;
+            while (panel) {
+                this.productPanel.removeChild(panel)
+                panel = this.productPanel.lastElementChild;
+            }
+            var tab = this.productTabs.lastElementChild;
+            while (tab) {
+                this.productTabs.removeChild(tab)
+                tab = this.productTabs.lastElementChild;
+            }
+            return result;
+        }
+
+        async deleteProductOrder(product) {
+            const queryParams = {
+                orderId: product.orderId
+            }
+            // setze delete call per fetch ab mit product.orderId
+            var response = await fetch(this.getAttribute('data-bifrost-uri') + '/shoppingCart/' + this.getAttribute('data-client-id'), {
+                    method: 'DELETE',
+                    credentials: 'include',
+                    headers: {
+                      'content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(queryParams)
+            });
+            var responseJson = await response.json();
+            console.log("shopping cart after deletion: ");
+            console.log(responseJson);
+            return responseJson;
         }
 
         async fetchProductData(fetchedShoppingCart) {

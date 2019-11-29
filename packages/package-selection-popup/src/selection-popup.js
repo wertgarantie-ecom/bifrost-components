@@ -190,9 +190,9 @@ import '../../package-rating/src/rating.js'
         
         .product__title {
             padding-top: 5em;
-            max-width: 75%;
+            max-width: 85%;
             text-transform: uppercase;
-            min-height: 3em;
+            min-height: 4em;
         }
 
         .product__advantages {
@@ -300,7 +300,23 @@ import '../../package-rating/src/rating.js'
         .button-section {
             padding: 0 3em 3em 3em;
             display: flex;
+        }
+
+        .button-section__details-cancel {
+            flex: 3 3 80%;
+            display: flex;
             justify-content: space-between;
+        }
+
+        .button-section__order {
+            min-width: 209px;
+            flex: 1 1 20%;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .order-button {
+            min-width: 203px;
         }
 
         .button {
@@ -310,6 +326,7 @@ import '../../package-rating/src/rating.js'
             background: none;
             outline: none;
             padding: 1.5em 3em 1.5em 3em;
+            margin: 3px;
             border: 2px solid var(--wertgarantie-popup-dark-button-background-color, rgb(32, 32, 32));
             transition: all 0.4s;
         }
@@ -338,6 +355,31 @@ import '../../package-rating/src/rating.js'
             
             --wertgarantie-rating-stars-font-size: 15px;
             --wertgarantie-rating-stars-color: orange;
+        }
+
+        @media only screen and (max-width: 878px) {
+            .button-section {
+                padding: 0 3em 3em 3em;
+                display: flex;
+                flex-wrap: wrap;
+            }
+    
+            .button-section__details-cancel {
+                display: flex;
+                justify-content: space-between;
+            }
+    
+            .button-section__order {
+                width: 100%;
+            }
+            
+            .button {
+                width: 50%;
+            }
+
+            .order-button {
+                width: 100%;
+            }
         }
 
     </style>
@@ -371,12 +413,12 @@ import '../../package-rating/src/rating.js'
                 </div>
             </section>
             <section class="button-section">
-                <div>
+                <div class="button-section__details-cancel">
                     <button class="button button--dark" id="detailsBtn">Details anzeigen</button>
+                    <button class="button button--light" id="cancelOrder">Nicht absichern</button>
                 </div>
-                <div>
-                    <button class="button button--light" id="cancelOrder">Ich möchte nicht absichern</button>
-                    <button class="button button--dark order-button--inactive" id="orderBtn">Beides in den Warenkorb</button>
+                <div class="button-section__order">
+                    <button class="button button--dark order-button order-button--inactive" id="orderBtn">Beides in den Warenkorb</button>
                 </div>
             </section>
         </div>

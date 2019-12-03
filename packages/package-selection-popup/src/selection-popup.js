@@ -1,6 +1,7 @@
 import '../../package-rating/src/rating.js'
 
 (function () {
+    const MOBILE_WIDTH = 878;
     const template = document.createElement('template');
     template.innerHTML = `
     <style>
@@ -73,7 +74,29 @@ import '../../package-rating/src/rating.js'
         }
 
         .head__subtitle {
-            padding: 3em 0 1.5em 0;
+            padding: 1em 3em;
+        }
+
+        .product-selectors {
+            display: none;
+        }
+
+        .product-selectors__button {
+            font-family: var(--wertgarantie-popup-font-family, Arial, Helvetica), sans-serif;
+            font-size: 0.9em;
+            cursor: pointer;
+            background: none;
+            outline: none;
+            padding: 1em 2em 1em 2em;
+            border: 2px solid var(--wertgarantie-popup-dark-button-background-color, rgb(32, 32, 32));
+            background-color: var(--wertgarantie-popup-light-button-background-color, rgb(244, 244, 244));
+            color: var(--wertgarantie-popup-light-button-text-color, rgb(32, 32, 32));
+            transition: all 0.4s;
+        }
+
+        .product-selectors__button--selected {
+            background-color: var(--wertgarantie-popup-dark-button-background-color, rgb(32, 32, 32));
+            color: var(--wertgarantie-popup-dark-button-text-color, rgb(244, 244, 244));
         }
 
         .products {
@@ -136,7 +159,7 @@ import '../../package-rating/src/rating.js'
 
         .product__base-info--top {
             display: grid;
-            grid-template-columns: 50% 50%;
+            grid-template-columns: 70% 30%;
         }
 
         .product__base-info--top-left {
@@ -380,7 +403,46 @@ import '../../package-rating/src/rating.js'
             .order-button {
                 width: 100%;
             }
+
+            .product-selectors {
+                display: flex;
+                padding-bottom: 3em;
+                justify-content: center;
+            }
+    
+            .products {
+                display: block;
+                position: relative;
+            }
+    
+            .product {
+                display: none;
+                width: 100%;
+                -webkit-transition: all 0.6s;
+            }
+    
+            .product--selected {
+                width: 100%;
+                background-color: #f7f7f7;
+            }
+    
+            .product--selected--mobile {
+                display: block
+            }
+    
+            .product--selected-left {
+                margin-right: 0;
+            }
+            
+            .product--selected-right {
+                margin-left: 0;
+            }
+    
+            .product--unselected, {
+                display: none;
+            }
         }
+
 
     </style>
 
@@ -398,8 +460,10 @@ import '../../package-rating/src/rating.js'
                 <div class="head__right">
                     <span class="closeBtn" id="closeBtn">&times;</span>
                 </div>
-                <p class="head__subtitle">Wählen Sie den Schutz, der Ihren Bedürfnissen am besten entspricht:</p>
             </div>
+            <p class="head__subtitle">Wählen Sie den Schutz, der Ihren Bedürfnissen am besten entspricht:</p>
+            <section class="product-selectors" id="product-selectors">
+            </section>
             <section class="products" id="products">
             </section>
             <section class="product__details-footer">
@@ -465,6 +529,7 @@ import '../../package-rating/src/rating.js'
         </div>
         `;
 
+
     class WertgarantieSelectionPopUp extends HTMLElement {
 
         constructor() {
@@ -473,6 +538,7 @@ import '../../package-rating/src/rating.js'
             this.shadowRoot.appendChild(template.content.cloneNode(true));
             this.modal = this.shadowRoot.querySelector('#modal');
             this.closeBtn = this.shadowRoot.querySelector('#closeBtn');
+            this.productSelectors = this.shadowRoot.querySelector('#product-selectors');
             this.productSection = this.shadowRoot.querySelector('#products');
             this.detailsBtn = this.shadowRoot.querySelector('#detailsBtn');
             this.productDetailsFooter = this.shadowRoot.querySelector('.product__details-footer');
@@ -683,30 +749,82 @@ import '../../package-rating/src/rating.js'
                 newProductDiv.querySelector('.wg-product-info-sheet').setAttribute('href', product.infoSheetUri);
                 newProductDiv.querySelector('.wg-avb').setAttribute('href', product.detailsDocUri);
 
-
                 // add listeners
                 newProductDiv.addEventListener('click', () => {
-                    if (newProductDiv.querySelector(".product__selection").checked) {
-                        newProductDiv.querySelector(".product__selection").checked = false;
-                        this.restoreHighlighting(newProductDiv);
-                    } else {
-                        newProductDiv.querySelector(".product__selection").checked = true;
-                        this.orderBtn.disabled = false;
-                        this.orderBtn.classList.remove('order-button--inactive')
-                        this.highlightProduct(newProductDiv);
+                    console.log(window.innerWidth);
+                    if (window.innerWidth > MOBILE_WIDTH) {
+                        if (newProductDiv.querySelector(".product__selection").checked) {
+                            newProductDiv.querySelector(".product__selection").checked = false;
+                            this.restoreHighlighting(newProductDiv);
+                            this.productSelectors.querySelectorAll('.product-selectors__button').forEach((button, buttonIdx) => {
+                                console.log("removing selected status from selector button with index: ", buttonIdx);
+                                button.classList.remove('product-selectors__button--selected');
+                            });
+                            console.log("adding selected status to selector button with index: ", idx);
+                            this.productSelectors.querySelectorAll('.product-selectors__button')[0].classList.add('product-selectors__button--selected');
+                        } else {
+                            this.checkProduct(newProductDiv);
+                            this.highlightProduct(newProductDiv);
+                            this.productSelectors.querySelectorAll('.product-selectors__button').forEach((button, buttonIdx) => {
+                                console.log("removing selected status from selector button with index: ", buttonIdx);
+                                button.classList.remove('product-selectors__button--selected');
+                            });
+                            console.log("adding selected status to selector button with index: ", idx);
+                            this.productSelectors.querySelectorAll('.product-selectors__button')[idx].classList.add('product-selectors__button--selected');
+                        }
                     }
                 });
 
                 newProductDiv.addEventListener('mouseover', () => {
-                    this.highlightProduct(newProductDiv);
+                    if (window.innerWidth > MOBILE_WIDTH) {
+                        this.highlightProduct(newProductDiv);
+                    }
                 });
 
                 newProductDiv.addEventListener('mouseleave', () => {
-                    this.restoreHighlighting();
+                    if (window.innerWidth > MOBILE_WIDTH) {
+                        this.restoreHighlighting();
+                    }
                 });
 
                 this.productSection.appendChild(newProductDiv);
+
+
+                if (idx === 0) {
+                    newProductDiv.classList.add('product--selected--mobile');
+                    if (window.innerWidth <= MOBILE_WIDTH) {
+                        this.checkProduct(newProductDiv);
+                        this.highlightProduct(newProductDiv);
+                    }
+                }
+
+                const selectorButton = document.createElement('button');
+                selectorButton.classList.add('product-selectors__button');
+                selectorButton.innerText = 'Varinate ' + (idx + 1);
+                if (idx === 0) {
+                    selectorButton.classList.add('product-selectors__button--selected');
+                }
+                selectorButton.addEventListener('click', () => {
+                    this.productSelectors.querySelectorAll('.product-selectors__button').forEach(button => {
+                        button.classList.remove('product-selectors__button--selected');
+                    });
+                    selectorButton.classList.add('product-selectors__button--selected');
+                    const allProductDivs = this.productSection.querySelectorAll('.product');
+                    this.productSection.querySelectorAll('.product').forEach(productDiv => {
+                        this.markAsUnselected(productDiv);
+                    })
+                    this.checkProduct(allProductDivs[idx]);
+                    this.highlightProduct(allProductDivs[idx]);
+                });
+
+                this.productSelectors.appendChild(selectorButton);
             });
+        }
+
+        checkProduct(newProductDiv) {
+            newProductDiv.querySelector(".product__selection").checked = true;
+            this.orderBtn.disabled = false;
+            this.orderBtn.classList.remove('order-button--inactive');
         }
 
         highlightProduct(newProductDiv) {
@@ -732,15 +850,23 @@ import '../../package-rating/src/rating.js'
             if (!checked) {
                 this.productSection.querySelectorAll('.product').forEach(productDiv => {
                     productDiv.classList.remove('product--unselected');
+                    productDiv.classList.remove('product--selected--mobile');
                 });
-                this.orderBtn.disabled = true;
-                this.orderBtn.classList.add('order-button--inactive')
+                if (window.innerWidth <= MOBILE_WIDTH) {
+                    let product = this.productSection.querySelectorAll('.product')[0];
+                    product.classList.add('product--selected--mobile', 'product--selected');
+                    product.querySelector(".product__selection").checked = true;
+                } else {
+                    this.orderBtn.disabled = true;
+                    this.orderBtn.classList.add('order-button--inactive')
+                }
             }
         }
 
         markAsSelected(productDiv, idx) {
             productDiv.classList.remove('product--unselected');
             productDiv.classList.add('product--selected');
+            productDiv.classList.add('product--selected--mobile');
             if (idx % 2 === 0) {
                 productDiv.classList.add('product--selected-left');
             } else {
@@ -751,6 +877,7 @@ import '../../package-rating/src/rating.js'
         markAsUnselected(productDiv) {
             productDiv.classList.add('product--unselected');
             productDiv.classList.remove('product--selected');
+            productDiv.classList.remove('product--selected--mobile');
             productDiv.classList.remove('product--selected-left');
             productDiv.classList.remove('product--selected-right');
         }

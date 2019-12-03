@@ -751,25 +751,20 @@ import '../../package-rating/src/rating.js'
 
                 // add listeners
                 newProductDiv.addEventListener('click', () => {
-                    console.log(window.innerWidth);
                     if (window.innerWidth > MOBILE_WIDTH) {
                         if (newProductDiv.querySelector(".product__selection").checked) {
                             newProductDiv.querySelector(".product__selection").checked = false;
                             this.restoreHighlighting(newProductDiv);
                             this.productSelectors.querySelectorAll('.product-selectors__button').forEach((button, buttonIdx) => {
-                                console.log("removing selected status from selector button with index: ", buttonIdx);
                                 button.classList.remove('product-selectors__button--selected');
                             });
-                            console.log("adding selected status to selector button with index: ", idx);
                             this.productSelectors.querySelectorAll('.product-selectors__button')[0].classList.add('product-selectors__button--selected');
                         } else {
                             this.checkProduct(newProductDiv);
                             this.highlightProduct(newProductDiv);
                             this.productSelectors.querySelectorAll('.product-selectors__button').forEach((button, buttonIdx) => {
-                                console.log("removing selected status from selector button with index: ", buttonIdx);
                                 button.classList.remove('product-selectors__button--selected');
                             });
-                            console.log("adding selected status to selector button with index: ", idx);
                             this.productSelectors.querySelectorAll('.product-selectors__button')[idx].classList.add('product-selectors__button--selected');
                         }
                     }
@@ -906,7 +901,6 @@ import '../../package-rating/src/rating.js'
                 deviceCurrency: currency,
                 shopProductName: this.getAttribute('data-shop-product-name')
             }
-            console.log(queryParams);
             try {
                 const response = await fetch(bifrostUri + '/shoppingCart/' + clientId, {
                     method: 'POST',
@@ -940,9 +934,7 @@ import '../../package-rating/src/rating.js'
         }
 
         getSelectedProduct() {
-            console.log("Get selected product:");
             var productId = this.productSection.querySelector('.product--selected').querySelector('.product__selection').value;
-            console.log(productId);
             return productId;
         }
     }

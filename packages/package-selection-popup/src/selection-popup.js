@@ -755,14 +755,14 @@ import '../../package-rating/src/rating.js'
                         if (newProductDiv.querySelector(".product__selection").checked) {
                             newProductDiv.querySelector(".product__selection").checked = false;
                             this.restoreHighlighting(newProductDiv);
-                            this.productSelectors.querySelectorAll('.product-selectors__button').forEach((button, buttonIdx) => {
+                            this.productSelectors.querySelectorAll('.product-selectors__button').forEach(button => {
                                 button.classList.remove('product-selectors__button--selected');
                             });
                             this.productSelectors.querySelectorAll('.product-selectors__button')[0].classList.add('product-selectors__button--selected');
                         } else {
                             this.checkProduct(newProductDiv);
                             this.highlightProduct(newProductDiv);
-                            this.productSelectors.querySelectorAll('.product-selectors__button').forEach((button, buttonIdx) => {
+                            this.productSelectors.querySelectorAll('.product-selectors__button').forEach(button => {
                                 button.classList.remove('product-selectors__button--selected');
                             });
                             this.productSelectors.querySelectorAll('.product-selectors__button')[idx].classList.add('product-selectors__button--selected');

@@ -1,5 +1,4 @@
 (function () {
-
     const template = document.createElement('template');
     template.innerHTML = `
         <style>
@@ -256,15 +255,15 @@
         </div>
     `;
 
-const productTabTemplate = 
-    `<div class="tab__name">
+    const productTabTemplate =
+        `<div class="tab__name">
     </div>
     <div class="tab__remove">
         &times;
     </div>`;
 
-const productDivTemplate = 
-    `<div>
+    const productDivTemplate =
+        `<div>
         <span class="payment-interval product__price-info--small">monatlich</span><br/>
         <span class="product-price product__price-info--strong">X,XX €</span><br/>
         <span class="product-tax product__price-info--small">(inkl. x,xx€ VerSt**)</span>
@@ -277,15 +276,15 @@ const productDivTemplate =
     <div>
         <small class="product-link"><a class="wg-link" href="http://www.example.com">Informationsblatt zu Versicherungsprodukten</a></small><br/>
         <small class="product-link"><a class="wg-link" href="http://www.example.com">Allgemeine Versicherungsbedingungen</a></small>
-    </div>`
+    </div>`;
 
-const bikeLockConfirmationTemplate = 
-    `<div class="confirmation__checkbox">
+    const bikeLockConfirmationTemplate =
+        `<div class="confirmation__checkbox">
         <input type="checkbox" />
     </div>
     <div class="confirmation__text">
         Ich bestätige, dass ich ein Fahrradschloss mit einem Mindestkaufpreis von 49,00 € zur Sicherung meines Fahrrads nutzen werde.
-    </div>`
+    </div>`;
 
     class WertgarantieConfirmation extends HTMLElement {
         constructor() {
@@ -317,11 +316,11 @@ const bikeLockConfirmationTemplate =
 
         connectedCallback() {
             this.fetchShoppingCartData()
-            .then(this.productDataAvailable)
-            .then(this.prepareTabs)
-            .then(this.fetchProductData)
-            .then(this.prepareProductPanels)
-            .then(this.connectTabsAndProductPanels);
+                .then(this.productDataAvailable)
+                .then(this.prepareTabs)
+                .then(this.fetchProductData)
+                .then(this.prepareProductPanels)
+                .then(this.connectTabsAndProductPanels);
         }
 
         async fetchShoppingCartData() {
@@ -330,10 +329,9 @@ const bikeLockConfirmationTemplate =
                     method: 'GET',
                     credentials: 'include'
                 });
-                var responseJson = await response.json();
-                return responseJson;
+                return await response.json();
             } catch (e) {
-                console.error("Error while fetching shoppingCartData: ", e)
+                console.error("Error while fetching shoppingCartData: ", e);
                 return {};
             }
         }
@@ -348,27 +346,24 @@ const bikeLockConfirmationTemplate =
 
         prepareTabs(fetchedShoppingCart) {
             fetchedShoppingCart.products.forEach((product, idx) => {
-                // erstelle Tab pro produkt mit Produkt-Namen.
                 const productTab = document.createElement('div');
                 productTab.classList.add('tab');
-                if (idx == 0) {
+                if (idx === 0) {
                     productTab.classList.add('tab--selected');
                 }
                 productTab.innerHTML = productTabTemplate;
                 productTab.querySelector('.tab__name').innerHTML = product.shopProductName;
 
-                // selektiere X
                 var removeTabBtn = productTab.querySelector('.tab__remove');
-                
-                // lege click listener auf X
+
                 removeTabBtn.addEventListener('click', () => {
                     this.deleteProductOrder(product)
-                    .then(this.refreshDisplay)
-                    .then(this.productDataAvailable)
-                    .then(this.prepareTabs)
-                    .then(this.fetchProductData)
-                    .then(this.prepareProductPanels)
-                    .then(this.connectTabsAndProductPanels);
+                        .then(this.refreshDisplay)
+                        .then(this.productDataAvailable)
+                        .then(this.prepareTabs)
+                        .then(this.fetchProductData)
+                        .then(this.prepareProductPanels)
+                        .then(this.connectTabsAndProductPanels);
                 });
 
                 this.productTabs.appendChild(productTab);
@@ -379,12 +374,12 @@ const bikeLockConfirmationTemplate =
         refreshDisplay(result) {
             var panel = this.productPanel.lastElementChild;
             while (panel) {
-                this.productPanel.removeChild(panel)
+                this.productPanel.removeChild(panel);
                 panel = this.productPanel.lastElementChild;
             }
             var tab = this.productTabs.lastElementChild;
             while (tab) {
-                this.productTabs.removeChild(tab)
+                this.productTabs.removeChild(tab);
                 tab = this.productTabs.lastElementChild;
             }
             return result;
@@ -393,15 +388,15 @@ const bikeLockConfirmationTemplate =
         async deleteProductOrder(product) {
             const queryParams = {
                 orderId: product.orderId
-            }
+            };
             // setze delete call per fetch ab mit product.orderId
             var response = await fetch(this.getAttribute('data-bifrost-uri') + '/shoppingCart/' + this.getAttribute('data-client-id'), {
-                    method: 'DELETE',
-                    credentials: 'include',
-                    headers: {
-                      'content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(queryParams)
+                method: 'DELETE',
+                credentials: 'include',
+                headers: {
+                    'content-Type': 'application/json'
+                },
+                body: JSON.stringify(queryParams)
             });
             var responseJson = await response.json();
             console.log("shopping cart after deletion: ");
@@ -448,19 +443,19 @@ const bikeLockConfirmationTemplate =
                     spanElement.textContent = advantage;
                     listElement.appendChild(spanElement);
                     productDiv.querySelector('.product__advantages').appendChild(listElement);
-                })
+                });
                 this.productPanel.appendChild(productDiv);
             });
         }
 
         async fetchProduct(product) {
-            const url = new URL(this.getAttribute('data-bifrost-uri')  + '/product');
+            const url = new URL(this.getAttribute('data-bifrost-uri') + '/product');
             const queryParams = {
                 deviceClass: product.deviceClass,
                 devicePrice: product.devicePrice,
                 productId: product.productId,
                 clientId: this.getAttribute('data-client-id')
-            }
+            };
             Object.keys(queryParams).forEach(key => url.searchParams.append(key, queryParams[key]));
             const response = await fetch(url);
             return await response.json();
@@ -472,7 +467,7 @@ const bikeLockConfirmationTemplate =
 
             tabs.forEach((tab, idx) => {
                 tab.addEventListener('click', () => {
-                    tabs.forEach(tab => tab.classList.remove('tab--selected'))
+                    tabs.forEach(tab => tab.classList.remove('tab--selected'));
                     tab.classList.add('tab--selected');
 
                     productPanels.forEach(panel => panel.classList.remove('product--selected'));

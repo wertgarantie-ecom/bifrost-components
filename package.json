@@ -8,7 +8,8 @@
     "storybook": "start-storybook -p 6006 -s ./stories/assets/*",
     "login": "npm-cli-login",
     "build-storybook": "build-storybook -s ./stories/assets/*",
-    "build": "lerna run build"
+    "build": "lerna run build",
+    "watch": "lerna run watch"
   },
   "author": "arne.landwehr@innoq.com",
   "license": "ISC",

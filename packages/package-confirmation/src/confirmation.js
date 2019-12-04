@@ -9,7 +9,7 @@
 
             .component {
                 max-width: 1100px;            
-                display: flex;
+                display: none;
                 background-color: white;
             }
 
@@ -232,7 +232,7 @@
                 <div class="confirmation__input">
                     <div class="confirmation__row">
                         <div class="confirmation__checkbox">
-                            <input type="checkbox" />
+                            <input id="confirmation_check" type="checkbox" />
                         </div>
                         <div class="confirmation__text">
                             Ich akzeptiere die Allgemeinen Versicherungsbedingungen (AVB) und die Bestimmungen zum Datenschutz. 
@@ -291,9 +291,12 @@
             super();
             this.attachShadow({mode: 'open'});
             this.shadowRoot.appendChild(template.content.cloneNode(true));
+           
             // element selectors
             this.productTabs = this.shadowRoot.querySelector('.product__tabs');
             this.productPanel = this.shadowRoot.querySelector('.product__panel');
+            this.component = this.shadowRoot.querySelector('.component');
+            this.checkbox = this.shadowRoot.querySelector('#confirmation_check');
 
             // method binding
             this.fetchShoppingCartData = this.fetchShoppingCartData.bind(this);
@@ -304,6 +307,8 @@
             this.connectTabsAndProductPanels = this.connectTabsAndProductPanels.bind(this);
             this.deleteProductOrder = this.deleteProductOrder.bind(this);
             this.refreshDisplay = this.refreshDisplay.bind(this);
+            this.showComponent = this.showComponent.bind(this);
+            this.setConfirmCheckbox = this.setConfirmCheckbox.bind(this);
         }
 
         set clientId(clientId) {
@@ -316,24 +321,59 @@
 
         connectedCallback() {
             this.fetchShoppingCartData()
+                .then(this.setConfirmCheckbox)
                 .then(this.productDataAvailable)
                 .then(this.prepareTabs)
                 .then(this.fetchProductData)
                 .then(this.prepareProductPanels)
-                .then(this.connectTabsAndProductPanels);
+                .then(this.connectTabsAndProductPanels)
+                .then(this.showComponent);
+
+            this.initListeners();
+        }
+
+        initListeners() {
+            this.checkbox.addEventListener("click", event => {
+                if (event.target.checked) {
+                    this.sendConfirmation();
+                } else {
+                    this.rejectConfirmation();
+                }
+            })
+        }
+
+        setConfirmCheckbox(shoppingCart) {
+            this.checkbox.checked = shoppingCart.confirmed;
+            return shoppingCart;
+        }
+
+
+        async sendConfirmation() {
+            const response = await fetch(this.getAttribute('data-bifrost-uri') + '/shoppingCart/' + this.getAttribute('data-client-id') + "/confirmation", {
+                method: 'PUT',
+                credentials: 'include'
+            });
+            console.log(response);
+        }
+
+        async rejectConfirmation() {
+            const response = await fetch(this.getAttribute('data-bifrost-uri') + '/shoppingCart/' + this.getAttribute('data-client-id') + "/confirmation", {
+                method: 'DELETE',
+                credentials: 'include'
+            });
+            console.log(response);
+        }
+
+        showComponent() {
+            this.component.style.display = "flex";
         }
 
         async fetchShoppingCartData() {
-            try {
-                const response = await fetch(this.getAttribute('data-bifrost-uri') + '/shoppingCart/' + this.getAttribute('data-client-id'), {
-                    method: 'GET',
-                    credentials: 'include'
-                });
-                return await response.json();
-            } catch (e) {
-                console.error("Error while fetching shoppingCartData: ", e);
-                return {};
-            }
+            const response = await fetch(this.getAttribute('data-bifrost-uri') + '/shoppingCart/' + this.getAttribute('data-client-id'), {
+                method: 'GET',
+                credentials: 'include'
+            });
+            return await response.json();
         }
 
         productDataAvailable(fetchedShoppingCart) {
@@ -415,7 +455,6 @@
 
         prepareProductPanels(products) {
             products.forEach((product, idx) => {
-                // erstelle product-panel pro produkt mit Versicherungsproduktdaten 
                 const productDiv = document.createElement('div');
                 productDiv.classList.add('product');
                 if (idx === 0) {

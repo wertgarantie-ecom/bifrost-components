@@ -1,3 +1,5 @@
+// import { bodyParser } from "restify";
+
 (function () {
     const template = document.createElement('template');
     template.innerHTML = `
@@ -232,7 +234,7 @@
                 <div class="confirmation__input">
                     <div class="confirmation__row">
                         <div class="confirmation__checkbox">
-                            <input id="confirmation_check" type="checkbox" />
+                            <input class="confirmation" id="confirmation_check" type="checkbox" />
                         </div>
                         <div class="confirmation__text">
                             Ich akzeptiere die Allgemeinen Versicherungsbedingungen (AVB) und die Bestimmungen zum Datenschutz. 
@@ -280,11 +282,11 @@
 
     const bikeLockConfirmationTemplate =
         `<div class="confirmation__checkbox">
-        <input type="checkbox" />
-    </div>
-    <div class="confirmation__text">
-        Ich bestätige, dass ich ein Fahrradschloss mit einem Mindestkaufpreis von 49,00 € zur Sicherung meines Fahrrads nutzen werde.
-    </div>`;
+            <input class="confirmation" type="checkbox" />
+        </div>
+        <div class="confirmation__text">
+            Ich bestätige, dass ich ein Fahrradschloss mit einem Mindestkaufpreis von 49,00 € zur Sicherung meines Fahrrads nutzen werde.
+        </div>`;
 
     class WertgarantieConfirmation extends HTMLElement {
         constructor() {
@@ -309,6 +311,7 @@
             this.refreshDisplay = this.refreshDisplay.bind(this);
             this.showComponent = this.showComponent.bind(this);
             this.setConfirmCheckbox = this.setConfirmCheckbox.bind(this);
+            this.isFullyChecked = this.isFullyChecked.bind(this);
         }
 
         set clientId(clientId) {
@@ -514,6 +517,17 @@
                     productPanels[idx].classList.add('product--selected');
                 })
             });
+        }
+
+        isFullyChecked() {
+            const checkboxes = this.shadowRoot.querySelectorAll('.confirmation'); // all checkboxes must have confirmation class (dynamic validation fields)
+            let fullyChecked = true;
+            checkboxes.forEach(box => {
+                if (!box.checked) {
+                    fullyChecked = false;
+                }
+            });
+            return fullyChecked;
         }
     }
 

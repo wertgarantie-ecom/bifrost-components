@@ -122,9 +122,22 @@
 
             }
 
-            .confirmation__checkbox {
+            .confirmation__checkbox-column {
                 min-width: 40px;
                 padding-left: 10px;
+                
+            }
+
+            .checkbox__container {
+                margin-left: 2px;
+                margin-right: 2px;
+                display: flex;
+                justify-content: center;
+            }
+
+
+            .confirmation--unchecked {
+                border: 2px solid red;
             }
 
             .confirmation__text {
@@ -137,6 +150,11 @@
                 padding-left: 50px;
                 font-weight: 700;
                 font-size: 0.7em;
+            }
+
+            .confirmation__footer--notification {
+                display: none;
+                color: red;
             }
 
             .product {
@@ -233,8 +251,10 @@
                 </div>
                 <div class="confirmation__input">
                     <div class="confirmation__row">
-                        <div class="confirmation__checkbox">
-                            <input class="confirmation" id="confirmation_check" type="checkbox" />
+                        <div class="confirmation__checkbox-column">
+                            <div class="checkbox__container">
+                                <input class="confirmation" id="confirmation_check" type="checkbox" />
+                            </div>
                         </div>
                         <div class="confirmation__text">
                             Ich akzeptiere die Allgemeinen Versicherungsbedingungen (AVB) und die Bestimmungen zum Datenschutz. 
@@ -250,6 +270,9 @@
                 </div>
                 <div class="confirmation__footer">
                     <strong>Mehr zum <a target="_blank" class="wg-link">Produkt</a> und der <a target="_blank" class="wg-link" href="http://www.example.com/">Wertgarantie</a>.</strong>
+                </div>
+                <div class="confirmation__footer confirmation__footer--notification">
+                    <strong>Bitte bestätige die oben stehenden Bedingungen um fortzufahren.</strong>
                 </div>
             </section>
             <div class="product__panel">
@@ -282,7 +305,11 @@
 
     const bikeLockConfirmationTemplate =
         `<div class="confirmation__checkbox">
-            <input class="confirmation" type="checkbox" />
+            <div class="confirmation__checkbox-column">
+                <div class="checkbox__container">
+                    <input class="confirmation" type="checkbox" />
+                </div>
+            </div>
         </div>
         <div class="confirmation__text">
             Ich bestätige, dass ich ein Fahrradschloss mit einem Mindestkaufpreis von 49,00 € zur Sicherung meines Fahrrads nutzen werde.
@@ -312,6 +339,8 @@
             this.showComponent = this.showComponent.bind(this);
             this.setConfirmCheckbox = this.setConfirmCheckbox.bind(this);
             this.isFullyChecked = this.isFullyChecked.bind(this);
+            this.setUncheckedWarning = this.setUncheckedWarning.bind(this);
+            this.checkStateOnSubmit = this.checkStateOnSubmit.bind(this);
         }
 
         set clientId(clientId) {
@@ -342,7 +371,12 @@
                 } else {
                     this.rejectConfirmation();
                 }
-            })
+            });
+
+            if (this.getAttribute('data-form-selector')) {
+                var form = document.querySelector(this.getAttribute('data-form-selector'));
+                form.addEventListener('submit', this.checkStateOnSubmit);
+            }
         }
 
         setConfirmCheckbox(shoppingCart) {
@@ -382,7 +416,6 @@
         productDataAvailable(fetchedShoppingCart) {
             if (!fetchedShoppingCart || fetchedShoppingCart.constructor !== Object || Object.entries(fetchedShoppingCart).length === 0 || fetchedShoppingCart.products.length === 0) {
                 this.remove();
-                throw new Error("No product selection has been made for this client id")
             }
             return fetchedShoppingCart;
         }
@@ -519,6 +552,14 @@
             });
         }
 
+        checkStateOnSubmit(e) {
+            if (!this.isFullyChecked()) {
+                this.setUncheckedWarning();
+                e.preventDefault();
+                return false;
+            }
+        }
+
         isFullyChecked() {
             const checkboxes = this.shadowRoot.querySelectorAll('.confirmation'); // all checkboxes must have confirmation class (dynamic validation fields)
             let fullyChecked = true;
@@ -528,6 +569,14 @@
                 }
             });
             return fullyChecked;
+        }
+
+        setUncheckedWarning() {
+            const checkboxDiv = this.shadowRoot.querySelectorAll('.checkbox__container');
+            checkboxDiv.forEach(div => {
+                div.classList.add('confirmation--unchecked');
+            });
+            this.shadowRoot.querySelector('.confirmation__footer--notification').style.display = 'block';
         }
     }
 

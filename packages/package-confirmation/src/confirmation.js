@@ -16,12 +16,16 @@
             }
 
             .info {
-                flex: 2;
+                width: 65%;
                 padding: 1em;
             }
 
             .product__panel {
-                flex: 1;
+                width: 35%;
+            }
+
+            .product__panel--mobile {
+                display: none;
             }
 
             .header {
@@ -60,7 +64,7 @@
                 font-weight: 700;
                 text-transform: uppercase;
                 font-size: 0.7em;
-                line-height: 26px;
+                line-height: 1.2em;
             }
 
             .header__title__text {
@@ -71,14 +75,16 @@
                 padding-top: 1em;
                 padding-left: 50px;
                 display: flex;
-                flex-direction: row;
+                flex-wrap: wrap;
             }
 
             .tab {
                 border: 1px solid rgb(230, 230, 230);
                 padding: 0.8em;
                 width: 18%;
+                min-width: 80px;
                 margin-right: 1.5em;
+                margin-bottom: 1em;
                 font-size: 0.8em;
                 font-weight: 700;
                 display: flex;
@@ -231,6 +237,45 @@
             .product-link {
                 font-size: 0.65em;
             }
+
+            @media only screen and (max-width: 768px) {
+                .component {
+                    width: 100%;
+                    max-width: 500px;            
+                }
+
+                .info {
+                    width: 100%;
+                    padding: 0;
+                }
+
+                .header__title {
+                    line-height: 1em;
+                    text-align: left;
+                }
+
+                .product__tabs {
+                    padding-left: 1em;
+                }
+
+                .product__panel {
+                    display: none;
+                }
+
+                .product__panel--mobile {
+                    display: block;
+                }
+
+                .confirmation__section {
+                    padding-right: 1em;
+                    padding-bottom: 1em;
+                }
+
+                .confirmation__header {
+                    padding-left: 2em;
+                }
+
+            }
     
         </style>
 
@@ -246,33 +291,37 @@
                 </div>
                 <div class="product__tabs"> 
                 </div>
-                <div class="confirmation__header">
-                    Bitte bestätige noch kurz:
+                <div class="product__panel--mobile">
                 </div>
-                <div class="confirmation__input">
-                    <div class="confirmation__row">
-                        <div class="confirmation__checkbox-column">
-                            <div class="checkbox__container">
-                                <input class="confirmation" id="confirmation_check" type="checkbox" />
+                <div class="confirmation__section">
+                    <div class="confirmation__header">
+                        Bitte bestätige noch kurz:
+                    </div>
+                    <div class="confirmation__input">
+                        <div class="confirmation__row">
+                            <div class="confirmation__checkbox-column">
+                                <div class="checkbox__container">
+                                    <input class="confirmation" id="confirmation_check" type="checkbox" />
+                                </div>
+                            </div>
+                            <div class="confirmation__text">
+                                Ich akzeptiere die Allgemeinen Versicherungsbedingungen (AVB) und die Bestimmungen zum Datenschutz. 
+                                Das gesetzliche Widerrufsrecht, das Produktinformationsblatt (IPID) und die Vermittler-Erstinformation 
+                                habe ich zur Kenntnis genommen und alle Dokumente heruntergeladen. Mit der Bestätigung der Checkbox 
+                                erkläre ich mich damit einverstanden, dass mir alle vorstehenden Unterlagen an meine E-Mail-Adresse übermittelt werden. 
+                                Der Übertragung meiner Daten an Wertgarantie stimme ich zu. Der Betrag wird separat per Rechnung bezahlt. 
                             </div>
                         </div>
-                        <div class="confirmation__text">
-                            Ich akzeptiere die Allgemeinen Versicherungsbedingungen (AVB) und die Bestimmungen zum Datenschutz. 
-                            Das gesetzliche Widerrufsrecht, das Produktinformationsblatt (IPID) und die Vermittler-Erstinformation 
-                            habe ich zur Kenntnis genommen und alle Dokumente heruntergeladen. Mit der Bestätigung der Checkbox 
-                            erkläre ich mich damit einverstanden, dass mir alle vorstehenden Unterlagen an meine E-Mail-Adresse übermittelt werden. 
-                            Der Übertragung meiner Daten an Wertgarantie stimme ich zu. Der Betrag wird separat per Rechnung bezahlt. 
-                        </div>
                     </div>
-                </div>
-                <div class="confirmation__footer">
-                    <strong>Nach dem Kauf erhalten Sie sowohl Ihr Zertifikat als auch die Rechnung der Wertgarantie per E-Mail.</strong>
-                </div>
-                <div class="confirmation__footer">
-                    <strong>Mehr zum <a target="_blank" class="wg-link">Produkt</a> und der <a target="_blank" class="wg-link" href="http://www.example.com/">Wertgarantie</a>.</strong>
-                </div>
-                <div class="confirmation__footer confirmation__footer--notification">
-                    <strong>Bitte bestätige die oben stehenden Bedingungen um fortzufahren.</strong>
+                    <div class="confirmation__footer">
+                        <strong>Nach dem Kauf erhalten Sie sowohl Ihr Zertifikat als auch die Rechnung der Wertgarantie per E-Mail.</strong>
+                    </div>
+                    <div class="confirmation__footer">
+                        <strong>Mehr zum <a target="_blank" class="wg-link">Produkt</a> und der <a target="_blank" class="wg-link" href="http://www.example.com/">Wertgarantie</a>.</strong>
+                    </div>
+                    <div class="confirmation__footer confirmation__footer--notification">
+                        <strong>Bitte bestätige die oben stehenden Bedingungen um fortzufahren.</strong>
+                    </div>
                 </div>
             </section>
             <div class="product__panel">
@@ -324,6 +373,7 @@
             // element selectors
             this.productTabs = this.shadowRoot.querySelector('.product__tabs');
             this.productPanel = this.shadowRoot.querySelector('.product__panel');
+            this.productPanelMobile = this.shadowRoot.querySelector('.product__panel--mobile');
             this.component = this.shadowRoot.querySelector('.component');
             this.checkbox = this.shadowRoot.querySelector('#confirmation_check');
 
@@ -453,6 +503,11 @@
                 this.productPanel.removeChild(panel);
                 panel = this.productPanel.lastElementChild;
             }
+            var mobilePanel = this.productPanelMobile.lastElementChild;
+            while (mobilePanel) {
+                this.productPanelMobile.removeChild(mobilePanel);
+                mobilePanel = this.productPanelMobile.lastElementChild;
+            }
             var tab = this.productTabs.lastElementChild;
             while (tab) {
                 this.productTabs.removeChild(tab);
@@ -491,7 +546,13 @@
 
         prepareProductPanels(products) {
             products.forEach((product, idx) => {
-                const productDiv = document.createElement('div');
+                this.productPanel.appendChild(this.createProductDiv(product, idx));
+                this.productPanelMobile.appendChild(this.createProductDiv(product, idx));
+            });
+        }
+
+        createProductDiv(product, idx) {
+            const productDiv = document.createElement('div');
                 productDiv.classList.add('product');
                 if (idx === 0) {
                     productDiv.classList.add('product--selected')
@@ -519,8 +580,7 @@
                     listElement.appendChild(spanElement);
                     productDiv.querySelector('.product__advantages').appendChild(listElement);
                 });
-                this.productPanel.appendChild(productDiv);
-            });
+            return productDiv;
         }
 
         async fetchProduct(product) {
@@ -539,6 +599,7 @@
         connectTabsAndProductPanels() {
             var tabs = this.productTabs.querySelectorAll('.tab');
             var productPanels = this.productPanel.querySelectorAll('.product');
+            var mobileProductPanels = this.productPanelMobile.querySelectorAll('.product');
 
             tabs.forEach((tab, idx) => {
                 tab.addEventListener('click', () => {
@@ -546,9 +607,11 @@
                     tab.classList.add('tab--selected');
 
                     productPanels.forEach(panel => panel.classList.remove('product--selected'));
+                    mobileProductPanels.forEach(panel => panel.classList.remove('product--selected'));
 
                     productPanels[idx].classList.add('product--selected');
-                })
+                    mobileProductPanels[idx].classList.add('product--selected');
+                });
             });
         }
 

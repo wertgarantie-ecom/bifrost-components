@@ -1,6 +1,6 @@
 {
   "name": "package-confirmation",
-  "version": "0.0.10",
+  "version": "1.0.0",
   "description": "Confirmation component for Wertgarantie e-commerce push",
   "main": "index.js",
   "scripts": {

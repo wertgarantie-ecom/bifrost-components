@@ -660,7 +660,7 @@ import '../../package-rating/src/rating.js'
                 );
             }
             try {
-                const url = new URL(bifrostUri + '/dummyPolicies');
+                const url = new URL(bifrostUri + '/components/selection-popup');
                 const queryParams = {
                     devicePrice: devicePrice,
                     deviceClass: deviceClass

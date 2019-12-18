@@ -641,6 +641,9 @@
             });
             this.shadowRoot.querySelector('.confirmation__footer--notification').style.display = 'block';
         }
+
+        // update hidden input field
+        // register hidden input field
     }
 
     window.customElements.define('wertgarantie-confirmation', WertgarantieConfirmation);

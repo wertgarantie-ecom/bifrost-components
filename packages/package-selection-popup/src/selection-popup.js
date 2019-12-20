@@ -634,7 +634,7 @@ import '../../package-rating/src/rating.js'
                 isComplete = false;
             } else {
                 displayData.products.forEach(data => {
-                    if (!(data.name && data.detailsDocText && data.detailsDocUri && data.advantages && data.top_3
+                    if (!(data.name && data.detailsDocText && data.detailsDocUri && data.advantages && data.top3
                         && data.excludedAdvantages && data.infoSheetUri && data.infoSheetText && data.paymentInterval
                         && data.price && data.currency && data.priceFormatted && data.tax)) {
                         isComplete = false;
@@ -706,7 +706,7 @@ import '../../package-rating/src/rating.js'
                 newProductDiv.querySelector('.info-sheet-link').href = product.infoSheetUri;
 
                 // Assemble Top 3 advantages to product head
-                product.top_3.forEach(advantage => {
+                product.top3.forEach(advantage => {
                     const listElement = document.createElement('li');
                     listElement.classList.add('advantage', 'advantage--included');
 

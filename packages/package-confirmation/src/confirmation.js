@@ -369,7 +369,7 @@
             super();
             this.attachShadow({mode: 'open'});
             this.shadowRoot.appendChild(template.content.cloneNode(true));
-           
+
             // element selectors
             this.productTabs = this.shadowRoot.querySelector('.product__tabs');
             this.productPanel = this.shadowRoot.querySelector('.product__panel');
@@ -456,7 +456,12 @@
         }
 
         async fetchShoppingCartData() {
-            const response = await fetch(this.getAttribute('data-bifrost-uri') + '/shoppingCart/' + this.getAttribute('data-client-id'), {
+            const url = new URL(this.getAttribute('data-bifrost-uri') + '/components/confirmation');
+            const queryParams = {
+                clientId: this.getAttribute('data-client-id')
+            };
+            Object.keys(queryParams).forEach(key => url.searchParams.append(key, queryParams[key]));
+            const response = await fetch(url, {
                 method: 'GET',
                 credentials: 'include'
             });
@@ -553,33 +558,33 @@
 
         createProductDiv(product, idx) {
             const productDiv = document.createElement('div');
-                productDiv.classList.add('product');
-                if (idx === 0) {
-                    productDiv.classList.add('product--selected')
-                }
-                if (idx % 2 === 0) {
-                    productDiv.classList.add('product--even');
-                    productDiv.style.setProperty("--image-link-even", "url('" + product.imageLink + "')");
-                } else {
-                    productDiv.classList.add('product--odd');
-                    productDiv.style.setProperty("--image-link-odd", "url('" + product.imageLink + "')");
-                }
-                productDiv.innerHTML = productDivTemplate;
-                productDiv.querySelector('.payment-interval').textContent = product.paymentInterval;
-                productDiv.querySelector('.product-price').textContent = product.price + product.currency;
-                productDiv.querySelector('.product-tax').textContent = product.taxFormatted;
+            productDiv.classList.add('product');
+            if (idx === 0) {
+                productDiv.classList.add('product--selected')
+            }
+            if (idx % 2 === 0) {
+                productDiv.classList.add('product--even');
+                productDiv.style.setProperty("--image-link-even", "url('" + product.imageLink + "')");
+            } else {
+                productDiv.classList.add('product--odd');
+                productDiv.style.setProperty("--image-link-odd", "url('" + product.imageLink + "')");
+            }
+            productDiv.innerHTML = productDivTemplate;
+            productDiv.querySelector('.payment-interval').textContent = product.paymentInterval;
+            productDiv.querySelector('.product-price').textContent = product.price + product.currency;
+            productDiv.querySelector('.product-tax').textContent = product.taxFormatted;
 
-                productDiv.querySelector('.product__title').textContent = product.name;
+            productDiv.querySelector('.product__title').textContent = product.name;
 
-                product.top_3.forEach(advantage => {
-                    const listElement = document.createElement('li');
-                    listElement.classList.add('product__advantage');
-                    const spanElement = document.createElement('span');
-                    spanElement.classList.add('advantage__icon');
-                    spanElement.textContent = advantage;
-                    listElement.appendChild(spanElement);
-                    productDiv.querySelector('.product__advantages').appendChild(listElement);
-                });
+            product.top_3.forEach(advantage => {
+                const listElement = document.createElement('li');
+                listElement.classList.add('product__advantage');
+                const spanElement = document.createElement('span');
+                spanElement.classList.add('advantage__icon');
+                spanElement.textContent = advantage;
+                listElement.appendChild(spanElement);
+                productDiv.querySelector('.product__advantages').appendChild(listElement);
+            });
             return productDiv;
         }
 

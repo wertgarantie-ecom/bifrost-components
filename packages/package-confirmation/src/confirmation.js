@@ -294,8 +294,7 @@
                 <div class="product__panel--mobile">
                 </div>
                 <div class="confirmation__section">
-                    <div class="confirmation__header">
-                        Bitte bestätige noch kurz:
+                    <div class="confirmation__header" id="please-confirm-text">
                     </div>
                     <div class="confirmation__input">
                         <div class="confirmation__row">
@@ -304,12 +303,7 @@
                                     <input class="confirmation" id="confirmation_check" type="checkbox" />
                                 </div>
                             </div>
-                            <div class="confirmation__text">
-                                Ich akzeptiere die Allgemeinen Versicherungsbedingungen (AVB) und die Bestimmungen zum Datenschutz. 
-                                Das gesetzliche Widerrufsrecht, das Produktinformationsblatt (IPID) und die Vermittler-Erstinformation 
-                                habe ich zur Kenntnis genommen und alle Dokumente heruntergeladen. Mit der Bestätigung der Checkbox 
-                                erkläre ich mich damit einverstanden, dass mir alle vorstehenden Unterlagen an meine E-Mail-Adresse übermittelt werden. 
-                                Der Übertragung meiner Daten an Wertgarantie stimme ich zu. Der Betrag wird separat per Rechnung bezahlt. 
+                            <div class="confirmation__text" id="general-confirmation-text">
                             </div>
                         </div>
                     </div>
@@ -349,7 +343,6 @@
     </div>
     <div>
         <small class="product-link"><a class="wg-link" href="http://www.example.com">Informationsblatt zu Versicherungsprodukten</a></small><br/>
-        <small class="product-link"><a class="wg-link" href="http://www.example.com">Allgemeine Versicherungsbedingungen</a></small>
     </div>`;
 
     const bikeLockConfirmationTemplate =
@@ -376,12 +369,15 @@
             this.productPanelMobile = this.shadowRoot.querySelector('.product__panel--mobile');
             this.component = this.shadowRoot.querySelector('.component');
             this.checkbox = this.shadowRoot.querySelector('#confirmation_check');
+            this.headerTitle = this.shadowRoot.querySelector('.header__title__text');
+            this.generalConfirmationText = this.shadowRoot.querySelector('#general-confirmation-text');
+            this.pleaseConfirmText = this.shadowRoot.querySelector('#please-confirm-text');
 
             // method binding
-            this.fetchShoppingCartData = this.fetchShoppingCartData.bind(this);
+            this.fetchConfirmationComponentData = this.fetchConfirmationComponentData.bind(this);
             this.productDataAvailable = this.productDataAvailable.bind(this);
+            this.setTexts = this.setTexts.bind(this);
             this.prepareTabs = this.prepareTabs.bind(this);
-            this.fetchProductData = this.fetchProductData.bind(this);
             this.prepareProductPanels = this.prepareProductPanels.bind(this);
             this.connectTabsAndProductPanels = this.connectTabsAndProductPanels.bind(this);
             this.deleteProductOrder = this.deleteProductOrder.bind(this);
@@ -402,11 +398,11 @@
         }
 
         connectedCallback() {
-            this.fetchShoppingCartData()
+            this.fetchConfirmationComponentData()
                 .then(this.setConfirmCheckbox)
                 .then(this.productDataAvailable)
+                .then(this.setTexts)
                 .then(this.prepareTabs)
-                .then(this.fetchProductData)
                 .then(this.prepareProductPanels)
                 .then(this.connectTabsAndProductPanels)
                 .then(this.showComponent);
@@ -455,7 +451,7 @@
             this.component.style.display = "flex";
         }
 
-        async fetchShoppingCartData() {
+        async fetchConfirmationComponentData() {
             const url = new URL(this.getAttribute('data-bifrost-uri') + '/components/confirmation');
             const queryParams = {
                 clientId: this.getAttribute('data-client-id')
@@ -468,38 +464,45 @@
             return await response.json();
         }
 
-        productDataAvailable(fetchedShoppingCart) {
-            if (!fetchedShoppingCart || fetchedShoppingCart.constructor !== Object || Object.entries(fetchedShoppingCart).length === 0 || fetchedShoppingCart.products.length === 0) {
+        productDataAvailable(fetchedConfirmationComponentData) {
+            if (!fetchedConfirmationComponentData || fetchedConfirmationComponentData.constructor !== Object || Object.entries(fetchedConfirmationComponentData).length === 0 || fetchedConfirmationComponentData.products.length === 0) {
                 this.remove();
             }
-            return fetchedShoppingCart;
+            return fetchedConfirmationComponentData;
         }
 
-        prepareTabs(fetchedShoppingCart) {
-            fetchedShoppingCart.products.forEach((product, idx) => {
+        setTexts(fetchedConfirmationComponentData) {
+            this.headerTitle.textContent = fetchedConfirmationComponentData.title;
+            this.pleaseConfirmText.textContent = fetchedConfirmationComponentData.confirmationHeader;
+            this.generalConfirmationText.innerHTML = fetchedConfirmationComponentData.confirmationTextGeneral;
+            return fetchedConfirmationComponentData;
+        }
+
+        prepareTabs(fetchedConfirmationComponentData) {
+            fetchedConfirmationComponentData.products.forEach((product, idx) => {
                 const productTab = document.createElement('div');
                 productTab.classList.add('tab');
                 if (idx === 0) {
                     productTab.classList.add('tab--selected');
                 }
                 productTab.innerHTML = productTabTemplate;
-                productTab.querySelector('.tab__name').innerHTML = product.shopProductName;
+                productTab.querySelector('.tab__name').innerHTML = product.shopProductShortName;
 
                 var removeTabBtn = productTab.querySelector('.tab__remove');
 
+                // ToDo Delete Mechanism
                 removeTabBtn.addEventListener('click', () => {
                     this.deleteProductOrder(product)
                         .then(this.refreshDisplay)
                         .then(this.productDataAvailable)
                         .then(this.prepareTabs)
-                        .then(this.fetchProductData)
                         .then(this.prepareProductPanels)
                         .then(this.connectTabsAndProductPanels);
                 });
 
                 this.productTabs.appendChild(productTab);
             });
-            return fetchedShoppingCart;
+            return fetchedConfirmationComponentData;
         }
 
         refreshDisplay(result) {
@@ -540,17 +543,8 @@
             return responseJson;
         }
 
-        async fetchProductData(fetchedShoppingCart) {
-            var products = [];
-            for (var i = 0; i < fetchedShoppingCart.products.length; i++) {
-                var productDetail = await this.fetchProduct(fetchedShoppingCart.products[i]);
-                products.push(productDetail);
-            }
-            return products;
-        }
-
-        prepareProductPanels(products) {
-            products.forEach((product, idx) => {
+        prepareProductPanels(fetchedConfirmationComponentData) {
+            fetchedConfirmationComponentData.products.forEach((product, idx) => {
                 this.productPanel.appendChild(this.createProductDiv(product, idx));
                 this.productPanelMobile.appendChild(this.createProductDiv(product, idx));
             });
@@ -564,19 +558,19 @@
             }
             if (idx % 2 === 0) {
                 productDiv.classList.add('product--even');
-                productDiv.style.setProperty("--image-link-even", "url('" + product.imageLink + "')");
+                productDiv.style.setProperty("--image-link-even", "url('" + product.productBackgroundImageLink + "')");
             } else {
                 productDiv.classList.add('product--odd');
-                productDiv.style.setProperty("--image-link-odd", "url('" + product.imageLink + "')");
+                productDiv.style.setProperty("--image-link-odd", "url('" + product.productBackgroundImageLink + "')");
             }
             productDiv.innerHTML = productDivTemplate;
             productDiv.querySelector('.payment-interval').textContent = product.paymentInterval;
-            productDiv.querySelector('.product-price').textContent = product.price + product.currency;
-            productDiv.querySelector('.product-tax').textContent = product.taxFormatted;
+            productDiv.querySelector('.product-price').textContent = product.price;
+            productDiv.querySelector('.product-tax').textContent = product.includedTax;
 
-            productDiv.querySelector('.product__title').textContent = product.name;
+            productDiv.querySelector('.product__title').textContent = product.productTitle;
 
-            product.top_3.forEach(advantage => {
+            product.top3.forEach(advantage => {
                 const listElement = document.createElement('li');
                 listElement.classList.add('product__advantage');
                 const spanElement = document.createElement('span');
@@ -586,19 +580,6 @@
                 productDiv.querySelector('.product__advantages').appendChild(listElement);
             });
             return productDiv;
-        }
-
-        async fetchProduct(product) {
-            const url = new URL(this.getAttribute('data-bifrost-uri') + '/product');
-            const queryParams = {
-                deviceClass: product.deviceClass,
-                devicePrice: product.devicePrice,
-                productId: product.productId,
-                clientId: this.getAttribute('data-client-id')
-            };
-            Object.keys(queryParams).forEach(key => url.searchParams.append(key, queryParams[key]));
-            const response = await fetch(url);
-            return await response.json();
         }
 
         connectTabsAndProductPanels() {

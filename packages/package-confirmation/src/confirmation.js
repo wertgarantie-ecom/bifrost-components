@@ -325,25 +325,25 @@
 
     const productTabTemplate =
         `<div class="tab__name">
-    </div>
-    <div class="tab__remove">
-        &times;
-    </div>`;
+        </div>
+        <div class="tab__remove">
+            &times;
+        </div>`;
 
     const productDivTemplate =
         `<div>
-        <span class="payment-interval product__price-info--small">monatlich</span><br/>
-        <span class="product-price product__price-info--strong">X,XX €</span><br/>
-        <span class="product-tax product__price-info--small">(inkl. x,xx€ VerSt**)</span>
-    </div>
-    <div>
-        <div class="product__title">Fahrrad Komplettschutz Basis</div>
-        <ul class="product__advantages">
-        </ul>
-    </div>
-    <div>
-        <small class="product-link"><a class="wg-link" href="http://www.example.com">Informationsblatt zu Versicherungsprodukten</a></small><br/>
-    </div>`;
+            <span class="payment-interval product__price-info--small">monatlich</span><br/>
+            <span class="product-price product__price-info--strong">X,XX €</span><br/>
+            <span class="product-tax product__price-info--small">(inkl. x,xx€ VerSt**)</span>
+        </div>
+        <div>
+            <div class="product__title">Fahrrad Komplettschutz Basis</div>
+            <ul class="product__advantages">
+            </ul>
+        </div>
+        <div>
+            <small class="product-link"><a class="wg-link" href="http://www.example.com">Informationsblatt zu Versicherungsprodukten</a></small><br/>
+        </div>`;
 
     const bikeLockConfirmationTemplate =
         `<div class="confirmation__checkbox">
@@ -376,12 +376,13 @@
             // method binding
             this.fetchConfirmationComponentData = this.fetchConfirmationComponentData.bind(this);
             this.productDataAvailable = this.productDataAvailable.bind(this);
-            this.setTexts = this.setTexts.bind(this);
+            this.setTextsAndHiddenInput = this.setTextsAndHiddenInput.bind(this);
+            this.updateComponent = this.updateComponent.bind(this);
+            this.updateColors = this.updateColors.bind(this);
             this.prepareTabs = this.prepareTabs.bind(this);
             this.prepareProductPanels = this.prepareProductPanels.bind(this);
             this.connectTabsAndProductPanels = this.connectTabsAndProductPanels.bind(this);
             this.deleteProductOrder = this.deleteProductOrder.bind(this);
-            this.refreshDisplay = this.refreshDisplay.bind(this);
             this.showComponent = this.showComponent.bind(this);
             this.setConfirmCheckbox = this.setConfirmCheckbox.bind(this);
             this.isFullyChecked = this.isFullyChecked.bind(this);
@@ -397,11 +398,15 @@
             this.setAttribute("data-bifrost-uri", bifrostUri);
         }
 
+        set hiddenInputSelector(wgProductInput) {
+            this.setAttribute("data-hidden-input-selector", wgProductInput);
+        }
+
         connectedCallback() {
             this.fetchConfirmationComponentData()
                 .then(this.setConfirmCheckbox)
                 .then(this.productDataAvailable)
-                .then(this.setTexts)
+                .then(this.setTextsAndHiddenInput)
                 .then(this.prepareTabs)
                 .then(this.prepareProductPanels)
                 .then(this.connectTabsAndProductPanels)
@@ -471,16 +476,19 @@
             return fetchedConfirmationComponentData;
         }
 
-        setTexts(fetchedConfirmationComponentData) {
+        setTextsAndHiddenInput(fetchedConfirmationComponentData) {
             this.headerTitle.textContent = fetchedConfirmationComponentData.title;
             this.pleaseConfirmText.textContent = fetchedConfirmationComponentData.confirmationHeader;
             this.generalConfirmationText.innerHTML = fetchedConfirmationComponentData.confirmationTextGeneral;
+            const hiddenInputField = document.querySelector(this.getAttribute("data-hidden-input-selector"));
+            hiddenInputField.value = fetchedConfirmationComponentData.shoppingCartInputString;
             return fetchedConfirmationComponentData;
         }
 
         prepareTabs(fetchedConfirmationComponentData) {
             fetchedConfirmationComponentData.products.forEach((product, idx) => {
                 const productTab = document.createElement('div');
+                productTab.orderId = product.orderId;
                 productTab.classList.add('tab');
                 if (idx === 0) {
                     productTab.classList.add('tab--selected');
@@ -493,11 +501,8 @@
                 // ToDo Delete Mechanism
                 removeTabBtn.addEventListener('click', () => {
                     this.deleteProductOrder(product)
-                        .then(this.refreshDisplay)
                         .then(this.productDataAvailable)
-                        .then(this.prepareTabs)
-                        .then(this.prepareProductPanels)
-                        .then(this.connectTabsAndProductPanels);
+                        .then(this.updateComponent)
                 });
 
                 this.productTabs.appendChild(productTab);
@@ -505,31 +510,50 @@
             return fetchedConfirmationComponentData;
         }
 
-        refreshDisplay(result) {
-            var panel = this.productPanel.lastElementChild;
-            while (panel) {
-                this.productPanel.removeChild(panel);
-                panel = this.productPanel.lastElementChild;
+        updateComponent(fetchedConfirmationComponentData) {
+            fetchedConfirmationComponentData.includedOrderIds
+            this.shadowRoot.querySelectorAll('.product').forEach(productDiv => {
+                if (!fetchedConfirmationComponentData.includedOrderIds.includes(productDiv.orderId)) {
+                    productDiv.remove();
+                }
+            });
+            this.shadowRoot.querySelectorAll('.tab').forEach(productTab => {
+                if (!fetchedConfirmationComponentData.includedOrderIds.includes(productTab.orderId)) {
+                    productTab.remove();
+                }
+            });
+
+            if (this.shadowRoot.querySelectorAll('.product--selected').length === 0) {
+                this.productPanel.querySelector('.product').classList.add('product--selected');
+                this.productPanelMobile.querySelector('.product').classList.add('product--selected');
+                this.productTabs.querySelector('.tab').classList.add('tab--selected');
+                this.updateColors(this.productPanel.querySelectorAll('.product'));
+                this.updateColors(this.productPanelMobile.querySelectorAll('.product'));
             }
-            var mobilePanel = this.productPanelMobile.lastElementChild;
-            while (mobilePanel) {
-                this.productPanelMobile.removeChild(mobilePanel);
-                mobilePanel = this.productPanelMobile.lastElementChild;
-            }
-            var tab = this.productTabs.lastElementChild;
-            while (tab) {
-                this.productTabs.removeChild(tab);
-                tab = this.productTabs.lastElementChild;
-            }
-            return result;
+            const hiddenInputField = document.querySelector(this.getAttribute("data-hidden-input-selector"));
+            hiddenInputField.value = fetchedConfirmationComponentData.shoppingCartInputString;
+        }
+
+        updateColors(productPanels) {
+            productPanels.forEach((productDiv, idx) => {
+                productDiv.classList.remove('product--even');
+                productDiv.classList.remove('product--odd');
+                if (idx % 2 === 0) {
+                    productDiv.classList.add('product--even');
+                } else {
+                    productDiv.classList.add('product--odd');
+                }
+            })
         }
 
         async deleteProductOrder(product) {
+            console.log(product);
+            const url = new URL(this.getAttribute('data-bifrost-uri') + '/components/confirmation/product');
             const queryParams = {
+                clientId: this.getAttribute('data-client-id'),
                 orderId: product.orderId
             };
-            // setze delete call per fetch ab mit product.orderId
-            var response = await fetch(this.getAttribute('data-bifrost-uri') + '/shoppingCart/' + this.getAttribute('data-client-id'), {
+            var response = await fetch(url, {
                 method: 'DELETE',
                 credentials: 'include',
                 headers: {
@@ -538,8 +562,6 @@
                 body: JSON.stringify(queryParams)
             });
             var responseJson = await response.json();
-            console.log("shopping cart after deletion: ");
-            console.log(responseJson);
             return responseJson;
         }
 
@@ -552,6 +574,7 @@
 
         createProductDiv(product, idx) {
             const productDiv = document.createElement('div');
+            productDiv.orderId = product.orderId;
             productDiv.classList.add('product');
             if (idx === 0) {
                 productDiv.classList.add('product--selected')
@@ -627,9 +650,6 @@
             });
             this.shadowRoot.querySelector('.confirmation__footer--notification').style.display = 'block';
         }
-
-        // update hidden input field
-        // register hidden input field
     }
 
     window.customElements.define('wertgarantie-confirmation', WertgarantieConfirmation);

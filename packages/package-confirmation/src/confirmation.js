@@ -404,13 +404,19 @@
 
         connectedCallback() {
             this.fetchConfirmationComponentData()
-                .then(this.setConfirmCheckbox)
                 .then(this.productDataAvailable)
+                .then(this.setConfirmCheckbox)
                 .then(this.setTextsAndHiddenInput)
                 .then(this.prepareTabs)
                 .then(this.prepareProductPanels)
                 .then(this.connectTabsAndProductPanels)
-                .then(this.showComponent);
+                .then(this.showComponent)
+                .catch(error => {
+                    if (!(error instanceof UndefinedConfirmationDataError)) {
+                        console.error(error);
+                    }
+                    this.remove();
+                });
 
             this.initListeners();
         }
@@ -466,12 +472,15 @@
                 method: 'GET',
                 credentials: 'include'
             });
+            if (response.status !== 200) {
+                return undefined;
+            }
             return await response.json();
         }
 
         productDataAvailable(fetchedConfirmationComponentData) {
             if (!fetchedConfirmationComponentData || fetchedConfirmationComponentData.constructor !== Object || Object.entries(fetchedConfirmationComponentData).length === 0 || fetchedConfirmationComponentData.products.length === 0) {
-                this.remove();
+                throw new UndefinedConfirmationDataError("fetchedConfirmationData is empty or undefined");
             }
             return fetchedConfirmationComponentData;
         }
@@ -651,6 +660,8 @@
             this.shadowRoot.querySelector('.confirmation__footer--notification').style.display = 'block';
         }
     }
+
+    class UndefinedConfirmationDataError extends Error {}
 
     window.customElements.define('wertgarantie-confirmation', WertgarantieConfirmation);
 })();

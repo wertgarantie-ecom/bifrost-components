@@ -364,21 +364,14 @@
             this.shadowRoot.appendChild(template.content.cloneNode(true));
 
             // element selectors
-            this.productTabs = this.shadowRoot.querySelector('.product__tabs');
-            this.productPanel = this.shadowRoot.querySelector('.product__panel');
-            this.productPanelMobile = this.shadowRoot.querySelector('.product__panel--mobile');
-            this.component = this.shadowRoot.querySelector('.component');
-            this.checkbox = this.shadowRoot.querySelector('#confirmation_check');
-            this.headerTitle = this.shadowRoot.querySelector('.header__title__text');
-            this.generalConfirmationText = this.shadowRoot.querySelector('#general-confirmation-text');
-            this.pleaseConfirmText = this.shadowRoot.querySelector('#please-confirm-text');
+            this.initElementSelectors();
 
             // method binding
             this.fetchConfirmationComponentData = this.fetchConfirmationComponentData.bind(this);
             this.productDataAvailable = this.productDataAvailable.bind(this);
+            this.initElementSelectors = this.initElementSelectors.bind(this);
+            this.refreshShadowRoot = this.refreshShadowRoot.bind(this);
             this.setTextsAndHiddenInput = this.setTextsAndHiddenInput.bind(this);
-            this.updateComponent = this.updateComponent.bind(this);
-            this.updateColors = this.updateColors.bind(this);
             this.prepareTabs = this.prepareTabs.bind(this);
             this.prepareProductPanels = this.prepareProductPanels.bind(this);
             this.connectTabsAndProductPanels = this.connectTabsAndProductPanels.bind(this);
@@ -388,6 +381,17 @@
             this.isFullyChecked = this.isFullyChecked.bind(this);
             this.setUncheckedWarning = this.setUncheckedWarning.bind(this);
             this.checkStateOnSubmit = this.checkStateOnSubmit.bind(this);
+        }
+
+        initElementSelectors() {
+            this.productTabs = this.shadowRoot.querySelector('.product__tabs');
+            this.productPanel = this.shadowRoot.querySelector('.product__panel');
+            this.productPanelMobile = this.shadowRoot.querySelector('.product__panel--mobile');
+            this.component = this.shadowRoot.querySelector('.component');
+            this.checkbox = this.shadowRoot.querySelector('#confirmation_check');
+            this.headerTitle = this.shadowRoot.querySelector('.header__title__text');
+            this.generalConfirmationText = this.shadowRoot.querySelector('#general-confirmation-text');
+            this.pleaseConfirmText = this.shadowRoot.querySelector('#please-confirm-text');
         }
 
         set clientId(clientId) {
@@ -443,18 +447,34 @@
 
 
         async sendConfirmation() {
-            const response = await fetch(this.getAttribute('data-bifrost-uri') + '/shoppingCart/' + this.getAttribute('data-client-id') + "/confirmation", {
+            const queryParams = {
+                clientId: this.getAttribute('data-client-id')
+            }
+            const response = await fetch(this.getAttribute('data-bifrost-uri') + '/components/confirmation', {
                 method: 'PUT',
-                credentials: 'include'
+                credentials: 'include',
+                headers: {
+                    'content-Type': 'application/json'
+                },
+                body: JSON.stringify(queryParams)
             });
+            // TODO: Was soll passieren, wenn call fehlschlägt?
             console.log(response);
         }
 
         async rejectConfirmation() {
-            const response = await fetch(this.getAttribute('data-bifrost-uri') + '/shoppingCart/' + this.getAttribute('data-client-id') + "/confirmation", {
+            const queryParams = {
+                clientId: this.getAttribute('data-client-id')
+            }
+            const response = await fetch(this.getAttribute('data-bifrost-uri') + '/components/confirmation', {
                 method: 'DELETE',
-                credentials: 'include'
+                credentials: 'include',
+                headers: {
+                    'content-Type': 'application/json'
+                },
+                body: JSON.stringify(queryParams)
             });
+            // TODO: Was soll passieren, wenn call fehlschlägt?
             console.log(response);
         }
 
@@ -511,7 +531,19 @@
                 removeTabBtn.addEventListener('click', () => {
                     this.deleteProductOrder(product)
                         .then(this.productDataAvailable)
-                        .then(this.updateComponent)
+                        .then(this.refreshShadowRoot)
+                        .then(this.setConfirmCheckbox)
+                        .then(this.setTextsAndHiddenInput)
+                        .then(this.prepareTabs)
+                        .then(this.prepareProductPanels)
+                        .then(this.connectTabsAndProductPanels)
+                        .then(this.showComponent)
+                        .catch(error => {
+                            if (!(error instanceof UndefinedConfirmationDataError)) {
+                                console.error(error);
+                            }
+                            this.remove();
+                        });
                 });
 
                 this.productTabs.appendChild(productTab);
@@ -519,44 +551,15 @@
             return fetchedConfirmationComponentData;
         }
 
-        updateComponent(fetchedConfirmationComponentData) {
-            fetchedConfirmationComponentData.includedOrderIds
-            this.shadowRoot.querySelectorAll('.product').forEach(productDiv => {
-                if (!fetchedConfirmationComponentData.includedOrderIds.includes(productDiv.orderId)) {
-                    productDiv.remove();
-                }
-            });
-            this.shadowRoot.querySelectorAll('.tab').forEach(productTab => {
-                if (!fetchedConfirmationComponentData.includedOrderIds.includes(productTab.orderId)) {
-                    productTab.remove();
-                }
-            });
-
-            if (this.shadowRoot.querySelectorAll('.product--selected').length === 0) {
-                this.productPanel.querySelector('.product').classList.add('product--selected');
-                this.productPanelMobile.querySelector('.product').classList.add('product--selected');
-                this.productTabs.querySelector('.tab').classList.add('tab--selected');
-                this.updateColors(this.productPanel.querySelectorAll('.product'));
-                this.updateColors(this.productPanelMobile.querySelectorAll('.product'));
-            }
-            const hiddenInputField = document.querySelector(this.getAttribute("data-hidden-input-selector"));
-            hiddenInputField.value = fetchedConfirmationComponentData.shoppingCartInputString;
+        refreshShadowRoot(fetchedConfirmationComponentData) {
+            const oldChild = this.shadowRoot.querySelector('.component');
+            this.shadowRoot.replaceChild(template.content.cloneNode(true), oldChild);
+            this.initElementSelectors();
+            return fetchedConfirmationComponentData;
         }
 
-        updateColors(productPanels) {
-            productPanels.forEach((productDiv, idx) => {
-                productDiv.classList.remove('product--even');
-                productDiv.classList.remove('product--odd');
-                if (idx % 2 === 0) {
-                    productDiv.classList.add('product--even');
-                } else {
-                    productDiv.classList.add('product--odd');
-                }
-            })
-        }
 
         async deleteProductOrder(product) {
-            console.log(product);
             const url = new URL(this.getAttribute('data-bifrost-uri') + '/components/confirmation/product');
             const queryParams = {
                 clientId: this.getAttribute('data-client-id'),

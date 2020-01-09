@@ -914,7 +914,6 @@ import '../../package-rating/src/rating.js'
                     console.error('Adding product to shopping cart failed:', response);
                     return {};
                 }
-                console.log(await response.json());
                 var fadeTarget = this.modal;
                 var fadeEffect = setInterval(function () {
                     if (!fadeTarget.style.opacity) {

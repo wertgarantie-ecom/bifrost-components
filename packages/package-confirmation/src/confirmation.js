@@ -361,13 +361,10 @@
         constructor() {
             super();
             this.attachShadow({mode: 'open'});
-            this.shadowRoot.appendChild(template.content.cloneNode(true));
-
-            // element selectors
-            this.initElementSelectors();
 
             // method binding
             this.fetchConfirmationComponentData = this.fetchConfirmationComponentData.bind(this);
+            this.initListeners = this.initListeners.bind(this);
             this.productDataAvailable = this.productDataAvailable.bind(this);
             this.initElementSelectors = this.initElementSelectors.bind(this);
             this.refreshShadowRoot = this.refreshShadowRoot.bind(this);
@@ -408,22 +405,27 @@
         }
 
         connectedCallback() {
-            this.fetchConfirmationComponentData()
+            const data = this.fetchConfirmationComponentData();
+            this.refreshComponent(data);
+        }
+
+        refreshComponent(componentData) {
+            componentData
                 .then(this.productDataAvailable)
+                .then(this.refreshShadowRoot)
                 .then(this.setConfirmCheckbox)
                 .then(this.setTextsAndHiddenInput)
                 .then(this.prepareTabs)
                 .then(this.prepareProductPanels)
                 .then(this.connectTabsAndProductPanels)
                 .then(this.showComponent)
+                .then(this.initListeners)
                 .catch(error => {
                     if (!(error instanceof UndefinedConfirmationDataError)) {
                         console.error(error);
                     }
                     this.remove();
                 });
-
-            this.initListeners();
         }
 
         initListeners() {
@@ -450,7 +452,7 @@
         async sendConfirmation() {
             const queryParams = {
                 clientId: this.getAttribute('data-client-id')
-            }
+            };
             const response = await fetch(this.getAttribute('data-bifrost-uri') + '/components/confirmation', {
                 method: 'PUT',
                 credentials: 'include',
@@ -467,7 +469,7 @@
         async rejectConfirmation() {
             const queryParams = {
                 clientId: this.getAttribute('data-client-id')
-            }
+            };
             const response = await fetch(this.getAttribute('data-bifrost-uri') + '/components/confirmation', {
                 method: 'DELETE',
                 credentials: 'include',
@@ -535,23 +537,9 @@
 
                 var removeTabBtn = productTab.querySelector('.tab__remove');
 
-                // ToDo Delete Mechanism
                 removeTabBtn.addEventListener('click', () => {
-                    this.deleteProductOrder(product)
-                        .then(this.productDataAvailable)
-                        .then(this.refreshShadowRoot)
-                        .then(this.setConfirmCheckbox)
-                        .then(this.setTextsAndHiddenInput)
-                        .then(this.prepareTabs)
-                        .then(this.prepareProductPanels)
-                        .then(this.connectTabsAndProductPanels)
-                        .then(this.showComponent)
-                        .catch(error => {
-                            if (!(error instanceof UndefinedConfirmationDataError)) {
-                                console.error(error);
-                            }
-                            this.remove();
-                        });
+                    const data = this.deleteProductOrder(product);
+                    this.refreshComponent(data);
                 });
 
                 this.productTabs.appendChild(productTab);
@@ -561,7 +549,12 @@
 
         refreshShadowRoot(fetchedConfirmationComponentData) {
             const oldChild = this.shadowRoot.querySelector('.component');
-            this.shadowRoot.replaceChild(template.content.cloneNode(true), oldChild);
+            if (oldChild) {
+                this.shadowRoot.replaceChild(template.content.cloneNode(true), oldChild);
+            } else {
+                this.shadowRoot.appendChild(template.content.cloneNode(true));
+            }
+
             this.initElementSelectors();
             return fetchedConfirmationComponentData;
         }
@@ -581,8 +574,7 @@
                 },
                 body: JSON.stringify(queryParams)
             });
-            var responseJson = await response.json();
-            return responseJson;
+            return await response.json();
         }
 
         prepareProductPanels(fetchedConfirmationComponentData) {
@@ -672,7 +664,8 @@
         }
     }
 
-    class UndefinedConfirmationDataError extends Error {}
+    class UndefinedConfirmationDataError extends Error {
+    }
 
     window.customElements.define('wertgarantie-confirmation', WertgarantieConfirmation);
 })();

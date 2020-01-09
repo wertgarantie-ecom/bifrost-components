@@ -372,6 +372,7 @@
             this.initElementSelectors = this.initElementSelectors.bind(this);
             this.refreshShadowRoot = this.refreshShadowRoot.bind(this);
             this.setTextsAndHiddenInput = this.setTextsAndHiddenInput.bind(this);
+            this.setHiddenInput = this.setHiddenInput.bind(this);
             this.prepareTabs = this.prepareTabs.bind(this);
             this.prepareProductPanels = this.prepareProductPanels.bind(this);
             this.connectTabsAndProductPanels = this.connectTabsAndProductPanels.bind(this);
@@ -458,6 +459,7 @@
                 },
                 body: JSON.stringify(queryParams)
             });
+            this.setHiddenInput(await response.text());
             // TODO: Was soll passieren, wenn call fehlschlägt?
             console.log(response);
         }
@@ -474,7 +476,8 @@
                 },
                 body: JSON.stringify(queryParams)
             });
-            // TODO: Was soll passieren, wenn call fehlschlägt?
+            this.setHiddenInput(await response.text());
+            // TODO: Was soll passieren, wenn call fehlschlägt? --> Nachricht: Service aktuell nicht verfügbar?
             console.log(response);
         }
 
@@ -509,9 +512,14 @@
             this.headerTitle.textContent = fetchedConfirmationComponentData.title;
             this.pleaseConfirmText.textContent = fetchedConfirmationComponentData.confirmationHeader;
             this.generalConfirmationText.innerHTML = fetchedConfirmationComponentData.confirmationTextGeneral;
-            const hiddenInputField = document.querySelector(this.getAttribute("data-hidden-input-selector"));
-            hiddenInputField.value = fetchedConfirmationComponentData.shoppingCartInputString;
+            this.setHiddenInput(fetchedConfirmationComponentData.shoppingCartInputString);
             return fetchedConfirmationComponentData;
+        }
+
+        setHiddenInput(wertgarantieSignedShoppingCart) {
+
+            const hiddenInputField = document.querySelector(this.getAttribute("data-hidden-input-selector"));
+            hiddenInputField.value = wertgarantieSignedShoppingCart;
         }
 
         prepareTabs(fetchedConfirmationComponentData) {

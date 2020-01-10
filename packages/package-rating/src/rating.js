@@ -1,4 +1,5 @@
 (function () {
+    const BIFROST_URI = "https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"
     const template = document.createElement('template');
     template.innerHTML =
         `
@@ -59,6 +60,14 @@
             this.checkIfRatingDefined = this.checkIfRatingDefined.bind(this);
         }
 
+        set bifrostUri(bifrostUri) {
+            this.setAttribute('data-bifrost-uri', bifrostUri);
+        }
+
+        get bifrostUri() {
+            return this.getAttribute('data-bifrost-uri') || BIFROST_URI
+        }
+
         connectedCallback() {
             const addIfDefined = (object, name, property) => {
                 if (property) object[name] = property;
@@ -67,12 +76,12 @@
             const displayData = {};
             addIfDefined(displayData, 'rating', this.getAttribute('data-rating'));
             addIfDefined(displayData, 'text', this.getAttribute('data-text'));
-            addIfDefined(displayData, 'uri', this.getAttribute('data-uri'));
+            addIfDefined(displayData, 'uri', this.bifrostUri);
             addIfDefined(displayData, 'ratingsTotal', this.getAttribute('data-ratings-total'));
             addIfDefined(displayData, 'showRatingNumber', this.getAttribute('data-show-rating-number') === "false" ? false : true);
 
             const fetchData = {};
-            addIfDefined(fetchData, 'fetchUri', this.getAttribute('data-fetch-uri'));
+            addIfDefined(fetchData, 'fetchUri', this.bifrostUri);
 
             if (this.allDisplayDataAvailable(displayData)) {
                 this.updateDisplay(displayData);

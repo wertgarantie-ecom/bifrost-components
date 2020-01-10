@@ -11,21 +11,18 @@
     <!-- data-show-rating-number="false" -->
     <div>
         <p>Remote Call to bifrost: </p>
-        <wertgarantie-rating class="mobilcom-wg-rating-theme"
-                data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"
-                >
+        <wertgarantie-rating class="mobilcom-wg-rating-theme">
         </wertgarantie-rating>
     </div>
     <div>
         <p>Fetch Data from local bifrost (make sure it's running)</p>
             <wertgarantie-rating class="mobilcom-wg-rating-theme"
-                data-fetch-uri="http://localhost:3000/wertgarantie/rating">
+                data-bifrost-uri="http://localhost:3000/wertgarantie/rating">
     </wertgarantie-rating>
     </div>
     <div>
         <p>Fetch Data from local bifrost with modified text and do not show rating number</p>
             <wertgarantie-rating id="no-rating-number-and-different-text"
-                data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"
                 data-text="Google Rezensionen"
                 data-show-rating-number="false">
     </wertgarantie-rating>

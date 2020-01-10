@@ -1,6 +1,7 @@
 import '../../package-rating/src/rating.js'
 
 (function () {
+    const BIFROST_URI = "https://wertgarantie-bifrost.herokuapp.com/wertgarantie";
     const MOBILE_WIDTH = 878;
     const template = document.createElement('template');
     template.innerHTML = `
@@ -571,6 +572,14 @@ import '../../package-rating/src/rating.js'
             this.setAttribute("data-shop-product-name", shopProductName);
         }
 
+        set bifrostUri(bifrostUri) {
+            this.setAttribute("data-bifrost-uri", bifrostUri);
+        }
+
+        get bifrostUri() {
+            return this.getAttribute("data-bifrost-uri") || BIFROST_URI;
+        }
+
         open() {
             this.modal.style.display = 'block';
         }
@@ -598,7 +607,7 @@ import '../../package-rating/src/rating.js'
             const fetchData = {};
             addIfDefined(fetchData, 'devicePrice', this.getAttribute('data-device-price'));
             addIfDefined(fetchData, 'deviceClass', this.getAttribute('data-device-class'));
-            addIfDefined(fetchData, 'bifrostUri', this.getAttribute('data-bifrost-uri'));
+            addIfDefined(fetchData, 'bifrostUri', this.bifrostUri);
             addIfDefined(fetchData, 'clientId', this.getAttribute('data-client-id'));
             addIfDefined(fetchData, 'shopProductName', this.getAttribute('data-shop-product-name'));
 
@@ -878,7 +887,7 @@ import '../../package-rating/src/rating.js'
         }
 
         async addProductToOrder() {
-            const bifrostUri = this.getAttribute('data-bifrost-uri');
+            const bifrostUri = this.bifrostUri;
             const clientId = this.getAttribute('data-client-id');
             const currency = "EUR"
             // fetch uri with different path for POST call to set cookie

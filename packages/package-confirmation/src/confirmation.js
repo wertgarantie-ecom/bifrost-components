@@ -1,6 +1,7 @@
 // import { bodyParser } from "restify";
 
 (function () {
+    const BIFROST_URI = "https://wertgarantie-bifrost.herokuapp.com/wertgarantie";
     const template = document.createElement('template');
     template.innerHTML = `
         <style>
@@ -379,6 +380,8 @@
             this.isFullyChecked = this.isFullyChecked.bind(this);
             this.setUncheckedWarning = this.setUncheckedWarning.bind(this);
             this.checkStateOnSubmit = this.checkStateOnSubmit.bind(this);
+
+            console.log(this.bifrostUri);
         }
 
         initElementSelectors() {
@@ -396,12 +399,24 @@
             this.setAttribute("data-client-id", clientId);
         }
 
+        get clientId() {
+            return this.getAttribute("data-client-id");
+        }
+
         set bifrostUri(bifrostUri) {
             this.setAttribute("data-bifrost-uri", bifrostUri);
         }
 
+        get bifrostUri() {
+            return this.getAttribute("data-bifrost-uri") || BIFROST_URI;
+        }
+
         set hiddenInputSelector(wgProductInput) {
             this.setAttribute("data-hidden-input-selector", wgProductInput);
+        }
+
+        get hiddenInputSelector() {
+            return this.getAttribute("data-hidden-input-selector");
         }
 
         connectedCallback() {
@@ -451,9 +466,9 @@
 
         async sendConfirmation() {
             const queryParams = {
-                clientId: this.getAttribute('data-client-id')
+                clientId: this.clientId
             };
-            const response = await fetch(this.getAttribute('data-bifrost-uri') + '/components/confirmation', {
+            const response = await fetch(this.bifrostUri + '/components/confirmation', {
                 method: 'PUT',
                 credentials: 'include',
                 headers: {
@@ -468,9 +483,9 @@
 
         async rejectConfirmation() {
             const queryParams = {
-                clientId: this.getAttribute('data-client-id')
+                clientId: this.clientId
             };
-            const response = await fetch(this.getAttribute('data-bifrost-uri') + '/components/confirmation', {
+            const response = await fetch(this.bifrostUri + '/components/confirmation', {
                 method: 'DELETE',
                 credentials: 'include',
                 headers: {
@@ -488,9 +503,9 @@
         }
 
         async fetchConfirmationComponentData() {
-            const url = new URL(this.getAttribute('data-bifrost-uri') + '/components/confirmation');
+            const url = new URL(this.bifrostUri + '/components/confirmation');
             const queryParams = {
-                clientId: this.getAttribute('data-client-id')
+                clientId: this.clientId
             };
             Object.keys(queryParams).forEach(key => url.searchParams.append(key, queryParams[key]));
             const response = await fetch(url, {
@@ -519,7 +534,6 @@
         }
 
         setHiddenInput(wertgarantieSignedShoppingCart) {
-
             const hiddenInputField = document.querySelector(this.getAttribute("data-hidden-input-selector"));
             hiddenInputField.value = wertgarantieSignedShoppingCart;
         }
@@ -561,9 +575,9 @@
 
 
         async deleteProductOrder(product) {
-            const url = new URL(this.getAttribute('data-bifrost-uri') + '/components/confirmation/product');
+            const url = new URL(this.bifrostUri + '/components/confirmation/product');
             const queryParams = {
-                clientId: this.getAttribute('data-client-id'),
+                clientId: this.clientId,
                 orderId: product.orderId
             };
             var response = await fetch(url, {

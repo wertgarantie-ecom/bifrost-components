@@ -1,8 +1,12 @@
-(function () {
-    const BIFROST_URI = "https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"
-    const template = document.createElement('template');
-    template.innerHTML =
-        `
+import {Modernizr} from '../../../src/vendor/modernizr';
+
+if (Modernizr.customelements) {
+    console.log(Modernizer);
+    (function () {
+        const BIFROST_URI = "https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating";
+        const template = document.createElement('template');
+        template.innerHTML =
+            `
         <style>
             :host {
                 display: inline-block;
@@ -45,111 +49,113 @@
             <a target="_blank" class="rating__link"></a>
         </div>`;
 
-    class WertgarantieRating extends HTMLElement {
-        constructor() {
-            super();
-            this.attachShadow({mode: 'open'});
-            this.shadowRoot.appendChild(template.content.cloneNode(true));
-            this.container = this.shadowRoot.querySelector(".rating");
-            this.ratingSpan = this.shadowRoot.querySelector('.rating__number');
-            this.ratingStarsDiv = this.shadowRoot.querySelector('.rating__stars');
-            this.ratingLink = this.shadowRoot.querySelector('.rating__link');
+        class WertgarantieRating extends HTMLElement {
+            constructor() {
+                super();
+                this.attachShadow({mode: 'open'});
+                this.shadowRoot.appendChild(template.content.cloneNode(true));
+                this.container = this.shadowRoot.querySelector(".rating");
+                this.ratingSpan = this.shadowRoot.querySelector('.rating__number');
+                this.ratingStarsDiv = this.shadowRoot.querySelector('.rating__stars');
+                this.ratingLink = this.shadowRoot.querySelector('.rating__link');
 
-            this.updateDisplay = this.updateDisplay.bind(this);
-            this.overwriteWithUserDefinedAttributes = this.overwriteWithUserDefinedAttributes.bind(this);
-            this.checkIfRatingDefined = this.checkIfRatingDefined.bind(this);
-        }
-
-        set bifrostUri(bifrostUri) {
-            this.setAttribute('data-bifrost-uri', bifrostUri);
-        }
-
-        get bifrostUri() {
-            return this.getAttribute('data-bifrost-uri') || BIFROST_URI
-        }
-
-        connectedCallback() {
-            const addIfDefined = (object, name, property) => {
-                if (property) object[name] = property;
-            };
-
-            const displayData = {};
-            addIfDefined(displayData, 'rating', this.getAttribute('data-rating'));
-            addIfDefined(displayData, 'text', this.getAttribute('data-text'));
-            addIfDefined(displayData, 'uri', this.bifrostUri);
-            addIfDefined(displayData, 'ratingsTotal', this.getAttribute('data-ratings-total'));
-            addIfDefined(displayData, 'showRatingNumber', this.getAttribute('data-show-rating-number') === "false" ? false : true);
-
-            const fetchData = {};
-            addIfDefined(fetchData, 'fetchUri', this.bifrostUri);
-
-            if (this.allDisplayDataAvailable(displayData)) {
-                this.updateDisplay(displayData);
-            } else {
-                this.fetchRating(fetchData.fetchUri)
-                    .then((fetchedValues) => this.overwriteWithUserDefinedAttributes(fetchedValues, displayData))
-                    .then(this.checkIfRatingDefined)
-                    .then(this.updateDisplay);
+                this.updateDisplay = this.updateDisplay.bind(this);
+                this.overwriteWithUserDefinedAttributes = this.overwriteWithUserDefinedAttributes.bind(this);
+                this.checkIfRatingDefined = this.checkIfRatingDefined.bind(this);
             }
-        }
 
-        allDisplayDataAvailable(displayData) {
-            return displayData.rating && displayData.text && displayData.ratingsTotal && displayData.uri;
-        }
-
-        async fetchRating(fetchUri) {
-            if (!fetchUri) {
-                this.remove();
-                throw new Error("fetch data and display data incomplete\n" + 
-                    "fetchUri: " + fetchUri
-                );
+            set bifrostUri(bifrostUri) {
+                this.setAttribute('data-bifrost-uri', bifrostUri);
             }
-            try {
-                const response = await fetch(fetchUri);
-                if (response.status !== 200) {
-                    console.error('fetch failed:', response);
+
+            get bifrostUri() {
+                return this.getAttribute('data-bifrost-uri') || BIFROST_URI
+            }
+
+            connectedCallback() {
+                const addIfDefined = (object, name, property) => {
+                    if (property) object[name] = property;
+                };
+
+                const displayData = {};
+                addIfDefined(displayData, 'rating', this.getAttribute('data-rating'));
+                addIfDefined(displayData, 'text', this.getAttribute('data-text'));
+                addIfDefined(displayData, 'uri', this.bifrostUri);
+                addIfDefined(displayData, 'ratingsTotal', this.getAttribute('data-ratings-total'));
+                addIfDefined(displayData, 'showRatingNumber', this.getAttribute('data-show-rating-number') === "false" ? false : true);
+
+                const fetchData = {};
+                addIfDefined(fetchData, 'fetchUri', this.bifrostUri);
+
+                if (this.allDisplayDataAvailable(displayData)) {
+                    this.updateDisplay(displayData);
+                } else {
+                    this.fetchRating(fetchData.fetchUri)
+                        .then((fetchedValues) => this.overwriteWithUserDefinedAttributes(fetchedValues, displayData))
+                        .then(this.checkIfRatingDefined)
+                        .then(this.updateDisplay);
+                }
+            }
+
+            allDisplayDataAvailable(displayData) {
+                return displayData.rating && displayData.text && displayData.ratingsTotal && displayData.uri;
+            }
+
+            async fetchRating(fetchUri) {
+                if (!fetchUri) {
+                    this.remove();
+                    throw new Error("fetch data and display data incomplete\n" +
+                        "fetchUri: " + fetchUri
+                    );
+                }
+                try {
+                    const response = await fetch(fetchUri);
+                    if (response.status !== 200) {
+                        console.error('fetch failed:', response);
+                        return {};
+                    }
+                    return await response.json();
+                } catch (error) {
+                    console.error('Error:', error);
                     return {};
                 }
-                return await response.json();
-            } catch (error) {
-                console.error('Error:', error);
-                return {};
+            }
+
+            overwriteWithUserDefinedAttributes(fetchedValues, definedAttributes) {
+                const merge = (object1, object2) => {
+                    return {...object1, ...object2}
+                };
+
+                return merge(fetchedValues, definedAttributes);
+            }
+
+            checkIfRatingDefined(displayData) {
+                if (!this.allDisplayDataAvailable(displayData)) {
+                    this.remove();
+                    throw new Error("display data incomplete");
+                } else {
+                    return displayData;
+                }
+            }
+
+            updateDisplay({rating, uri, ratingsTotal, text, showRatingNumber}) {
+                rating = Math.round(rating * 10) / 10;
+                this.ratingStarsDiv.innerText = '★★★★★';
+                if (showRatingNumber) {
+                    this.ratingSpan.innerText = rating;
+                }
+                this.ratingStarsDiv.style.setProperty("--rating", rating);
+                if (uri) {
+                    this.ratingLink.setAttribute('href', uri);
+                }
+                if (text) {
+                    this.ratingLink.innerText = ratingsTotal + " " + text;
+                }
             }
         }
 
-        overwriteWithUserDefinedAttributes(fetchedValues, definedAttributes) {
-            const merge = (object1, object2) => {
-                return {...object1, ...object2}
-            };
-
-            return merge(fetchedValues, definedAttributes);
+        if (!window.customElements.get('wertgarantie-rating')) {
+            window.customElements.define('wertgarantie-rating', WertgarantieRating);
         }
-
-        checkIfRatingDefined(displayData) {
-            if (!this.allDisplayDataAvailable(displayData)) {
-                this.remove();
-                throw new Error("display data incomplete");
-            } else {
-                return displayData;
-            }
-        }
-
-        updateDisplay({rating, uri, ratingsTotal, text, showRatingNumber}) {
-            rating = Math.round(rating * 10) / 10;
-            this.ratingStarsDiv.innerText = '★★★★★';
-            if (showRatingNumber) {
-                this.ratingSpan.innerText = rating;
-            }
-            this.ratingStarsDiv.style.setProperty("--rating", rating);
-            if (uri) {
-                this.ratingLink.setAttribute('href', uri);
-            }
-            if (text) {
-                this.ratingLink.innerText = ratingsTotal + " " + text;
-            }
-        }
-    }
-    if (!window.customElements.get('wertgarantie-rating')) {
-        window.customElements.define('wertgarantie-rating', WertgarantieRating);
-    }
-})();
+    })();
+}

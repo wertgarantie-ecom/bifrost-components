@@ -672,7 +672,8 @@ import '../../package-rating/src/rating.js'
                 const url = new URL(bifrostUri + '/components/selection-popup');
                 const queryParams = {
                     devicePrice: devicePrice,
-                    deviceClass: deviceClass
+                    deviceClass: deviceClass,
+                    clientId: clientId
                 };
                 Object.keys(queryParams).forEach(key => url.searchParams.append(key, queryParams[key]));
                 const response = await fetch(url);

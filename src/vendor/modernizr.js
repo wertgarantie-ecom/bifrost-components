@@ -210,5 +210,5 @@ Detects support for the Custom Elements API, to create custom html elements via 
 })(window, document);
 
 
-module.exports = window.Modernizr;
+// module.exports = window.Modernizr;
 

@@ -1,7 +1,7 @@
-import {Modernizr} from '../../../src/vendor/modernizr';
+import '../../../src/vendor/modernizr';
 
-if (Modernizr.customelements) {
-    console.log(Modernizer);
+if (window.Modernizr.customelements) {
+    console.log(window.Modernizr);
     (function () {
         const BIFROST_URI = "https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating";
         const template = document.createElement('template');
@@ -80,7 +80,7 @@ if (Modernizr.customelements) {
                 const displayData = {};
                 addIfDefined(displayData, 'rating', this.getAttribute('data-rating'));
                 addIfDefined(displayData, 'text', this.getAttribute('data-text'));
-                addIfDefined(displayData, 'uri', this.bifrostUri);
+                addIfDefined(displayData, 'uri', this.getAttribute('data-uri'));
                 addIfDefined(displayData, 'ratingsTotal', this.getAttribute('data-ratings-total'));
                 addIfDefined(displayData, 'showRatingNumber', this.getAttribute('data-show-rating-number') === "false" ? false : true);
 

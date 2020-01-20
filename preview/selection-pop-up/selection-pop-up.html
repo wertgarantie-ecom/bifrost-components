@@ -21,9 +21,10 @@
                                data-shop-product-name="Phone X">
 </wertgarantie-selection-pop-up>
 
-<button class="example-button" id="openBtn3">Klick mich für Beispiel 3</button>
+<button class="example-button" id="openBtn3">Klick mich für Beispiel 3 (Local Bifröst muss laufen)</button>
 <wertgarantie-selection-pop-up id="selection3"
                                class="example1"
+                               data-bifrost-uri="http://localhost:3000/wertgarantie"
                                data-shop-product-name="Bike X">
 </wertgarantie-selection-pop-up>
 <!-- data-bifrost-uri="http://localhost:3000/wertgarantie"> -->
@@ -33,7 +34,7 @@
     var selection1 = document.querySelector("#selection1");
     selection1.devicePrice = 1000;
     selection1.deviceClass = "1dfd4549-9bdc-4285-9047-e5088272dade";
-    selection1.clientId = "f1eea02c-f9bd-11e9-a37a-b3513bff18fe";
+    selection1.clientId = "5209d6ea-1a6e-11ea-9f8d-778f0ad9137f";
 
     var openBtn1 = document.querySelector('#openBtn1');
     openBtn1.addEventListener('click', () => {
@@ -82,7 +83,7 @@
     var selection2 = document.querySelector("#selection2");
     selection2.devicePrice = 1000;
     selection2.deviceClass = "1dfd4549-9bdc-4285-9047-e5088272dade";
-    selection2.clientId = "f1eea02c-f9bd-11e9-a37a-b3513bff18fe";
+    selection2.clientId = "5209d6ea-1a6e-11ea-9f8d-778f0ad9137f";
 
     var openBtn2 = document.querySelector('#openBtn2');
     openBtn2.addEventListener('click', () => {
@@ -92,7 +93,7 @@
     var selection3 = document.querySelector("#selection3");
     selection3.devicePrice = 1000;
     selection3.deviceClass = "6bdd2d93-45d0-49e1-8a0c-98eb80342222"; // bike
-    selection3.clientId = "f1eea02c-f9bd-11e9-a37a-b3513bff18fe";
+    selection3.clientId = "5209d6ea-1a6e-11ea-9f8d-778f0ad9137f";
 
     var openBtn3 = document.querySelector('#openBtn3');
     openBtn3.addEventListener('click', () => {

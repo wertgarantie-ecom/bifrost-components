@@ -76,7 +76,7 @@
             const displayData = {};
             addIfDefined(displayData, 'rating', this.getAttribute('data-rating'));
             addIfDefined(displayData, 'text', this.getAttribute('data-text'));
-            addIfDefined(displayData, 'uri', this.bifrostUri);
+            addIfDefined(displayData, 'uri', this.getAttribute('data-uri'));
             addIfDefined(displayData, 'ratingsTotal', this.getAttribute('data-ratings-total'));
             addIfDefined(displayData, 'showRatingNumber', this.getAttribute('data-show-rating-number') === "false" ? false : true);
 

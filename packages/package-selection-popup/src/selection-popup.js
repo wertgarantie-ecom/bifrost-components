@@ -658,7 +658,7 @@ import '../../package-rating/src/rating.js'
         }
 
         async fetchPolicy({bifrostUri, devicePrice, deviceClass, clientId, shopProductName}) {
-            if (!(bifrostUri && devicePrice && deviceClass, clientId && shopProductName)) {
+            if (!(bifrostUri && devicePrice && deviceClass && clientId && shopProductName)) {
                 this.remove();
                 throw new Error("fetch data incomplete\n" +
                     "bifrostUri: " + bifrostUri + "\n" +
@@ -817,7 +817,7 @@ import '../../package-rating/src/rating.js'
                     const allProductDivs = this.productSection.querySelectorAll('.product');
                     this.productSection.querySelectorAll('.product').forEach(productDiv => {
                         this.markAsUnselected(productDiv);
-                    })
+                    });
                     this.checkProduct(allProductDivs[idx]);
                     this.highlightProduct(allProductDivs[idx]);
                 });
@@ -890,7 +890,7 @@ import '../../package-rating/src/rating.js'
         async addProductToOrder() {
             const bifrostUri = this.bifrostUri;
             const clientId = this.getAttribute('data-client-id');
-            const currency = "EUR"
+            const currency = "EUR";
             // fetch uri with different path for POST call to set cookie
             const selectedProduct = this.getSelectedProduct();
             if (!(bifrostUri && this.getAttribute('data-device-price') && this.getAttribute('data-device-class') && this.getAttribute('data-shop-product-name') && selectedProduct && clientId)) {
@@ -910,7 +910,7 @@ import '../../package-rating/src/rating.js'
                 productId: selectedProduct,
                 deviceCurrency: currency,
                 shopProductName: this.getAttribute('data-shop-product-name')
-            }
+            };
             try {
                 const response = await fetch(bifrostUri + '/shoppingCart/' + clientId, {
                     method: 'POST',
@@ -943,8 +943,7 @@ import '../../package-rating/src/rating.js'
         }
 
         getSelectedProduct() {
-            var productId = this.productSection.querySelector('.product--selected').querySelector('.product__selection').value;
-            return productId;
+            return this.productSection.querySelector('.product--selected').querySelector('.product__selection').value;
         }
     }
 

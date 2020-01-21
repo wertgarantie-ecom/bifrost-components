@@ -16,26 +16,23 @@ To make the html `wertgarantie-confirmation`-tag available, just include this JS
 In order to see the confirmation component here, please select a bike insurance product via <a href="https://wertgarantie-ecom.github.io/bifrost-components/?path=/story/components-pop-up--bike-product-popup">this link</a>.
 
 <wertgarantie-confirmation
-    data-client-id="f0037d1d-9936-4f63-8f74-136d8aa6b063"
-    data-bifrost-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie">
+    data-client-id="5209d6ea-1a6e-11ea-9f8d-778f0ad9137f">
 </wertgarantie-confirmation>
 
 Code for this component: 
 
 ```html
 <wertgarantie-confirmation
-    data-client-id="f0037d1d-9936-4f63-8f74-136d8aa6b063"
-    data-bifrost-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie">
+    data-client-id="5209d6ea-1a6e-11ea-9f8d-778f0ad9137f">
 </wertgarantie-confirmation>
 ```
 
 ## Configuration
-There are two attributes that you need to provide for this component:
-* `data-client-id`: the public client ID for your shop (you get this ID from Wertgarantie)
-* `data-bifrost-uri`: Uri of Wertgarantie's Backend for Frontend
-
-The following attribute is optional:
+There are several attributes in the component that are configurable:
+* `data-client-id`: the public client ID for your shop (you get this ID from Wertgarantie). You can either use this attribute or set `component.clientId = <your client ID>` via JavaScript, but `without this information, the component will not work`.
+* `data-hidden-input-selector`: a css-selector that selects a hidden input tag in your HTML-form. When initialized, the component will set the value of the input tag (cookie data with signature) that you can use for the checkout call to bifrost in your web shop.
 * `data-form-selector`: a css-selector that selects your checkout form (e. g. '#checkout-form') 
+* `data-bifrost-uri`: Uri of the backend. Defaults to `"https://wertgarantie-bifrost.herokuapp.com/wertgarantie"`
 
 
 ## Validation
@@ -45,4 +42,4 @@ Therefore you have different opportunities:
 * provide the `data-form-selector` attribute in the html tag that selects your checkout form. This way the component automatically adds a `submit` - event listener to your form, and checks for confirmation status. If not confirmed the form will not be submitted and the confirmation component will notify the user and mark checkboxes in red.
 * the component has an API that you can use to validate. You'll just have to call the method `checkStateOnSubmit()` of the component which returns false in case the confirmation is not given by the user. So you can call this method in your maybe already existing submit event listening method.
 
-To see this in action, please checkout the [demo shop](https://heimdall-mock.herokuapp.com/demoshop) where the interaction of the different components is displayed 
+To see this in action, please checkout the [demo shop](https://wertgarantie-demo-shop.herokuapp.com/demoshop) where the interaction of the different components is displayed 

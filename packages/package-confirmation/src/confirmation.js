@@ -54,7 +54,7 @@
                 font-size: 20px;
                 content: "\\F3ED";
                 position: absolute;
-                top:30%;
+                top:10%;
                 left:30%;
             }
 

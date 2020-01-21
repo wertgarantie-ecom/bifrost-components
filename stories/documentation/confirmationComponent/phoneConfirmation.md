@@ -13,18 +13,30 @@ To make the html `wertgarantie-confirmation`-tag available, just include this JS
 <script src="https://cdn.jsdelivr.net/npm/package-confirmation/dist/confirmation.min.js" type="text/javascript">
 ```
 
-In order to see the confirmation component here, please select a phone insurance product via <a href="https://wertgarantie-ecom.github.io/bifrost-components/?path=/story/components-pop-up--bike-product-popup">this link</a>.
+In order to see the confirmation component here, please select a phone insurance product via <a href="https://wertgarantie-ecom.github.io/bifrost-components/?path=/story/components-pop-up--phone-product-popup">this link</a>.
 
-<wertgarantie-confirmation
-    data-client-id="5209d6ea-1a6e-11ea-9f8d-778f0ad9137f">
-</wertgarantie-confirmation>
+<form id="demo-html-form">
+    <input id="hidden-input-phone" type="hidden" />
+    <wertgarantie-confirmation
+        data-client-id="5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
+        data-hidden-input-selector="#hidden-input-phone"
+        data-form-selector="#demo-html-form">
+    </wertgarantie-confirmation>
+    <input type="submit" class="checkoutBtn" value="Checkout" />
+</form>
 
 Code for this component: 
 
 ```html
-<wertgarantie-confirmation
-    data-client-id="5209d6ea-1a6e-11ea-9f8d-778f0ad9137f">
-</wertgarantie-confirmation>
+<form id="demo-html-form">
+    <input id="hidden-input-phone" type="hidden" />
+    <wertgarantie-confirmation
+        data-client-id="5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
+        data-hidden-input-selector="#hidden-input-phone"
+        data-form-selector="#demo-html-form">
+    </wertgarantie-confirmation>
+    <input type="submit" class="checkoutBtn" value="Checkout" />
+</form>
 ```
 
 ## Configuration

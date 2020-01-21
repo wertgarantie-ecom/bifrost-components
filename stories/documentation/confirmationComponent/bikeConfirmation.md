@@ -15,16 +15,28 @@ To make the html `wertgarantie-confirmation`-tag available, just include this JS
 
 In order to see the confirmation component here, please select a bike insurance product via <a href="https://wertgarantie-ecom.github.io/bifrost-components/?path=/story/components-pop-up--bike-product-popup">this link</a>.
 
-<wertgarantie-confirmation
-    data-client-id="5209d6ea-1a6e-11ea-9f8d-778f0ad9137f">
-</wertgarantie-confirmation>
+<form id="demo-html-form">
+    <input id="hidden-input-bike" type="hidden" />
+    <wertgarantie-confirmation
+        data-client-id="5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
+        data-hidden-input-selector="#hidden-input-bike"
+        data-form-selector="#demo-html-form">
+    </wertgarantie-confirmation>
+    <input type="submit" class="checkoutBtn" value="Checkout" />
+</form>
 
 Code for this component: 
 
 ```html
-<wertgarantie-confirmation
-    data-client-id="5209d6ea-1a6e-11ea-9f8d-778f0ad9137f">
-</wertgarantie-confirmation>
+<form id="demo-html-form">
+    <input id="hidden-input-bike" type="hidden" />
+    <wertgarantie-confirmation
+        data-client-id="5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
+        data-hidden-input-selector="#hidden-input-bike"
+        data-form-selector="#demo-html-form">
+    </wertgarantie-confirmation>
+    <input type="submit" class="checkoutBtn" value="Checkout" />
+</form>
 ```
 
 ## Configuration

@@ -1,5 +1,5 @@
 // import { bodyParser } from "restify";
-
+if (window.customElements) {
 (function () {
     const BIFROST_URI = "https://wertgarantie-bifrost.herokuapp.com/wertgarantie";
     const template = document.createElement('template');
@@ -683,3 +683,4 @@
 
     window.customElements.define('wertgarantie-confirmation', WertgarantieConfirmation);
 })();
+}

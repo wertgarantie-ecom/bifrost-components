@@ -380,8 +380,6 @@ if (window.customElements) {
             this.isFullyChecked = this.isFullyChecked.bind(this);
             this.setUncheckedWarning = this.setUncheckedWarning.bind(this);
             this.checkStateOnSubmit = this.checkStateOnSubmit.bind(this);
-
-            console.log(this.bifrostUri);
         }
 
         initElementSelectors() {

@@ -15,8 +15,9 @@ npm install wertgarantie-rating
 
 Or directly include it into your web page
 ```html
-<script src="https://cdn.jsdelivr.net/npm/wertgarantie-rating/dist/rating.min.js" type="text/javascript">
+<script src="https://cdn.jsdelivr.net/npm/wertgarantie-rating/dist/rating.min.js" type="module">
 ```
+`NOTE` that `type="module"` is required to ensure that older browsers without ES6 support will not misinterpret the file and throw errors.
 
 Once the JavaScript file is included the following tag is available
 ```html
@@ -28,12 +29,22 @@ Once the JavaScript file is included the following tag is available
 The component behaves different depending on what attibutes are provided when included.
 
 ### Fetch Data
-If you want to fetch the real google ratings from Wertgarantie's backend for frontend `Bifröst`, you need to set the `data-fetch-uri` attribute like in the following example:
+The component will fetch data from an endpoint that you can provide with the attribute `data-bifrost-uri`. If this attribute is not provided, the component will fetch from `"https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"` per default.
+The endpoint will return a JSON object like
+```
+{
+    "ratingsTotal": 2957,
+    "text": "Google Reviews",
+    "rating": 4.7,
+    "uri": "https://www.google.com/maps/place/WERTGARANTIE+AG/@52.3691835,9.7394476,17z/data=!3m1!4b1!4m7!3m6!1s0x0:0x5a09a30e8964c1f7!8m2!3d52.3691835!4d9.7416363!9m1!1b1"
+}
+```
+This is all the data, the component needs in order to be displayed in your web page.
 
-<wertgarantie-rating data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"></wertgarantie-rating>
+<wertgarantie-rating data-bifrost-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"></wertgarantie-rating>
 
 ```html
-<wertgarantie-rating data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"></wertgarantie-rating>
+<wertgarantie-rating data-bifrost-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"></wertgarantie-rating>
 ```
 
 ### Provide data manually
@@ -61,9 +72,9 @@ Another way to configure the component is to provide all of the following three 
 <strong>Note</strong> that you either have to provide `data-fetch-uri` or <i>all</i> four attributes for manual data providing
 
 The attribute `data-show-rating-number` can be set to false in order to hide the number and just show the stars:
-<wertgarantie-rating data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating" data-show-rating-number="false"></wertgarantie-rating>
+<wertgarantie-rating data-show-rating-number="false"></wertgarantie-rating>
 ```html
-<wertgarantie-rating data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"
+<wertgarantie-rating 
                      data-show-rating-number="false">
 </wertgarantie-rating>
 ```
@@ -92,11 +103,10 @@ Provide a css file with the following code:
     --wertgarantie-rating-stars-color: green;
 }
 ```
-<wertgarantie-rating class="example" 
-                     data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating">
+<wertgarantie-rating class="example">
 </wertgarantie-rating>
+
 ```html
-<wertgarantie-rating class="example"
-                     data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating">
+<wertgarantie-rating class="example">
 </wertgarantie-rating>
 ```

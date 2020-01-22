@@ -10,8 +10,9 @@ It is, so to say, the shopping cart for Wertgarantie's products.
 ## Include
 To make the html `wertgarantie-confirmation`-tag available, just include this JS file in your web page:
 ```html
-<script src="https://cdn.jsdelivr.net/npm/package-confirmation/dist/confirmation.min.js" type="text/javascript">
+<script src="https://cdn.jsdelivr.net/npm/package-confirmation/dist/confirmation.min.js" type="module">
 ```
+`NOTE` that `type="module"` is required to ensure that older browsers without ES6 support will not misinterpret the file and throw errors.
 
 In order to see the confirmation component here, please select a phone insurance product via <a href="https://wertgarantie-ecom.github.io/bifrost-components/?path=/story/components-pop-up--phone-product-popup">this link</a>.
 

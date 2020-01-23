@@ -1,13 +1,14 @@
 FROM node:latest
 
+RUN mkdir -p /app/components-liveserve
 WORKDIR /app/components-liveserve/
 COPY package*.json /app/components-liveserve/
 RUN npm install
-RUN npm install -g local-cors-proxy
 
 COPY . /app/components-liveserve/
+RUN npm run build
 
-EXPOSE 8010
 
-RUN npm run serve &
-CMD lcp --proxyUrl http://localhost:3333
+EXPOSE 3333
+
+CMD npm run serve

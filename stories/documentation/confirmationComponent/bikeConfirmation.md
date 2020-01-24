@@ -45,7 +45,7 @@ There are several attributes in the component that are configurable:
 * `data-client-id`: the public client ID for your shop (you get this ID from Wertgarantie). You can either use this attribute or set `component.clientId = <your client ID>` via JavaScript, but `without this information, the component will not work`.
 * `data-hidden-input-selector`: a css-selector that selects a hidden input tag in your HTML-form. When initialized, the component will set the value of the input tag (cookie data with signature) that you can use for the checkout call to bifrost in your web shop.
 * `data-form-selector`: a css-selector that selects your checkout form (e. g. '#checkout-form') 
-* `data-bifrost-uri`: Uri of the backend. Defaults to `"https://wertgarantie-bifrost.herokuapp.com/wertgarantie"`
+* `data-bifrost-uri`: Uri of the backend. Defaults to `"https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie"`
 
 
 ## Validation

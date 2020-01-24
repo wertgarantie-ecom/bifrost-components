@@ -1,7 +1,7 @@
 // import { bodyParser } from "restify";
 if (window.customElements) {
 (function () {
-    const BIFROST_URI = "https://wertgarantie-bifrost.herokuapp.com/wertgarantie";
+    const BIFROST_URI = "https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie";
     const template = document.createElement('template');
     template.innerHTML = `
         <style>

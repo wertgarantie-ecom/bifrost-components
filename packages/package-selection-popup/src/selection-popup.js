@@ -2,7 +2,7 @@ import '../../package-rating/src/rating.js'
 
 if (window.customElements) {
     (function () {
-        const BIFROST_URI = "https://wertgarantie-bifrost.herokuapp.com/wertgarantie";
+        const BIFROST_URI = "https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie";
         const MOBILE_WIDTH = 878;
         const template = document.createElement('template');
         template.innerHTML = `
@@ -455,7 +455,7 @@ if (window.customElements) {
                     <strong class="head__title">Wird oft dazugebucht</strong>
                     <wertgarantie-rating 
                         class="wg-rating-default"
-                        data-fetch-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"
+                        data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie/rating"
                         data-show-rating-number="false">
                     </wertgarantie-rating>
                 </div>

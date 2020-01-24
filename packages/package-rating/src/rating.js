@@ -1,6 +1,6 @@
 if (window.customElements) {
     (function () {
-        const BIFROST_URI = "https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating";
+        const BIFROST_URI = "https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie";
         const template = document.createElement('template');
         template.innerHTML =
             `
@@ -82,7 +82,7 @@ if (window.customElements) {
                 addIfDefined(displayData, 'showRatingNumber', this.getAttribute('data-show-rating-number') !== "false");
 
                 const fetchData = {};
-                addIfDefined(fetchData, 'fetchUri', this.bifrostUri);
+                addIfDefined(fetchData, 'fetchUri', this.bifrostUri + '/rating');
 
                 if (this.allDisplayDataAvailable(displayData)) {
                     this.updateDisplay(displayData);

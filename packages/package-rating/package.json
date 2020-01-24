@@ -4,7 +4,7 @@
   "description": "wertgarantie web component to display google review ratings",
   "main": "rating.js",
   "scripts": {
-    "version": "sed  -i \"\" \"s/%VERSION%/$(node -p 'require(\"./package.json\").version')/\" \"./src/rating.js\"",
+    "version": "sed  -i \"\" \"s/%VERSION%/$(node -p 'require(\"./package.json\").version')/\" \"./src/rating.js\" && git add ./src/rating.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "faucet --compact",
     "fingerprint": "faucet --fingerprint",

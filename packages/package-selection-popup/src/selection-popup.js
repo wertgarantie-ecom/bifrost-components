@@ -547,7 +547,7 @@ if (window.customElements) {
                 this.orderBtn = this.shadowRoot.querySelector('#orderBtn');
 
                 this.initialized = false;
-                this.version = '0.0.28';
+                this.version = '0.0.23';
 
                 // method binding:
                 this.allDisplayDataAvailable = this.allDisplayDataAvailable.bind(this);

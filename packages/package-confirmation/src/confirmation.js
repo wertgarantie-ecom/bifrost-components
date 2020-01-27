@@ -381,7 +381,7 @@ if (window.customElements) {
             this.setUncheckedWarning = this.setUncheckedWarning.bind(this);
             this.checkStateOnSubmit = this.checkStateOnSubmit.bind(this);
 
-            this.version = '1.0.11';
+            this.version = '1.0.9';
         }
 
         initElementSelectors() {

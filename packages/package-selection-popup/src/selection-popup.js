@@ -547,6 +547,8 @@ if (window.customElements) {
                 this.orderBtn = this.shadowRoot.querySelector('#orderBtn');
 
                 this.initialized = false;
+                this.version = '0.0.28';
+
                 // method binding:
                 this.allDisplayDataAvailable = this.allDisplayDataAvailable.bind(this);
                 this.setupDisplay = this.setupDisplay.bind(this);
@@ -677,7 +679,11 @@ if (window.customElements) {
                         clientId: clientId
                     };
                     Object.keys(queryParams).forEach(key => url.searchParams.append(key, queryParams[key]));
-                    const response = await fetch(url);
+                    const response = await fetch(url, {
+                        headers: {
+                            'X-Version': this.version
+                        }
+                    });
                     if (response.status !== 200) {
                         console.error('fetch failed:', response);
                         return {};
@@ -917,7 +923,8 @@ if (window.customElements) {
                         method: 'POST',
                         credentials: 'include',
                         headers: {
-                            'content-Type': 'application/json'
+                            'content-Type': 'application/json',
+                            'X-Version': this.version
                         },
                         body: JSON.stringify(queryParams)
                     });

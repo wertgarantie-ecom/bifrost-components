@@ -380,6 +380,8 @@ if (window.customElements) {
             this.isFullyChecked = this.isFullyChecked.bind(this);
             this.setUncheckedWarning = this.setUncheckedWarning.bind(this);
             this.checkStateOnSubmit = this.checkStateOnSubmit.bind(this);
+
+            this.version = '1.0.11';
         }
 
         initElementSelectors() {
@@ -470,7 +472,8 @@ if (window.customElements) {
                 method: 'PUT',
                 credentials: 'include',
                 headers: {
-                    'content-Type': 'application/json'
+                    'content-Type': 'application/json',
+                    'X-Version': this.version
                 },
                 body: JSON.stringify(queryParams)
             });
@@ -487,7 +490,8 @@ if (window.customElements) {
                 method: 'DELETE',
                 credentials: 'include',
                 headers: {
-                    'content-Type': 'application/json'
+                    'content-Type': 'application/json',
+                    'X-Version': this.version
                 },
                 body: JSON.stringify(queryParams)
             });
@@ -508,7 +512,10 @@ if (window.customElements) {
             Object.keys(queryParams).forEach(key => url.searchParams.append(key, queryParams[key]));
             const response = await fetch(url, {
                 method: 'GET',
-                credentials: 'include'
+                credentials: 'include',
+                headers: {
+                    'X-Version': this.version
+                }
             });
             if (response.status !== 200) {
                 return undefined;
@@ -582,7 +589,8 @@ if (window.customElements) {
                 method: 'DELETE',
                 credentials: 'include',
                 headers: {
-                    'content-Type': 'application/json'
+                    'content-Type': 'application/json',
+                    'X-Version': this.version
                 },
                 body: JSON.stringify(queryParams)
             });

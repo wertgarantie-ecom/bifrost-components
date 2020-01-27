@@ -55,7 +55,7 @@ if (window.customElements) {
                 this.ratingSpan = this.shadowRoot.querySelector('.rating__number');
                 this.ratingStarsDiv = this.shadowRoot.querySelector('.rating__stars');
                 this.ratingLink = this.shadowRoot.querySelector('.rating__link');
-                this.version = '1.0.7'; // component version indicator, will be filled during 'lerna version'
+                this.version = '1.0.7';
 
                 this.updateDisplay = this.updateDisplay.bind(this);
                 this.overwriteWithUserDefinedAttributes = this.overwriteWithUserDefinedAttributes.bind(this);

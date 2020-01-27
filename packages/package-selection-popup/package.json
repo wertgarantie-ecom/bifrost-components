@@ -4,6 +4,7 @@
   "description": "wertgarantie web component to select policy products",
   "main": "selection-popup.js",
   "scripts": {
+    "version": "regex-replace \"(this.version = ')(%VERSION%|\\d+\\.\\d+\\.\\d+)(';)\" \"\\$1$(node -p 'require(\"./package.json\").version')\\$3\" ./src/selection-popup.js && git add ./src/selection-popup.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "faucet --compact",
     "fingerprint": "faucet --fingerprint",

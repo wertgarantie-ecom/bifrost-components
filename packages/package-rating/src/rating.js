@@ -107,7 +107,11 @@ if (window.customElements) {
                     );
                 }
                 try {
-                    const response = await fetch(fetchUri);
+                    const response = await fetch(fetchUri, {
+                       headers: {
+                          'X-Version': this.version
+                       }
+                    });
                     if (response.status !== 200) {
                         console.error('fetch failed:', response);
                         return {};

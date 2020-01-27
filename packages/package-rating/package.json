@@ -31,8 +31,5 @@
   "gitHead": "f03d8c58379ba27eede5732cdc172336cb06dad8",
   "dependencies": {
     "chai": "^4.2.0"
-  },
-  "devDependencies": {
-    "regex-replace": "^2.3.1"
   }
 }

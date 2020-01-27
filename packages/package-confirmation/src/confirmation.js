@@ -1,9 +1,9 @@
 // import { bodyParser } from "restify";
 if (window.customElements) {
-(function () {
-    const BIFROST_URI = "https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie";
-    const template = document.createElement('template');
-    template.innerHTML = `
+    (function () {
+        const BIFROST_URI = "https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie";
+        const template = document.createElement('template');
+        template.innerHTML = `
         <style>
 
             :host {
@@ -324,15 +324,15 @@ if (window.customElements) {
         </div>
     `;
 
-    const productTabTemplate =
-        `<div class="tab__name">
+        const productTabTemplate =
+            `<div class="tab__name">
         </div>
         <div class="tab__remove">
             &times;
         </div>`;
 
-    const productDivTemplate =
-        `<div>
+        const productDivTemplate =
+            `<div>
             <span class="payment-interval product__price-info--small">monatlich</span><br/>
             <span class="product-price product__price-info--strong">X,XX €</span><br/>
             <span class="product-tax product__price-info--small">(inkl. x,xx€ VerSt**)</span>
@@ -346,8 +346,8 @@ if (window.customElements) {
             <small class="product-link"><a class="wg-link" href="http://www.example.com">Informationsblatt zu Versicherungsprodukten</a></small><br/>
         </div>`;
 
-    const bikeLockConfirmationTemplate =
-        `<div class="confirmation__checkbox">
+        const bikeLockConfirmationTemplate =
+            `<div class="confirmation__checkbox">
             <div class="confirmation__checkbox-column">
                 <div class="checkbox__container">
                     <input class="confirmation" type="checkbox" />
@@ -358,335 +358,334 @@ if (window.customElements) {
             Ich bestätige, dass ich ein Fahrradschloss mit einem Mindestkaufpreis von 49,00 € zur Sicherung meines Fahrrads nutzen werde.
         </div>`;
 
-    class WertgarantieConfirmation extends HTMLElement {
-        constructor() {
-            super();
-            this.attachShadow({mode: 'open'});
+        class WertgarantieConfirmation extends HTMLElement {
+            constructor() {
+                super();
+                this.attachShadow({mode: 'open'});
 
-            // method binding
-            this.fetchConfirmationComponentData = this.fetchConfirmationComponentData.bind(this);
-            this.initListeners = this.initListeners.bind(this);
-            this.productDataAvailable = this.productDataAvailable.bind(this);
-            this.initElementSelectors = this.initElementSelectors.bind(this);
-            this.refreshShadowRoot = this.refreshShadowRoot.bind(this);
-            this.setTextsAndHiddenInput = this.setTextsAndHiddenInput.bind(this);
-            this.setHiddenInput = this.setHiddenInput.bind(this);
-            this.prepareTabs = this.prepareTabs.bind(this);
-            this.prepareProductPanels = this.prepareProductPanels.bind(this);
-            this.connectTabsAndProductPanels = this.connectTabsAndProductPanels.bind(this);
-            this.deleteProductOrder = this.deleteProductOrder.bind(this);
-            this.showComponent = this.showComponent.bind(this);
-            this.setConfirmCheckbox = this.setConfirmCheckbox.bind(this);
-            this.isFullyChecked = this.isFullyChecked.bind(this);
-            this.setUncheckedWarning = this.setUncheckedWarning.bind(this);
-            this.checkStateOnSubmit = this.checkStateOnSubmit.bind(this);
+                // method binding
+                this.fetchConfirmationComponentData = this.fetchConfirmationComponentData.bind(this);
+                this.initListeners = this.initListeners.bind(this);
+                this.productDataAvailable = this.productDataAvailable.bind(this);
+                this.initElementSelectors = this.initElementSelectors.bind(this);
+                this.refreshShadowRoot = this.refreshShadowRoot.bind(this);
+                this.setTextsAndHiddenInput = this.setTextsAndHiddenInput.bind(this);
+                this.setHiddenInput = this.setHiddenInput.bind(this);
+                this.prepareTabs = this.prepareTabs.bind(this);
+                this.prepareProductPanels = this.prepareProductPanels.bind(this);
+                this.connectTabsAndProductPanels = this.connectTabsAndProductPanels.bind(this);
+                this.deleteProductOrder = this.deleteProductOrder.bind(this);
+                this.showComponent = this.showComponent.bind(this);
+                this.setConfirmCheckbox = this.setConfirmCheckbox.bind(this);
+                this.isFullyChecked = this.isFullyChecked.bind(this);
+                this.setUncheckedWarning = this.setUncheckedWarning.bind(this);
+                this.checkStateOnSubmit = this.checkStateOnSubmit.bind(this);
+                this.componentVersion = '1.0.13';
+            }
 
-            this.version = '1.0.9';
-        }
+            initElementSelectors() {
+                this.productTabs = this.shadowRoot.querySelector('.product__tabs');
+                this.productPanel = this.shadowRoot.querySelector('.product__panel');
+                this.productPanelMobile = this.shadowRoot.querySelector('.product__panel--mobile');
+                this.component = this.shadowRoot.querySelector('.component');
+                this.checkbox = this.shadowRoot.querySelector('#confirmation_check');
+                this.headerTitle = this.shadowRoot.querySelector('.header__title__text');
+                this.generalConfirmationText = this.shadowRoot.querySelector('#general-confirmation-text');
+                this.pleaseConfirmText = this.shadowRoot.querySelector('#please-confirm-text');
+            }
 
-        initElementSelectors() {
-            this.productTabs = this.shadowRoot.querySelector('.product__tabs');
-            this.productPanel = this.shadowRoot.querySelector('.product__panel');
-            this.productPanelMobile = this.shadowRoot.querySelector('.product__panel--mobile');
-            this.component = this.shadowRoot.querySelector('.component');
-            this.checkbox = this.shadowRoot.querySelector('#confirmation_check');
-            this.headerTitle = this.shadowRoot.querySelector('.header__title__text');
-            this.generalConfirmationText = this.shadowRoot.querySelector('#general-confirmation-text');
-            this.pleaseConfirmText = this.shadowRoot.querySelector('#please-confirm-text');
-        }
+            set clientId(clientId) {
+                this.setAttribute("data-client-id", clientId);
+            }
 
-        set clientId(clientId) {
-            this.setAttribute("data-client-id", clientId);
-        }
+            get clientId() {
+                return this.getAttribute("data-client-id");
+            }
 
-        get clientId() {
-            return this.getAttribute("data-client-id");
-        }
+            set bifrostUri(bifrostUri) {
+                this.setAttribute("data-bifrost-uri", bifrostUri);
+            }
 
-        set bifrostUri(bifrostUri) {
-            this.setAttribute("data-bifrost-uri", bifrostUri);
-        }
+            get bifrostUri() {
+                return this.getAttribute("data-bifrost-uri") || BIFROST_URI;
+            }
 
-        get bifrostUri() {
-            return this.getAttribute("data-bifrost-uri") || BIFROST_URI;
-        }
+            set hiddenInputSelector(wgProductInput) {
+                this.setAttribute("data-hidden-input-selector", wgProductInput);
+            }
 
-        set hiddenInputSelector(wgProductInput) {
-            this.setAttribute("data-hidden-input-selector", wgProductInput);
-        }
+            get hiddenInputSelector() {
+                return this.getAttribute("data-hidden-input-selector");
+            }
 
-        get hiddenInputSelector() {
-            return this.getAttribute("data-hidden-input-selector");
-        }
+            connectedCallback() {
+                const data = this.fetchConfirmationComponentData();
+                this.refreshComponent(data);
+            }
 
-        connectedCallback() {
-            const data = this.fetchConfirmationComponentData();
-            this.refreshComponent(data);
-        }
+            refreshComponent(componentData) {
+                componentData
+                    .then(this.productDataAvailable)
+                    .then(this.refreshShadowRoot)
+                    .then(this.setConfirmCheckbox)
+                    .then(this.setTextsAndHiddenInput)
+                    .then(this.prepareTabs)
+                    .then(this.prepareProductPanels)
+                    .then(this.connectTabsAndProductPanels)
+                    .then(this.showComponent)
+                    .then(this.initListeners)
+                    .catch(error => {
+                        if (!(error instanceof UndefinedConfirmationDataError)) {
+                            console.error(error);
+                        }
+                        this.remove();
+                    });
+            }
 
-        refreshComponent(componentData) {
-            componentData
-                .then(this.productDataAvailable)
-                .then(this.refreshShadowRoot)
-                .then(this.setConfirmCheckbox)
-                .then(this.setTextsAndHiddenInput)
-                .then(this.prepareTabs)
-                .then(this.prepareProductPanels)
-                .then(this.connectTabsAndProductPanels)
-                .then(this.showComponent)
-                .then(this.initListeners)
-                .catch(error => {
-                    if (!(error instanceof UndefinedConfirmationDataError)) {
-                        console.error(error);
+            initListeners() {
+                this.checkbox.addEventListener("click", event => {
+                    if (event.target.checked) {
+                        this.sendConfirmation();
+                    } else {
+                        this.rejectConfirmation();
                     }
-                    this.remove();
                 });
-        }
 
-        initListeners() {
-            this.checkbox.addEventListener("click", event => {
-                if (event.target.checked) {
-                    this.sendConfirmation();
+                if (this.getAttribute('data-form-selector')) {
+                    var form = document.querySelector(this.getAttribute('data-form-selector'));
+                    form.addEventListener('submit', this.checkStateOnSubmit);
+                }
+            }
+
+            setConfirmCheckbox(shoppingCart) {
+                this.checkbox.checked = shoppingCart.confirmed;
+                return shoppingCart;
+            }
+
+
+            async sendConfirmation() {
+                const queryParams = {
+                    clientId: this.clientId
+                };
+                const response = await fetch(this.bifrostUri + '/components/confirmation', {
+                    method: 'PUT',
+                    credentials: 'include',
+                    headers: {
+                        'content-Type': 'application/json',
+                        'X-Version': this.componentVersion
+                    },
+                    body: JSON.stringify(queryParams)
+                });
+                this.setHiddenInput(await response.text());
+                // TODO: Was soll passieren, wenn call fehlschlägt?
+                console.log(response);
+            }
+
+            async rejectConfirmation() {
+                const queryParams = {
+                    clientId: this.clientId
+                };
+                const response = await fetch(this.bifrostUri + '/components/confirmation', {
+                    method: 'DELETE',
+                    credentials: 'include',
+                    headers: {
+                        'content-Type': 'application/json',
+                        'X-Version': this.componentVersion
+                    },
+                    body: JSON.stringify(queryParams)
+                });
+                this.setHiddenInput(await response.text());
+                // TODO: Was soll passieren, wenn call fehlschlägt? --> Nachricht: Service aktuell nicht verfügbar?
+                console.log(response);
+            }
+
+            showComponent() {
+                this.component.style.display = "flex";
+            }
+
+            async fetchConfirmationComponentData() {
+                const url = new URL(this.bifrostUri + '/components/confirmation');
+                const queryParams = {
+                    clientId: this.clientId
+                };
+                Object.keys(queryParams).forEach(key => url.searchParams.append(key, queryParams[key]));
+                const response = await fetch(url, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'X-Version': this.componentVersion
+                    }
+                });
+                if (response.status !== 200) {
+                    return undefined;
+                }
+                return await response.json();
+            }
+
+            productDataAvailable(fetchedConfirmationComponentData) {
+                if (!fetchedConfirmationComponentData || fetchedConfirmationComponentData.constructor !== Object || Object.entries(fetchedConfirmationComponentData).length === 0 || fetchedConfirmationComponentData.products.length === 0) {
+                    throw new UndefinedConfirmationDataError("fetchedConfirmationData is empty or undefined");
+                }
+                return fetchedConfirmationComponentData;
+            }
+
+            setTextsAndHiddenInput(fetchedConfirmationComponentData) {
+                this.headerTitle.textContent = fetchedConfirmationComponentData.title;
+                this.pleaseConfirmText.textContent = fetchedConfirmationComponentData.confirmationHeader;
+                this.generalConfirmationText.innerHTML = fetchedConfirmationComponentData.confirmationTextGeneral;
+                this.setHiddenInput(fetchedConfirmationComponentData.shoppingCartInputString);
+                return fetchedConfirmationComponentData;
+            }
+
+            setHiddenInput(wertgarantieSignedShoppingCart) {
+                const hiddenInputField = document.querySelector(this.getAttribute("data-hidden-input-selector"));
+                hiddenInputField.value = wertgarantieSignedShoppingCart;
+            }
+
+            prepareTabs(fetchedConfirmationComponentData) {
+                fetchedConfirmationComponentData.products.forEach((product, idx) => {
+                    const productTab = document.createElement('div');
+                    productTab.orderId = product.orderId;
+                    productTab.classList.add('tab');
+                    if (idx === 0) {
+                        productTab.classList.add('tab--selected');
+                    }
+                    productTab.innerHTML = productTabTemplate;
+                    productTab.querySelector('.tab__name').innerHTML = product.shopProductShortName;
+
+                    var removeTabBtn = productTab.querySelector('.tab__remove');
+
+                    removeTabBtn.addEventListener('click', () => {
+                        const data = this.deleteProductOrder(product);
+                        this.refreshComponent(data);
+                    });
+
+                    this.productTabs.appendChild(productTab);
+                });
+                return fetchedConfirmationComponentData;
+            }
+
+            refreshShadowRoot(fetchedConfirmationComponentData) {
+                const oldChild = this.shadowRoot.querySelector('.component');
+                if (oldChild) {
+                    this.shadowRoot.replaceChild(template.content.cloneNode(true), oldChild);
                 } else {
-                    this.rejectConfirmation();
+                    this.shadowRoot.appendChild(template.content.cloneNode(true));
                 }
-            });
 
-            if (this.getAttribute('data-form-selector')) {
-                var form = document.querySelector(this.getAttribute('data-form-selector'));
-                form.addEventListener('submit', this.checkStateOnSubmit);
+                this.initElementSelectors();
+                return fetchedConfirmationComponentData;
             }
-        }
-
-        setConfirmCheckbox(shoppingCart) {
-            this.checkbox.checked = shoppingCart.confirmed;
-            return shoppingCart;
-        }
 
 
-        async sendConfirmation() {
-            const queryParams = {
-                clientId: this.clientId
-            };
-            const response = await fetch(this.bifrostUri + '/components/confirmation', {
-                method: 'PUT',
-                credentials: 'include',
-                headers: {
-                    'content-Type': 'application/json',
-                    'X-Version': this.version
-                },
-                body: JSON.stringify(queryParams)
-            });
-            this.setHiddenInput(await response.text());
-            // TODO: Was soll passieren, wenn call fehlschlägt?
-            console.log(response);
-        }
-
-        async rejectConfirmation() {
-            const queryParams = {
-                clientId: this.clientId
-            };
-            const response = await fetch(this.bifrostUri + '/components/confirmation', {
-                method: 'DELETE',
-                credentials: 'include',
-                headers: {
-                    'content-Type': 'application/json',
-                    'X-Version': this.version
-                },
-                body: JSON.stringify(queryParams)
-            });
-            this.setHiddenInput(await response.text());
-            // TODO: Was soll passieren, wenn call fehlschlägt? --> Nachricht: Service aktuell nicht verfügbar?
-            console.log(response);
-        }
-
-        showComponent() {
-            this.component.style.display = "flex";
-        }
-
-        async fetchConfirmationComponentData() {
-            const url = new URL(this.bifrostUri + '/components/confirmation');
-            const queryParams = {
-                clientId: this.clientId
-            };
-            Object.keys(queryParams).forEach(key => url.searchParams.append(key, queryParams[key]));
-            const response = await fetch(url, {
-                method: 'GET',
-                credentials: 'include',
-                headers: {
-                    'X-Version': this.version
-                }
-            });
-            if (response.status !== 200) {
-                return undefined;
+            async deleteProductOrder(product) {
+                const url = new URL(this.bifrostUri + '/components/confirmation/product');
+                const queryParams = {
+                    clientId: this.clientId,
+                    orderId: product.orderId
+                };
+                var response = await fetch(url, {
+                    method: 'DELETE',
+                    credentials: 'include',
+                    headers: {
+                        'content-Type': 'application/json',
+                        'X-Version': this.componentVersion
+                    },
+                    body: JSON.stringify(queryParams)
+                });
+                return await response.json();
             }
-            return await response.json();
-        }
 
-        productDataAvailable(fetchedConfirmationComponentData) {
-            if (!fetchedConfirmationComponentData || fetchedConfirmationComponentData.constructor !== Object || Object.entries(fetchedConfirmationComponentData).length === 0 || fetchedConfirmationComponentData.products.length === 0) {
-                throw new UndefinedConfirmationDataError("fetchedConfirmationData is empty or undefined");
+            prepareProductPanels(fetchedConfirmationComponentData) {
+                fetchedConfirmationComponentData.products.forEach((product, idx) => {
+                    this.productPanel.appendChild(this.createProductDiv(product, idx));
+                    this.productPanelMobile.appendChild(this.createProductDiv(product, idx));
+                });
             }
-            return fetchedConfirmationComponentData;
-        }
 
-        setTextsAndHiddenInput(fetchedConfirmationComponentData) {
-            this.headerTitle.textContent = fetchedConfirmationComponentData.title;
-            this.pleaseConfirmText.textContent = fetchedConfirmationComponentData.confirmationHeader;
-            this.generalConfirmationText.innerHTML = fetchedConfirmationComponentData.confirmationTextGeneral;
-            this.setHiddenInput(fetchedConfirmationComponentData.shoppingCartInputString);
-            return fetchedConfirmationComponentData;
-        }
-
-        setHiddenInput(wertgarantieSignedShoppingCart) {
-            const hiddenInputField = document.querySelector(this.getAttribute("data-hidden-input-selector"));
-            hiddenInputField.value = wertgarantieSignedShoppingCart;
-        }
-
-        prepareTabs(fetchedConfirmationComponentData) {
-            fetchedConfirmationComponentData.products.forEach((product, idx) => {
-                const productTab = document.createElement('div');
-                productTab.orderId = product.orderId;
-                productTab.classList.add('tab');
+            createProductDiv(product, idx) {
+                const productDiv = document.createElement('div');
+                productDiv.orderId = product.orderId;
+                productDiv.classList.add('product');
                 if (idx === 0) {
-                    productTab.classList.add('tab--selected');
+                    productDiv.classList.add('product--selected')
                 }
-                productTab.innerHTML = productTabTemplate;
-                productTab.querySelector('.tab__name').innerHTML = product.shopProductShortName;
-
-                var removeTabBtn = productTab.querySelector('.tab__remove');
-
-                removeTabBtn.addEventListener('click', () => {
-                    const data = this.deleteProductOrder(product);
-                    this.refreshComponent(data);
-                });
-
-                this.productTabs.appendChild(productTab);
-            });
-            return fetchedConfirmationComponentData;
-        }
-
-        refreshShadowRoot(fetchedConfirmationComponentData) {
-            const oldChild = this.shadowRoot.querySelector('.component');
-            if (oldChild) {
-                this.shadowRoot.replaceChild(template.content.cloneNode(true), oldChild);
-            } else {
-                this.shadowRoot.appendChild(template.content.cloneNode(true));
-            }
-
-            this.initElementSelectors();
-            return fetchedConfirmationComponentData;
-        }
-
-
-        async deleteProductOrder(product) {
-            const url = new URL(this.bifrostUri + '/components/confirmation/product');
-            const queryParams = {
-                clientId: this.clientId,
-                orderId: product.orderId
-            };
-            var response = await fetch(url, {
-                method: 'DELETE',
-                credentials: 'include',
-                headers: {
-                    'content-Type': 'application/json',
-                    'X-Version': this.version
-                },
-                body: JSON.stringify(queryParams)
-            });
-            return await response.json();
-        }
-
-        prepareProductPanels(fetchedConfirmationComponentData) {
-            fetchedConfirmationComponentData.products.forEach((product, idx) => {
-                this.productPanel.appendChild(this.createProductDiv(product, idx));
-                this.productPanelMobile.appendChild(this.createProductDiv(product, idx));
-            });
-        }
-
-        createProductDiv(product, idx) {
-            const productDiv = document.createElement('div');
-            productDiv.orderId = product.orderId;
-            productDiv.classList.add('product');
-            if (idx === 0) {
-                productDiv.classList.add('product--selected')
-            }
-            if (idx % 2 === 0) {
-                productDiv.classList.add('product--even');
-                productDiv.style.setProperty("--image-link-even", "url('" + product.productBackgroundImageLink + "')");
-            } else {
-                productDiv.classList.add('product--odd');
-                productDiv.style.setProperty("--image-link-odd", "url('" + product.productBackgroundImageLink + "')");
-            }
-            productDiv.innerHTML = productDivTemplate;
-            productDiv.querySelector('.payment-interval').textContent = product.paymentInterval;
-            productDiv.querySelector('.product-price').textContent = product.price;
-            productDiv.querySelector('.product-tax').textContent = product.includedTax;
-
-            productDiv.querySelector('.product__title').textContent = product.productTitle;
-
-            product.top3.forEach(advantage => {
-                const listElement = document.createElement('li');
-                listElement.classList.add('product__advantage');
-                const spanElement = document.createElement('span');
-                spanElement.classList.add('advantage__icon');
-                spanElement.textContent = advantage;
-                listElement.appendChild(spanElement);
-                productDiv.querySelector('.product__advantages').appendChild(listElement);
-            });
-            return productDiv;
-        }
-
-        connectTabsAndProductPanels() {
-            var tabs = this.productTabs.querySelectorAll('.tab');
-            var productPanels = this.productPanel.querySelectorAll('.product');
-            var mobileProductPanels = this.productPanelMobile.querySelectorAll('.product');
-
-            tabs.forEach((tab, idx) => {
-                tab.addEventListener('click', () => {
-                    tabs.forEach(tab => tab.classList.remove('tab--selected'));
-                    tab.classList.add('tab--selected');
-
-                    productPanels.forEach(panel => panel.classList.remove('product--selected'));
-                    mobileProductPanels.forEach(panel => panel.classList.remove('product--selected'));
-
-                    productPanels[idx].classList.add('product--selected');
-                    mobileProductPanels[idx].classList.add('product--selected');
-                });
-            });
-        }
-
-        checkStateOnSubmit(e) {
-            if (!this.isFullyChecked()) {
-                this.setUncheckedWarning();
-                e.preventDefault();
-                return false;
-            }
-        }
-
-        isFullyChecked() {
-            const checkboxes = this.shadowRoot.querySelectorAll('.confirmation'); // all checkboxes must have confirmation class (dynamic validation fields)
-            let fullyChecked = true;
-            checkboxes.forEach(box => {
-                if (!box.checked) {
-                    fullyChecked = false;
+                if (idx % 2 === 0) {
+                    productDiv.classList.add('product--even');
+                    productDiv.style.setProperty("--image-link-even", "url('" + product.productBackgroundImageLink + "')");
+                } else {
+                    productDiv.classList.add('product--odd');
+                    productDiv.style.setProperty("--image-link-odd", "url('" + product.productBackgroundImageLink + "')");
                 }
-            });
-            return fullyChecked;
+                productDiv.innerHTML = productDivTemplate;
+                productDiv.querySelector('.payment-interval').textContent = product.paymentInterval;
+                productDiv.querySelector('.product-price').textContent = product.price;
+                productDiv.querySelector('.product-tax').textContent = product.includedTax;
+
+                productDiv.querySelector('.product__title').textContent = product.productTitle;
+
+                product.top3.forEach(advantage => {
+                    const listElement = document.createElement('li');
+                    listElement.classList.add('product__advantage');
+                    const spanElement = document.createElement('span');
+                    spanElement.classList.add('advantage__icon');
+                    spanElement.textContent = advantage;
+                    listElement.appendChild(spanElement);
+                    productDiv.querySelector('.product__advantages').appendChild(listElement);
+                });
+                return productDiv;
+            }
+
+            connectTabsAndProductPanels() {
+                var tabs = this.productTabs.querySelectorAll('.tab');
+                var productPanels = this.productPanel.querySelectorAll('.product');
+                var mobileProductPanels = this.productPanelMobile.querySelectorAll('.product');
+
+                tabs.forEach((tab, idx) => {
+                    tab.addEventListener('click', () => {
+                        tabs.forEach(tab => tab.classList.remove('tab--selected'));
+                        tab.classList.add('tab--selected');
+
+                        productPanels.forEach(panel => panel.classList.remove('product--selected'));
+                        mobileProductPanels.forEach(panel => panel.classList.remove('product--selected'));
+
+                        productPanels[idx].classList.add('product--selected');
+                        mobileProductPanels[idx].classList.add('product--selected');
+                    });
+                });
+            }
+
+            checkStateOnSubmit(e) {
+                if (!this.isFullyChecked()) {
+                    this.setUncheckedWarning();
+                    e.preventDefault();
+                    return false;
+                }
+            }
+
+            isFullyChecked() {
+                const checkboxes = this.shadowRoot.querySelectorAll('.confirmation'); // all checkboxes must have confirmation class (dynamic validation fields)
+                let fullyChecked = true;
+                checkboxes.forEach(box => {
+                    if (!box.checked) {
+                        fullyChecked = false;
+                    }
+                });
+                return fullyChecked;
+            }
+
+            setUncheckedWarning() {
+                const checkboxDiv = this.shadowRoot.querySelectorAll('.checkbox__container');
+                checkboxDiv.forEach(div => {
+                    div.classList.add('confirmation--unchecked');
+                });
+                this.shadowRoot.querySelector('.confirmation__footer--notification').style.display = 'block';
+            }
         }
 
-        setUncheckedWarning() {
-            const checkboxDiv = this.shadowRoot.querySelectorAll('.checkbox__container');
-            checkboxDiv.forEach(div => {
-                div.classList.add('confirmation--unchecked');
-            });
-            this.shadowRoot.querySelector('.confirmation__footer--notification').style.display = 'block';
+        class UndefinedConfirmationDataError extends Error {
         }
-    }
 
-    class UndefinedConfirmationDataError extends Error {
-    }
-
-    window.customElements.define('wertgarantie-confirmation', WertgarantieConfirmation);
-})();
+        window.customElements.define('wertgarantie-confirmation', WertgarantieConfirmation);
+    })();
 }

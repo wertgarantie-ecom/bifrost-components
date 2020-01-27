@@ -545,9 +545,8 @@ if (window.customElements) {
                 this.detailsBtn = this.shadowRoot.querySelector('#detailsBtn');
                 this.productDetailsFooter = this.shadowRoot.querySelector('.product__details-footer');
                 this.orderBtn = this.shadowRoot.querySelector('#orderBtn');
-
                 this.initialized = false;
-                this.version = '0.0.23';
+                this.componentVersion = '0.0.30';
 
                 // method binding:
                 this.allDisplayDataAvailable = this.allDisplayDataAvailable.bind(this);
@@ -681,7 +680,7 @@ if (window.customElements) {
                     Object.keys(queryParams).forEach(key => url.searchParams.append(key, queryParams[key]));
                     const response = await fetch(url, {
                         headers: {
-                            'X-Version': this.version
+                            'X-Version': this.componentVersion
                         }
                     });
                     if (response.status !== 200) {
@@ -924,7 +923,7 @@ if (window.customElements) {
                         credentials: 'include',
                         headers: {
                             'content-Type': 'application/json',
-                            'X-Version': this.version
+                            'X-Version': this.componentVersion
                         },
                         body: JSON.stringify(queryParams)
                     });

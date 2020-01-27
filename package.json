@@ -19,6 +19,7 @@
     "@storybook/addon-notes": "5.2.0",
     "@storybook/html": "5.2.0",
     "babel-loader": "8.0.6",
+    "chai": "^4.2.0",
     "chromedriver": "78.0.1",
     "donny": "0.1.0",
     "eslint": "6.4.0",
@@ -29,7 +30,6 @@
     "lerna": "^3.18.3",
     "live-server": "1.2.1",
     "nightwatch": "1.2.4",
-    "regex-replace": "^2.3.1",
     "storybook-readme": "^5.0.8"
   },
   "browserslist": [

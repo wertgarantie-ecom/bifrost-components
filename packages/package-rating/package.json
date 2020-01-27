@@ -1,10 +1,10 @@
 {
   "name": "wertgarantie-rating",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "wertgarantie web component to display google review ratings",
   "main": "rating.js",
   "scripts": {
-    "version": "regex-replace \"(this.version = ')(%VERSION%|\\d+\\.\\d+\\.\\d+)(';)\" \"\\$1$(node -p 'require(\"./package.json\").version')\\$3\" ./src/rating.js && git add ./src/rating.js",
+    "version": "sed -i \"\" -E \"s/(this.componentVersion = \\')(.*)(\\';)/\\1$(node -p 'require(\"./package.json\").version')\\3/\" ./src/rating.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "faucet --compact",
     "fingerprint": "faucet --fingerprint",
@@ -27,9 +27,5 @@
   "bugs": {
     "url": "https://github.com/wertgarantie-ecom/bifrost-components/issues"
   },
-  "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme",
-  "gitHead": "f03d8c58379ba27eede5732cdc172336cb06dad8",
-  "dependencies": {
-    "chai": "^4.2.0"
-  }
+  "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme"
 }

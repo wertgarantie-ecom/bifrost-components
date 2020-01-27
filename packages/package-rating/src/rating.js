@@ -55,7 +55,7 @@ if (window.customElements) {
                 this.ratingSpan = this.shadowRoot.querySelector('.rating__number');
                 this.ratingStarsDiv = this.shadowRoot.querySelector('.rating__stars');
                 this.ratingLink = this.shadowRoot.querySelector('.rating__link');
-                this.version = '1.0.6';
+                this.componentVersion = '1.0.9';
 
                 this.updateDisplay = this.updateDisplay.bind(this);
                 this.overwriteWithUserDefinedAttributes = this.overwriteWithUserDefinedAttributes.bind(this);
@@ -108,9 +108,9 @@ if (window.customElements) {
                 }
                 try {
                     const response = await fetch(fetchUri, {
-                       headers: {
-                          'X-Version': this.version
-                       }
+                        headers: {
+                            'X-Version': this.componentVersion
+                        }
                     });
                     if (response.status !== 200) {
                         console.error('fetch failed:', response);

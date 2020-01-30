@@ -1,0 +1,7 @@
+FROM node:latest
+
+RUN mkdir -p /app/serve
+WORKDIR /app/serve/
+RUN npm install -g http-server
+
+CMD http-server -p 3333 --cors

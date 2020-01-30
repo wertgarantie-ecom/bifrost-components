@@ -55,7 +55,7 @@ if (window.customElements) {
                 this.ratingSpan = this.shadowRoot.querySelector('.rating__number');
                 this.ratingStarsDiv = this.shadowRoot.querySelector('.rating__stars');
                 this.ratingLink = this.shadowRoot.querySelector('.rating__link');
-                this.componentVersion = '1.0.9';
+                this.componentVersion = '1.0.10';
 
                 this.updateDisplay = this.updateDisplay.bind(this);
                 this.overwriteWithUserDefinedAttributes = this.overwriteWithUserDefinedAttributes.bind(this);

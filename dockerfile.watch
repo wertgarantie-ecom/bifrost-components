@@ -1,0 +1,8 @@
+FROM node:latest
+
+RUN mkdir -p /app/watch
+WORKDIR /app/watch
+COPY package*.json /app/watch/
+RUN npm install
+
+CMD npm rum watch

@@ -1,3 +1,3 @@
 module.exports = {
-    watchDirs: ["./packages/*"]
+    watchDirs: ["./packages/**"]
 };

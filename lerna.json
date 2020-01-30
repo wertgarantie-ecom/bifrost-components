@@ -8,7 +8,8 @@
       "verifyAccess": false,
       "ignoreChanges": [
         "*.md",
-        "tests/*"
+        "tests/*",
+        "package-lock.json"
       ]
     }
   },

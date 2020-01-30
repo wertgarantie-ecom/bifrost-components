@@ -455,7 +455,7 @@ if (window.customElements) {
                     <strong class="head__title">Wird oft dazugebucht</strong>
                     <wertgarantie-rating 
                         class="wg-rating-default"
-                        data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie/rating"
+                        data-bifrost-uri=${BIFROST_URI}
                         data-show-rating-number="false">
                     </wertgarantie-rating>
                 </div>

@@ -478,7 +478,6 @@ if (window.customElements) {
                 });
                 this.setHiddenInput(await response.text());
                 // TODO: Was soll passieren, wenn call fehlschlägt?
-                console.log(response);
             }
 
             async rejectConfirmation() {
@@ -496,7 +495,6 @@ if (window.customElements) {
                 });
                 this.setHiddenInput(await response.text());
                 // TODO: Was soll passieren, wenn call fehlschlägt? --> Nachricht: Service aktuell nicht verfügbar?
-                console.log(response);
             }
 
             showComponent() {

@@ -47,6 +47,15 @@ jobs:
       - run:
           name: Publish package
           command: ./node_modules/.bin/lerna publish --yes from-package
+      - run:
+          name: purge CDN cache for confirmation component
+          command: curl https://purge.jsdelivr.net/npm/package-confirmation@1/dist/confirmation.min.js
+      - run:
+          name: purge CDN cache for selection component
+          command: curl https://purge.jsdelivr.net/npm/wertgarantie-selection-popup@0/dist/selection-popup.min.js
+      - run:
+          name: purge CDN cache for rating component
+          command: curl https://purge.jsdelivr.net/npm/wertgarantie-rating@1/dist/rating.min.js
 
 workflows:
   version: 2

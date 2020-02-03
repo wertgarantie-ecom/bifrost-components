@@ -1,7 +1,3 @@
-body {
-    background-color: rgb(235, 235, 235);
-}
-
 .checkoutBtn {
     font-size: 0.9em;
     cursor: pointer;
@@ -13,4 +9,8 @@ body {
     background-color: var(--wertgarantie-popup-dark-button-background-color, rgb(32, 32, 32));
     color: var(--wertgarantie-popup-dark-button-text-color, rgb(244, 244, 244));
     transition: all 0.4s;
+}
+
+#demo-html-form {
+    margin-bottom: 15px;
 }

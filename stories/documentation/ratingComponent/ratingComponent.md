@@ -29,7 +29,7 @@ Once the JavaScript file is included the following tag is available
 The component behaves different depending on what attibutes are provided when included.
 
 ### Fetch Data
-The component will fetch data from an endpoint that you can provide with the attribute `data-bifrost-uri`. If this attribute is not provided, the component will fetch from `"https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"` per default.
+The component will fetch data from an endpoint that you can provide with the attribute `data-bifrost-uri`. If this attribute is not provided, the component will fetch from `"https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie/rating"` per default.
 The endpoint will return a JSON object like
 ```
 {
@@ -41,10 +41,10 @@ The endpoint will return a JSON object like
 ```
 This is all the data, the component needs in order to be displayed in your web page.
 
-<wertgarantie-rating data-bifrost-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"></wertgarantie-rating>
+<wertgarantie-rating></wertgarantie-rating>
 
 ```html
-<wertgarantie-rating data-bifrost-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie/rating"></wertgarantie-rating>
+<wertgarantie-rating></wertgarantie-rating>
 ```
 
 ### Provide data manually

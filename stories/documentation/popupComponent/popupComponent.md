@@ -27,7 +27,7 @@ Once the JavaScript file is included the following tag is available
 ## Configure the selection popup
 
 ### Fetch Data
-The popup component fetches data from the value behind the attribute `data-bifrost-uri`. If this is not provided, it defaults to `https://wertgarantie-bifrost.herokuapp.com/wertgarantie`. The component will fetch a JSON object from this server.
+The popup component fetches data from the value behind the attribute `data-bifrost-uri`. If this is not provided, it defaults to `https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie`. The component will fetch a JSON object from this server.
 It also needs the following attributes:
 * `data-device-class`
 * `data-device-price`
@@ -46,7 +46,6 @@ document.querySelector('wertgarantie-selection-pop-up').clientId = ${clientId};
 
 <wertgarantie-selection-pop-up 
         id="basic-popup"
-        data-bifrost-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie"
         data-client-id="5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
         data-shop-product-name="Super Phone"
         data-device-class="1dfd4549-9bdc-4285-9047-e5088272dade"
@@ -55,7 +54,6 @@ document.querySelector('wertgarantie-selection-pop-up').clientId = ${clientId};
 
 ```html
 <wertgarantie-selection-pop-up 
-        data-bifrost-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie"
         data-client-id="5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
         data-shop-product-name="Super Phone"
         data-device-class="1dfd4549-9bdc-4285-9047-e5088272dade"
@@ -132,7 +130,6 @@ Provide a css file with the following code:
 
 <wertgarantie-selection-pop-up id="popup-styling-example"
         class="example2"
-        data-bifrost-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie"
         data-client-id="5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
         data-shop-product-name="Super Phone"
         data-device-class="1dfd4549-9bdc-4285-9047-e5088272dade"
@@ -142,7 +139,6 @@ Provide a css file with the following code:
 ```html
 <wertgarantie-selection-pop-up
         class="example"
-        data-bifrost-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie"
         data-client-id="5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
         data-shop-product-name="Super Phone"
         data-device-class="1dfd4549-9bdc-4285-9047-e5088272dade"

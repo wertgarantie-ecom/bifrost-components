@@ -455,7 +455,6 @@ if (window.customElements) {
                     <strong class="head__title">Wird oft dazugebucht</strong>
                     <wertgarantie-rating 
                         class="wg-rating-default"
-                        data-bifrost-uri=${BIFROST_URI}
                         data-show-rating-number="false">
                     </wertgarantie-rating>
                 </div>

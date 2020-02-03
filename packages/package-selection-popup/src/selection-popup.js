@@ -545,7 +545,7 @@ if (window.customElements) {
                 this.productDetailsFooter = this.shadowRoot.querySelector('.product__details-footer');
                 this.orderBtn = this.shadowRoot.querySelector('#orderBtn');
                 this.initialized = false;
-                this.componentVersion = '0.0.30';
+                this.componentVersion = '0.0.31';
 
                 // method binding:
                 this.allDisplayDataAvailable = this.allDisplayDataAvailable.bind(this);

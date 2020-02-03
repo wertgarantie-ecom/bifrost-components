@@ -555,6 +555,7 @@ if (window.customElements) {
                 this.close = this.close.bind(this);
                 this.addProductToOrder = this.addProductToOrder.bind(this);
                 this.getSelectedProduct = this.getSelectedProduct.bind(this);
+                this.getCookieValue = this.getCookieValue.bind(this);
             }
 
             set devicePrice(devicePrice) {
@@ -959,12 +960,13 @@ if (window.customElements) {
             getSelectedProduct() {
                 return this.productSection.querySelector('.product--selected').querySelector('.product__selection').value;
             }
+
+            getCookieValue(cookieName) {
+                var cookieContent = document.cookie.match('(^|[^;]+)\\s*' + cookieName + '\\s*=\\s*([^;]+)');
+                return cookieContent ? JSON.parse(cookieContent.pop()) : undefined;
+            }
         }
 
-        function getCookieValue(cookieName) {
-            var cookieContent = document.cookie.match('(^|[^;]+)\\s*' + cookieName + '\\s*=\\s*([^;]+)');
-            return cookieContent ? JSON.parse(cookieContent.pop()) : undefined;
-        }
 
         window.wertgarantieSelectionPopUpOpen = (popupId, configuredData = {}) => {
             const name = 'wertgarantie-selection-pop-up';

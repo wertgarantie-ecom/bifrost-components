@@ -380,6 +380,7 @@ if (window.customElements) {
                 this.isFullyChecked = this.isFullyChecked.bind(this);
                 this.setUncheckedWarning = this.setUncheckedWarning.bind(this);
                 this.checkStateOnSubmit = this.checkStateOnSubmit.bind(this);
+                this.getCookieValue = this.getCookieValue.bind(this);
                 this.componentVersion = '1.0.15';
             }
 
@@ -506,18 +507,25 @@ if (window.customElements) {
                 const queryParams = {
                     clientId: this.clientId
                 };
+                const shoppingCart = this.getCookieValue('wertgarantie-shopping-cart');
                 Object.keys(queryParams).forEach(key => url.searchParams.append(key, queryParams[key]));
                 const response = await fetch(url, {
-                    method: 'GET',
+                    method: 'PUT',
                     credentials: 'include',
                     headers: {
                         'X-Version': this.componentVersion
-                    }
+                    },
+                    body: shoppingCart
                 });
                 if (response.status !== 200) {
                     return undefined;
                 }
                 return await response.json();
+            }
+
+            getCookieValue(cookieName) {
+                var cookieContent = document.cookie.match('(^|[^;]+)\\s*' + cookieName + '\\s*=\\s*([^;]+)');
+                return cookieContent ? JSON.parse(cookieContent.pop()) : undefined;
             }
 
             productDataAvailable(fetchedConfirmationComponentData) {

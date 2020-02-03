@@ -380,7 +380,7 @@ if (window.customElements) {
                 this.isFullyChecked = this.isFullyChecked.bind(this);
                 this.setUncheckedWarning = this.setUncheckedWarning.bind(this);
                 this.checkStateOnSubmit = this.checkStateOnSubmit.bind(this);
-                this.componentVersion = '1.0.13';
+                this.componentVersion = '1.0.15';
             }
 
             initElementSelectors() {

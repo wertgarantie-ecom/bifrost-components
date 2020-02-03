@@ -909,7 +909,7 @@ if (window.customElements) {
                         "shopProductName: " + this.getAttribute('data-shop-product-name')
                     );
                 }
-                const queryParams = {
+                const selectedProductData = {
                     devicePrice: this.getAttribute('data-device-price'),
                     deviceClass: this.getAttribute('data-device-class'),
                     productId: selectedProduct,
@@ -917,6 +917,8 @@ if (window.customElements) {
                     shopProductName: this.getAttribute('data-shop-product-name')
                 };
                 try {
+                    // bestehenden cookie auslesen um zu validieren
+                    const currentShoppingCart = getCookieValue('wertgarantie-shopping-cart');
                     const response = await fetch(bifrostUri + '/shoppingCart/' + clientId, {
                         method: 'POST',
                         credentials: 'include',
@@ -924,12 +926,18 @@ if (window.customElements) {
                             'content-Type': 'application/json',
                             'X-Version': this.componentVersion
                         },
-                        body: JSON.stringify(queryParams)
+                        body: {
+                            selectedProductData: JSON.stringify(selectedProductData),
+                            shoppingCart: currentShoppingCart
+                        }
                     });
                     if (response.status !== 200) {
                         console.error('Adding product to shopping cart failed:', response);
                         return {};
                     }
+
+                    document.cookie = 'wertgarantie-shopping-cart=' + JSON.stringify(await response.json());
+
                     var fadeTarget = this.modal;
                     var fadeEffect = setInterval(function () {
                         if (!fadeTarget.style.opacity) {
@@ -951,6 +959,11 @@ if (window.customElements) {
             getSelectedProduct() {
                 return this.productSection.querySelector('.product--selected').querySelector('.product__selection').value;
             }
+        }
+
+        function getCookieValue(cookieName) {
+            var cookieContent = document.cookie.match('(^|[^;]+)\\s*' + cookieName + '\\s*=\\s*([^;]+)');
+            return cookieContent ? JSON.parse(cookieContent.pop()) : undefined;
         }
 
         window.wertgarantieSelectionPopUpOpen = (popupId, configuredData = {}) => {

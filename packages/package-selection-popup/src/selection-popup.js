@@ -910,13 +910,6 @@ if (window.customElements) {
                         "shopProductName: " + this.getAttribute('data-shop-product-name')
                     );
                 }
-                const selectedProductData = {
-                    devicePrice: this.getAttribute('data-device-price'),
-                    deviceClass: this.getAttribute('data-device-class'),
-                    productId: selectedProduct,
-                    deviceCurrency: currency,
-                    shopProductName: this.getAttribute('data-shop-product-name')
-                };
                 try {
                     // bestehenden cookie auslesen um zu validieren
                     const currentShoppingCart = this.getCookieValue('wertgarantie-shopping-cart');
@@ -927,17 +920,22 @@ if (window.customElements) {
                             'content-Type': 'application/json',
                             'X-Version': this.componentVersion
                         },
-                        body: {
-                            selectedProductData: JSON.stringify(selectedProductData),
-                            shoppingCart: currentShoppingCart
-                        }
+                        body: JSON.stringify({
+                            devicePrice: parseFloat(this.getAttribute('data-device-price')),
+                            deviceClass: this.getAttribute('data-device-class'),
+                            productId: parseInt(selectedProduct),
+                            deviceCurrency: currency,
+                            shopProductName: this.getAttribute('data-shop-product-name'),
+                            signedShoppingCart: currentShoppingCart
+                        })
                     });
                     if (response.status !== 200) {
                         console.error('Adding product to shopping cart failed:', response);
                         return {};
                     }
 
-                    document.cookie = 'wertgarantie-shopping-cart=' + JSON.stringify(await response.json());
+                    const json = await response.json();
+                    document.cookie = 'wertgarantie-shopping-cart=' + JSON.stringify(json.signedShoppingCart);
 
                     var fadeTarget = this.modal;
                     var fadeEffect = setInterval(function () {

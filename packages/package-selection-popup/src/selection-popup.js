@@ -919,7 +919,7 @@ if (window.customElements) {
                 };
                 try {
                     // bestehenden cookie auslesen um zu validieren
-                    const currentShoppingCart = getCookieValue('wertgarantie-shopping-cart');
+                    const currentShoppingCart = this.getCookieValue('wertgarantie-shopping-cart');
                     const response = await fetch(bifrostUri + '/shoppingCart/' + clientId, {
                         method: 'POST',
                         credentials: 'include',

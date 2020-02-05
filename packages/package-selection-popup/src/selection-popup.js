@@ -921,7 +921,7 @@ if (window.customElements) {
                             'X-Version': this.componentVersion
                         },
                         body: JSON.stringify({
-                            devicePrice: parseFloat(this.getAttribute('data-device-price')),
+                            devicePrice: parseInt(this.getAttribute('data-device-price')),
                             deviceClass: this.getAttribute('data-device-class'),
                             productId: parseInt(selectedProduct),
                             deviceCurrency: currency,
@@ -937,18 +937,8 @@ if (window.customElements) {
                     const json = await response.json();
                     document.cookie = 'wertgarantie-shopping-cart=' + JSON.stringify(json.signedShoppingCart);
 
-                    var fadeTarget = this.modal;
-                    var fadeEffect = setInterval(function () {
-                        if (!fadeTarget.style.opacity) {
-                            fadeTarget.style.opacity = 1;
-                        }
-                        if (fadeTarget.style.opacity > 0) {
-                            fadeTarget.style.opacity -= 0.1;
-                        } else {
-                            clearInterval(fadeEffect);
-                            fadeTarget.remove();
-                        }
-                    }, 60);
+                    this.fadeout();
+
 
                 } catch (error) {
                     console.error('Error:', error);
@@ -962,6 +952,21 @@ if (window.customElements) {
             getCookieValue(cookieName) {
                 var cookieContent = document.cookie.match('(^|[^;]+)\\s*' + cookieName + '\\s*=\\s*([^;]+)');
                 return cookieContent ? JSON.parse(cookieContent.pop()) : undefined;
+            }
+
+            fadeout() {
+                var fadeTarget = this.modal;
+                var fadeEffect = setInterval(function () {
+                    if (!fadeTarget.style.opacity) {
+                        fadeTarget.style.opacity = 1;
+                    }
+                    if (fadeTarget.style.opacity > 0) {
+                        fadeTarget.style.opacity -= 0.05;
+                    } else {
+                        clearInterval(fadeEffect);
+                        fadeTarget.remove();
+                    }
+                }, 20);
             }
         }
 

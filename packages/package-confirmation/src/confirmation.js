@@ -2,6 +2,8 @@
 if (window.customElements) {
     (function () {
         const BIFROST_URI = "https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie";
+        const SHOPPING_CART_DELETE_HEADER = 'X-wertgarantie-shopping-cart-delete';
+        const COOKIE_NAME = 'wertgarantie-shopping-cart';
         const template = document.createElement('template');
         template.innerHTML = `
         <style>
@@ -381,6 +383,7 @@ if (window.customElements) {
                 this.setUncheckedWarning = this.setUncheckedWarning.bind(this);
                 this.checkStateOnSubmit = this.checkStateOnSubmit.bind(this);
                 this.getCookieValue = this.getCookieValue.bind(this);
+                this.updateCookieAndInputField = this.updateCookieAndInputField.bind(this);
                 this.componentVersion = '1.0.15';
             }
 
@@ -465,37 +468,40 @@ if (window.customElements) {
 
 
             async sendConfirmation() {
-                const queryParams = {
-                    clientId: this.clientId
-                };
-                const response = await fetch(this.bifrostUri + '/components/confirmation', {
+                const signedShoppingCart = this.getCookieValue(COOKIE_NAME);
+                const response = await fetch(this.bifrostUri + '/components/confirmation/confirm', {
                     method: 'PUT',
                     credentials: 'include',
                     headers: {
                         'content-Type': 'application/json',
                         'X-Version': this.componentVersion
                     },
-                    body: JSON.stringify(queryParams)
+                    body: signedShoppingCart
                 });
-                this.setHiddenInput(await response.text());
+                this.updateCookieAndInputField(await response.json());
                 // TODO: Was soll passieren, wenn call fehlschlägt?
             }
 
+
             async rejectConfirmation() {
-                const queryParams = {
-                    clientId: this.clientId
-                };
-                const response = await fetch(this.bifrostUri + '/components/confirmation', {
+                const signedShoppingCart = this.getCookieValue(COOKIE_NAME);
+                const response = await fetch(this.bifrostUri + '/components/confirmation/confirm', {
                     method: 'DELETE',
                     credentials: 'include',
                     headers: {
                         'content-Type': 'application/json',
                         'X-Version': this.componentVersion
                     },
-                    body: JSON.stringify(queryParams)
+                    body: signedShoppingCart
                 });
-                this.setHiddenInput(await response.text());
+                this.updateCookieAndInputField(await response.json())
                 // TODO: Was soll passieren, wenn call fehlschlägt? --> Nachricht: Service aktuell nicht verfügbar?
+            }
+
+            updateCookieAndInputField(responseJson) {
+                const signedShoppingCartText = JSON.stringify(responseJson.signedShoppingCart);
+                this.setHiddenInput(signedShoppingCartText);
+                document.cookie(`${COOKIE_NAME}=${signedShoppingCartText}`);
             }
 
             showComponent() {
@@ -504,23 +510,29 @@ if (window.customElements) {
 
             async fetchConfirmationComponentData() {
                 const url = new URL(this.bifrostUri + '/components/confirmation');
-                const queryParams = {
-                    clientId: this.clientId
-                };
-                const shoppingCart = this.getCookieValue('wertgarantie-shopping-cart');
-                Object.keys(queryParams).forEach(key => url.searchParams.append(key, queryParams[key]));
+                const signedShoppingCart = this.getCookieValue(COOKIE_NAME);
                 const response = await fetch(url, {
                     method: 'PUT',
                     credentials: 'include',
                     headers: {
+                        'content-Type': 'application/json',
                         'X-Version': this.componentVersion
                     },
-                    body: shoppingCart
+                    body: JSON.stringify({
+                        signedShoppingCart: signedShoppingCart
+                    })
                 });
+                const jsonResponse = await response.json();
+
+                if (jsonResponse.headers[SHOPPING_CART_DELETE_HEADER]) {
+                    document.cookie = `${SHOPPING_CART_DELETE_HEADER}=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
+                    this.remove();
+                }
                 if (response.status !== 200) {
                     return undefined;
                 }
-                return await response.json();
+
+                return jsonResponse;
             }
 
             getCookieValue(cookieName) {
@@ -540,6 +552,7 @@ if (window.customElements) {
                 this.pleaseConfirmText.textContent = fetchedConfirmationComponentData.confirmationHeader;
                 this.generalConfirmationText.innerHTML = fetchedConfirmationComponentData.confirmationTextGeneral;
                 this.setHiddenInput(fetchedConfirmationComponentData.shoppingCartInputString);
+                document.cookie(`${COOKIE_NAME}=${fetchedConfirmationComponentData.shoppingCartInputString}`);
                 return fetchedConfirmationComponentData;
             }
 
@@ -586,10 +599,7 @@ if (window.customElements) {
 
             async deleteProductOrder(product) {
                 const url = new URL(this.bifrostUri + '/components/confirmation/product');
-                const queryParams = {
-                    clientId: this.clientId,
-                    orderId: product.orderId
-                };
+                const signedShoppingCart = this.getCookieValue(COOKIE_NAME);
                 var response = await fetch(url, {
                     method: 'DELETE',
                     credentials: 'include',
@@ -597,7 +607,10 @@ if (window.customElements) {
                         'content-Type': 'application/json',
                         'X-Version': this.componentVersion
                     },
-                    body: JSON.stringify(queryParams)
+                    body: {
+                        orderId: product.orderId,
+                        signedShoppingCart: signedShoppingCart
+                    }
                 });
                 return await response.json();
             }

@@ -384,6 +384,7 @@ if (window.customElements) {
                 this.checkStateOnSubmit = this.checkStateOnSubmit.bind(this);
                 this.getCookieValue = this.getCookieValue.bind(this);
                 this.updateCookieAndInputField = this.updateCookieAndInputField.bind(this);
+                this.setWertgarantieShoppingCartCookie = this.setWertgarantieShoppingCartCookie.bind(this);
                 this.componentVersion = '1.0.15';
             }
 
@@ -433,6 +434,7 @@ if (window.customElements) {
                     .then(this.refreshShadowRoot)
                     .then(this.setConfirmCheckbox)
                     .then(this.setTextsAndHiddenInput)
+                    .then(this.setWertgarantieShoppingCartCookie)
                     .then(this.prepareTabs)
                     .then(this.prepareProductPanels)
                     .then(this.connectTabsAndProductPanels)
@@ -476,7 +478,7 @@ if (window.customElements) {
                         'content-Type': 'application/json',
                         'X-Version': this.componentVersion
                     },
-                    body: signedShoppingCart
+                    body: JSON.stringify({signedShoppingCart: signedShoppingCart})
                 });
                 this.updateCookieAndInputField(await response.json());
                 // TODO: Was soll passieren, wenn call fehlschlägt?
@@ -492,7 +494,7 @@ if (window.customElements) {
                         'content-Type': 'application/json',
                         'X-Version': this.componentVersion
                     },
-                    body: signedShoppingCart
+                    body: JSON.stringify({signedShoppingCart: signedShoppingCart})
                 });
                 this.updateCookieAndInputField(await response.json())
                 // TODO: Was soll passieren, wenn call fehlschlägt? --> Nachricht: Service aktuell nicht verfügbar?
@@ -501,7 +503,7 @@ if (window.customElements) {
             updateCookieAndInputField(responseJson) {
                 const signedShoppingCartText = JSON.stringify(responseJson.signedShoppingCart);
                 this.setHiddenInput(signedShoppingCartText);
-                document.cookie(`${COOKIE_NAME}=${signedShoppingCartText}`);
+                document.cookie = `${COOKIE_NAME}=${signedShoppingCartText}`;
             }
 
             showComponent() {
@@ -524,7 +526,7 @@ if (window.customElements) {
                 });
                 const jsonResponse = await response.json();
 
-                if (jsonResponse.headers[SHOPPING_CART_DELETE_HEADER]) {
+                if (response.headers[SHOPPING_CART_DELETE_HEADER]) {
                     document.cookie = `${SHOPPING_CART_DELETE_HEADER}=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
                     this.remove();
                 }
@@ -551,14 +553,18 @@ if (window.customElements) {
                 this.headerTitle.textContent = fetchedConfirmationComponentData.title;
                 this.pleaseConfirmText.textContent = fetchedConfirmationComponentData.confirmationHeader;
                 this.generalConfirmationText.innerHTML = fetchedConfirmationComponentData.confirmationTextGeneral;
-                this.setHiddenInput(fetchedConfirmationComponentData.shoppingCartInputString);
-                document.cookie(`${COOKIE_NAME}=${fetchedConfirmationComponentData.shoppingCartInputString}`);
+                this.setHiddenInput(fetchedConfirmationComponentData.signedShoppingCart);
+                return fetchedConfirmationComponentData;
+            }
+
+            setWertgarantieShoppingCartCookie(fetchedConfirmationComponentData) {
+                document.cookie = `${COOKIE_NAME}=${JSON.stringify(fetchedConfirmationComponentData.signedShoppingCart)}`;
                 return fetchedConfirmationComponentData;
             }
 
             setHiddenInput(wertgarantieSignedShoppingCart) {
                 const hiddenInputField = document.querySelector(this.getAttribute("data-hidden-input-selector"));
-                hiddenInputField.value = wertgarantieSignedShoppingCart;
+                hiddenInputField.value = JSON.stringify(wertgarantieSignedShoppingCart);
             }
 
             prepareTabs(fetchedConfirmationComponentData) {

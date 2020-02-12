@@ -486,8 +486,7 @@ if (window.customElements) {
             }
 
             updateInputField(response) {
-                const signedShoppingCartText = JSON.stringify(response.body.signedShoppingCart);
-                this.setHiddenInput(signedShoppingCartText);
+                this.setHiddenInput(response.body.signedShoppingCart);
             }
 
             showComponent() {
@@ -535,7 +534,7 @@ if (window.customElements) {
 
             setHiddenInput(wertgarantieSignedShoppingCart) {
                 const hiddenInputField = document.querySelector(this.getAttribute("data-hidden-input-selector"));
-                hiddenInputField.value = JSON.stringify(wertgarantieSignedShoppingCart);
+                hiddenInputField.value = btoa(JSON.stringify(wertgarantieSignedShoppingCart));
             }
 
             prepareTabs(fetchedConfirmationComponentData) {
@@ -686,7 +685,7 @@ if (window.customElements) {
                 });
 
                 if (result.headers.get(SHOPPING_CART_DELETE_HEADER)) {
-                    document.cookie = `${SHOPPING_CART_DELETE_HEADER}=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
+                    document.cookie = `${COOKIE_NAME}=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
                 }
 
                 let responseJson = undefined;

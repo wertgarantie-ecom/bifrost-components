@@ -385,7 +385,7 @@ if (window.customElements) {
                 this.getCookieValue = this.getCookieValue.bind(this);
                 this.updateInputField = this.updateInputField.bind(this);
                 this.setWertgarantieShoppingCartCookie = this.setWertgarantieShoppingCartCookie.bind(this);
-                this.fetchFromBifrost= this.fetchFromBifrost.bind(this);
+                this.fetchFromBifrost = this.fetchFromBifrost.bind(this);
                 this.componentVersion = '1.0.15';
             }
 
@@ -515,7 +515,7 @@ if (window.customElements) {
                     fetchedConfirmationComponentData.constructor !== Object ||
                     Object.entries(fetchedConfirmationComponentData).length === 0 ||
                     fetchedConfirmationComponentData.products.length === 0) {
-                        throw new UndefinedConfirmationDataError("fetchedConfirmationData is empty or undefined");
+                    throw new UndefinedConfirmationDataError("fetchedConfirmationData is empty or undefined");
                 }
                 return fetchedConfirmationComponentData;
             }
@@ -577,9 +577,11 @@ if (window.customElements) {
             async deleteProductOrder(product) {
                 const url = new URL(this.bifrostUri + '/components/confirmation/product');
 
-                return await this.fetchFromBifrost(url, 'DELETE', {
+                const result = await this.fetchFromBifrost(url, 'DELETE', {
                     orderId: product.orderId
                 });
+
+                return result.body;
             }
 
             prepareProductPanels(fetchedConfirmationComponentData) {
@@ -676,21 +678,24 @@ if (window.customElements) {
                 const result = await fetch(url, {
                     method: method,
                     headers: {
+                        "credentials": 'include',
                         'content-Type': 'application/json',
                         'X-Version': this.componentVersion
                     },
                     body: JSON.stringify(body)
                 });
 
-                if (result.headers[SHOPPING_CART_DELETE_HEADER]) {
+                if (result.headers.get(SHOPPING_CART_DELETE_HEADER)) {
                     document.cookie = `${SHOPPING_CART_DELETE_HEADER}=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
                 }
 
-                const responseJson = await result.json();
-                if (responseJson.signedShoppingCart) {
-                    document.cookie = `${COOKIE_NAME}=${JSON.stringify(responseJson.signedShoppingCart)}`
+                let responseJson = undefined;
+                if (result.status === 200) {
+                    responseJson = await result.json();
+                    if (responseJson.signedShoppingCart) {
+                        document.cookie = `${COOKIE_NAME}=${JSON.stringify(responseJson.signedShoppingCart)}`
+                    }
                 }
-
                 return {
                     headers: result.headers,
                     status: result.status,

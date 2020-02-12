@@ -385,6 +385,7 @@ if (window.customElements) {
                 this.getCookieValue = this.getCookieValue.bind(this);
                 this.updateCookieAndInputField = this.updateCookieAndInputField.bind(this);
                 this.setWertgarantieShoppingCartCookie = this.setWertgarantieShoppingCartCookie.bind(this);
+                this.fetchFromBifrost= this.fetchFromBifrost.bind(this);
                 this.componentVersion = '1.0.15';
             }
 
@@ -471,32 +472,18 @@ if (window.customElements) {
 
             async sendConfirmation() {
                 const signedShoppingCart = this.getCookieValue(COOKIE_NAME);
-                const response = await fetch(this.bifrostUri + '/components/confirmation/confirm', {
-                    method: 'PUT',
-                    credentials: 'include',
-                    headers: {
-                        'content-Type': 'application/json',
-                        'X-Version': this.componentVersion
-                    },
-                    body: JSON.stringify({signedShoppingCart: signedShoppingCart})
-                });
-                this.updateCookieAndInputField(await response.json());
+                const url = this.bifrostUri + '/components/confirmation/confirm';
+                const response = await this.fetchFromBifrost(url, 'PUT', JSON.stringify({signedShoppingCart: signedShoppingCart}));
+                this.updateCookieAndInputField(response);
                 // TODO: Was soll passieren, wenn call fehlschlägt?
             }
 
 
             async rejectConfirmation() {
                 const signedShoppingCart = this.getCookieValue(COOKIE_NAME);
-                const response = await fetch(this.bifrostUri + '/components/confirmation/confirm', {
-                    method: 'DELETE',
-                    credentials: 'include',
-                    headers: {
-                        'content-Type': 'application/json',
-                        'X-Version': this.componentVersion
-                    },
-                    body: JSON.stringify({signedShoppingCart: signedShoppingCart})
-                });
-                this.updateCookieAndInputField(await response.json())
+                const url = this.bifrostUri + '/components/confirmation/confirm';
+                const response = await this.fetchFromBifrost(url, 'DELETE', JSON.stringify({signedShoppingCart: signedShoppingCart}));
+                this.updateCookieAndInputField(response)
                 // TODO: Was soll passieren, wenn call fehlschlägt? --> Nachricht: Service aktuell nicht verfügbar?
             }
 
@@ -513,18 +500,9 @@ if (window.customElements) {
             async fetchConfirmationComponentData() {
                 const url = new URL(this.bifrostUri + '/components/confirmation');
                 const signedShoppingCart = this.getCookieValue(COOKIE_NAME);
-                const response = await fetch(url, {
-                    method: 'PUT',
-                    credentials: 'include',
-                    headers: {
-                        'content-Type': 'application/json',
-                        'X-Version': this.componentVersion
-                    },
-                    body: JSON.stringify({
-                        signedShoppingCart: signedShoppingCart
-                    })
-                });
-                const jsonResponse = await response.json();
+                const response = await this.fetchFromBifrost(url, 'PUT', JSON.stringify({
+                    signedShoppingCart: signedShoppingCart
+                }));
 
                 if (response.headers[SHOPPING_CART_DELETE_HEADER]) {
                     document.cookie = `${SHOPPING_CART_DELETE_HEADER}=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
@@ -534,7 +512,7 @@ if (window.customElements) {
                     return undefined;
                 }
 
-                return jsonResponse;
+                return response;
             }
 
             getCookieValue(cookieName) {
@@ -606,19 +584,11 @@ if (window.customElements) {
             async deleteProductOrder(product) {
                 const url = new URL(this.bifrostUri + '/components/confirmation/product');
                 const signedShoppingCart = this.getCookieValue(COOKIE_NAME);
-                var response = await fetch(url, {
-                    method: 'DELETE',
-                    credentials: 'include',
-                    headers: {
-                        'content-Type': 'application/json',
-                        'X-Version': this.componentVersion
-                    },
-                    body: {
-                        orderId: product.orderId,
-                        signedShoppingCart: signedShoppingCart
-                    }
+
+                return await this.fetchFromBifrost(url, 'DELETE', {
+                    orderId: product.orderId,
+                    signedShoppingCart: signedShoppingCart
                 });
-                return await response.json();
             }
 
             prepareProductPanels(fetchedConfirmationComponentData) {
@@ -705,6 +675,18 @@ if (window.customElements) {
                     div.classList.add('confirmation--unchecked');
                 });
                 this.shadowRoot.querySelector('.confirmation__footer--notification').style.display = 'block';
+            }
+
+            async fetchFromBifrost(url, method, body) {
+                const result = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'content-Type': 'application/json',
+                        'X-Version': this.componentVersion
+                    },
+                    body: body
+                });
+                return await result.json();
             }
         }
 

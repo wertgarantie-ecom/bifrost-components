@@ -52,7 +52,7 @@ jobs:
           command: curl https://purge.jsdelivr.net/npm/package-confirmation@1/dist/confirmation.min.js
       - run:
           name: purge CDN cache for selection component
-          command: curl https://purge.jsdelivr.net/npm/wertgarantie-selection-popup@0/dist/selection-popup.min.js
+          command: curl https://purge.jsdelivr.net/npm/wertgarantie-selection-popup@1/dist/selection-popup.min.js
       - run:
           name: purge CDN cache for rating component
           command: curl https://purge.jsdelivr.net/npm/wertgarantie-rating@1/dist/rating.min.js

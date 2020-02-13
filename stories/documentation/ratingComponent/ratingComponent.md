@@ -26,7 +26,7 @@ Once the JavaScript file is included the following tag is available
 
 ## Configure the rating component
 
-The component behaves different depending on what attibutes are provided when included.
+The component behaves different depending on what attributes are provided when included.
 
 ### Fetch Data
 The component will fetch data from an endpoint that you can provide with the attribute `data-bifrost-uri`. If this attribute is not provided, the component will fetch from `"https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie/rating"` per default.
@@ -54,14 +54,14 @@ Another way to configure the component is to provide all of the following three 
 * data-uri (the link behind the `data-ratings-total` + `data-text`)
 * data-rating (the rating number itself, e. g. 3.5)
 
-<wertgarantie-rating data-text="Reviews on Google"
+<wertgarantie-rating data-link-text="Reviews on Google"
                      data-ratings-total="5000"
                      data-uri="https://www.google.de/"
                      data-rating="3.5">
 </wertgarantie-rating>
 
 ```html
-<wertgarantie-rating data-text="Reviews on Google"
+<wertgarantie-rating data-link-text="Reviews on Google"
                      data-ratings-total="5000"
                      data-uri="https://www.google.de/"
                      data-rating="3.5">
@@ -69,13 +69,13 @@ Another way to configure the component is to provide all of the following three 
 ```
 
 ### Noteworthy
-<strong>Note</strong> that you either have to provide `data-fetch-uri` or <i>all</i> four attributes for manual data providing
+<strong>Note</strong> that you either have to provide `data-bifrost-uri` or <i>all</i> four attributes for manual data providing
 
-The attribute `data-show-rating-number` can be set to false in order to hide the number and just show the stars:
-<wertgarantie-rating data-show-rating-number="false"></wertgarantie-rating>
+The attribute `data-disable-rating-number` can be set to true in order to hide the number and just show the stars:
+<wertgarantie-rating data-disable-rating-number="true"></wertgarantie-rating>
 ```html
 <wertgarantie-rating 
-                     data-show-rating-number="false">
+                     data-disable-rating-number="true">
 </wertgarantie-rating>
 ```
 

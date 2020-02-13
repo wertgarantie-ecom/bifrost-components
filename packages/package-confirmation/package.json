@@ -1,6 +1,6 @@
 {
   "name": "wertgarantie-confirmation",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "Confirmation component for Wertgarantie e-commerce push",
   "main": "index.js",
   "scripts": {

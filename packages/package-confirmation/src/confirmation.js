@@ -383,7 +383,7 @@ if (window.customElements) {
                 this.checkStateOnSubmit = this.checkStateOnSubmit.bind(this);
                 this.updateInputField = this.updateInputField.bind(this);
                 this.toggelConfirmation = this.toggelConfirmation.bind(this);
-                this.componentVersion = '1.0.17';
+                this.componentVersion = '1.0.18';
             }
 
             initElementSelectors() {

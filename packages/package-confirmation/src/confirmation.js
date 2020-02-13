@@ -386,7 +386,7 @@ if (window.customElements) {
                 this.updateInputField = this.updateInputField.bind(this);
                 this.setWertgarantieShoppingCartCookie = this.setWertgarantieShoppingCartCookie.bind(this);
                 this.fetchFromBifrost = this.fetchFromBifrost.bind(this);
-                this.componentVersion = '1.0.16';
+                this.componentVersion = '1.0.17';
             }
 
             initElementSelectors() {

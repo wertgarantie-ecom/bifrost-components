@@ -1,5 +1,6 @@
 import {LitElement, html} from 'lit-element';
 import {ratingStyling} from './rating-styling';
+import fetchBifrost from "../../../shared-code/fetchBifrost";
 
 const starText = '★★★★★';
 
@@ -43,7 +44,6 @@ class WertgarantieRating extends LitElement {
 
     render() {
         if (this.ratingDataAvailable()) {
-            console.log("rendering...");
             return html`<div class="rating">
                 ${this.showRatingNumber ? html`<span class="rating__number" id="rating">${this.rating}</span>` : html``}
                 <div class="rating__stars" id="wertgarantie-rating-stars" style="--rating:${this.rating};">${starText}</div>
@@ -77,16 +77,12 @@ class WertgarantieRating extends LitElement {
             );
         }
         try {
-            const response = await fetch(fetchUri, {
-                headers: {
-                    'X-Version': this.componentVersion
-                }
-            });
+            const response = await fetchBifrost(fetchUri, 'GET', this.componentVersion);
             if (response.status !== 200) {
                 console.error('fetch failed:', response);
                 return {};
             }
-            return await response.json();
+            return response.body;
         } catch (error) {
             console.error('Error:', error);
             return {};
@@ -94,7 +90,6 @@ class WertgarantieRating extends LitElement {
     }
 
     checkIfRatingDefined(displayData) {
-        console.log(displayData);
         if (!this.allDisplayDataAvailable(displayData)) {
             this.remove();
             throw new Error("display data incomplete");

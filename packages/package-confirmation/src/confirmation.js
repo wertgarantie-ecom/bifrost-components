@@ -2,6 +2,8 @@
 if (window.customElements) {
     (function () {
         const BIFROST_URI = "https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie";
+        const SHOPPING_CART_DELETE_HEADER = 'X-wertgarantie-shopping-cart-delete';
+        const COOKIE_NAME = 'wertgarantie-shopping-cart';
         const template = document.createElement('template');
         template.innerHTML = `
         <style>
@@ -380,7 +382,11 @@ if (window.customElements) {
                 this.isFullyChecked = this.isFullyChecked.bind(this);
                 this.setUncheckedWarning = this.setUncheckedWarning.bind(this);
                 this.checkStateOnSubmit = this.checkStateOnSubmit.bind(this);
-                this.componentVersion = '1.0.15';
+                this.getCookieValue = this.getCookieValue.bind(this);
+                this.updateInputField = this.updateInputField.bind(this);
+                this.setWertgarantieShoppingCartCookie = this.setWertgarantieShoppingCartCookie.bind(this);
+                this.fetchFromBifrost = this.fetchFromBifrost.bind(this);
+                this.componentVersion = '1.0.16';
             }
 
             initElementSelectors() {
@@ -429,6 +435,7 @@ if (window.customElements) {
                     .then(this.refreshShadowRoot)
                     .then(this.setConfirmCheckbox)
                     .then(this.setTextsAndHiddenInput)
+                    .then(this.setWertgarantieShoppingCartCookie)
                     .then(this.prepareTabs)
                     .then(this.prepareProductPanels)
                     .then(this.connectTabsAndProductPanels)
@@ -464,37 +471,22 @@ if (window.customElements) {
 
 
             async sendConfirmation() {
-                const queryParams = {
-                    clientId: this.clientId
-                };
-                const response = await fetch(this.bifrostUri + '/components/confirmation', {
-                    method: 'PUT',
-                    credentials: 'include',
-                    headers: {
-                        'content-Type': 'application/json',
-                        'X-Version': this.componentVersion
-                    },
-                    body: JSON.stringify(queryParams)
-                });
-                this.setHiddenInput(await response.text());
+                const url = this.bifrostUri + '/components/confirmation/confirm';
+                const response = await this.fetchFromBifrost(url, 'PUT');
+                this.updateInputField(response);
                 // TODO: Was soll passieren, wenn call fehlschlägt?
             }
 
+
             async rejectConfirmation() {
-                const queryParams = {
-                    clientId: this.clientId
-                };
-                const response = await fetch(this.bifrostUri + '/components/confirmation', {
-                    method: 'DELETE',
-                    credentials: 'include',
-                    headers: {
-                        'content-Type': 'application/json',
-                        'X-Version': this.componentVersion
-                    },
-                    body: JSON.stringify(queryParams)
-                });
-                this.setHiddenInput(await response.text());
+                const url = this.bifrostUri + '/components/confirmation/confirm';
+                const response = await this.fetchFromBifrost(url, 'DELETE');
+                this.updateInputField(response)
                 // TODO: Was soll passieren, wenn call fehlschlägt? --> Nachricht: Service aktuell nicht verfügbar?
+            }
+
+            updateInputField(response) {
+                this.setHiddenInput(response.body.signedShoppingCart);
             }
 
             showComponent() {
@@ -503,25 +495,25 @@ if (window.customElements) {
 
             async fetchConfirmationComponentData() {
                 const url = new URL(this.bifrostUri + '/components/confirmation');
-                const queryParams = {
-                    clientId: this.clientId
-                };
-                Object.keys(queryParams).forEach(key => url.searchParams.append(key, queryParams[key]));
-                const response = await fetch(url, {
-                    method: 'GET',
-                    credentials: 'include',
-                    headers: {
-                        'X-Version': this.componentVersion
-                    }
-                });
+                const response = await this.fetchFromBifrost(url, 'PUT');
+
                 if (response.status !== 200) {
                     return undefined;
                 }
-                return await response.json();
+
+                return response.body;
+            }
+
+            getCookieValue(cookieName) {
+                var cookieContent = document.cookie.match('(^|[^;]+)\\s*' + cookieName + '\\s*=\\s*([^;]+)');
+                return cookieContent ? JSON.parse(cookieContent.pop()) : undefined;
             }
 
             productDataAvailable(fetchedConfirmationComponentData) {
-                if (!fetchedConfirmationComponentData || fetchedConfirmationComponentData.constructor !== Object || Object.entries(fetchedConfirmationComponentData).length === 0 || fetchedConfirmationComponentData.products.length === 0) {
+                if (!fetchedConfirmationComponentData ||
+                    fetchedConfirmationComponentData.constructor !== Object ||
+                    Object.entries(fetchedConfirmationComponentData).length === 0 ||
+                    fetchedConfirmationComponentData.products.length === 0) {
                     throw new UndefinedConfirmationDataError("fetchedConfirmationData is empty or undefined");
                 }
                 return fetchedConfirmationComponentData;
@@ -531,13 +523,18 @@ if (window.customElements) {
                 this.headerTitle.textContent = fetchedConfirmationComponentData.title;
                 this.pleaseConfirmText.textContent = fetchedConfirmationComponentData.confirmationHeader;
                 this.generalConfirmationText.innerHTML = fetchedConfirmationComponentData.confirmationTextGeneral;
-                this.setHiddenInput(fetchedConfirmationComponentData.shoppingCartInputString);
+                this.setHiddenInput(fetchedConfirmationComponentData.signedShoppingCart);
+                return fetchedConfirmationComponentData;
+            }
+
+            setWertgarantieShoppingCartCookie(fetchedConfirmationComponentData) {
+                document.cookie = `${COOKIE_NAME}=${JSON.stringify(fetchedConfirmationComponentData.signedShoppingCart)}`;
                 return fetchedConfirmationComponentData;
             }
 
             setHiddenInput(wertgarantieSignedShoppingCart) {
                 const hiddenInputField = document.querySelector(this.getAttribute("data-hidden-input-selector"));
-                hiddenInputField.value = wertgarantieSignedShoppingCart;
+                hiddenInputField.value = btoa(JSON.stringify(wertgarantieSignedShoppingCart));
             }
 
             prepareTabs(fetchedConfirmationComponentData) {
@@ -578,20 +575,12 @@ if (window.customElements) {
 
             async deleteProductOrder(product) {
                 const url = new URL(this.bifrostUri + '/components/confirmation/product');
-                const queryParams = {
-                    clientId: this.clientId,
+
+                const result = await this.fetchFromBifrost(url, 'DELETE', {
                     orderId: product.orderId
-                };
-                var response = await fetch(url, {
-                    method: 'DELETE',
-                    credentials: 'include',
-                    headers: {
-                        'content-Type': 'application/json',
-                        'X-Version': this.componentVersion
-                    },
-                    body: JSON.stringify(queryParams)
                 });
-                return await response.json();
+
+                return result.body;
             }
 
             prepareProductPanels(fetchedConfirmationComponentData) {
@@ -678,6 +667,39 @@ if (window.customElements) {
                     div.classList.add('confirmation--unchecked');
                 });
                 this.shadowRoot.querySelector('.confirmation__footer--notification').style.display = 'block';
+            }
+
+            async fetchFromBifrost(url, method, body = {}) {
+                const signedShoppingCart = this.getCookieValue(COOKIE_NAME);
+                if (signedShoppingCart) {
+                    body.signedShoppingCart = signedShoppingCart;
+                }
+                const result = await fetch(url, {
+                    method: method,
+                    headers: {
+                        "credentials": 'include',
+                        'content-Type': 'application/json',
+                        'X-Version': this.componentVersion
+                    },
+                    body: JSON.stringify(body)
+                });
+
+                if (result.headers.get(SHOPPING_CART_DELETE_HEADER)) {
+                    document.cookie = `${COOKIE_NAME}=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
+                }
+
+                let responseJson = undefined;
+                if (result.status === 200) {
+                    responseJson = await result.json();
+                    if (responseJson.signedShoppingCart) {
+                        document.cookie = `${COOKIE_NAME}=${JSON.stringify(responseJson.signedShoppingCart)}`
+                    }
+                }
+                return {
+                    headers: result.headers,
+                    status: result.status,
+                    body: responseJson
+                };
             }
         }
 

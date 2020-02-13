@@ -545,7 +545,7 @@ if (window.customElements) {
                 this.productDetailsFooter = this.shadowRoot.querySelector('.product__details-footer');
                 this.orderBtn = this.shadowRoot.querySelector('#orderBtn');
                 this.initialized = false;
-                this.componentVersion = '0.0.32';
+                this.componentVersion = '1.0.0';
 
                 // method binding:
                 this.allDisplayDataAvailable = this.allDisplayDataAvailable.bind(this);
@@ -555,6 +555,7 @@ if (window.customElements) {
                 this.close = this.close.bind(this);
                 this.addProductToOrder = this.addProductToOrder.bind(this);
                 this.getSelectedProduct = this.getSelectedProduct.bind(this);
+                this.getCookieValue = this.getCookieValue.bind(this);
             }
 
             set devicePrice(devicePrice) {
@@ -909,14 +910,9 @@ if (window.customElements) {
                         "shopProductName: " + this.getAttribute('data-shop-product-name')
                     );
                 }
-                const queryParams = {
-                    devicePrice: this.getAttribute('data-device-price'),
-                    deviceClass: this.getAttribute('data-device-class'),
-                    productId: selectedProduct,
-                    deviceCurrency: currency,
-                    shopProductName: this.getAttribute('data-shop-product-name')
-                };
                 try {
+                    // bestehenden cookie auslesen um zu validieren
+                    const currentShoppingCart = this.getCookieValue('wertgarantie-shopping-cart');
                     const response = await fetch(bifrostUri + '/shoppingCart/' + clientId, {
                         method: 'POST',
                         credentials: 'include',
@@ -924,24 +920,25 @@ if (window.customElements) {
                             'content-Type': 'application/json',
                             'X-Version': this.componentVersion
                         },
-                        body: JSON.stringify(queryParams)
+                        body: JSON.stringify({
+                            devicePrice: parseInt(this.getAttribute('data-device-price')),
+                            deviceClass: this.getAttribute('data-device-class'),
+                            productId: parseInt(selectedProduct),
+                            deviceCurrency: currency,
+                            shopProductName: this.getAttribute('data-shop-product-name'),
+                            signedShoppingCart: currentShoppingCart
+                        })
                     });
                     if (response.status !== 200) {
                         console.error('Adding product to shopping cart failed:', response);
                         return {};
                     }
-                    var fadeTarget = this.modal;
-                    var fadeEffect = setInterval(function () {
-                        if (!fadeTarget.style.opacity) {
-                            fadeTarget.style.opacity = 1;
-                        }
-                        if (fadeTarget.style.opacity > 0) {
-                            fadeTarget.style.opacity -= 0.1;
-                        } else {
-                            clearInterval(fadeEffect);
-                            fadeTarget.remove();
-                        }
-                    }, 60);
+
+                    const json = await response.json();
+                    document.cookie = 'wertgarantie-shopping-cart=' + JSON.stringify(json.signedShoppingCart);
+
+                    this.fadeout();
+
 
                 } catch (error) {
                     console.error('Error:', error);
@@ -951,7 +948,28 @@ if (window.customElements) {
             getSelectedProduct() {
                 return this.productSection.querySelector('.product--selected').querySelector('.product__selection').value;
             }
+
+            getCookieValue(cookieName) {
+                var cookieContent = document.cookie.match('(^|[^;]+)\\s*' + cookieName + '\\s*=\\s*([^;]+)');
+                return cookieContent ? JSON.parse(cookieContent.pop()) : undefined;
+            }
+
+            fadeout() {
+                var fadeTarget = this.modal;
+                var fadeEffect = setInterval(function () {
+                    if (!fadeTarget.style.opacity) {
+                        fadeTarget.style.opacity = 1;
+                    }
+                    if (fadeTarget.style.opacity > 0) {
+                        fadeTarget.style.opacity -= 0.05;
+                    } else {
+                        clearInterval(fadeEffect);
+                        fadeTarget.remove();
+                    }
+                }, 20);
+            }
         }
+
 
         window.wertgarantieSelectionPopUpOpen = (popupId, configuredData = {}) => {
             const name = 'wertgarantie-selection-pop-up';

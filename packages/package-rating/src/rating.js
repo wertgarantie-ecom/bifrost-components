@@ -36,7 +36,7 @@ class WertgarantieRating extends LitElement {
         this.link = this.getAttribute('data-link');
         this.linkText = this.getAttribute('data-link-text');
         this.ratingsTotal = this.getAttribute('data-ratings-total');
-        this.showRatingNumber = this.getAttribute('data-show-rating-number') || true;
+        this.disableRatingNumber = this.getAttribute('data-disable-rating-number') === "true";
         this.fetchRating(this.bifrostUri + '/rating')
             .then(this.checkIfRatingDefined)
             .then(this.setProperties)
@@ -45,7 +45,7 @@ class WertgarantieRating extends LitElement {
     render() {
         if (this.ratingDataAvailable()) {
             return html`<div class="rating">
-                ${this.showRatingNumber ? html`<span class="rating__number" id="rating">${this.rating}</span>` : html``}
+                ${this.disableRatingNumber ? html`` : html`<span class="rating__number" id="rating">${this.rating}</span>`}
                 <div class="rating__stars" id="wertgarantie-rating-stars" style="--rating:${this.rating};">${starText}</div>
                 <a target="_blank" class="rating__link" href="${this.link}">${this.ratingsTotal + " " + this.linkText}</a>
             </div>`;

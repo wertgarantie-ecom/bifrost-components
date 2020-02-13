@@ -1,9 +1,8 @@
-// import { bodyParser } from "restify";
+import fetchBifrost from "../../../shared-code/fetchBifrost";
+
 if (window.customElements) {
     (function () {
         const BIFROST_URI = "https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie";
-        const SHOPPING_CART_DELETE_HEADER = 'X-wertgarantie-shopping-cart-delete';
-        const COOKIE_NAME = 'wertgarantie-shopping-cart';
         const template = document.createElement('template');
         template.innerHTML = `
         <style>
@@ -382,10 +381,8 @@ if (window.customElements) {
                 this.isFullyChecked = this.isFullyChecked.bind(this);
                 this.setUncheckedWarning = this.setUncheckedWarning.bind(this);
                 this.checkStateOnSubmit = this.checkStateOnSubmit.bind(this);
-                this.getCookieValue = this.getCookieValue.bind(this);
                 this.updateInputField = this.updateInputField.bind(this);
-                this.setWertgarantieShoppingCartCookie = this.setWertgarantieShoppingCartCookie.bind(this);
-                this.fetchFromBifrost = this.fetchFromBifrost.bind(this);
+                this.toggelConfirmation = this.toggelConfirmation.bind(this);
                 this.componentVersion = '1.0.17';
             }
 
@@ -435,7 +432,6 @@ if (window.customElements) {
                     .then(this.refreshShadowRoot)
                     .then(this.setConfirmCheckbox)
                     .then(this.setTextsAndHiddenInput)
-                    .then(this.setWertgarantieShoppingCartCookie)
                     .then(this.prepareTabs)
                     .then(this.prepareProductPanels)
                     .then(this.connectTabsAndProductPanels)
@@ -452,9 +448,9 @@ if (window.customElements) {
             initListeners() {
                 this.checkbox.addEventListener("click", event => {
                     if (event.target.checked) {
-                        this.sendConfirmation();
+                        this.toggelConfirmation('PUT');
                     } else {
-                        this.rejectConfirmation();
+                        this.toggelConfirmation('DELETE');
                     }
                 });
 
@@ -469,20 +465,11 @@ if (window.customElements) {
                 return shoppingCart;
             }
 
-
-            async sendConfirmation() {
+            async toggelConfirmation(method) {
                 const url = this.bifrostUri + '/components/confirmation/confirm';
-                const response = await this.fetchFromBifrost(url, 'PUT');
+                const response = await fetchBifrost(url, method, this.componentVersion);
                 this.updateInputField(response);
                 // TODO: Was soll passieren, wenn call fehlschlägt?
-            }
-
-
-            async rejectConfirmation() {
-                const url = this.bifrostUri + '/components/confirmation/confirm';
-                const response = await this.fetchFromBifrost(url, 'DELETE');
-                this.updateInputField(response)
-                // TODO: Was soll passieren, wenn call fehlschlägt? --> Nachricht: Service aktuell nicht verfügbar?
             }
 
             updateInputField(response) {
@@ -495,18 +482,13 @@ if (window.customElements) {
 
             async fetchConfirmationComponentData() {
                 const url = new URL(this.bifrostUri + '/components/confirmation');
-                const response = await this.fetchFromBifrost(url, 'PUT');
+                const response = await fetchBifrost(url, 'PUT', this.componentVersion);
 
                 if (response.status !== 200) {
                     return undefined;
                 }
 
                 return response.body;
-            }
-
-            getCookieValue(cookieName) {
-                var cookieContent = document.cookie.match('(^|[^;]+)\\s*' + cookieName + '\\s*=\\s*([^;]+)');
-                return cookieContent ? JSON.parse(cookieContent.pop()) : undefined;
             }
 
             productDataAvailable(fetchedConfirmationComponentData) {
@@ -524,11 +506,6 @@ if (window.customElements) {
                 this.pleaseConfirmText.textContent = fetchedConfirmationComponentData.confirmationHeader;
                 this.generalConfirmationText.innerHTML = fetchedConfirmationComponentData.confirmationTextGeneral;
                 this.setHiddenInput(fetchedConfirmationComponentData.signedShoppingCart);
-                return fetchedConfirmationComponentData;
-            }
-
-            setWertgarantieShoppingCartCookie(fetchedConfirmationComponentData) {
-                document.cookie = `${COOKIE_NAME}=${JSON.stringify(fetchedConfirmationComponentData.signedShoppingCart)}`;
                 return fetchedConfirmationComponentData;
             }
 
@@ -576,7 +553,7 @@ if (window.customElements) {
             async deleteProductOrder(product) {
                 const url = new URL(this.bifrostUri + '/components/confirmation/product');
 
-                const result = await this.fetchFromBifrost(url, 'DELETE', {
+                const result = await fetchBifrost(url, 'DELETE', this.componentVersion, {
                     orderId: product.orderId
                 });
 
@@ -668,40 +645,8 @@ if (window.customElements) {
                 });
                 this.shadowRoot.querySelector('.confirmation__footer--notification').style.display = 'block';
             }
-
-            async fetchFromBifrost(url, method, body = {}) {
-                const signedShoppingCart = this.getCookieValue(COOKIE_NAME);
-                if (signedShoppingCart) {
-                    body.signedShoppingCart = signedShoppingCart;
-                }
-                const result = await fetch(url, {
-                    method: method,
-                    headers: {
-                        "credentials": 'include',
-                        'content-Type': 'application/json',
-                        'X-Version': this.componentVersion
-                    },
-                    body: JSON.stringify(body)
-                });
-
-                if (result.headers.get(SHOPPING_CART_DELETE_HEADER)) {
-                    document.cookie = `${COOKIE_NAME}=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
-                }
-
-                let responseJson = undefined;
-                if (result.status === 200) {
-                    responseJson = await result.json();
-                    if (responseJson.signedShoppingCart) {
-                        document.cookie = `${COOKIE_NAME}=${JSON.stringify(responseJson.signedShoppingCart)}`
-                    }
-                }
-                return {
-                    headers: result.headers,
-                    status: result.status,
-                    body: responseJson
-                };
-            }
         }
+
 
         class UndefinedConfirmationDataError extends Error {
         }

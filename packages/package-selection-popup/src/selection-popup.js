@@ -1,4 +1,5 @@
 import '../../package-rating/src/rating.js'
+import fetchBifrost from "../../../shared-code/fetchBifrost";
 
 if (window.customElements) {
     (function () {
@@ -555,7 +556,6 @@ if (window.customElements) {
                 this.close = this.close.bind(this);
                 this.addProductToOrder = this.addProductToOrder.bind(this);
                 this.getSelectedProduct = this.getSelectedProduct.bind(this);
-                this.getCookieValue = this.getCookieValue.bind(this);
             }
 
             set devicePrice(devicePrice) {
@@ -678,16 +678,12 @@ if (window.customElements) {
                         clientId: clientId
                     };
                     Object.keys(queryParams).forEach(key => url.searchParams.append(key, queryParams[key]));
-                    const response = await fetch(url, {
-                        headers: {
-                            'X-Version': this.componentVersion
-                        }
-                    });
+                    const response = await fetchBifrost(url, 'GET', this.componentVersion);
                     if (response.status !== 200) {
                         console.error('fetch failed:', response);
                         return {};
                     }
-                    return await response.json();
+                    return response.body;
                 } catch (error) {
                     console.error('Error:', error);
                     return {};
@@ -911,35 +907,19 @@ if (window.customElements) {
                     );
                 }
                 try {
-                    // bestehenden cookie auslesen um zu validieren
-                    const currentShoppingCart = this.getCookieValue('wertgarantie-shopping-cart');
-                    const response = await fetch(bifrostUri + '/shoppingCart/' + clientId, {
-                        method: 'POST',
-                        credentials: 'include',
-                        headers: {
-                            'content-Type': 'application/json',
-                            'X-Version': this.componentVersion
-                        },
-                        body: JSON.stringify({
-                            devicePrice: parseInt(this.getAttribute('data-device-price')),
-                            deviceClass: this.getAttribute('data-device-class'),
-                            productId: parseInt(selectedProduct),
-                            deviceCurrency: currency,
-                            shopProductName: this.getAttribute('data-shop-product-name'),
-                            signedShoppingCart: currentShoppingCart
-                        })
+                    const response = await fetchBifrost(bifrostUri + '/shoppingCart/' + clientId, 'POST', this.componentVersion, {
+                        devicePrice: parseInt(this.getAttribute('data-device-price')),
+                        deviceClass: this.getAttribute('data-device-class'),
+                        productId: parseInt(selectedProduct),
+                        deviceCurrency: currency,
+                        shopProductName: this.getAttribute('data-shop-product-name')
                     });
                     if (response.status !== 200) {
                         console.error('Adding product to shopping cart failed:', response);
                         return {};
                     }
 
-                    const json = await response.json();
-                    document.cookie = 'wertgarantie-shopping-cart=' + JSON.stringify(json.signedShoppingCart);
-
                     this.fadeout();
-
-
                 } catch (error) {
                     console.error('Error:', error);
                 }
@@ -947,11 +927,6 @@ if (window.customElements) {
 
             getSelectedProduct() {
                 return this.productSection.querySelector('.product--selected').querySelector('.product__selection').value;
-            }
-
-            getCookieValue(cookieName) {
-                var cookieContent = document.cookie.match('(^|[^;]+)\\s*' + cookieName + '\\s*=\\s*([^;]+)');
-                return cookieContent ? JSON.parse(cookieContent.pop()) : undefined;
             }
 
             fadeout() {

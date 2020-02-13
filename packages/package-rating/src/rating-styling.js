@@ -1,6 +1,7 @@
 import {css} from 'lit-element';
 
-export const ratingLitStyling = css`
+//language=CSS
+export const ratingStyling = css`
     :host {
         display: inline-block;
     }

@@ -7,26 +7,27 @@
     <title>Rating</title>
 </head>
 <body>
-    <!-- data-fetch-uri="http://localhost:3000/wertgarantie/rating" -->
-    <!-- data-show-rating-number="false" -->
-    <div>
-        <p>Remote Call to bifrost: </p>
-        <wertgarantie-rating class="mobilcom-wg-rating-theme">
-        </wertgarantie-rating>
-    </div>
-    <div>
-        <p>Fetch Data from local bifrost (make sure it's running)</p>
-            <wertgarantie-rating class="mobilcom-wg-rating-theme"
-                data-bifrost-uri="http://localhost:3000/wertgarantie/rating">
+<!-- data-fetch-uri="http://localhost:3000/wertgarantie/rating" -->
+<!-- data-show-rating-number="false" -->
+<div>
+    <p>Remote Call to bifrost: </p>
+    <wertgarantie-rating class="mobilcom-wg-rating-theme">
     </wertgarantie-rating>
-    </div>
-    <div>
-        <p>Fetch Data from local bifrost with modified text and do not show rating number</p>
-            <wertgarantie-rating id="no-rating-number-and-different-text"
-                data-text="Google Rezensionen"
-                data-show-rating-number="false">
+</div>
+<div>
+    <p>Fetch Data from local bifrost (make sure it's running)</p>
+    <wertgarantie-rating class="mobilcom-wg-rating-theme"
+                         data-bifrost-uri="http://localhost:3000/wertgarantie"
+                         data-link-text="Voll krasse Google Rezensionen">
     </wertgarantie-rating>
-    </div>
+</div>
+<!--<div>-->
+<!--    <p>Fetch Data from local bifrost with modified text and do not show rating number</p>-->
+<!--    <wertgarantie-rating id="no-rating-number-and-different-text"-->
+<!--                         data-text="Google Rezensionen"-->
+<!--                         data-show-rating-number="false">-->
+<!--    </wertgarantie-rating>-->
+<!--</div>-->
 </body>
-<script src="../../packages/package-rating/dist/rating.min.js"></script>
+<script src="../../packages/package-rating/dist/rating-lit.min.js"></script>
 </html>

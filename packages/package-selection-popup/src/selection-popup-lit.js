@@ -1,13 +1,15 @@
 import {LitElement, html} from 'lit-element';
 import '../../package-rating/src/rating.js'
 import fetchBifrost from "../../../shared-code/fetchBifrost";
+import {classMap} from 'lit-html/directives/class-map';
 
+const head__title = "Wird oft dazugebucht";
 
 class WertgarantieSelectionPopUp extends LitElement {
 
     static get properties() {
         return {
-            display: {type: Boolean},
+            showComponent: {type: Boolean},
             devicePrice: {type: Number},
             deviceClass: {type: String},
             bifrostUri: {type: String},
@@ -15,7 +17,11 @@ class WertgarantieSelectionPopUp extends LitElement {
             shopProductName: {type: String},
             title: {type: String},
             products: {type: Array},
-            displayAttributes: {type: Object}
+            displayAttributes: {type: Object},
+            headTitle: {type: String},
+            headSubTitle: {type: String},
+            detailsHeader: {type: String},
+            termsAndConditions: {type: String}
         };
     }
 
@@ -36,9 +42,14 @@ class WertgarantieSelectionPopUp extends LitElement {
         });
 
         this.title = responseData.title;
+        this.headTitle = responseData.headTitle || "Wird oft dazugebucht";
+        this.headSubTitle = responseData.headSubTitle || "Wählen Sie den Schutz, der Ihren Bedürfnissen am besten entspricht:";
+        this.detailsHeader = responseData.detailsHeader || "Details";
+        this.termsAndConditions = responseData.termsAndConditions || "Bedingungen";
         this.products = products;
         this.displayAttributes = {
-            showDetails: false
+            showDetails: false,
+            selectedProductIndex: 0
         };
     }
 
@@ -112,121 +123,214 @@ class WertgarantieSelectionPopUp extends LitElement {
         // TODO
     }
 
+    createMobileProductSelectionButton(product, idx) {
+        const buttonClasses = {
+            "product-selectors__button": true,
+            "product-selectors__button--selected": idx === this.displayAttributes.selectedProductIndex
+        };
+        return html`
+            <button @click="${() => this.displayAttributes.selectedProductIndex = idx}" class=${classMap(buttonClasses)}>${"Varinate " + (idx + 1)}</button>
+        `;
+    }
+
+    createProductDiv(product, idx) {
+        //language=HTML
+        const productHeadClassList = {
+            "product__head--background": true,
+            "product__head--background-even": idx % 2 === 0,
+            "product__head--background-odd": idx % 2 !== 0
+        }
+        const productDetailsClassList = {
+            "product__details": true,
+            "product__details--expanded": this.displayAttributes.showDetails
+        }
+
+        return html`
+            <div @click="${() => this.displayAttributes.selectedProductIndex = idx}" class="product">
+                <div class=${classMap(productHeadClassList)}
+                     style="--image-link:url(${product.imageLink})">
+                    <div class="product__base-info">
+                        <div class="product__base-info--top">
+                            <div class="product__base-info--top-left">
+                                <small class="payment-interval">${product.paymentInterval}</small><br>
+                                <strong class="price-display">${product.priceFormatted}</strong><br>
+                                <small class="tax-display">${product.taxFormatted}</small>
+                            </div>
+                            <div class="product__base-info--top-right">
+                                <label class="radio-container">
+                                    <input class="product__selection" type="radio" name="product-id">
+                                    <span class="radio-circle"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="product__base-info--bottom">
+                            <h3 class="product__title">${product.name}E-Bike Komplettschutz mit monatlicher Zahlweise</h3>
+                            <ul class="product__advantages product__advantages--top3">
+                                ${product.top3.forEach((topAdvantage) => html`<li class="advantage advantage--included"><span class="advantage__icon advantage__icon--included">${topAdvantage}</span></li>`)}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class=${classMap(productDetailsClassList)}>
+                    <h3>${this.detailsHeader}</h3>
+<!--                    excluded Advantages fehlen noch -->
+                    <ul class="product__advantages product__advantages--details">
+                        ${product.advantages.forEach((advantage) => html`<li class="advantage advantage--included"><span class="advantage__icon advantage__icon--included">${advantage}</span></li>`)}
+                    </ul>
+                    <div class="product__terms">
+                        <div>
+                            <p><strong>${this.termsAndConditions}</strong></p>
+                            <a class="wg-link wg-infosheet-link wg-product-info-sheet"
+                               href="${product.detailsDocUri}">${product.detailsDocText}
+                                zu Versicherungsprodukten</a><br>
+                            <a class="wg-link wg-infosheet-link wg-avb"
+                               href="${product.infoSheetUri}">${product.infoSheetText}</a>
+                        </div>
+                        <div style="text-align: center; padding-top: 1em;">
+                            <p><strong>Mehr zum <a target="_blank" class="wg-link info-sheet-link"
+                                                   href="https://stage-api.wertgarantie.com/download/82e38762-4440-46a9-a34e-58974a3ddad5">Produkt</a>
+                                und der <a target="_blank" class="wg-link"
+                                           href="http://www.example.com/">Wertgarantie</a>.</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `
+    }
+
     render() {
-        return (this.display) ? html`<div class="modal" id="modal" style="display: block;">
-        <div class="content">
-            <div class="head">
-                <div class="head__left">
-                    <strong class="head__title">Wird oft dazugebucht</strong>
-                    <wertgarantie-rating class="wg-rating-default" data-show-rating-number="false">
-                    </wertgarantie-rating>
-                </div>
-                <div class="head__right">
-                    <span class="closeBtn" id="closeBtn">×</span>
-                </div>
-            </div>
-            <p class="head__subtitle">Wählen Sie den Schutz, der Ihren Bedürfnissen am besten entspricht:</p>
-            <section class="product-selectors" id="product-selectors">
-            <button class="product-selectors__button product-selectors__button--selected">Varinate 1</button><button class="product-selectors__button">Varinate 2</button></section>
-            <section class="products" id="products">
-            <div class="product">
-        <div class="product__head--background product__head--background-even" style="--image-link-even:url(&quot;https://wertgarantie-bifrost.s3.eu-central-1.amazonaws.com/eBike-HP.jpeg&quot;);">
-            <div class="product__base-info">
-                <div class="product__base-info--top">
-                    <div class="product__base-info--top-left">
-                        <small class="payment-interval">monatl.</small><br>
-                        <strong class="price-display">ab 5,00 €</strong><br>
-                        <small class="tax-display">(inkl. 0,80€ VerSt**)</small>
+        return (this.showComponent) ?
+            //language=HTML
+            html`
+                <div class="modal" id="modal">
+                    <div class="content">
+                        <div class="head">
+                            <div class="head__left">
+                                <strong class="head__title">${this.headTitle}</strong>
+                                <wertgarantie-rating class="wg-rating-default"
+                                                     data-bifrost-uri="${this.bifrostUri}"
+                                                     data-disable-rating-number="true">
+                                </wertgarantie-rating>
+                            </div>
+                            <div class="head__right">
+                                <span @click="${() => this.display = false}" class="closeBtn" id="closeBtn">×</span>
+                            </div>
+                        </div>
+                        <p class="head__subtitle">${this.headSubTitle}</p>
+                        <section class="product-selectors" id="product-selectors">
+                            ${this.products.forEach(this.createMobileProductSelectionButton)}
+                        </section>
+                        <section class="products" id="products">
+                            ${this.products.forEach(this.createProdutDiv)}
+                            <div class="product">
+                                <div class="product__head--background product__head--background-odd"
+                                     style="--image-link-odd:url(&quot;https://wertgarantie-bifrost.s3.eu-central-1.amazonaws.com/utah-mountain-biking-bike-biking-71104.jpeg&quot;);">
+                                    <div class="product__base-info">
+                                        <div class="product__base-info--top">
+                                            <div class="product__base-info--top-left">
+                                                <small class="payment-interval">jährl.</small><br>
+                                                <strong class="price-display">ab 83,40 €</strong><br>
+                                                <small class="tax-display">(inkl. 13,32€ VerSt**)</small>
+                                            </div>
+                                            <div class="product__base-info--top-right">
+                                                <label class="radio-container">
+                                                    <input class="product__selection" type="radio" name="product-id"
+                                                           value="10">
+                                                    <span class="radio-circle"></span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="product__base-info--bottom">
+                                            <h3 class="product__title">E-Bike Komplettschutz mit jährlicher
+                                                Zahlweise</h3>
+                                            <ul class="product__advantages product__advantages--top3">
+                                                <li class="advantage advantage--included"><span
+                                                        class="advantage__icon advantage__icon--included">Unterwegs was passiert? Wir holen Sie ab!</span>
+                                                </li>
+                                                <li class="advantage advantage--included"><span
+                                                        class="advantage__icon advantage__icon--included">Schaden an Fahrrad oder Motor? Wir kümmern uns um die Reparatur und Kosten!</span>
+                                                </li>
+                                                <li class="advantage advantage--included"><span
+                                                        class="advantage__icon advantage__icon--included">Diebstahl? Wir erstatten den Zeitwert!</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="product__details product__details--expanded">
+                                    <h3>Details</h3>
+                                    <ul class="product__advantages product__advantages--details">
+                                        <li class="advantage advantage--included"><span
+                                                class="advantage__icon advantage__icon--included">Pick-Up-Service</span>
+                                        </li>
+                                        <li class="advantage advantage--included"><span
+                                                class="advantage__icon advantage__icon--included">Volle Kostenübernahme bei Reparaturen</span>
+                                        </li>
+                                        <li class="advantage advantage--included"><span
+                                                class="advantage__icon advantage__icon--included">Unsachgemäße Handhabung</span>
+                                        </li>
+                                        <li class="advantage advantage--included"><span
+                                                class="advantage__icon advantage__icon--included">Verschleißschutz</span>
+                                        </li>
+                                        <li class="advantage advantage--included"><span
+                                                class="advantage__icon advantage__icon--included">Diebstahlschutz</span>
+                                        </li>
+                                        <li class="advantage advantage--included"><span
+                                                class="advantage__icon advantage__icon--included">Teilediebstahlschutz</span>
+                                        </li>
+                                    </ul>
+                                    <div class="product__terms">
+                                        <div>
+                                            <p><strong>Bedingungen</strong></p>
+                                            <a class="wg-link wg-infosheet-link wg-product-info-sheet"
+                                               href="https://stage-api.wertgarantie.com/download/928e51ef-d92f-4aa4-ba42-61d1e100af2f">Informationsblatt
+                                                zu Versicherungsprodukten</a><br>
+                                            <a class="wg-link wg-infosheet-link wg-avb"
+                                               href="https://stage-api.wertgarantie.com/download/191a36e2-6685-4a3d-beb0-dc0159a90387">Allgemeine
+                                                Versicherungsbedingungen</a>
+                                        </div>
+                                        <div style="text-align: center; padding-top: 1em;">
+                                            <p><strong>Mehr zum <a target="_blank" class="wg-link info-sheet-link"
+                                                                   href="https://stage-api.wertgarantie.com/download/928e51ef-d92f-4aa4-ba42-61d1e100af2f">Produkt</a>
+                                                und der <a target="_blank" class="wg-link"
+                                                           href="http://www.example.com/">Wertgarantie</a>.</strong></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section class="product__details-footer product__details-footer--expanded">
+                            <div>
+                                <p>Versicherung ist Vertrauenssache, deshalb setzt "PARTNERSHOP" neben <strong>500.000
+                                    zufriedener Kunden</strong> auf die <strong>Wertgarantie</strong>, den <strong>Testsieger
+                                    in Sachen Sicherheit</strong></p>
+                            </div>
+
+                            <div class="award-image-block">
+                                <a target="_blank" href="https://www.certipedia.com/quality_marks/9105052129"><img
+                                        class="award-image"
+                                        src="https://www.wertgarantie.de/portaldata/4/resources/Icons/tuev-logo.png"
+                                        alt="tuev-logo"></a>
+                                <a target="_blank" href="https://www.wertgarantie.de/Home.aspx#"><img
+                                        class="award-image"
+                                        src="https://www.wertgarantie.de/Portaldata/4/Resources/logos/test-bild-wertgarantie-109-01.png"
+                                        alt="test-bild"></a>
+                            </div>
+                        </section>
+                        <section class="button-section">
+                            <div class="button-section__details-cancel">
+                                <button class="button button--dark" id="detailsBtn">Details anzeigen</button>
+                                <button class="button button--light" id="cancelOrder">Nicht absichern</button>
+                            </div>
+                            <div class="button-section__order">
+                                <button class="button button--dark order-button order-button--inactive" id="orderBtn"
+                                        disabled="">Beides in den Warenkorb
+                                </button>
+                            </div>
+                        </section>
                     </div>
-                    <div class="product__base-info--top-right">
-                        <label class="radio-container">
-                            <input class="product__selection" type="radio" name="product-id" value="11">
-                            <span class="radio-circle"></span>
-                        </label>
-                    </div>
-                </div>
-                <div class="product__base-info--bottom">
-                    <h3 class="product__title">E-Bike Komplettschutz mit monatlicher Zahlweise</h3>
-                    <ul class="product__advantages product__advantages--top3">
-                <li class="advantage advantage--included"><span class="advantage__icon advantage__icon--included">Unterwegs was passiert? Wir holen Sie ab!</span></li><li class="advantage advantage--included"><span class="advantage__icon advantage__icon--included">Schaden an Fahrrad oder Motor? Wir kümmern uns um die Reparatur und Kosten!</span></li><li class="advantage advantage--included"><span class="advantage__icon advantage__icon--included">Diebstahl? Wir erstatten den Zeitwert!</span></li></ul></div>
-                
-            </div>
-        </div>
-        <div class="product__details product__details--expanded">
-            <h3>Details</h3>
-            <ul class="product__advantages product__advantages--details">
-            <li class="advantage advantage--included"><span class="advantage__icon advantage__icon--included">Pick-Up-Service</span></li><li class="advantage advantage--included"><span class="advantage__icon advantage__icon--included">Volle Kostenübernahme bei Reparaturen</span></li><li class="advantage advantage--included"><span class="advantage__icon advantage__icon--included">Unsachgemäße Handhabung</span></li><li class="advantage advantage--included"><span class="advantage__icon advantage__icon--included">Verschleißschutz</span></li><li class="advantage advantage--included"><span class="advantage__icon advantage__icon--included">Diebstahlschutz</span></li><li class="advantage advantage--included"><span class="advantage__icon advantage__icon--included">Teilediebstahlschutz</span></li></ul>
-            <div class="product__terms">
-                <div>
-                    <p><strong>Bedingungen</strong></p>
-                    <a class="wg-link wg-infosheet-link wg-product-info-sheet" href="https://stage-api.wertgarantie.com/download/82e38762-4440-46a9-a34e-58974a3ddad5">Informationsblatt zu Versicherungsprodukten</a><br>
-                    <a class="wg-link wg-infosheet-link wg-avb" href="https://stage-api.wertgarantie.com/download/1eb7d0ce-6c62-4264-a3e7-58319bd4d4d1">Allgemeine Versicherungsbedingungen</a>
-                </div>
-                <div style="text-align: center; padding-top: 1em;">
-                    <p><strong>Mehr zum <a target="_blank" class="wg-link info-sheet-link" href="https://stage-api.wertgarantie.com/download/82e38762-4440-46a9-a34e-58974a3ddad5">Produkt</a> und der <a target="_blank" class="wg-link" href="http://www.example.com/">Wertgarantie</a>.</strong></p>
-                </div>
-            </div>
-        </div>
-        </div><div class="product">
-        <div class="product__head--background product__head--background-odd" style="--image-link-odd:url(&quot;https://wertgarantie-bifrost.s3.eu-central-1.amazonaws.com/utah-mountain-biking-bike-biking-71104.jpeg&quot;);">
-            <div class="product__base-info">
-                <div class="product__base-info--top">
-                    <div class="product__base-info--top-left">
-                        <small class="payment-interval">jährl.</small><br>
-                        <strong class="price-display">ab 83,40 €</strong><br>
-                        <small class="tax-display">(inkl. 13,32€ VerSt**)</small>
-                    </div>
-                    <div class="product__base-info--top-right">
-                        <label class="radio-container">
-                            <input class="product__selection" type="radio" name="product-id" value="10">
-                            <span class="radio-circle"></span>
-                        </label>
-                    </div>
-                </div>
-                <div class="product__base-info--bottom">
-                    <h3 class="product__title">E-Bike Komplettschutz mit jährlicher Zahlweise</h3>
-                    <ul class="product__advantages product__advantages--top3">
-                <li class="advantage advantage--included"><span class="advantage__icon advantage__icon--included">Unterwegs was passiert? Wir holen Sie ab!</span></li><li class="advantage advantage--included"><span class="advantage__icon advantage__icon--included">Schaden an Fahrrad oder Motor? Wir kümmern uns um die Reparatur und Kosten!</span></li><li class="advantage advantage--included"><span class="advantage__icon advantage__icon--included">Diebstahl? Wir erstatten den Zeitwert!</span></li></ul></div>
-                
-            </div>
-        </div>
-        <div class="product__details product__details--expanded">
-            <h3>Details</h3>
-            <ul class="product__advantages product__advantages--details">
-            <li class="advantage advantage--included"><span class="advantage__icon advantage__icon--included">Pick-Up-Service</span></li><li class="advantage advantage--included"><span class="advantage__icon advantage__icon--included">Volle Kostenübernahme bei Reparaturen</span></li><li class="advantage advantage--included"><span class="advantage__icon advantage__icon--included">Unsachgemäße Handhabung</span></li><li class="advantage advantage--included"><span class="advantage__icon advantage__icon--included">Verschleißschutz</span></li><li class="advantage advantage--included"><span class="advantage__icon advantage__icon--included">Diebstahlschutz</span></li><li class="advantage advantage--included"><span class="advantage__icon advantage__icon--included">Teilediebstahlschutz</span></li></ul>
-            <div class="product__terms">
-                <div>
-                    <p><strong>Bedingungen</strong></p>
-                    <a class="wg-link wg-infosheet-link wg-product-info-sheet" href="https://stage-api.wertgarantie.com/download/928e51ef-d92f-4aa4-ba42-61d1e100af2f">Informationsblatt zu Versicherungsprodukten</a><br>
-                    <a class="wg-link wg-infosheet-link wg-avb" href="https://stage-api.wertgarantie.com/download/191a36e2-6685-4a3d-beb0-dc0159a90387">Allgemeine Versicherungsbedingungen</a>
-                </div>
-                <div style="text-align: center; padding-top: 1em;">
-                    <p><strong>Mehr zum <a target="_blank" class="wg-link info-sheet-link" href="https://stage-api.wertgarantie.com/download/928e51ef-d92f-4aa4-ba42-61d1e100af2f">Produkt</a> und der <a target="_blank" class="wg-link" href="http://www.example.com/">Wertgarantie</a>.</strong></p>
-                </div>
-            </div>
-        </div>
-        </div></section>
-            <section class="product__details-footer product__details-footer--expanded">
-                <div>
-                    <p>Versicherung ist Vertrauenssache, deshalb setzt "PARTNERSHOP" neben <strong>500.000 zufriedener Kunden</strong> auf die <strong>Wertgarantie</strong>, den <strong>Testsieger in Sachen Sicherheit</strong></p>
-                </div>
-                
-                <div class="award-image-block">
-                    <a target="_blank" href="https://www.certipedia.com/quality_marks/9105052129"><img class="award-image" src="https://www.wertgarantie.de/portaldata/4/resources/Icons/tuev-logo.png" alt="tuev-logo"></a>
-                    <a target="_blank" href="https://www.wertgarantie.de/Home.aspx#"><img class="award-image" src="https://www.wertgarantie.de/Portaldata/4/Resources/logos/test-bild-wertgarantie-109-01.png" alt="test-bild"></a>
-                </div>
-            </section>
-            <section class="button-section">
-                <div class="button-section__details-cancel">
-                    <button class="button button--dark" id="detailsBtn">Details anzeigen</button>
-                    <button class="button button--light" id="cancelOrder">Nicht absichern</button>
-                </div>
-                <div class="button-section__order">
-                    <button class="button button--dark order-button order-button--inactive" id="orderBtn" disabled="">Beides in den Warenkorb</button>
-                </div>
-            </section>
-        </div>
-    </div>` : html``;
+                </div>` : html``;
     }
 
 }

@@ -61,7 +61,7 @@ class WertgarantieSelectionPopUp extends LitElement {
         const products = responseData.products.map(product => {
             product.displayAttributes = {
                 isSelected: false
-            }
+            };
             return product;
         });
 
@@ -160,11 +160,11 @@ class WertgarantieSelectionPopUp extends LitElement {
             "product__head--background": true,
             "product__head--background-even": idx % 2 === 0,
             "product__head--background-odd": idx % 2 !== 0
-        }
+        };
         const productDetailsClassList = {
             "product__details": true,
             "product__details--expanded": this.displayAttributes.showDetails
-        }
+        };
 
         return html`
             <div @click="${() => this.displayAttributes.selectedProductIndex = idx}" class="product">
@@ -261,7 +261,7 @@ class WertgarantieSelectionPopUp extends LitElement {
                         <section class="button-section">
                             <div class="button-section__details-cancel">
                                 <button @click="${() => this.displayAttributes.showDetails = !this.displayAttributes.showDetails}" class="button button--dark" id="detailsBtn">${this.showDetailsText}</button>
-                                <button @click="${() => this.fadeout()}}class="button button--light" id="cancelOrder">${this.doNotInsureText}</button>
+                                <button @click="${() => this.fadeout()}" class="button button--light" id="cancelOrder">${this.doNotInsureText}</button>
                             </div>
                             <div class="button-section__order">
                                 <button @click="${() => this.addProductToShoppingCart()}" class="button button--dark order-button order-button--inactive" id="orderBtn"
@@ -276,7 +276,7 @@ class WertgarantieSelectionPopUp extends LitElement {
     async addProductToOrder() {
         const currency = "EUR";
         // fetch uri with different path for POST call to set cookie
-        const selectedProduct = this.products[this.displayAttributes.selectedProductIndex]
+        const selectedProduct = this.products[this.displayAttributes.selectedProductIndex];
         if (!(this.bifrostUri && this.devicePrice && this.deviceClass && this.shopProductName && selectedProduct && this.clientId)) {
             this.fadeout();
             throw new Error("order data incomplete: \n" +
@@ -284,7 +284,7 @@ class WertgarantieSelectionPopUp extends LitElement {
                 "devicePrice: " + this.devicePrice + "\n" +
                 "deviceClass: " + this.deviceClass + "\n" +
                 "clientId: " + this.clientId + "\n" +
-                "selectedProduct: " + selectedProduct.id() + "\n",
+                "selectedProduct: " + selectedProduct.id + "\n" +
                 "shopProductName: " + this.shopProductName
             );
         }
@@ -308,8 +308,8 @@ class WertgarantieSelectionPopUp extends LitElement {
     }
 
     fadeout() {
-        var fadeTarget = this.shadowRoot.getElementById('modal');
-        var fadeEffect = setInterval(function () {
+        const fadeTarget = this.shadowRoot.getElementById('modal');
+        const fadeEffect = setInterval(function () {
             if (!fadeTarget.style.opacity) {
                 fadeTarget.style.opacity = 1;
             }

@@ -1,7 +1,7 @@
 import {css} from 'lit-element';
 
 //language=CSS
-export const ratingStyling = css`
+export const selectionPopUpStyling = css`
     :host {
         font-family: var(--wertgarantie-popup-font-family, Arial, Helvetica), sans-serif;
         font-size: 0.8em;
@@ -438,7 +438,7 @@ export const ratingStyling = css`
             margin-left: 0;
         }
 
-        .product--unselected, {
+        .product--unselected {
             display: none;
         }
     }

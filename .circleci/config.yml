@@ -25,6 +25,7 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/repo
+      - run: google-chrome --version
       - run: npm test
   gh-pages:
     <<: *defaults

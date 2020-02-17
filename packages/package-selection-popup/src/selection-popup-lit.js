@@ -1,5 +1,5 @@
 import {LitElement, html} from 'lit-element';
-import '../../package-rating/src/rating.js'
+import '../../package-rating/src/rating.js';
 import fetchBifrost from "../../../shared-code/fetchBifrost";
 import {classMap} from 'lit-html/directives/class-map';
 import {selectionPopUpStyling} from "./selection-popup-styling";
@@ -20,7 +20,8 @@ class WertgarantieSelectionPopUp extends LitElement {
             shopProductName: {type: String},
             title: {type: String},
             products: {type: Array},
-            displayAttributes: {type: Object},
+            showDetails: {type: Boolean},
+            selectedProductIndex: {type: Number},
             headTitle: {type: String},
             headSubTitle: {type: String},
             detailsHeader: {type: String},
@@ -79,10 +80,8 @@ class WertgarantieSelectionPopUp extends LitElement {
         this.bothIntoShoppingCartText = responseData.bothIntoShoppingCartText || "Beides in den Warenkorb";
         this.products = products;
         this.showComponent = false;
-        this.displayAttributes = {
-            showDetails: false,
-            selectedProductIndex: 0
-        };
+        this.showDetails = false;
+        this.selectedProductIndex = -1;
     }
 
     displayComponent() {
@@ -147,15 +146,30 @@ class WertgarantieSelectionPopUp extends LitElement {
     createMobileProductSelectionButton(product, idx) {
         const buttonClasses = {
             "product-selectors__button": true,
-            "product-selectors__button--selected": idx === this.displayAttributes.selectedProductIndex
+            "product-selectors__button--selected": idx === this.selectedProductIndex
         };
         return html`
-            <button @click="${() => this.displayAttributes.selectedProductIndex = idx}" class=${classMap(buttonClasses)}>${"Varinate " + (idx + 1)}</button>
+            <button @click="${() => this.selectedProductIndex = idx}" class=${classMap(buttonClasses)}>${"Varinate " + (idx + 1)}</button>
         `;
     }
 
     createProductDiv(product, idx) {
-        //language=HTML
+        // ToDo:
+        // hover
+        // button aktivieren, wenn selected product index != -1
+        // button funktionalität
+
+
+        const productRadioButtonClassList = {
+            "product__selection": true,
+        };
+        const productDivClassList = {
+            "product": true,
+            "product--selected": this.selectedProductIndex === idx,
+            "product--selected--left": this.selectedProductIndex === idx && idx % 2 === 0,
+            "product--selected--right": this.selectedProductIndex === idx && idx % 2 !== 0,
+            "product--unselected": this.selectedProductIndex !== idx && this.selectedProductIndex !== -1
+        };
         const productHeadClassList = {
             "product__head--background": true,
             "product__head--background-even": idx % 2 === 0,
@@ -163,13 +177,13 @@ class WertgarantieSelectionPopUp extends LitElement {
         };
         const productDetailsClassList = {
             "product__details": true,
-            "product__details--expanded": this.displayAttributes.showDetails
+            "product__details--expanded": this.showDetails,
+            "product__details-footer--expanded": this.showDetails
         };
-
+        //language=HTML
         return html`
-            <div @click="${() => this.displayAttributes.selectedProductIndex = idx}" class="product">
-                <div class=${classMap(productHeadClassList)}
-                     style="--image-link:url(${product.imageLink})">
+            <div @click="${() => this.updateSelectedProductIndex(idx)}" class=${classMap(productDivClassList)}>
+                <div class=${classMap(productHeadClassList)}>
                     <div class="product__base-info">
                         <div class="product__base-info--top">
                             <div class="product__base-info--top-left">
@@ -179,7 +193,8 @@ class WertgarantieSelectionPopUp extends LitElement {
                             </div>
                             <div class="product__base-info--top-right">
                                 <label class="radio-container">
-                                    <input class="product__selection" type="radio" name="product-id">
+                                    <input class=${classMap(productRadioButtonClassList)}
+                                            type="radio" name="product-id" ?checked=${this.selectedProductIndex === idx}>
                                     <span class="radio-circle"></span>
                                 </label>
                             </div>
@@ -187,7 +202,10 @@ class WertgarantieSelectionPopUp extends LitElement {
                         <div class="product__base-info--bottom">
                             <h3 class="product__title">${product.name}</h3>
                             <ul class="product__advantages product__advantages--top3">
-                                ${product.top3.forEach((topAdvantage) => html`<li class="advantage advantage--included"><span class="advantage__icon advantage__icon--included">${topAdvantage}</span></li>`)}
+                                ${product.top3.map((topAdvantage) => html`
+                                    <li class="advantage advantage--included">
+                                        <span class="advantage__icon advantage__icon--included">${topAdvantage}</span>
+                                    </li>`)}
                             </ul>
                         </div>
                     </div>
@@ -195,10 +213,16 @@ class WertgarantieSelectionPopUp extends LitElement {
                 <div class=${classMap(productDetailsClassList)}>
                     <h3>${this.detailsHeader}</h3>
                     <ul class="product__advantages product__advantages--details">
-                        ${product.excludedAdvantages.forEach(advantage => html`<li class="advantage advantage--excluded"><span class="advantage__icon advantage__icon--excluded">${advantage}</span></li>`)}
+                        ${product.excludedAdvantages.map(advantage => html`
+                            <li class="advantage advantage--excluded">
+                                <span class="advantage__icon advantage__icon--excluded">${advantage}</span>
+                            </li>`)}
                     </ul>   
                     <ul class="product__advantages product__advantages--details">
-                        ${product.advantages.forEach((advantage) => html`<li class="advantage advantage--included"><span class="advantage__icon advantage__icon--included">${advantage}</span></li>`)}
+                        ${product.advantages.map((advantage) => html`
+                            <li class="advantage advantage--included">
+                                <span class="advantage__icon advantage__icon--included">${advantage}</span>
+                            </li>`)}
                     </ul>
                     <div class="product__terms">
                         <div>
@@ -242,25 +266,27 @@ class WertgarantieSelectionPopUp extends LitElement {
                         <section class="products" id="products">
                             ${this.products.map(this.createProductDiv)}
                         </section>
-                        <section class="product__details-footer product__details-footer--expanded">
+                        <section class="product__details-footer">
                             <div>
                                 <p>${this.footerHtml}</p>
                             </div>
 
                             <div class="award-image-block">
-                                <a target="_blank" href="https://www.certipedia.com/quality_marks/9105052129"><img
-                                        class="award-image"
-                                        src="https://www.wertgarantie.de/portaldata/4/resources/Icons/tuev-logo.png"
-                                        alt="tuev-logo"></a>
-                                <a target="_blank" href="https://www.wertgarantie.de/Home.aspx#"><img
-                                        class="award-image"
-                                        src="https://www.wertgarantie.de/Portaldata/4/Resources/logos/test-bild-wertgarantie-109-01.png"
-                                        alt="test-bild"></a>
+                                <a target="_blank" href="https://www.certipedia.com/quality_marks/9105052129">
+                                    <img class="award-image"
+                                         src="https://www.wertgarantie.de/portaldata/4/resources/Icons/tuev-logo.png"
+                                         alt="tuev-logo">
+                                     </a>
+                                <a target="_blank" href="https://www.wertgarantie.de/Home.aspx#">
+                                    <img class="award-image"
+                                         src="https://www.wertgarantie.de/Portaldata/4/Resources/logos/test-bild-wertgarantie-109-01.png"
+                                         alt="test-bild">
+                                </a>
                             </div>
                         </section>
                         <section class="button-section">
                             <div class="button-section__details-cancel">
-                                <button @click="${() => this.displayAttributes.showDetails = !this.displayAttributes.showDetails}" class="button button--dark" id="detailsBtn">${this.showDetailsText}</button>
+                                <button @click="${() => this.toggleDetailsExpansion()}" class="button button--dark" id="detailsBtn">${this.showDetailsText}</button>
                                 <button @click="${() => this.fadeout()}" class="button button--light" id="cancelOrder">${this.doNotInsureText}</button>
                             </div>
                             <div class="button-section__order">
@@ -273,10 +299,18 @@ class WertgarantieSelectionPopUp extends LitElement {
                 </div>` : html``;
     }
 
+    toggleDetailsExpansion() {
+        this.showDetails = !this.showDetails;
+    }
+
+    updateSelectedProductIndex(idx) {
+        this.selectedProductIndex = this.selectedProductIndex === idx ? -1 : idx
+    }
+
     async addProductToOrder() {
         const currency = "EUR";
         // fetch uri with different path for POST call to set cookie
-        const selectedProduct = this.products[this.displayAttributes.selectedProductIndex];
+        const selectedProduct = this.products[this.selectedProductIndex];
         if (!(this.bifrostUri && this.devicePrice && this.deviceClass && this.shopProductName && selectedProduct && this.clientId)) {
             this.fadeout();
             throw new Error("order data incomplete: \n" +

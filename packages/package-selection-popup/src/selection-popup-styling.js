@@ -205,7 +205,7 @@ export const selectionPopUpStyling = css`
         text-rendering: auto;
         font-family: "Font Awesome 5 Free", sans-serif;
         font-weight: 700;
-        content: "\F00C";
+        content: "\\F00C";
         position: absolute;
         top: 18%;
         left: 18%;
@@ -264,11 +264,11 @@ export const selectionPopUpStyling = css`
     }
 
     .advantage__icon--included::before {
-        content: "\F00C";
+        content: "\\F00C";
     }
 
     .advantage__icon--excluded::before {
-        content: "\F05E";
+        content: "\\F05E";
     }
 
     .product__details-footer {

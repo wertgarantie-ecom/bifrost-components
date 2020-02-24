@@ -2,6 +2,7 @@ import {LitElement, html} from 'lit-element';
 import '../../package-rating/src/rating.js';
 import fetchBifrost from "../../../shared-code/fetchBifrost";
 import {classMap} from 'lit-html/directives/class-map';
+import {styleMap} from 'lit-html/directives/style-map';
 import {selectionPopUpStyling} from "./selection-popup-styling";
 
 class WertgarantieSelectionPopUp extends LitElement {
@@ -22,6 +23,7 @@ class WertgarantieSelectionPopUp extends LitElement {
             products: {type: Array},
             showDetails: {type: Boolean},
             selectedProductIndex: {type: Number},
+            focusedProductIndex: {type: Number},
             headTitle: {type: String},
             headSubTitle: {type: String},
             detailsHeader: {type: String},
@@ -46,7 +48,7 @@ class WertgarantieSelectionPopUp extends LitElement {
         this.displayComponent = this.displayComponent.bind(this);
         this.createMobileProductSelectionButton = this.createMobileProductSelectionButton.bind(this);
         this.createProductDiv = this.createProductDiv.bind(this);
-        this.addProductToOrder = this.addProductToOrder.bind(this);
+        this.addProductToShoppingCart = this.addProductToShoppingCart.bind(this);
     }
 
     connectedCallback() {
@@ -82,6 +84,7 @@ class WertgarantieSelectionPopUp extends LitElement {
         this.showComponent = false;
         this.showDetails = false;
         this.selectedProductIndex = -1;
+        this.focusedProductIndex = this.selectedProductIndex;
     }
 
     displayComponent() {
@@ -160,15 +163,13 @@ class WertgarantieSelectionPopUp extends LitElement {
         // button funktionalität
 
 
-        const productRadioButtonClassList = {
-            "product__selection": true,
-        };
         const productDivClassList = {
             "product": true,
-            "product--selected": this.selectedProductIndex === idx,
-            "product--selected--left": this.selectedProductIndex === idx && idx % 2 === 0,
-            "product--selected--right": this.selectedProductIndex === idx && idx % 2 !== 0,
-            "product--unselected": this.selectedProductIndex !== idx && this.selectedProductIndex !== -1
+            "product--focused": this.isFocused(idx),
+            "product--focused--mobile": this.isFocused(idx),
+            "product--focused-left": this.isFocused(idx) && idx % 2 === 0,
+            "product--focused-right": this.isFocused(idx) && idx % 2 !== 0,
+            "product--unfocused": !this.isFocused(idx) && this.focusedProductIndex !== -1
         };
         const productHeadClassList = {
             "product__head--background": true,
@@ -180,10 +181,16 @@ class WertgarantieSelectionPopUp extends LitElement {
             "product__details--expanded": this.showDetails,
             "product__details-footer--expanded": this.showDetails
         };
+        const productImageLinkStyleList = {
+            "--image-link": "url(" + product.imageLink + ")"
+        };
         //language=HTML
         return html`
-            <div @click="${() => this.updateSelectedProductIndex(idx)}" class=${classMap(productDivClassList)}>
-                <div class=${classMap(productHeadClassList)}>
+            <div @click="${() => this.updateSelectedProductIndex(idx)}"
+                 @mouseover="${() => this.updateHoverProductIndex(idx)}"
+                 @mouseleave="${() => this.updateMouseLeaveProductIndex()}"
+                 class=${classMap(productDivClassList)}>
+                <div class=${classMap(productHeadClassList)} style=${styleMap(productImageLinkStyleList)}>
                     <div class="product__base-info">
                         <div class="product__base-info--top">
                             <div class="product__base-info--top-left">
@@ -193,8 +200,7 @@ class WertgarantieSelectionPopUp extends LitElement {
                             </div>
                             <div class="product__base-info--top-right">
                                 <label class="radio-container">
-                                    <input class=${classMap(productRadioButtonClassList)}
-                                            type="radio" name="product-id" ?checked=${this.selectedProductIndex === idx}>
+                                    <input class="product__selection" type="radio" name="product-id" ?checked=${this.selectedProductIndex === idx} />
                                     <span class="radio-circle"></span>
                                 </label>
                             </div>
@@ -242,6 +248,13 @@ class WertgarantieSelectionPopUp extends LitElement {
     }
 
     render() {
+        const orderButtonClassList = {
+            "button": true,
+            "button--dark": true,
+            "order-button": true,
+            "order-button--inactive": this.selectedProductIndex === -1
+        }
+
         return (this.showComponent) ?
             //language=HTML
             html`
@@ -290,8 +303,8 @@ class WertgarantieSelectionPopUp extends LitElement {
                                 <button @click="${() => this.fadeout()}" class="button button--light" id="cancelOrder">${this.doNotInsureText}</button>
                             </div>
                             <div class="button-section__order">
-                                <button @click="${() => this.addProductToShoppingCart()}" class="button button--dark order-button order-button--inactive" id="orderBtn"
-                                        disabled="">${this.bothIntoShoppingCartText}
+                                <button @click="${() => this.addProductToShoppingCart()}" class=${classMap(orderButtonClassList)} id="orderBtn"
+                                        ?disabled=${this.selectedProductIndex === -1}>${this.bothIntoShoppingCartText}
                                 </button>
                             </div>
                         </section>
@@ -304,10 +317,26 @@ class WertgarantieSelectionPopUp extends LitElement {
     }
 
     updateSelectedProductIndex(idx) {
-        this.selectedProductIndex = this.selectedProductIndex === idx ? -1 : idx
+        if (this.selectedProductIndex === idx) {
+            this.selectedProductIndex = -1;
+        } else {
+            this.selectedProductIndex = idx;
+        }
     }
 
-    async addProductToOrder() {
+    updateHoverProductIndex(idx) {
+        this.focusedProductIndex = idx;
+    }
+
+    updateMouseLeaveProductIndex() {
+        this.focusedProductIndex = this.selectedProductIndex;
+    }
+
+    isFocused(idx) {
+        return this.focusedProductIndex === idx;
+    }
+
+    async addProductToShoppingCart() {
         const currency = "EUR";
         // fetch uri with different path for POST call to set cookie
         const selectedProduct = this.products[this.selectedProductIndex];

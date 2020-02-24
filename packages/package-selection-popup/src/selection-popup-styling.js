@@ -132,22 +132,22 @@ export const selectionPopUpStyling = css`
         background-size: cover;
     }
 
-    .product--selected {
+    .product--focused {
         opacity: 1;
         z-index: 3;
         width: 60%;
         background-color: #f7f7f7;
     }
 
-    .product--selected-left {
+    .product--focused-left {
         margin-right: -10%;
     }
 
-    .product--selected-right {
+    .product--focused-right {
         margin-left: -10%;
     }
 
-    .product--unselected {
+    .product--unfocused {
         opacity: 0.2;
         z-index: 2;
     }
@@ -196,7 +196,7 @@ export const selectionPopUpStyling = css`
         background-color: rgb(70, 70, 70);
     }
 
-    .product__selection:checked + .radio-circle::after {
+    .product__selection:checked + .radio-circle:after {
         -moz-osx-font-smoothing: grayscale;
         -webkit-font-smoothing: antialiased;
         display: inline-block;
@@ -421,24 +421,24 @@ export const selectionPopUpStyling = css`
             -webkit-transition: all 0.6s;
         }
 
-        .product--selected {
+        .product--focused {
             width: 100%;
             background-color: #f7f7f7;
         }
 
-        .product--selected--mobile {
+        .product--focused--mobile {
             display: block
         }
 
-        .product--selected-left {
+        .product--focused-left {
             margin-right: 0;
         }
 
-        .product--selected-right {
+        .product--focused-right {
             margin-left: 0;
         }
 
-        .product--unselected {
+        .product--unfocused {
             display: none;
         }
     }

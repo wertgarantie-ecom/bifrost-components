@@ -202,6 +202,8 @@ class WertgarantieConfirmation extends LitElement {
         });
         if(result.status === 200) {
             this.setProperties(result.body)
+        } else if (result.status === 204) {
+            this.showComponent = false
         }
     }
 

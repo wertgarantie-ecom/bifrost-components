@@ -158,45 +158,35 @@ export const selectionPopUpStyling = css`
     }
 
     .product__base-info--top {
-        display: grid;
-        grid-template-columns: 70% 30%;
+        display: flex;
+        justify-content: space-between;
     }
 
     .product__base-info--top-left {
-        grid-column-start: 1;
-        grid-column-end: 1;
+        width: calc(100% - 22px);
     }
 
     .product__base-info--top-right {
-        grid-column-start: 2;
-        grid-column-end: 2;
-        position: relative;
-    }
-
-    .radio-container {
-        top: 0;
-        right: 0;
-        position: absolute;
+        width: 22px;
+        justify-content: left;
     }
 
     .product__selection {
-        display: none;
-        user-select: none;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-    }
-
-    .radio-circle {
-        display: inline-block;
-        width: 22px;
         height: 22px;
         border-radius: 50%;
         cursor: pointer;
         background-color: rgb(70, 70, 70);
     }
 
-    .product__selection:checked + .radio-circle:after {
+    .product__selection--visible {
+        display: inline-block;
+        font-weight: 700;
+        color: white;
+        font-size: 15px;
+    }
+
+    .product__selection--visible:after {
+        align-self: center;
         -moz-osx-font-smoothing: grayscale;
         -webkit-font-smoothing: antialiased;
         display: inline-block;
@@ -206,11 +196,14 @@ export const selectionPopUpStyling = css`
         font-family: "Font Awesome 5 Free", sans-serif;
         font-weight: 700;
         content: "\\F00C";
-        position: absolute;
-        top: 18%;
-        left: 18%;
+        padding-top: calc((22px - 15px)/2);
+        padding-left: calc((22px - 15px)/2);
     }
-
+    
+    .product__selection--invisible {
+        display: none;
+    }
+    
     .product__title {
         padding-top: 5em;
         max-width: 85%;

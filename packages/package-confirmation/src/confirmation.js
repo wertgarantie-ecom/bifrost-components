@@ -78,7 +78,7 @@ class WertgarantieConfirmation extends LitElement {
 
     initListeners() {
         if (this.formSelector) {
-            var form = document.querySelector(this.formSelector);
+            const form = document.querySelector(this.formSelector);
             form.addEventListener('submit', this.checkStateOnSubmit);
         }
     }
@@ -92,7 +92,6 @@ class WertgarantieConfirmation extends LitElement {
     }
 
     isFullyChecked() {
-        // später dynamische Validierungen inkludieren
         return this.termsAndConditionsConfirmed && this.legalAgeConfirmed;
     }
 

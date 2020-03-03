@@ -1,7 +1,7 @@
 import {css} from 'lit-element';
 
 //language=CSS
-export const ratingStyling = css`
+export const confirmationStyling = css`
     :host {
         font-family: var(--wertgarantie-popup-font-family, Arial, Helvetica), sans-serif;
     }
@@ -48,7 +48,7 @@ export const ratingStyling = css`
         font-family: "Font Awesome 5 Free", sans-serif;
         font-weight: 700;
         font-size: 20px;
-        content: "\F3ED";
+        content: "\\F3ED";
         position: absolute;
         top: 10%;
         left: 30%;
@@ -156,7 +156,6 @@ export const ratingStyling = css`
     }
 
     .confirmation__footer--notification {
-        display: none;
         color: red;
     }
 
@@ -173,20 +172,20 @@ export const ratingStyling = css`
     }
 
     .product--even {
-        --image-link-even: linear-gradient(to top right, #006EFF, rgba(81, 61, 61, 0));
+        --image-link: linear-gradient(to top right, #006EFF, rgba(81, 61, 61, 0));
         background-image: var(--wertgarantie-popup-product-background-even,
         linear-gradient(to bottom right, rgba(0, 0, 0, 0), #000),
         linear-gradient(to top right, #006EFF, rgba(81, 61, 61, 0))),
-        var(--image-link-even);
+        var(--image-link);
         background-size: cover;
     }
 
     .product--odd {
-        --image-link-odd: linear-gradient(to top right, rgba(0, 0, 0, 0), #000);
+        --image-link: linear-gradient(to top right, rgba(0, 0, 0, 0), #000);
         background-image: var(--wertgarantie-popup-product-background-odd,
         linear-gradient(to bottom right, rgba(81, 61, 61, 0), rgba(255, 145, 0, 0.6)),
         linear-gradient(to top right, rgba(0, 0, 0, 0), #000)),
-        var(--image-link-odd);
+        var(--image-link);
         background-size: cover;
     }
 
@@ -223,7 +222,7 @@ export const ratingStyling = css`
         font-family: "Font Awesome 5 Free", sans-serif;
         font-weight: 700;
         margin: 0 0.5em 0 -1.5em;
-        content: "\F00C";
+        content: "\\F00C";
     }
 
     .wg-link {

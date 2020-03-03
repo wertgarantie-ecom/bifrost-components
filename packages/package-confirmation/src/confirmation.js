@@ -48,6 +48,7 @@ class WertgarantieConfirmation extends LitElement {
         this.toggleLegalAgeConfirmationRequest = this.toggleLegalAgeConfirmationRequest.bind(this);
         this.sendToggelLegalAgeConfirmationRequest = this.sendToggelLegalAgeConfirmationRequest.bind(this);
         this.renderValidationFailed = this.renderValidationFailed.bind(this);
+        this.renderTab = this.renderTab.bind(this);
     }
 
     connectedCallback() {
@@ -121,7 +122,7 @@ class WertgarantieConfirmation extends LitElement {
             .then(this.productDataAvailable)
             .then(this.setProperties)
             .then(() => this.showComponent = true)
-            .catch(error => this.showComponent = false)
+            .catch(() => this.showComponent = false)
     }
 
     renderProductPanel(classAttribute, product) {
@@ -200,7 +201,7 @@ class WertgarantieConfirmation extends LitElement {
         const result = await fetchBifrost(url, 'DELETE', this.componentVersion, {
             orderId: product.orderId
         });
-        if(result.status === 200) {
+        if (result.status === 200) {
             this.setProperties(result.body)
         } else if (result.status === 204) {
             this.showComponent = false
@@ -212,6 +213,22 @@ class WertgarantieConfirmation extends LitElement {
             <div class="confirmation__footer confirmation__footer--notification" >
                 <strong>${this.pleaseConfirmText}</strong>
             </div> ` : html``;
+    }
+
+    renderTab(product, index) {
+        const tabClassList = {
+            "tab": true,
+            "tab--selected": index === this.selectedProductIndex
+        };
+        return html`
+                        <div class="${classMap(tabClassList)}" @click="${() => this.selectedProductIndex = index}">
+                            <div class="tab__name">${product.shopProductShortName}</div>
+                            <div class="tab__remove"
+                                 @click="${() => this.deleteProductOrder(product)}">
+                                ×
+                            </div>
+                        </div>
+        `
     }
 
     render() {
@@ -239,15 +256,7 @@ class WertgarantieConfirmation extends LitElement {
                         </div>
                     </div>
                     <div class="product__tabs">
-                    ${this.products.map((product, index) => html`
-                        <div class="tab ?tab--selected=${index === this.selectedProductIndex}">
-                            <div class="tab__name">${product.shopProductShortName}</div>
-                            <div class="tab__remove"
-                                 @click="${() => this.deleteProductOrder(product)}">
-                                ×
-                            </div>
-                        </div>
-                    `)}
+                    ${this.products.map((product, index) => this.renderTab(product, index))}
                     </div>
                     ${this.renderProductPanel('product__panel--mobile', this.products[this.selectedProductIndex])}
                     <div class="confirmation__section">
@@ -283,6 +292,7 @@ class WertgarantieConfirmation extends LitElement {
             </div>                   `;
     }
 }
+
 class UndefinedConfirmationDataError extends Error {
 }
 

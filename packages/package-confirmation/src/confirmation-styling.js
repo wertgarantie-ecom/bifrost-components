@@ -76,6 +76,7 @@ export const confirmationStyling = css`
     }
 
     .tab {
+        cursor: pointer;
         border: 1px solid rgb(230, 230, 230);
         padding: 0.8em;
         width: 18%;

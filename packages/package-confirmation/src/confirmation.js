@@ -220,13 +220,13 @@ class WertgarantieConfirmation extends LitElement {
             "tab--selected": index === this.selectedProductIndex
         };
         return html`
-                        <div class="${classMap(tabClassList)}" @click="${() => this.selectedProductIndex = index}">
-                            <div class="tab__name">${product.shopProductShortName}</div>
-                            <div class="tab__remove"
-                                 @click="${() => this.deleteProductOrder(product)}">
-                                ×
-                            </div>
-                        </div>
+            <div class="${classMap(tabClassList)}" @click="${() => this.selectedProductIndex = index}">
+                <div class="tab__name">${product.shopProductShortName}</div>
+                <div class="tab__remove"
+                     @click="${() => this.deleteProductOrder(product)}">
+                    ×
+                </div>
+            </div>
         `
     }
 
@@ -251,7 +251,7 @@ class WertgarantieConfirmation extends LitElement {
                             <i class="shield"></i>
                         </div>
                         <div class="header__title">
-                            <span class="header__title__text">${this.headerTitle}</span>
+                            ${this.headerTitle}
                         </div>
                     </div>
                     <div class="product__tabs">

@@ -49,23 +49,17 @@ export const confirmationStyling = css`
         font-weight: 700;
         font-size: 20px;
         content: "\\F3ED";
-        position: absolute;
-        top: 10%;
-        left: 30%;
+        padding: 0.7em 0;
     }
 
     .header__title {
         flex: 12.5;
-        padding: 1em;
         text-align: center;
         font-weight: 700;
         text-transform: uppercase;
         font-size: 0.7em;
         line-height: 1.2em;
-    }
-
-    .header__title__text {
-        vertical-align: middle;
+        padding: 1.7em 1em;
     }
 
     .product__tabs {
@@ -78,12 +72,10 @@ export const confirmationStyling = css`
     .tab {
         cursor: pointer;
         border: 1px solid rgb(230, 230, 230);
-        padding: 0.8em;
-        width: 18%;
-        min-width: 80px;
+        width: 20%;
+        min-width: 150px;
         margin-right: 1.5em;
         margin-bottom: 1em;
-        font-size: 0.8em;
         font-weight: 700;
         display: flex;
         justify-content: space-between;
@@ -91,12 +83,17 @@ export const confirmationStyling = css`
     }
 
     .tab__name {
-        flex: 4;
+        width: 85%;
+        font-size: 0.8em;
+        padding: 0.8em 0.8em;
     }
 
     .tab__remove {
         cursor: pointer;
-        flex: 0.5;
+        width: 15%;
+        font-size: 1.5em;
+        text-align: center;
+        padding: 0.5em 0.3em;
     }
 
     .tab:hover {

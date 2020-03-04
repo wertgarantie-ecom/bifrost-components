@@ -6,6 +6,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.css">
 <script>
     function openPopup(id) {
-        window.wertgarantieSelectionPopUpOpen('#' + id);
+        var popUp = document.getElementById(id);
+        console.log(popUp);
+        popUp.displayComponent();
     }
 </script>

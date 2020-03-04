@@ -98,5 +98,6 @@ class WertgarantieRating extends LitElement {
         }
     }
 }
-
-customElements.define('wertgarantie-rating', WertgarantieRating);
+if (!customElements.get('wertgarantie-rating')) {
+    customElements.define('wertgarantie-rating', WertgarantieRating);
+}

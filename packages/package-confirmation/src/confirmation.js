@@ -294,5 +294,6 @@ class WertgarantieConfirmation extends LitElement {
 
 class UndefinedConfirmationDataError extends Error {
 }
-
-window.customElements.define('wertgarantie-confirmation', WertgarantieConfirmation);
+if (!customElements.get('wertgarantie-confirmation')) {
+    customElements.define('wertgarantie-confirmation', WertgarantieConfirmation);
+}

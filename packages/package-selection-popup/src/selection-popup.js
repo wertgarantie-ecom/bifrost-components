@@ -1,5 +1,5 @@
 import {LitElement, html} from 'lit-element';
-import '../../package-rating/src/rating.js';
+import '../../package-rating/dist/rating.min.js';
 import fetchBifrost from "../../../shared-code/fetchBifrost";
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from 'lit-html/directives/style-map';
@@ -388,5 +388,6 @@ class WertgarantieSelectionPopUp extends LitElement {
         }, 20);
     }
 }
-
-customElements.define('wertgarantie-selection-pop-up', WertgarantieSelectionPopUp);
+if (!customElements.get('wertgarantie-selection-pop-up')) {
+    customElements.define('wertgarantie-selection-pop-up', WertgarantieSelectionPopUp);
+}

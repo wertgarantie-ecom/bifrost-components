@@ -1,8 +1,9 @@
 const SHOPPING_CART_DELETE_HEADER = 'X-wertgarantie-shopping-cart-delete';
-const COOKIE_NAME = 'wertgarantie-shopping-cart';
+const JSON_SHOPPING_CART_COOKIE = 'wertgarantie-shopping-cart';
+const BASE64_SHOPPING_CART_COOKIE = 'wertgarantie-shopping-cart-data';
 
-export default async function(url, method, version, body = {}) {
-    const signedShoppingCart = getCookieValue(COOKIE_NAME);
+export default async function (url, method, version, body = {}) {
+    const signedShoppingCart = getCookieValue(JSON_SHOPPING_CART_COOKIE);
     if (signedShoppingCart) {
         body.signedShoppingCart = signedShoppingCart;
     }
@@ -22,14 +23,17 @@ export default async function(url, method, version, body = {}) {
     const result = await fetch(url, requestParams);
 
     if (result.headers.get(SHOPPING_CART_DELETE_HEADER)) {
-        document.cookie = `${COOKIE_NAME}=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
+        document.cookie = `${JSON_SHOPPING_CART_COOKIE}=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
+        document.cookie = `${BASE64_SHOPPING_CART_COOKIE}=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
     }
 
     let responseJson = undefined;
     if (result.status === 200) {
         responseJson = await result.json();
         if (responseJson.signedShoppingCart) {
-            document.cookie = `${COOKIE_NAME}=${JSON.stringify(responseJson.signedShoppingCart)}`
+            const shoppingCartString = JSON.stringify(responseJson.signedShoppingCart);
+            document.cookie = `${JSON_SHOPPING_CART_COOKIE}=${shoppingCartString}`;
+            document.cookie = `${BASE64_SHOPPING_CART_COOKIE}=${btoa(shoppingCartString)}`
         }
     }
     return {

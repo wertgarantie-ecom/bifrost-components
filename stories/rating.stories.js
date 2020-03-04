@@ -1,4 +1,5 @@
 import {storiesOf} from '@storybook/html';
+import '../packages/package-rating/dist/rating.min.js';
 
 import RatingReadme from './documentation/ratingComponent/ratingComponent.md';
 

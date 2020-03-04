@@ -1,5 +1,5 @@
 import {storiesOf} from '@storybook/html';
-import '../packages/package-selection-popup/src/selection-popup.js';
+import '../packages/package-selection-popup/dist/selection-popup.min.js';
 
 import PopupReadme from './documentation/popupComponent/popupComponent.md';
 import BikePopUp from './documentation/popupComponent/bikePopUp.md';

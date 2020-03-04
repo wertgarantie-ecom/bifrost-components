@@ -1,5 +1,5 @@
 import {storiesOf} from '@storybook/html';
-import '../packages/package-confirmation/src/confirmation.js';
+import '../packages/package-confirmation/dist/confirmation.min.js';
 
 import bikeConfirmationReadme from './documentation/confirmationComponent/bikeConfirmation.md';
 import phoneConfirmationReadme from './documentation/confirmationComponent/phoneConfirmation.md';

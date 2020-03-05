@@ -106,14 +106,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    font-weight: 700;
 }
 
 .panel__number--dark {
-    border: 2px solid #FFFFFF;
+    border: 3px solid #FFFFFF;
 }
 
 .panel__number--light {
-    border: 2px solid #000000;
+    border: 3px solid #000000;
 }
 
 .panel__title {

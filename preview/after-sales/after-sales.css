@@ -1,0 +1,63 @@
+.after-sales {
+    width: 100%;
+    max-width: 1350px;
+    font-family: Arial, Helvetica, sans-serif;
+    border: 1px solid #F2F2F2;
+}
+
+.header {
+    display: flex;
+    justify-content: normal;
+}
+
+.header__icon {
+    min-width: 65px;
+    font-size: 1.2em;
+    color: white;
+    background-color: #13CC52;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header__title {
+    width: calc(100% - 65px);
+    padding: 1em 1.2em;
+    line-height: 1.2em;
+    font-size: 1.2em;
+    background-color: #CDFFCC;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.content {
+    display: flex;
+    justify-content: normal;
+    background-color: #F9F9F9;
+}
+
+.content__box {
+    width: 50%;
+}
+
+.products__header {
+    padding: 1em 1.4em;
+    line-height: 1.2em;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.products {
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    padding: 0 1.5em 1.8em 1.5em;
+}
+
+.product {
+    background-color: lightgrey;
+    width: 180px;
+    height: 250px;
+    margin: 0.3em 0.3em;
+}

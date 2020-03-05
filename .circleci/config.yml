@@ -57,6 +57,9 @@ jobs:
       - run:
           name: purge CDN cache for rating component
           command: curl https://purge.jsdelivr.net/npm/wertgarantie-rating@2/dist/rating.min.js
+      - run:
+          name: purge CDN cache for after sales component
+          command: curl https://purge.jsdelivr.net/npm/wertgarantie-after-sales@1/dist/after-sales.min.js
 
 workflows:
   version: 2

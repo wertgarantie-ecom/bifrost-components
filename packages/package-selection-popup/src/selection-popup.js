@@ -176,14 +176,17 @@ class WertgarantieSelectionPopUp extends LitElement {
                                 </wertgarantie-rating>
                             </div>
                             <div class="head__right">
-                                <span @click="${() => {this.fadeout(); this.showComponent = false;}}" class="closeBtn" id="closeBtn">×</span>
+                                <span @click="${() => {
+                this.fadeout();
+                this.showComponent = false;
+            }}" class="closeBtn" id="closeBtn">×</span>
                             </div>
                         </div>
                         <p class="head__subtitle">${this.headSubTitle}</p>
                         <section class="product-selectors" id="product-selectors">
                             ${this.products.map(this.createMobileProductSelectionButton)}
                         </section>
-                        <section class="products" id="products">
+                        <section class="checkouts" id="products">
                             ${this.products.map(this.createProductDiv)}
                         </section>
                         <section class="product__details-footer">

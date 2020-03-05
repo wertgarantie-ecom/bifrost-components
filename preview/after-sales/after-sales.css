@@ -48,7 +48,7 @@
     font-weight: 700;
 }
 
-.products {
+.checkouts {
     display: flex;
     flex-wrap: wrap;
     padding-top: 1.5em;
@@ -65,8 +65,10 @@
 }
 
 .product--light {
-    color: #000000;
-    background-color: lightgrey;
+    --text-color: black;
+    --background-color: lightgrey;
+    color: var(--text-color);
+    background-color: var(--background-color);
     background-image: url("handy1.png");
     background-repeat: no-repeat;
     background-size: 29%;
@@ -74,8 +76,10 @@
 }
 
 .product--dark {
-    color: #FFFFFF;
-    background-color: #000000;
+    --text-color: white;
+    --background-color: black;
+    color: var(--text-color);
+    background-color: var(--background-color);
     background-image: url("handy2.png");
     background-repeat: no-repeat;
     background-size: 65%;
@@ -107,14 +111,7 @@
     justify-content: center;
     align-items: center;
     font-weight: 700;
-}
-
-.panel__number--dark {
-    border: 3px solid #FFFFFF;
-}
-
-.panel__number--light {
-    border: 3px solid #000000;
+    border: 3px solid var(--text-color);
 }
 
 .panel__title {

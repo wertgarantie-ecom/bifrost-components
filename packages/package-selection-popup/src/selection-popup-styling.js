@@ -99,7 +99,7 @@ export const selectionPopUpStyling = css`
         color: var(--wertgarantie-popup-dark-button-text-color, rgb(244, 244, 244));
     }
 
-    .products {
+    .checkouts {
         display: flex;
         position: relative;
     }
@@ -196,14 +196,14 @@ export const selectionPopUpStyling = css`
         font-family: "Font Awesome 5 Free", sans-serif;
         font-weight: 700;
         content: "\\F00C";
-        padding-top: calc((22px - 15px)/2);
-        padding-left: calc((22px - 15px)/2);
+        padding-top: calc((22px - 15px) / 2);
+        padding-left: calc((22px - 15px) / 2);
     }
-    
+
     .product__selection--invisible {
         display: none;
     }
-    
+
     .product__title {
         padding-top: 5em;
         max-width: 85%;
@@ -403,7 +403,7 @@ export const selectionPopUpStyling = css`
             justify-content: center;
         }
 
-        .products {
+        .checkouts {
             display: block;
             position: relative;
         }

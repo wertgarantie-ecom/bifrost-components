@@ -51,6 +51,7 @@ class WertgarantieConfirmation extends LitElement {
         this.renderTab = this.renderTab.bind(this);
     }
 
+
     connectedCallback() {
         super.connectedCallback();
         this.clientId = this.getAttribute('data-client-id');

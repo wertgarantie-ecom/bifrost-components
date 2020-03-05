@@ -55,11 +55,78 @@
 }
 
 .product {
-    background-color: lightgrey;
-    width: 180px;
-    height: 250px;
+    width: 28%;
+    min-width: 150px;
+    height: 100%;
+    min-height: 250px;
     margin-top: 0.3em;
     margin-right: 1.5em;
+    display: flex;
+}
+
+.product--light {
+    color: #000000;
+    background-color: lightgrey;
+    background-image: url("handy1.png");
+    background-repeat: no-repeat;
+    background-size: 29%;
+    background-position: bottom right;
+}
+
+.product--dark {
+    color: #FFFFFF;
+    background-color: #000000;
+    background-image: url("handy2.png");
+    background-repeat: no-repeat;
+    background-size: 65%;
+    background-position: bottom right;
+}
+
+.panel__content {
+    margin: 0.8em 0.8em;
+}
+
+.panel__content--top {
+    height: 50%;
+    display: flex;
+    flex-flow: column;
+}
+
+.panel__content--bottom {
+    height: 50%;
+    display: flex;
+    flex-flow: column-reverse;
+}
+
+.panel__number {
+    width: 28px;
+    height: 28px;
+    min-height: 28px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.panel__number--dark {
+    border: 2px solid #FFFFFF;
+}
+
+.panel__number--light {
+    border: 2px solid #000000;
+}
+
+.panel__title {
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+.panel__product-name {
+    border-bottom: 3px solid white;
+}
+
+.panel__product-name--light {
+    border-bottom: 3px solid black;
 }
 
 .box__icons {

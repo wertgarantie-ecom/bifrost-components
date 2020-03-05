@@ -81,6 +81,9 @@ class WertgarantieConfirmation extends LitElement {
             const form = document.querySelector(this.formSelector);
             form.addEventListener('submit', this.checkStateOnSubmit);
         }
+        document.addEventListener('wertgarantie-product-added', () => {
+            this.displayComponent();
+        });
     }
 
     checkStateOnSubmit(e) {
@@ -277,6 +280,7 @@ class WertgarantieConfirmation extends LitElement {
                                 </div>
                                 <div class="confirmation__text" id="legal-age-confirmation-text">${this.legalAgeConfirmationText}</div>
                             </div>
+                            ${this.renderValidationFailed()}
                         </div>
                         <div class="confirmation__footer">
                             <strong>${this.footerText}</strong>
@@ -284,7 +288,7 @@ class WertgarantieConfirmation extends LitElement {
                         <div class="confirmation__footer">
                             <strong>${this.moreInformationHtml}</strong>
                         </div>
-                        ${this.renderValidationFailed()}
+                        
                     </div>
                 </section>
                 ${this.renderProductPanel('product__panel', this.products[this.selectedProductIndex])}

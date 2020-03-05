@@ -366,6 +366,8 @@ class WertgarantieSelectionPopUp extends LitElement {
                 console.error('Adding product to shopping cart failed:', response);
                 return {};
             }
+            console.log("Cookie has been set");
+            document.dispatchEvent(new Event('wertgarantie-product-added'));
             this.fadeout();
         } catch (error) {
             console.error('Error:', error);

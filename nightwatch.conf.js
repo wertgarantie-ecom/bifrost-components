@@ -17,4 +17,4 @@ module.exports = {
             "skip_testcases_on_fail": false
         }
     }
-}
+};

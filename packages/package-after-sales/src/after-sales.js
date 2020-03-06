@@ -13,32 +13,54 @@ class WertgarantieAfterSales extends LitElement {
         return {
             headerTitle: {type: String},
             productBoxTitle: {type: String},
-
+            orderItems: {type: Array},
+            nextStepsTitle: {type: String},
+            nextSteps: {type: Array},
+            base64EncodedShopCheckoutData: {type: String},
+            showComponent: {type: Boolean}
         };
     }
 
     setProperties(data) {
         this.headerTitle = data.headerTitle || "Ihre Geräte wurden erfolgreich versichert!";
         this.productBoxTitle = data.productBoxTitle || "Folgende Geräte wurden versichert:";
+        this.nextStepsTitle = data.nextStepsTitle || "Die nächsten Schritte:";
+        this.nextSteps = data.nextSteps || [];
         this.orderItems = data.orderItems || [];
+
     }
 
     constructor() {
         super();
         this.componentVersion = '1.0.0';
-
         this.setProperties = this.setProperties.bind(this);
+        this.renderOrder = this.renderOrder.bind(this);
+        this.renderOrderItem = this.renderOrderItem.bind(this);
+        this.displayComponent = this.displayComponent.bind(this);
     }
 
     connectedCallback() {
         super.connectedCallback();
+        this.base64EncodedShopCheckoutData = this.getAttribute('data-shop-purchase-data');
+
+        this.displayComponent();
+    }
+
+    displayComponent() {
+        if (!this.base64EncodedShopCheckoutData) {
+            this.showComponent = false;
+        } else {
+            // POST call auf Checkout
+            // .then(setProperties(responseData)
+            // .then(() => this.showComponent = true;
+        }
     }
 
     renderOrder() {
         //language=HTML
         return html`
             <div class="order">
-                {this.orderItems.map((item, index) => this.renderOrderItem(item, index))
+                ${this.orderItems.map((item, index) => this.renderOrderItem(item, index))}
             </div>
         `;
     }
@@ -74,49 +96,39 @@ class WertgarantieAfterSales extends LitElement {
         //language=HTML
         return html`
             <div class="after-sales">
-                <div class="header">
-                    <div class="header__icon"><i class="icon fas fa-check"></i></div>
-                    <div class="header__title">${this.headerTitle}</div>
-                </div>
-                <div class="content">
-                    <div class="content__box">
-                        <div class="box__header">
-                            ${this.productBoxTitle}
-                        </div>
-                        
+                <div class="orders">
+                    <div class="header">
+                        <div class="header__icon"><i class="icon fas fa-check"></i></div>
+                        <div class="header__title">${this.headerTitle}</div>
                     </div>
-                    <div class="content__box">
-                        <div class="box__header">DIE NÄCHSTEN SCHRITTE:</div>
-                        <div class="box__icons">
-                            <i class="fas fa-envelope-open-text"></i>
-                            <div class="box__icons__arrow">
-                                <i class="fas fa-chevron-right"></i>
+                    <div class="content">
+                        <div class="content__box">
+                            <div class="box__header">
+                                ${this.productBoxTitle}
                             </div>
-                            <i class="fas fa-file-alt"></i>
-                            <div class="box__icons__arrow">
-                                <i class="fas fa-chevron-right"></i>
-                            </div>
-                            <i class="fas fa-flag-checkered"></i>
+                            ${this.renderOrder()}
                         </div>
-                        <div class="box__explanation">
-                            <ul>
-                                <li>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-                                    tempor
-                                    invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
-                                    accusam
-                                    et justo duo dolores et ea rebum.
-                                </li>
-                                <li>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod
-                                    tempor
-                                    invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et
-                                    accusam
-                                    et justo duo dolores et ea rebum.
-                                </li>
-                            </ul>
+                        <div class="content__box">
+                            <div class="box__header"${this.nextStepsTitle}</div>
+                            <div class="box__icons">
+                                <i class="fas fa-envelope-open-text"></i>
+                                <div class="box__icons__arrow">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                                <i class="fas fa-file-alt"></i>
+                                <div class="box__icons__arrow">
+                                    <i class="fas fa-chevron-right"></i>
+                                </div>
+                                <i class="fas fa-flag-checkered"></i>
+                            </div>
+                            <div class="box__explanation">
+                                <ol>
+                                    ${this.nextSteps.map((step) => html`<li>${step}</li>`)}
+                                </ol>
+                            </div>
                         </div>
                     </div>
                 </div>
-
             </div>
         `;
     }

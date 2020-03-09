@@ -3,8 +3,11 @@ import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from "lit-html/directives/style-map";
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
 import {afterSalesStyling} from './after-sales-styling';
+<<<<<<< HEAD
 import {getCookieValue, fetchBifrost} from '../../../shared-code/fetchBifrost';
 const JSON_SHOPPING_CART_COOKIE = 'wertgarantie-shopping-cart';
+=======
+>>>>>>> fd7a298b8b8a7b2cdd0b6f8dea4ccd3ef72351b2
 
 class WertgarantieAfterSales extends LitElement {
     static get styles() {

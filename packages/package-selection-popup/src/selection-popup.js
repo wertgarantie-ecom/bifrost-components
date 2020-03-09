@@ -343,14 +343,15 @@ class WertgarantieSelectionPopUp extends LitElement {
         const currency = "EUR";
         // fetch uri with different path for POST call to set cookie
         const selectedProduct = this.products[this.selectedProductIndex];
-        if (!(this.bifrostUri && this.devicePrice && this.deviceClass && this.shopProductName && selectedProduct && this.clientId)) {
+        if (!(this.bifrostUri && this.devicePrice && this.deviceClass && this.shopProductName && selectedProduct.id && selectedProduct.name && this.clientId)) {
             this.fadeout();
             throw new Error("order data incomplete: \n" +
                 "bifrostUri: " + this.bifrostUri + "\n" +
                 "devicePrice: " + this.devicePrice + "\n" +
                 "deviceClass: " + this.deviceClass + "\n" +
                 "clientId: " + this.clientId + "\n" +
-                "selectedProduct: " + selectedProduct.id + "\n" +
+                "selectedProductId: " + selectedProduct.id + "\n" +
+                "selectedProductName: " + selectedProduct.name + "\n" +
                 "shopProductName: " + this.shopProductName
             );
         }
@@ -359,6 +360,7 @@ class WertgarantieSelectionPopUp extends LitElement {
                 devicePrice: parseInt(this.devicePrice),
                 deviceClass: this.deviceClass,
                 productId: selectedProduct.id,
+                productName: selectedProduct.name,
                 deviceCurrency: currency,
                 shopProductName: this.shopProductName
             });

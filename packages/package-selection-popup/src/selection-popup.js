@@ -40,7 +40,7 @@ class WertgarantieSelectionPopUp extends LitElement {
     constructor() {
         super();
         this.initialized = false;
-        this.componentVersion = '2.0.1';
+        this.componentVersion = '2.0.2';
 
         // method binding
         this.setProperties = this.setProperties.bind(this);

@@ -3,6 +3,8 @@ import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from "lit-html/directives/style-map";
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
 import {afterSalesStyling} from './after-sales-styling';
+import {getCookieValue, fetchBifrost} from '../../../shared-code/fetchBifrost';
+const JSON_SHOPPING_CART_COOKIE = 'wertgarantie-shopping-cart';
 
 class WertgarantieAfterSales extends LitElement {
     static get styles() {
@@ -37,10 +39,12 @@ class WertgarantieAfterSales extends LitElement {
         this.renderOrder = this.renderOrder.bind(this);
         this.renderOrderItem = this.renderOrderItem.bind(this);
         this.displayComponent = this.displayComponent.bind(this);
+        this.initializeViaSessionId = this.initializeViaSessionId.bind(this);
     }
 
     connectedCallback() {
         super.connectedCallback();
+        this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie";
         this.base64EncodedShopCheckoutData = this.getAttribute('data-shop-purchase-data');
 
         this.displayComponent();
@@ -48,11 +52,30 @@ class WertgarantieAfterSales extends LitElement {
 
     displayComponent() {
         if (!this.base64EncodedShopCheckoutData) {
-            this.showComponent = false;
+            // wenn nicht gefüllt, müsste sich die Komponente mit der Session ID aus dem Cookie initialisieren
+            const wertgarantieCookie = getCookieValue(JSON_SHOPPING_CART_COOKIE);
+            if (!wertgarantieCookie) {
+                this.showComponent = false;
+                return;
+            }
+            const sessionId = wertgarantieCookie.shoppingCart.sessionId;
+            this.initializeViaSessionId(sessionId);
         } else {
+            this.showComponent = false;
             // POST call auf Checkout
             // .then(setProperties(responseData)
             // .then(() => this.showComponent = true;
+        }
+    }
+
+    async initializeViaSessionId(sessionId) {
+        const url = this.bifrostUri + '/components/after-sales/' + sessionId
+        const fetchResult = await fetchBifrost(url, 'GET', this.componentVersion);
+        if (fetchResult.status === 200) {
+            this.setProperties(fetchResult.body);
+            this.showComponent = true;
+        } else {
+            this.showComponent = false;
         }
     }
 
@@ -67,12 +90,13 @@ class WertgarantieAfterSales extends LitElement {
 
     renderOrderItem(item, index) {
         const contrastClasses = {
+            "order-item": true,
             "order-item--dark": index % 2 === 0,
             "order-item--light": index % 2 === 1
         };
         //language=HTML
         return html`
-            <div class="order-item ${classMap(contrastClasses)}">
+            <div class=${classMap(contrastClasses)}>
                 <div class="order-item__panel panel">
                     <div class="panel__content--top">
                         <div class="panel__content panel__number">
@@ -94,7 +118,7 @@ class WertgarantieAfterSales extends LitElement {
 
     render() {
         //language=HTML
-        return html`
+        return this.showComponent ? html`
             <div class="after-sales">
                 <div class="orders">
                     <div class="header">
@@ -109,7 +133,7 @@ class WertgarantieAfterSales extends LitElement {
                             ${this.renderOrder()}
                         </div>
                         <div class="content__box">
-                            <div class="box__header"${this.nextStepsTitle}</div>
+                            <div class="box__header">${this.nextStepsTitle}</div>
                             <div class="box__icons">
                                 <i class="fas fa-envelope-open-text"></i>
                                 <div class="box__icons__arrow">
@@ -130,7 +154,7 @@ class WertgarantieAfterSales extends LitElement {
                     </div>
                 </div>
             </div>
-        `;
+        ` : html``;
     }
 }
 

@@ -2,7 +2,7 @@ const SHOPPING_CART_DELETE_HEADER = 'X-wertgarantie-shopping-cart-delete';
 const JSON_SHOPPING_CART_COOKIE = 'wertgarantie-shopping-cart';
 const BASE64_SHOPPING_CART_COOKIE = 'wertgarantie-shopping-cart-data';
 
-export default async function (url, method, version, body = {}) {
+export async function fetchBifrost(url, method, version, body = {}) {
     const signedShoppingCart = getCookieValue(JSON_SHOPPING_CART_COOKIE);
     if (signedShoppingCart) {
         body.signedShoppingCart = signedShoppingCart;
@@ -43,7 +43,7 @@ export default async function (url, method, version, body = {}) {
     };
 }
 
-function getCookieValue(cookieName) {
+export function getCookieValue(cookieName) {
     const cookieContent = document.cookie.match('(^|[^;]+)\\s*' + cookieName + '\\s*=\\s*([^;]+)');
     return cookieContent ? JSON.parse(cookieContent.pop()) : undefined;
 }

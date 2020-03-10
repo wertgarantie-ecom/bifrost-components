@@ -153,7 +153,6 @@ class WertgarantieSelectionPopUp extends LitElement {
         }
         return displayData;
     }
-
     render() {
         const orderButtonClassList = {
             "button": true,

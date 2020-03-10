@@ -1,7 +1,5 @@
 import {LitElement, html} from "lit-element";
 import {classMap} from 'lit-html/directives/class-map';
-import {styleMap} from "lit-html/directives/style-map";
-import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
 import {afterSalesStyling} from './after-sales-styling';
 import {getCookieValue, fetchBifrost} from '../../../shared-code/fetchBifrost';
 const JSON_SHOPPING_CART_COOKIE = 'wertgarantie-shopping-cart';
@@ -119,6 +117,7 @@ class WertgarantieAfterSales extends LitElement {
     render() {
         //language=HTML
         return this.showComponent ? html`
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css">
             <div class="after-sales">
                 <div class="orders">
                     <div class="header">

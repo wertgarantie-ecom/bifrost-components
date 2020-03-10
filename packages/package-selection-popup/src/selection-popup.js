@@ -1,9 +1,10 @@
 import {LitElement, html} from 'lit-element';
 import '../../package-rating/dist/rating.min.js';
-import fetchBifrost from "../../../shared-code/fetchBifrost";
+import {fetchBifrost} from "../../../shared-code/fetchBifrost";
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from 'lit-html/directives/style-map';
 import {selectionPopUpStyling} from "./selection-popup-styling";
+
 const MOBILE_WIDTH = 878;
 
 class WertgarantieSelectionPopUp extends LitElement {
@@ -63,9 +64,9 @@ class WertgarantieSelectionPopUp extends LitElement {
         this.clientId = this.getAttribute("data-client-id");
         this.shopProductName = this.getAttribute("data-shop-product-name");
         window.addEventListener('resize', () => {
-           if (window.innerWidth <= MOBILE_WIDTH && this.focusedProductIndex === -1) {
-               this.updateMobileFocusIndex(0);
-           }
+            if (window.innerWidth <= MOBILE_WIDTH && this.focusedProductIndex === -1) {
+                this.updateMobileFocusIndex(0);
+            }
         });
     }
 
@@ -165,6 +166,7 @@ class WertgarantieSelectionPopUp extends LitElement {
         return (this.showComponent) ?
             //language=HTML
             html`
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css">
                 <div class="modal" id="modal">
                     <div class="content">
                         <div class="head">
@@ -176,14 +178,17 @@ class WertgarantieSelectionPopUp extends LitElement {
                                 </wertgarantie-rating>
                             </div>
                             <div class="head__right">
-                                <span @click="${() => {this.fadeout(); this.showComponent = false;}}" class="closeBtn" id="closeBtn">×</span>
+                                <span @click="${() => {
+                this.fadeout();
+                this.showComponent = false;
+            }}" class="closeBtn" id="closeBtn">×</span>
                             </div>
                         </div>
                         <p class="head__subtitle">${this.headSubTitle}</p>
                         <section class="product-selectors" id="product-selectors">
                             ${this.products.map(this.createMobileProductSelectionButton)}
                         </section>
-                        <section class="products" id="products">
+                        <section class="checkouts" id="products">
                             ${this.products.map(this.createProductDiv)}
                         </section>
                         <section class="product__details-footer">
@@ -392,6 +397,7 @@ class WertgarantieSelectionPopUp extends LitElement {
         }, 20);
     }
 }
+
 if (!customElements.get('wertgarantie-selection-pop-up')) {
     customElements.define('wertgarantie-selection-pop-up', WertgarantieSelectionPopUp);
 }

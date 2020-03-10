@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css">
+    <link rel="stylesheet" href="./after-sales.css">
+    <title>After Sales Component</title>
+</head>
+<body>
+<div class="after-sales">
+    <div class="header">
+        <div class="header__icon"><i class="icon fas fa-check"></i></div>
+        <div class="header__title">Ihre Geräte wurden erfolgreich versichert!</div>
+    </div>
+    <div class="content">
+        <div class="content__box">
+            <div class="box__header">
+                Folgende Geräte wurden versichert:
+            </div>
+            <div class="checkouts">
+                <div class="product product--dark">
+                    <div class="product__panel panel">
+                        <div class="panel__content--top">
+                            <div class="panel__content panel__number panel__number--dark">
+                                1
+                            </div>
+                            <div class="panel__content panel__title">
+                                Smartphone Komplettschutz Premium
+                            </div>
+                        </div>
+                        <div class="panel__content--bottom">
+                            <div class="panel__content">
+                                <span class="panel__product-name">Handy 1</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product product--light">
+                    <div class="product__panel panel">
+                        <div class="panel__content--top">
+                            <div class="panel__content panel__number panel__number--light">
+                                2
+                            </div>
+                            <div class="panel__content panel__title">
+                                Smartphone Komplettschutz Basis
+                            </div>
+                        </div>
+                        <div class="panel__content--bottom">
+                            <div class="panel__content">
+                                <span class="panel__product-name--light">Handy 2</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product product--dark">
+                    <div class="product__panel panel">
+                        <div class="panel__content--top">
+                            <div class="panel__content panel__number panel__number--dark">
+                                3
+                            </div>
+                            <div class="panel__content panel__title">
+                                Smartphone Komplettschutz Premium
+                            </div>
+                        </div>
+                        <div class="panel__content--bottom">
+                            <div class="panel__content">
+                                <span class="panel__product-name">Handy 1</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content__box">
+            <div class="box__header">DIE NÄCHSTEN SCHRITTE:</div>
+            <div class="box__icons">
+                <i class="fas fa-envelope-open-text"></i>
+                <div class="box__icons__arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <i class="fas fa-file-alt"></i>
+                <div class="box__icons__arrow">
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+                <i class="fas fa-flag-checkered"></i>
+            </div>
+            <div class="box__explanation">
+                <ul>
+                    <li>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                        invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
+                        et justo duo dolores et ea rebum.
+                    </li>
+                    <li>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
+                        invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam
+                        et justo duo dolores et ea rebum.
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+<wertgarantie-after-sales
+        data-client-id="f1eea02c-f9bd-11e9-a37a-b3513bff18fe">
+    Bitte warten. Ihre Versicherungsanträge werden angelegt....
+</wertgarantie-after-sales>
+<!-- data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie"> -->
+<!-- data-bifrost-uri="http://localhost:3000/wertgarantie"> -->
+
+<script src="../../packages/package-after-sales/dist/after-sales.min.js" type="module"></script>
+</body>
+</html>

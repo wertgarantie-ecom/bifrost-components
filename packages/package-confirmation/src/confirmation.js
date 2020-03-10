@@ -1,6 +1,6 @@
 import {LitElement, html} from 'lit-element';
 import {confirmationStyling} from './confirmation-styling';
-import fetchBifrost from "../../../shared-code/fetchBifrost";
+import {fetchBifrost} from "../../../shared-code/fetchBifrost";
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from "lit-html/directives/style-map";
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
@@ -50,6 +50,7 @@ class WertgarantieConfirmation extends LitElement {
         this.renderValidationFailed = this.renderValidationFailed.bind(this);
         this.renderTab = this.renderTab.bind(this);
     }
+
 
     connectedCallback() {
         super.connectedCallback();
@@ -140,6 +141,7 @@ class WertgarantieConfirmation extends LitElement {
         };
 
         return html`
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.10.2/css/all.css">
             <div class="${classAttribute}">
                 <div class=${classMap(productDivClassList)}
                      style=${styleMap(productDivStyleMap)}>

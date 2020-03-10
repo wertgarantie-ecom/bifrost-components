@@ -26,7 +26,13 @@ jobs:
       - attach_workspace:
           at: ~/repo
       - run: google-chrome --version
-      - run: npm test
+      - run:
+          name: Run all Browser Tests
+          command: npm run test
+      - store_test_results:
+          path: ./reports
+      - store_artifacts:
+          path: ./reports
   gh-pages:
     <<: *defaults
     steps:

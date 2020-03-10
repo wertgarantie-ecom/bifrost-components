@@ -1,4 +1,5 @@
 module.exports = {
+    "output_folder": "./reports",
     "src_folders": [
         "packages/package-rating/tests",
         "packages/package-selection-popup/tests"

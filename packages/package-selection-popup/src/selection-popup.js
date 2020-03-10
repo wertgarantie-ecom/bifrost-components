@@ -1,6 +1,6 @@
 import {LitElement, html} from 'lit-element';
 import '../../package-rating/dist/rating.min.js';
-import {fetchBifrost} from "../../../shared-code/fetchBifrost";
+import fetchBifrost from "../../../shared-code/fetchBifrost";
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from 'lit-html/directives/style-map';
 import {selectionPopUpStyling} from "./selection-popup-styling";

@@ -2,9 +2,10 @@ const SHOPPING_CART_DELETE_HEADER = 'X-wertgarantie-shopping-cart-delete';
 const WERTGARANTIE_SESSION_ID = 'X-wertgarantie-session-id';
 const JSON_SHOPPING_CART_COOKIE = 'wertgarantie-shopping-cart';
 const BASE64_SHOPPING_CART_COOKIE = 'wertgarantie-shopping-cart-data';
+import getWertgarantieCookieValue from "./getWertgarantieCookieValue";
 
-export async function fetchBifrost(url, method, version, body = {}) {
-    const signedShoppingCart = getCookieValue(JSON_SHOPPING_CART_COOKIE);
+export default async function fetchBifrost(url, method, version, body = {}) {
+    const signedShoppingCart = getWertgarantieCookieValue(JSON_SHOPPING_CART_COOKIE);
     const requestParams = {
         method: method,
         headers: {
@@ -43,9 +44,4 @@ export async function fetchBifrost(url, method, version, body = {}) {
         status: result.status,
         body: responseJson
     };
-}
-
-export function getCookieValue(cookieName) {
-    const cookieContent = document.cookie.match('(^|[^;]+)\\s*' + cookieName + '\\s*=\\s*([^;]+)');
-    return cookieContent ? JSON.parse(cookieContent.pop()) : undefined;
 }

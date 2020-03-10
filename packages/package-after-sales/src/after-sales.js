@@ -1,7 +1,8 @@
 import {LitElement, html} from "lit-element";
 import {classMap} from 'lit-html/directives/class-map';
 import {afterSalesStyling} from './after-sales-styling';
-import {getCookieValue, fetchBifrost} from '../../../shared-code/fetchBifrost';
+import fetchBifrost from '../../../shared-code/fetchBifrost';
+import getWertgarantieCookieValue from "../../../shared-code/getWertgarantieCookieValue";
 const JSON_SHOPPING_CART_COOKIE = 'wertgarantie-shopping-cart';
 
 class WertgarantieAfterSales extends LitElement {
@@ -51,7 +52,7 @@ class WertgarantieAfterSales extends LitElement {
     displayComponent() {
         if (!this.base64EncodedShopCheckoutData) {
             // wenn nicht gefüllt, müsste sich die Komponente mit der Session ID aus dem Cookie initialisieren
-            const wertgarantieCookie = getCookieValue(JSON_SHOPPING_CART_COOKIE);
+            const wertgarantieCookie = getWertgarantieCookieValue(JSON_SHOPPING_CART_COOKIE);
             if (!wertgarantieCookie) {
                 this.showComponent = false;
                 return;

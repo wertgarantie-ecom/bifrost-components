@@ -15,7 +15,7 @@ export async function fetchBifrost(url, method, version, body = {}) {
     };
     if (signedShoppingCart) {
         body.signedShoppingCart = signedShoppingCart;
-        requestParams.headers[WERTGARANTIE_SESSION_ID] = signedShoppingCart.sessionId;
+        requestParams.headers[WERTGARANTIE_SESSION_ID] = signedShoppingCart.shoppingCart.sessionId;
     }
 
     if (method !== 'GET') {

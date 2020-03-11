@@ -30,6 +30,7 @@
     "lerna": "^3.18.3",
     "live-server": "1.2.1",
     "nightwatch": "1.2.4",
+    "nightwatch-html-reporter": "^2.0.6",
     "storybook-readme": "^5.0.8"
   },
   "browserslist": [

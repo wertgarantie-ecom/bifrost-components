@@ -9,4 +9,5 @@ storybook-static/
 geckodriver.log
 tests_output/
 lerna-debug.log
-/reports/
+/reports/report.html
+/reports/tests/

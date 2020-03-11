@@ -1,5 +1,5 @@
 module.exports = {
-    "globals_path": "globals.js",
+    "globals_path": "./globals.js",
     "output_folder": "./reports",
     "src_folders": [
         "packages/package-rating/tests",

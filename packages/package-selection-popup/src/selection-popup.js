@@ -157,9 +157,9 @@ class WertgarantieSelectionPopUp extends LitElement {
                             </div>
                             <div class="head__right">
                                 <span @click="${() => {
-                this.fadeout();
-                this.showComponent = false;
-            }}" class="closeBtn" id="closeBtn">×</span>
+                                    this.fadeout();
+                                    this.showComponent = false;
+                                }}" class="closeBtn" id="closeBtn">×</span>
                             </div>
                         </div>
                         <p class="head__subtitle">${this.headSubTitle}</p>
@@ -276,7 +276,8 @@ class WertgarantieSelectionPopUp extends LitElement {
                         ${product.excludedAdvantages.map(advantage => html`
                             <li class="advantage advantage--excluded">
                                 <span class="advantage__icon advantage__icon--excluded">${advantage}</span>
-                            </li>`)}
+                            </li>`
+                        )}
                     </ul>   
                     <ul class="product__advantages product__advantages--details">
                         ${product.advantages.map((advantage) => html`

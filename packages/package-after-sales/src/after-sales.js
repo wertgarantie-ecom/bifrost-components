@@ -1,5 +1,6 @@
 import {LitElement, html} from "lit-element";
 import {classMap} from 'lit-html/directives/class-map';
+import {styleMap} from "lit-html/directives/style-map";
 import {afterSalesStyling} from './after-sales-styling';
 import fetchBifrost from '../../../shared-code/fetchBifrost';
 import getWertgarantieCookieValue from "../../../shared-code/getWertgarantieCookieValue";
@@ -94,9 +95,12 @@ class WertgarantieAfterSales extends LitElement {
             "order-item--dark": index % 2 === 0,
             "order-item--light": index % 2 === 1
         };
+        const imageLinkStyle = {
+            "--image-link": "url(" + item.imageLink + ")"
+        }
         //language=HTML
         return html`
-            <div class=${classMap(contrastClasses)}>
+            <div class=${classMap(contrastClasses)} style=${styleMap(imageLinkStyle)}>
                 <div class="order-item__panel panel">
                     <div class="panel__content--top">
                         <div class="panel__content panel__number">

@@ -3,6 +3,7 @@ import {classMap} from 'lit-html/directives/class-map';
 import {afterSalesStyling} from './after-sales-styling';
 import fetchBifrost from '../../../shared-code/fetchBifrost';
 import getWertgarantieCookieValue from "../../../shared-code/getWertgarantieCookieValue";
+
 const JSON_SHOPPING_CART_COOKIE = 'wertgarantie-shopping-cart';
 
 class WertgarantieAfterSales extends LitElement {
@@ -38,10 +39,9 @@ class WertgarantieAfterSales extends LitElement {
         this.renderOrder = this.renderOrder.bind(this);
         this.renderOrderItem = this.renderOrderItem.bind(this);
         this.displayComponent = this.displayComponent.bind(this);
-        this.initializeViaSessionId = this.initializeViaSessionId.bind(this);
     }
 
-    connectedCallback() {
+    async connectedCallback() {
         super.connectedCallback();
         this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie";
         this.base64EncodedShopCheckoutData = this.getAttribute('data-shop-purchase-data');
@@ -49,27 +49,27 @@ class WertgarantieAfterSales extends LitElement {
         this.displayComponent();
     }
 
-    displayComponent() {
+    async displayComponent() {
+        let fetchResult;
         if (!this.base64EncodedShopCheckoutData) {
-            // wenn nicht gefüllt, müsste sich die Komponente mit der Session ID aus dem Cookie initialisieren
             const wertgarantieCookie = getWertgarantieCookieValue(JSON_SHOPPING_CART_COOKIE);
             if (!wertgarantieCookie) {
                 this.showComponent = false;
                 return;
             }
             const sessionId = wertgarantieCookie.shoppingCart.sessionId;
-            this.initializeViaSessionId(sessionId);
+            const url = this.bifrostUri + '/components/after-sales/' + sessionId;
+            fetchResult = await fetchBifrost(url, 'GET', this.componentVersion);
         } else {
             this.showComponent = false;
-            // POST call auf Checkout
-            // .then(setProperties(responseData)
-            // .then(() => this.showComponent = true;
+            const shopDataString = atob(this.base64EncodedShopCheckoutData);
+            const shopData = JSON.parse((shopDataString));
+            const url = this.bifrostUri + '/components/after-sales/checkout';
+            const checkoutRequestData = {
+                webshopData: shopData
+            };
+            fetchResult = await fetchBifrost(url, 'POST', this.componentVersion, checkoutRequestData);
         }
-    }
-
-    async initializeViaSessionId(sessionId) {
-        const url = this.bifrostUri + '/components/after-sales/' + sessionId
-        const fetchResult = await fetchBifrost(url, 'GET', this.componentVersion);
         if (fetchResult.status === 200) {
             this.setProperties(fetchResult.body);
             this.showComponent = true;
@@ -77,6 +77,7 @@ class WertgarantieAfterSales extends LitElement {
             this.showComponent = false;
         }
     }
+
 
     renderOrder() {
         //language=HTML

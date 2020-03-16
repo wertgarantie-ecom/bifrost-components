@@ -73,7 +73,7 @@ export const afterSalesStyling = css`
     }
 
     .order-item--light {
-        --text-color: black;
+        --text-color: white;
         --background-color: lightgrey;
         color: var(--text-color);
         background-color: var(--background-color);

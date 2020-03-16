@@ -39,7 +39,6 @@ class WertgarantieAfterSales extends LitElement {
         this.renderOrder = this.renderOrder.bind(this);
         this.renderOrderItem = this.renderOrderItem.bind(this);
         this.displayComponent = this.displayComponent.bind(this);
-        this.initializeViaSessionId = this.initializeViaSessionId.bind(this);
     }
 
     async connectedCallback() {
@@ -63,12 +62,13 @@ class WertgarantieAfterSales extends LitElement {
             fetchResult = await fetchBifrost(url, 'GET', this.componentVersion);
         } else {
             this.showComponent = false;
-            const shopData = atob(this.base64EncodedShopCheckoutData);
+            const shopDataString = atob(this.base64EncodedShopCheckoutData);
+            const shopData = JSON.parse((shopDataString));
             const url = this.bifrostUri + '/components/after-sales/checkout';
             const checkoutRequestData = {
                 webshopData: shopData
             };
-            fetchResult = await fetchBifrost(url, 'POST', checkoutRequestData);
+            fetchResult = await fetchBifrost(url, 'POST', this.componentVersion, checkoutRequestData);
         }
         if (fetchResult.status === 200) {
             this.setProperties(fetchResult.body);

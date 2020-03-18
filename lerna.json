@@ -1,6 +1,7 @@
 {
   "packages": [
-    "packages/*"
+    "packages/*",
+    "shared-code/*"
   ],
   "command": {
     "publish": {

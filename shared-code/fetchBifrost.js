@@ -3,7 +3,7 @@ const WERTGARANTIE_SESSION_ID = 'X-wertgarantie-session-id';
 const JSON_SHOPPING_CART_COOKIE = 'wertgarantie-shopping-cart';
 const BASE64_SHOPPING_CART_COOKIE = 'wertgarantie-shopping-cart-data';
 import getWertgarantieCookieValue from "./getWertgarantieCookieValue";
-// import Dexie from '../node_modules/dexie';
+import Dexie from '../node_modules/dexie';
 
 export default async function fetchBifrost(url, method, version, body = {}) {
     const signedShoppingCart = getWertgarantieCookieValue(JSON_SHOPPING_CART_COOKIE);

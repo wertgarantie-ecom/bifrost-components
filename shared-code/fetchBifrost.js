@@ -6,7 +6,7 @@ import {saveShoppingCart, getShoppingCart, deleteShoppingCart} from './wertgaran
 
 export default async function fetchBifrost(url, method, version, body = {}) {
     const sessionId = getWertgarantieCookieValue(WERTGARANTIE_SESSION_ID_COOKIE)
-    const signedShoppingCart = getShoppingCart(sessionId);
+    const signedShoppingCart = await getShoppingCart(sessionId);
     const requestParams = {
         method: method,
         headers: {
@@ -27,7 +27,8 @@ export default async function fetchBifrost(url, method, version, body = {}) {
     const result = await fetch(url, requestParams);
 
     if (result.headers.get(SHOPPING_CART_DELETE_HEADER)) {
-        deleteShoppingCart(sessionId);
+        // ToDo: SWDBECOM-196 handle response
+        await deleteShoppingCart(sessionId);
         document.cookie = `${WERTGARANTIE_SESSION_ID_COOKIE}=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
     }
 
@@ -35,7 +36,8 @@ export default async function fetchBifrost(url, method, version, body = {}) {
     if (result.status === 200) {
         responseJson = await result.json();
         if (responseJson.signedShoppingCart) {
-            saveShoppingCart(responseJson.signedShoppingCart)
+            // ToDo: SWDBECOM-196 handle response
+            await saveShoppingCart(responseJson.signedShoppingCart)
             document.cookie = `${WERTGARANTIE_SESSION_ID_COOKIE}=${responseJson.signedShoppingCart.shoppingCart.sessionId}`
         }
     }

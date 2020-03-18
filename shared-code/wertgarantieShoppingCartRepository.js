@@ -1,4 +1,6 @@
 import Dexie from "dexie";
+import getWertgarantieCookieValue from "./getWertgarantieCookieValue";
+const WERTGARANTIE_SESSION_ID_COOKIE = 'wertgarantie-session-id';
 
 export async function saveShoppingCart(signedShoppingCart, database) {
     const db = database || await getShoppingCartDatabase();
@@ -10,11 +12,12 @@ export async function saveShoppingCart(signedShoppingCart, database) {
 }
 
 export async function getShoppingCart(sessionId, database) {
-    if (!sessionId) {
+    const sessionIdToQuery = sessionId || getWertgarantieCookieValue(WERTGARANTIE_SESSION_ID_COOKIE);
+    if (!sessionIdToQuery) {
         return undefined;
     }
     const db = database || await getShoppingCartDatabase();
-    return await db.signedShoppingCart.get(sessionId);
+    return await db.signedShoppingCart.get(sessionIdToQuery);
 }
 
 // wir sollten hier vielleicht überlegen, ob wir beim client eine zweite Datenbank aufmachen für deletedShoppingCarts / purchases

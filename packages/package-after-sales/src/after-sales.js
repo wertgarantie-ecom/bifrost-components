@@ -3,9 +3,7 @@ import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from "lit-html/directives/style-map";
 import {afterSalesStyling} from './after-sales-styling';
 import fetchBifrost from '../../../shared-code/fetchBifrost';
-import getWertgarantieCookieValue from "../../../shared-code/getWertgarantieCookieValue";
-
-const JSON_SHOPPING_CART_COOKIE = 'wertgarantie-shopping-cart';
+import {getShoppingCart} from "../../../shared-code/wertgarantieShoppingCartRepository";
 
 class WertgarantieAfterSales extends LitElement {
     static get styles() {
@@ -53,12 +51,12 @@ class WertgarantieAfterSales extends LitElement {
     async displayComponent() {
         let fetchResult;
         if (!this.base64EncodedShopCheckoutData) {
-            const wertgarantieCookie = getWertgarantieCookieValue(JSON_SHOPPING_CART_COOKIE);
-            if (!wertgarantieCookie) {
+            const signedShoppingCart = getShoppingCart();
+            if (!signedShoppingCart) {
                 this.showComponent = false;
                 return;
             }
-            const sessionId = wertgarantieCookie.shoppingCart.sessionId;
+            const sessionId = signedShoppingCart.shoppingCart.sessionId;
             const url = this.bifrostUri + '/components/after-sales/' + sessionId;
             fetchResult = await fetchBifrost(url, 'GET', this.componentVersion);
         } else {

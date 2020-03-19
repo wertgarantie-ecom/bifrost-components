@@ -1,18 +1,14 @@
-import getWertgarantieCookieValue from "./getWertgarantieCookieValue";
-const WERTGARANTIE_SESSION_ID_COOKIE = 'wertgarantie-session-id';
+const DATABASE_NAME = 'WertgarantieDatabase';
 const SIGNED_SHOPPING_CARTS_TABLE_NAME = 'signedShoppingCarts';
+const SHOPPING_CART_ROW_KEY = 'wertgarantie-shopping-cart';
 
-export async function getShoppingCartBySessionId(sessionId) {
-    const sessionIdToQuery = sessionId || getWertgarantieCookieValue(WERTGARANTIE_SESSION_ID_COOKIE);
-    if (!sessionIdToQuery) {
-        return undefined;
-    }
+export async function getShoppingCart() {
     const db = await getIndexedDB();
-    const wertgarantieData = await db.wertgarantieData.get(sessionIdToQuery);
-    return wertgarantieData ? wertgarantieData.signedShoppingCart : undefined;
+    const tx = await getTransaction(db, 'read');
+    const objectStore = getObjectStore(SIGNED_SHOPPING_CARTS_TABLE_NAME, tx);
+    return await getFromStore(objectStore, SHOPPING_CART_ROW_KEY);
 }
 
-// wir sollten hier vielleicht überlegen, ob wir beim client eine zweite Datenbank aufmachen für deletedShoppingCarts / purchases
 // export async function deleteShoppingCart(sessionId) {
 //     if (!sessionId) {
 //         return false;
@@ -22,8 +18,41 @@ export async function getShoppingCartBySessionId(sessionId) {
 //     return !(await db.wertgarantieData.get(sessionId)); // --> true if undefined, which is the desired output
 // }
 
+function getFromStore(store, key) {
+    return new Promise((resolve, reject) => {
+        const request = store.get(key);
+        request.onsuccess = () => {
+            resolve(request.result);
+        };
+        request.onerror = (event) => {
+            console.log('indexedDB transaction threw an error: ' + event.target.error);
+            reject();
+        };
+    });
+}
+
+function getObjectStore(db, tx) {
+    return tx.objectStore(db);
+}
+
+function getTransaction(db, mode) {
+    return new Promise((resolve, reject) => {
+        const tx = db.transaction(mode);
+        tx.oncomplete = () => {
+            console.log('get shopping cart from indexeddb');
+            resolve(tx);
+        };
+        tx.onerror = (event) => {
+            console.log('indexedDB transaction threw an error: ' + event.target.error);
+            reject();
+        };
+
+    });
+}
+
 export async function saveShoppingCart(signedShoppingCart) {
     const db = await getIndexedDB();
+
     return new Promise((resolve, reject) => {
 
         const tx = db.transaction(SIGNED_SHOPPING_CARTS_TABLE_NAME, 'readwrite');
@@ -38,19 +67,17 @@ export async function saveShoppingCart(signedShoppingCart) {
         };
 
         const store = tx.objectStore(SIGNED_SHOPPING_CARTS_TABLE_NAME);
-        store.put({
-            sessionId: signedShoppingCart.shoppingCart.sessionId,
-            signedShoppingCart: signedShoppingCart
-        });
+        store.put(signedShoppingCart, SHOPPING_CART_ROW_KEY);
     });
+
 }
 
-export function getIndexedDB(databaseName = 'WertgarantieDatabase') {
+export function getIndexedDB(databaseName = DATABASE_NAME) {
     const db = new Promise((resolve, reject) => {
         const indexedDBRequest = window.indexedDB.open(databaseName, 1);
         indexedDBRequest.onupgradeneeded = () => {
             let db = indexedDBRequest.result;
-            db.createObjectStore('signedShoppingCarts', {keyPath: 'sessionId'});
+            db.createObjectStore(SIGNED_SHOPPING_CARTS_TABLE_NAME);
         };
         indexedDBRequest.onsuccess = () => resolve(indexedDBRequest.result);
         indexedDBRequest.onerror = (event) => reject(event.target.error);

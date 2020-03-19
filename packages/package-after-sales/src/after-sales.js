@@ -5,7 +5,7 @@ import {afterSalesStyling} from './after-sales-styling';
 import fetchBifrost from '../../../shared-code/fetchBifrost';
 import getWertgarantieCookieValue from "../../../shared-code/getWertgarantieCookieValue";
 
-const JSON_SHOPPING_CART_COOKIE = 'wertgarantie-shopping-cart';
+const WERTGARANTIE_SESSION_ID_COOKIE = 'wertgarantie-session-id';
 
 class WertgarantieAfterSales extends LitElement {
     static get styles() {
@@ -53,12 +53,11 @@ class WertgarantieAfterSales extends LitElement {
     async displayComponent() {
         let fetchResult;
         if (!this.base64EncodedShopCheckoutData) {
-            const wertgarantieCookie = getWertgarantieCookieValue(JSON_SHOPPING_CART_COOKIE);
-            if (!wertgarantieCookie) {
+            const sessionId = getWertgarantieCookieValue(WERTGARANTIE_SESSION_ID_COOKIE);
+            if (!sessionId) {
                 this.showComponent = false;
                 return;
             }
-            const sessionId = wertgarantieCookie.shoppingCart.sessionId;
             const url = this.bifrostUri + '/components/after-sales/' + sessionId;
             fetchResult = await fetchBifrost(url, 'GET', this.componentVersion);
         } else {

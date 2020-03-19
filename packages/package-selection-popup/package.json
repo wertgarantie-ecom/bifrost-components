@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme",
   "dependencies": {
-    "wertgarantie-rating": "^2.0.1"
+    "wertgarantie-rating": "^2.0.1",
+    "wertgarantie-shared-code": "^1.0.0"
   }
 }

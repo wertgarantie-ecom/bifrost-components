@@ -1,0 +1,27 @@
+{
+  "name": "package-shared-code",
+  "version": "1.0.0",
+  "description": "Shared Code for Wertgaranties Web Components",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/wertgarantie-ecom/bifrost-components.git"
+  },
+  "keywords": [
+    "WebComponents",
+    "Wertgarantie",
+    "SharedCode"
+  ],
+  "author": "henning.nobbe@innoq.com, arne.landwehr@innoq.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wertgarantie-ecom/bifrost-components/issues"
+  },
+  "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme",
+  "dependencies": {
+    "wertgarantie-shared-code": "^1.0.0"
+  }
+}

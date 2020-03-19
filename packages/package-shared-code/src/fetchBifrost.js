@@ -3,7 +3,7 @@ const WERTGARANTIE_SESSION_ID = 'X-wertgarantie-session-id';
 const JSON_SHOPPING_CART_COOKIE = 'wertgarantie-shopping-cart';
 const BASE64_SHOPPING_CART_COOKIE = 'wertgarantie-shopping-cart-data';
 import getWertgarantieCookieValue from "./getWertgarantieCookieValue";
-import Dexie from '../node_modules/dexie';
+import Dexie from "dexie";
 
 export default async function fetchBifrost(url, method, version, body = {}) {
     const signedShoppingCart = getWertgarantieCookieValue(JSON_SHOPPING_CART_COOKIE);
@@ -48,18 +48,18 @@ export default async function fetchBifrost(url, method, version, body = {}) {
     };
 }
 
-// async function saveSignedShoppingCart(signedShoppingCart) {
-//     const db = getDatabase();
-//     db.wertgarantieSessionData.put({
-//         sessionId: signedShoppingCart.shoppingCart.sessionId,
-//         signedShoppingCart: signedShoppingCart
-//     })
-// }
-//
-// async function getDatabase() {
-//     var db = new Dexie('WertgarantieShoppingCart');
-//     db.version(1).stores({
-//         wertgarantieSessionData: "sessionId, signedShoppingCart"
-//     });
-//     return db;
-// }
+async function saveSignedShoppingCart(signedShoppingCart) {
+    const db = getDatabase();
+    db.wertgarantieSessionData.put({
+        sessionId: signedShoppingCart.shoppingCart.sessionId,
+        signedShoppingCart: signedShoppingCart
+    })
+}
+
+async function getDatabase() {
+    var db = new Dexie('WertgarantieShoppingCart');
+    db.version(1).stores({
+        wertgarantieSessionData: "sessionId, signedShoppingCart"
+    });
+    return db;
+}

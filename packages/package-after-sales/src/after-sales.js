@@ -2,8 +2,9 @@ import {LitElement, html} from "lit-element";
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from "lit-html/directives/style-map";
 import {afterSalesStyling} from './after-sales-styling';
-import fetchBifrost from '../../../shared-code/fetchBifrost';
-import getWertgarantieCookieValue from "../../../shared-code/getWertgarantieCookieValue";
+import fetchBifrost from '../../package-shared-code/src/fetchBifrost';
+import getWertgarantieCookieValue from "../../package-shared-code/src/getWertgarantieCookieValue";
+// import Dexie from "dexie";
 
 const JSON_SHOPPING_CART_COOKIE = 'wertgarantie-shopping-cart';
 

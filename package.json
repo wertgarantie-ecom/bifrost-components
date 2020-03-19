@@ -50,6 +50,7 @@
     "wertgarantie-confirmation": "file:packages/package-confirmation",
     "wertgarantie-rating": "file:packages/package-rating",
     "wertgarantie-selection-embedded": "file:packages/package-selection-embedded",
-    "wertgarantie-selection-popup": "file:packages/package-selection-popup"
+    "wertgarantie-selection-popup": "file:packages/package-selection-popup",
+    "wertgarantie-shared-code": "file:packages/package-shared-code"
   }
 }

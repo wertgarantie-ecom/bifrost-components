@@ -1,10 +1,12 @@
+import {saveShoppingCart} from "./wertgarantieShoppingCartRepository";
+import getWertgarantieCookieValue from "./getWertgarantieCookieValue";
 const SHOPPING_CART_DELETE_HEADER = 'X-wertgarantie-shopping-cart-delete';
 const WERTGARANTIE_SESSION_ID = 'X-wertgarantie-session-id';
-const WERTGARANTIE_SESSION_ID_COOKIE = 'wertgarantie-session-id';
-import {saveShoppingCart, getShoppingCart, deleteShoppingCart} from './wertgarantieShoppingCartRepository';
+const JSON_SHOPPING_CART_COOKIE = 'wertgarantie-shopping-cart';
+const BASE64_SHOPPING_CART_COOKIE = 'wertgarantie-shopping-cart-data';
 
 export default async function fetchBifrost(url, method, version, body = {}) {
-    const signedShoppingCart = await getShoppingCart();
+    const signedShoppingCart = getWertgarantieCookieValue(JSON_SHOPPING_CART_COOKIE);
     const requestParams = {
         method: method,
         headers: {
@@ -25,18 +27,18 @@ export default async function fetchBifrost(url, method, version, body = {}) {
     const result = await fetch(url, requestParams);
 
     if (result.headers.get(SHOPPING_CART_DELETE_HEADER)) {
-        // ToDo: SWDBECOM-196 handle response
-        await deleteShoppingCart();
-        document.cookie = `${WERTGARANTIE_SESSION_ID_COOKIE}=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
+        document.cookie = `${JSON_SHOPPING_CART_COOKIE}=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
+        document.cookie = `${BASE64_SHOPPING_CART_COOKIE}=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
     }
 
     let responseJson = undefined;
     if (result.status === 200) {
         responseJson = await result.json();
         if (responseJson.signedShoppingCart) {
-            // ToDo: SWDBECOM-196 handle response
-            const savedSignedShoppingCart = await saveShoppingCart(responseJson.signedShoppingCart)
-            document.cookie = `${WERTGARANTIE_SESSION_ID_COOKIE}=${savedSignedShoppingCart.shoppingCart.sessionId}`
+            await saveShoppingCart(responseJson.signedShoppingCart);
+            const shoppingCartString = JSON.stringify(responseJson.signedShoppingCart);
+            document.cookie = `${JSON_SHOPPING_CART_COOKIE}=${shoppingCartString}`;
+            document.cookie = `${BASE64_SHOPPING_CART_COOKIE}=${btoa(shoppingCartString)}`
         }
     }
     return {

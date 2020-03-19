@@ -6,21 +6,32 @@ export async function getShoppingCart() {
     const db = await getIndexedDB();
     const tx = await getTransaction(db, 'readonly');
     const objectStore = getObjectStore(SIGNED_SHOPPING_CARTS_TABLE_NAME, tx);
-    const dbResult = await getFromStore(objectStore, SHOPPING_CART_ROW_KEY);
-    console.log(dbResult);
-    return dbResult;
+    return await getFromStore(objectStore, SHOPPING_CART_ROW_KEY);
 }
 
 async function deleteFromStore(objectStore, key) {
     return new Promise((resolve, reject) => {
-       const deleteRequest = objectStore.delete(key);
-       deleteRequest.onsuccess = () => {
-           resolve(deleteRequest.result);
-       };
-       deleteRequest.onerror = (event) => {
-           console.log('DELETE FROM STORE: indexedDB transaction threw an error: ' + event.target.error);
-           reject();
-       }
+        const deleteRequest = objectStore.delete(key);
+        deleteRequest.onsuccess = () => {
+            resolve(deleteRequest.result);
+        };
+        deleteRequest.onerror = (event) => {
+            console.log('DELETE FROM STORE: indexedDB transaction threw an error: ' + event.target.error);
+            reject();
+        }
+    });
+}
+
+async function putValue(objectStore, key, value) {
+    return new Promise((resolve, reject) => {
+        const putRequest = objectStore.put(value, key);
+        putRequest.onsuccess = () => {
+            resolve(putRequest.result);
+        };
+        putRequest.onerror = (event) => {
+            console.log('PUT transaction threw an error: ' + event.target.error);
+            reject();
+        }
     });
 }
 
@@ -50,9 +61,6 @@ function getObjectStore(db, tx) {
 
 function getTransaction(db, mode) {
     const tx = db.transaction(SIGNED_SHOPPING_CARTS_TABLE_NAME, mode);
-    tx.oncomplete = () => {
-        console.log('Transaction completed');
-    };
     tx.onerror = (event) => {
         console.log('indexedDB transaction threw an error: ' + event.target.error);
     };
@@ -62,24 +70,9 @@ function getTransaction(db, mode) {
 
 export async function saveShoppingCart(signedShoppingCart) {
     const db = await getIndexedDB();
-
-    return new Promise((resolve, reject) => {
-
-        const tx = db.transaction(SIGNED_SHOPPING_CARTS_TABLE_NAME, 'readwrite');
-        tx.oncomplete = () => {
-            console.log('saved signed shopping cart to indexeddb!');
-            console.log(JSON.stringify(signedShoppingCart, null, 2));
-            resolve(signedShoppingCart);
-        };
-        tx.onerror = (event) => {
-            console.log('indexedDB transaction threw an error: ' + event.target.error);
-            reject();
-        };
-
-        const store = tx.objectStore(SIGNED_SHOPPING_CARTS_TABLE_NAME);
-        store.put(signedShoppingCart, SHOPPING_CART_ROW_KEY);
-    });
-
+    const tx = await getTransaction(db, 'readwrite');
+    const objectStore = getObjectStore(SIGNED_SHOPPING_CARTS_TABLE_NAME, tx);
+    return await putValue(objectStore, SHOPPING_CART_ROW_KEY, signedShoppingCart);
 }
 
 export function getIndexedDB(databaseName = DATABASE_NAME) {

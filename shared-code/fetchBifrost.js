@@ -25,9 +25,8 @@ export default async function fetchBifrost(url, method, version, body = {}) {
     const result = await fetch(url, requestParams);
 
     if (result.headers.get(SHOPPING_CART_DELETE_HEADER)) {
-        const deleteResult = await deleteShoppingCart();
+        await deleteShoppingCart();
         document.cookie = `${WERTGARANTIE_SESSION_ID_COOKIE}=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
-        console.log(deleteResult);
     }
 
     let responseJson = undefined;

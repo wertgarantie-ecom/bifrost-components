@@ -54,7 +54,6 @@ class WertgarantieConfirmation extends LitElement {
 
     connectedCallback() {
         super.connectedCallback();
-        this.clientId = this.getAttribute('data-client-id');
         this.bifrostUri = this.getAttribute('data-bifrost-uri') || "https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie";
         this.formSelector = this.getAttribute('data-form-selector');
         this.initListeners();
@@ -300,6 +299,7 @@ class WertgarantieConfirmation extends LitElement {
 
 class UndefinedConfirmationDataError extends Error {
 }
+
 if (!customElements.get('wertgarantie-confirmation')) {
     customElements.define('wertgarantie-confirmation', WertgarantieConfirmation);
 }

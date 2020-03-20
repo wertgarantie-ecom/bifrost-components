@@ -33,7 +33,7 @@ class WertgarantieConfirmation extends LitElement {
 
     constructor() {
         super();
-        this.componentVersion = '2.0.3';
+        this.componentVersion = '2.0.4';
 
         //method binding
         this.setProperties = this.setProperties.bind(this);

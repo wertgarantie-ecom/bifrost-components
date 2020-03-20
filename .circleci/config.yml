@@ -56,7 +56,7 @@ jobs:
           command: ./node_modules/.bin/lerna publish --yes from-package
       - run:
           name: purge CDN cache for confirmation component
-          command: curl https://purge.jsdelivr.net/npm/package-confirmation@2/dist/confirmation.min.js
+          command: curl https://purge.jsdelivr.net/npm/wertgarantie-confirmation@2/dist/confirmation.min.js
       - run:
           name: purge CDN cache for selection component
           command: curl https://purge.jsdelivr.net/npm/wertgarantie-selection-popup@2/dist/selection-popup.min.js

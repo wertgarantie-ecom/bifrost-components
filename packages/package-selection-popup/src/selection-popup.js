@@ -46,7 +46,6 @@ class WertgarantieSelectionPopUp extends LitElement {
         // method binding
         this.setProperties = this.setProperties.bind(this);
         this.fetchPolicy = this.fetchPolicy.bind(this);
-        this.allDisplayDataAvailable = this.allDisplayDataAvailable.bind(this);
         this.displayComponent = this.displayComponent.bind(this);
         this.createMobileProductSelectionButton = this.createMobileProductSelectionButton.bind(this);
         this.createProductDiv = this.createProductDiv.bind(this);
@@ -54,6 +53,7 @@ class WertgarantieSelectionPopUp extends LitElement {
         this.addProductToShoppingCart = this.addProductToShoppingCart.bind(this);
         this.updateMobileFocusIndex = this.updateMobileFocusIndex.bind(this);
         this.fadeout = this.fadeout.bind(this);
+        this.setDefaults = this.setDefaults.bind(this);
     }
 
     connectedCallback() {
@@ -68,6 +68,14 @@ class WertgarantieSelectionPopUp extends LitElement {
                 this.updateMobileFocusIndex(0);
             }
         });
+        this.setDefaults();
+    }
+
+    setDefaults() {
+        this.showComponent = false;
+        this.showDetails = false;
+        this.selectedProductIndex = -1;
+        this.focusedProductIndex = this.selectedProductIndex;
     }
 
     setProperties(responseData) {
@@ -91,10 +99,6 @@ class WertgarantieSelectionPopUp extends LitElement {
         this.doNotInsureText = responseData.doNotInsureText || "Nicht absichern";
         this.bothIntoShoppingCartText = responseData.bothIntoShoppingCartText || "Beides in den Warenkorb";
         this.products = products;
-        this.showComponent = false;
-        this.showDetails = false;
-        this.selectedProductIndex = -1;
-        this.focusedProductIndex = this.selectedProductIndex;
     }
 
     displayComponent() {

@@ -20,8 +20,13 @@ module.exports = {
             .url("file://" + process.cwd() + "/packages/package-selection-popup/testPages/selectionPopupTest.html")
             .waitForElementVisible('#invalid-fetch-uri-button', 1000)
             .click('#invalid-fetch-uri-button')
-            .pause(2000)
-            .expect.element('#invalid-fetch-uri').not.to.be.present;
+            .pause(2000);
+
+        browser.execute(function selectProduct() {
+            return document.querySelector('#invalid-fetch-uri').showComponent;
+        }, [], function (result) {
+            browser.assert.equal(result.value, false);
+        });
     },
     "Should enable order button when product is clicked": function (browser) {
         browser

@@ -8,16 +8,17 @@
     <title>After Sales Component</title>
 </head>
 <body>
-</div>
 <wertgarantie-after-sales
-        data-client-id="f1eea02c-f9bd-11e9-a37a-b3513bff18fe"
-        data-bifrost-uri="http://localhost:3000/wertgarantie">
-    Bitte warten. Ihre Versicherungsanträge werden angelegt....
+        data-client-id="5209d6ea-1a6e-11ea-9f8d-778f0ad9137f">
 </wertgarantie-after-sales>
 
 <!-- data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie"> -->
 <!-- data-bifrost-uri="http://localhost:3000/wertgarantie"> -->
 
+<script>
+    const WERTGARANTIE_SESSION_ID = 'wertgarantie-session-id';
+    document.cookie = `${WERTGARANTIE_SESSION_ID}="5542c945-aee5-49a1-8c7f-393b7bb3280d";`;
+</script>
 <script src="../../packages/package-after-sales/dist/after-sales.min.js" type="module"></script>
 </body>
 </html>

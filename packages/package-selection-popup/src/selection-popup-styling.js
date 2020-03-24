@@ -176,6 +176,9 @@ export const selectionPopUpStyling = css`
         border-radius: 50%;
         cursor: pointer;
         background-color: rgb(70, 70, 70);
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     .product__selection--visible {
@@ -185,23 +188,14 @@ export const selectionPopUpStyling = css`
         font-size: 15px;
     }
 
-    .product__selection--visible:after {
-        align-self: center;
-        -moz-osx-font-smoothing: grayscale;
-        -webkit-font-smoothing: antialiased;
-        display: inline-block;
-        font-style: normal;
-        font-variant: normal;
-        text-rendering: auto;
-        font-family: "Font Awesome 5 Free", sans-serif;
-        font-weight: 700;
-        content: "\\F00C";
-        padding-top: calc((22px - 15px) / 2);
-        padding-left: calc((22px - 15px) / 2);
-    }
-
     .product__selection--invisible {
         display: none;
+    }
+    
+    .selection__checkmark {
+        padding-top: 2px;
+        width: 15px;
+        height: 15px;
     }
 
     .product__title {
@@ -254,7 +248,7 @@ export const selectionPopUpStyling = css`
     }
     
     .icon__svg--included {
-        fill: var(--wertgarantie-selection-advantage-excluded-text-color, rgb(32, 32, 32));
+        fill: var(--wertgarantie-selection-advantage-included-text-color, rgb(32, 32, 32));
     }
     
     .icon__svg--excluded {

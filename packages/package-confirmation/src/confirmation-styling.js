@@ -35,9 +35,18 @@ export const confirmationStyling = css`
         flex: 1;
         min-width: 50px;
         background-color: rgb(50, 50, 50);
-        color: white;
-        text-align: center;
-        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .icon__svg {
+        width: 50%;
+        height: 50%;
+    }
+
+    .icon__svg--white {
+        fill: white;
     }
 
     .shield::after {
@@ -212,15 +221,10 @@ export const confirmationStyling = css`
         font-size: 0.8em;
         padding-top: 0.7em;
     }
-
-    .advantage__icon::before {
-        -moz-osx-font-smoothing: grayscale;
-        -webkit-font-smoothing: antialiased;
-        display: inline-block;
-        font-family: "Font Awesome 5 Free", sans-serif;
-        font-weight: 700;
-        margin: 0 0.5em 0 -1.5em;
-        content: "\\F00C";
+    
+    .advantage__icon {
+        width: 15px;
+        height: 15px;
     }
 
     .wg-link {

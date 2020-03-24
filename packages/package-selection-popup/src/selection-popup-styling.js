@@ -243,21 +243,22 @@ export const selectionPopUpStyling = css`
     .advantage--excluded {
         color: var(--wertgarantie-selection-advantage-excluded-text-color, rgb(161, 161, 161));
     }
-
-    .advantage__icon::before {
-        -moz-osx-font-smoothing: grayscale;
-        -webkit-font-smoothing: antialiased;
-        display: inline-block;
-        font-style: normal;
-        font-variant: normal;
-        text-rendering: auto;
-        font-family: "Font Awesome 5 Free", sans-serif;
-        font-weight: 700;
-        margin: 0 0.5em 0 -1.5em;
+    
+    .advantage__icon {
+        width: 15px;
+        height: 15px;
     }
-
-    .advantage__icon--included::before {
-        content: "\\F00C";
+    
+    .icon__svg--top3 {
+        fill: var(--wertgarantie-selection-advantage-included-text-color, white);
+    }
+    
+    .icon__svg--included {
+        fill: var(--wertgarantie-selection-advantage-excluded-text-color, rgb(32, 32, 32));
+    }
+    
+    .icon__svg--excluded {
+        fill: var(--wertgarantie-selection-advantage-excluded-text-color, rgb(161, 161, 161));
     }
 
     .advantage__icon--excluded::before {

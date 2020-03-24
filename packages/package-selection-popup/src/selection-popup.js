@@ -99,9 +99,9 @@ class WertgarantieSelectionPopUp extends LitElement {
 
     displayComponent() {
         this.fetchPolicy()
-            .then(this.allDisplayDataAvailable)
             .then(this.setProperties)
             .then(() => this.showComponent = true)
+            .catch(console.error)
     }
 
     async fetchPolicy() {
@@ -115,44 +115,18 @@ class WertgarantieSelectionPopUp extends LitElement {
                 "shopProductName: " + this.shopProductName
             );
         }
-        try {
-            const url = new URL(this.bifrostUri + '/components/selection-popup');
-            const queryParams = {
-                devicePrice: this.devicePrice,
-                deviceClass: this.deviceClass,
-                clientId: this.clientId
-            };
-            Object.keys(queryParams).forEach(key => url.searchParams.append(key, queryParams[key]));
-            const response = await fetchBifrost(url, 'GET', this.componentVersion);
-            if (response.status !== 200) {
-                console.error('fetch failed:', response);
-                return {};
-            }
-            return response.body;
-        } catch (error) {
-            console.error('Error:', error);
-            return {};
+        const url = new URL(this.bifrostUri + '/components/selection-popup');
+        const queryParams = {
+            devicePrice: this.devicePrice,
+            deviceClass: this.deviceClass,
+            clientId: this.clientId
+        };
+        Object.keys(queryParams).forEach(key => url.searchParams.append(key, queryParams[key]));
+        const response = await fetchBifrost(url, 'GET', this.componentVersion);
+        if (response.status !== 200) {
+            throw new Error(`invalid bifrost response: ${response.status}`);
         }
-    }
-
-    allDisplayDataAvailable(displayData) {
-        let isComplete = true;
-        if (Object.entries(displayData).length === 0 && displayData.constructor === Object) {
-            isComplete = false;
-        } else {
-            displayData.products.forEach(data => {
-                if (!(data.name && data.detailsDocText && data.detailsDocUri && data.advantages && data.top3
-                    && data.excludedAdvantages && data.infoSheetUri && data.infoSheetText && data.paymentInterval
-                    && data.price && data.currency && data.priceFormatted && data.tax)) {
-                    isComplete = false;
-                }
-            });
-        }
-        if (!isComplete) {
-            this.remove();
-            throw new Error("display data incomplete");
-        }
-        return displayData;
+        return response.body;
     }
 
     render() {

@@ -164,7 +164,8 @@ export const afterSalesStyling = css`
     }
 
     .next-steps__icon {
-        width: 12%;
+        width: 47px;
+        height: 47px;
     }
     
     .next-steps__icon--color {

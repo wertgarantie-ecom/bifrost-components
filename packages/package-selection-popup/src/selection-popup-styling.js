@@ -163,39 +163,40 @@ export const selectionPopUpStyling = css`
     }
 
     .product__base-info--top-left {
-        width: calc(100% - 22px);
+        width: calc(100% - 25px);
     }
 
     .product__base-info--top-right {
-        width: 22px;
+        width: 25px;
         justify-content: left;
     }
 
     .product__selection {
-        height: 22px;
+        display: inline-block;
         border-radius: 50%;
         cursor: pointer;
         background-color: rgb(70, 70, 70);
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        height: 25px;
+        width: 25px;
     }
 
     .product__selection--visible {
-        display: inline-block;
-        font-weight: 700;
-        color: white;
-        font-size: 15px;
+        height: 25px;
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle;
+        text-decoration: none;
+    }
+
+    .selection__checkmark {
+        display: block;
+        margin: auto;
+        height: 75%;
+        width: 75%;
     }
 
     .product__selection--invisible {
         display: none;
-    }
-    
-    .selection__checkmark {
-        padding-top: 2px;
-        width: 15px;
-        height: 15px;
     }
 
     .product__title {
@@ -237,20 +238,20 @@ export const selectionPopUpStyling = css`
     .advantage--excluded {
         color: var(--wertgarantie-selection-advantage-excluded-text-color, rgb(161, 161, 161));
     }
-    
+
     .advantage__icon {
         width: 15px;
         height: 15px;
     }
-    
+
     .icon__svg--top3 {
         fill: var(--wertgarantie-selection-advantage-included-text-color, white);
     }
-    
+
     .icon__svg--included {
         fill: var(--wertgarantie-selection-advantage-included-text-color, rgb(32, 32, 32));
     }
-    
+
     .icon__svg--excluded {
         fill: var(--wertgarantie-selection-advantage-excluded-text-color, rgb(161, 161, 161));
     }

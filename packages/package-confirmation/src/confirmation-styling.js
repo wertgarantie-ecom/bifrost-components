@@ -49,18 +49,6 @@ export const confirmationStyling = css`
         fill: white;
     }
 
-    .shield::after {
-        -moz-osx-font-smoothing: grayscale;
-        -webkit-font-smoothing: antialiased;
-        display: inline-block;
-        font-style: normal;
-        font-family: "Font Awesome 5 Free", sans-serif;
-        font-weight: 700;
-        font-size: 20px;
-        content: "\\F3ED";
-        padding: 0.7em 0;
-    }
-
     .header__title {
         flex: 12.5;
         text-align: center;

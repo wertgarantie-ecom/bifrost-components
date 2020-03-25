@@ -153,7 +153,9 @@ class WertgarantieConfirmation extends LitElement {
                         <div class="product__title">${product.productTitle}</div>
                         <ul class="product__advantages">
                         ${product.top3.map(advantage => html`
-                            <li class="product__advantage"><span class="advantage__icon">${advantage}</span>
+                            <li class="product__advantage">
+                                <svg class="advantage__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="icon__svg--white" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>
+                                ${advantage}
                             </li>
                            `)}
                         </ul>
@@ -248,11 +250,16 @@ class WertgarantieConfirmation extends LitElement {
         };
         //language=HTML
         return html`
+            <!--
+            Font Awesome Free by @fontawesome - https://fontawesome.com
+            License - https://fontawesome.com/license (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+            -->
             <div class="component" style="display: flex;">
                 <section class="info">
                     <div class="header">
                         <div class="header__icon">
-                            <i class="shield"></i>
+                            <!-- Font Awesome shield icon: -->
+                            <svg class="icon__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="icon__svg--white" d="M466.5 83.7l-192-80a48.15 48.15 0 0 0-36.9 0l-192 80C27.7 91.1 16 108.6 16 128c0 198.5 114.5 335.7 221.5 380.3 11.8 4.9 25.1 4.9 36.9 0C360.1 472.6 496 349.3 496 128c0-19.4-11.7-36.9-29.5-44.3zM256.1 446.3l-.1-381 175.9 73.3c-3.3 151.4-82.1 261.1-175.8 307.7z"/></svg>
                         </div>
                         <div class="header__title">
                             ${this.headerTitle}

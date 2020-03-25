@@ -163,41 +163,36 @@ export const selectionPopUpStyling = css`
     }
 
     .product__base-info--top-left {
-        width: calc(100% - 22px);
+        width: calc(100% - 25px);
     }
 
     .product__base-info--top-right {
-        width: 22px;
+        width: 25px;
         justify-content: left;
     }
 
     .product__selection {
-        height: 22px;
+        display: inline-block;
         border-radius: 50%;
         cursor: pointer;
         background-color: rgb(70, 70, 70);
+        height: 25px;
+        width: 25px;
     }
 
     .product__selection--visible {
-        display: inline-block;
-        font-weight: 700;
-        color: white;
-        font-size: 15px;
+        height: 25px;
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle;
+        text-decoration: none;
     }
 
-    .product__selection--visible:after {
-        align-self: center;
-        -moz-osx-font-smoothing: grayscale;
-        -webkit-font-smoothing: antialiased;
-        display: inline-block;
-        font-style: normal;
-        font-variant: normal;
-        text-rendering: auto;
-        font-family: "Font Awesome 5 Free", sans-serif;
-        font-weight: 700;
-        content: "\\F00C";
-        padding-top: calc((22px - 15px) / 2);
-        padding-left: calc((22px - 15px) / 2);
+    .selection__checkmark {
+        display: block;
+        margin: auto;
+        height: 75%;
+        width: 75%;
     }
 
     .product__selection--invisible {
@@ -244,20 +239,21 @@ export const selectionPopUpStyling = css`
         color: var(--wertgarantie-selection-advantage-excluded-text-color, rgb(161, 161, 161));
     }
 
-    .advantage__icon::before {
-        -moz-osx-font-smoothing: grayscale;
-        -webkit-font-smoothing: antialiased;
-        display: inline-block;
-        font-style: normal;
-        font-variant: normal;
-        text-rendering: auto;
-        font-family: "Font Awesome 5 Free", sans-serif;
-        font-weight: 700;
-        margin: 0 0.5em 0 -1.5em;
+    .advantage__icon {
+        width: 15px;
+        height: 15px;
     }
 
-    .advantage__icon--included::before {
-        content: "\\F00C";
+    .icon__svg--top3 {
+        fill: var(--wertgarantie-selection-advantage-included-text-color, white);
+    }
+
+    .icon__svg--included {
+        fill: var(--wertgarantie-selection-advantage-included-text-color, rgb(32, 32, 32));
+    }
+
+    .icon__svg--excluded {
+        fill: var(--wertgarantie-selection-advantage-excluded-text-color, rgb(161, 161, 161));
     }
 
     .advantage__icon--excluded::before {

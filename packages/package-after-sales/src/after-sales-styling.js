@@ -19,13 +19,20 @@ export const afterSalesStyling = css`
     }
 
     .header__icon {
-        min-width: 65px;
-        font-size: 1.2em;
-        color: white;
+        width: 65px;
         background-color: #13CC52;
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+    
+    .icon__svg {
+        width: 50%;
+        height: 50%;
+    }
+    
+    .icon__svg--white {
+        fill: white;
     }
 
     .header__title {
@@ -145,9 +152,24 @@ export const afterSalesStyling = css`
 
     .box__icons__arrow {
         font-size: 0.7em;
+        width: 20%;
         display: flex;
         justify-content: center;
         align-items: center;
+    }
+    
+    .next-steps__arrow {
+        width: 50%;
+        height: 50%;
+    }
+
+    .next-steps__icon {
+        width: 47px;
+        height: 47px;
+    }
+    
+    .next-steps__icon--color {
+        fill: black;
     }
 
 `;

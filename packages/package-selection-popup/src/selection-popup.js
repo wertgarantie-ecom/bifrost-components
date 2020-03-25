@@ -166,10 +166,7 @@ class WertgarantieSelectionPopUp extends LitElement {
                                 </wertgarantie-rating>
                             </div>
                             <div class="head__right">
-                                <span @click="${() => {
-                                    this.fadeout();
-                                    this.showComponent = false;
-                                }}" class="closeBtn" id="closeBtn">×</span>
+                                <span @click="${() => this.fadeout()}" class="closeBtn" id="closeBtn">×</span>
                             </div>
                         </div>
                         <p class="head__subtitle">${this.headSubTitle}</p>
@@ -272,43 +269,57 @@ class WertgarantieSelectionPopUp extends LitElement {
                             </div>
                         </div>
                         <div class="product__base-info--bottom">
-                            <h3 class="product__title">${product.name}</h3>
-                            <ul class="product__advantages product__advantages--top3">
+                            <div class="product__title">${product.name}</div>
+                            <div class="product__advantages">
                                 ${product.top3.map((topAdvantage) => html`
-                                    <li class="advantage advantage--included">
-                                        <!-- Font Awesome check icon-->
-                                        <svg class="advantage__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="icon__svg--top3" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>
-                                        ${topAdvantage}
-                                    </li>`)}
-                            </ul>
+                                    <div class="advantage advantage--included">
+                                        <div class="advantage__icon-container">
+                                            <!-- Font Awesome check icon-->
+                                            <svg class="advantage__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="icon__svg--top3" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>
+                                        </div>
+                                        <div class="advantage__text-container">
+                                            ${topAdvantage}
+                                        </div>
+                                    </div>`
+                                )}
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class=${classMap(productDetailsClassList)}>
-                    <h3>${this.detailsHeader}</h3>
-                    <ul class="product__advantages product__advantages--details">
+                    <div class="details__title">${this.detailsHeader}</div>
+                    ${product.excludedAdvantages.length > 0 ? html`
+                        <div class="product__advantages">
                         ${product.excludedAdvantages.map(advantage => html`
-                            <li class="advantage advantage--excluded">
+                            <div class="advantage advantage--excluded">
                                 <!-- Font Awesome ban icon-->
-                                <svg class="advantage__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="icon__svg--excluded" d="M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z"/></svg>
-                                ${advantage}
-                            </li>`
-                        )}
-                    </ul>   
-                    <ul class="product__advantages product__advantages--details">
+                                <div class="advantage__icon-container">
+                                    <svg class="advantage__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="icon__svg--excluded" d="M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z"/></svg>
+                                </div>        
+                                <div class="advantage__text-container">                        
+                                    ${advantage}
+                                </div>
+                            </div>`)}
+                        </div>
+                    ` : ``}
+                    <div class="product__advantages product__advantages--details">
                         ${product.advantages.map((advantage) => html`
-                            <li class="advantage advantage--included">
+                            <div class="advantage advantage--included">
                                 <!-- Font Awesome check icon-->
-                                <svg class="advantage__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="icon__svg--included" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>
-                                ${advantage}
-                            </li>`)}
-                    </ul>
+                                <div class="advantage__icon-container">
+                                    <svg class="advantage__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="icon__svg--included" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>
+                                </div>
+                                <div class="advantage__text-container">
+                                    ${advantage}
+                                </div>
+                            </div>`)}
+                    </div>
                     <div class="product__terms">
                         <div>
                             <p><strong>${this.termsAndConditions}</strong></p>
-                            <a class="wg-link wg-infosheet-link wg-product-info-sheet"
+                            <a target="_blank" class="wg-link wg-infosheet-link wg-product-info-sheet"
                                href="${product.detailsDocUri}">${product.detailsDocText}</a><br>
-                            <a class="wg-link wg-infosheet-link wg-avb"
+                            <a target="_blank" class="wg-link wg-infosheet-link wg-avb"
                                href="${product.infoSheetUri}">${product.infoSheetText}</a>
                         </div>
                         <div class="product-further-info">

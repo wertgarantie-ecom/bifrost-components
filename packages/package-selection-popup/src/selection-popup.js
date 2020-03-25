@@ -59,6 +59,8 @@ class WertgarantieSelectionPopUp extends LitElement {
     connectedCallback() {
         super.connectedCallback();
         this.devicePrice = this.getAttribute("data-device-price");
+        const quantity = this.getAttribute("data-quantity");
+        this.quantity = quantity ? parseInt(quantity) : 1;
         this.deviceClass = this.getAttribute("data-device-class");
         this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie";
         this.clientId = this.getAttribute("data-client-id");
@@ -102,10 +104,14 @@ class WertgarantieSelectionPopUp extends LitElement {
     }
 
     displayComponent() {
+        if (this.quantity !== 1) {
+            this.showComponent = false;
+            return;
+        }
         this.fetchPolicy()
             .then(this.setProperties)
             .then(() => this.showComponent = true)
-            .catch(console.error)
+            .catch(console.error);
     }
 
     async fetchPolicy() {

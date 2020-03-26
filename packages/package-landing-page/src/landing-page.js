@@ -1,13 +1,28 @@
 import {LitElement, html} from "lit-element";
 import fetchBifrost from "../../../shared-code/fetchBifrost";
 import {unsafeHTML} from "lit-html/directives/unsafe-html";
+import {landingPageStylingGeneral} from "./landing-page-styling-general";
+import {landingPageStylingHead} from "./landing-page-styling-head";
+import {landingPageStylingBody} from "./landing-page-styling-body";
 
 class LandingPage extends LitElement{
+
+    static get styles() {
+        return [
+            landingPageStylingGeneral,
+            landingPageStylingHead,
+            landingPageStylingBody
+        ];
+    }
 
     static get properties() {
         return {
             showComponent: {type: Boolean},
-            tariffCalculatorHtml: {type: String}
+            tariffCalculatorHtml: {type: String},
+            whyInsurance: {type: Object},
+            insuranceForDevices: {type: Object},
+            safeIsSafe: {type: Object},
+            findYourTariff: {type: Object}
         };
     }
 
@@ -45,11 +60,94 @@ class LandingPage extends LitElement{
 
     setProperties(landingPageData) {
         this.tariffCalculatorHtml = landingPageData.tariffCalculatorHtml;
+        this.whyInsurance = landingPageData.textSections.whyInsurance;
+        this.insuranceForDevices = landingPageData.textSections.insuranceForDevices;
+        this.safeIsSafe = landingPageData.textSections.safeIsSafe;
+        this.findYourTariff = landingPageData.textSections.findYourTariff;
     }
 
     render() {
         return this.showComponent ? html`
-                ${unsafeHTML(this.tariffCalculatorHtml)}
+            <div class="landing-page">
+                <div class="landing-page__head">
+                    <div class="head">
+                        <div class="title-section">
+                            <div class="head__title head__item">
+                                LOREM IPSUM DOLOR SIT AMET
+                            </div>
+                            <div class="head__title--edge"></div>
+                        </div>
+                        <div class="head__subtitle head__item">
+                            Consetetur sadipscing elitr, sed diam nonumy
+                        </div>
+                        <div class="head__bottom head__item">
+                            <div class="secure-button">
+                                <button class="insurance-application-button">
+                                    Jetzt absichern
+                                </button>
+                            </div>
+                            <div class="google-rating">
+                                <wertgarantie-rating class="default-google-rating"
+                                                     data-disable-rating-number="true"
+                                                     data-link-text="Google Rezensionen">
+                                </wertgarantie-rating>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bottom">
+                        <div class="head__images">
+                            <img id="tuev-image" src="https://www.wertgarantie.de/portaldata/4/resources/Icons/tuev-logo.png" alt="">
+                            <img id="focus-money-image" src="https://www.wertgarantie.at/assets/pictures/badges/1914_FoMo_ElVers_ges_B.jpg" alt="">
+                            <img id="test-bild-image" src="https://www.wertgarantie.de/Portaldata/4/Resources/logos/test-bild-wertgarantie-109-01.png" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="landing-page_body body">
+                    <div class="body__section body__section--no-picture">
+                        <div class="section__header">
+                            ${this.whyInsurance.title}
+                        </div>
+                        <div class="section__text">
+                            ${this.whyInsurance.text}
+                        </div>
+                    </div>
+                    <div class="body__section body__section--with-picture">
+                        <div class="section__content">
+                            <div class="section__header section__header--split">
+                                ${this.insuranceForDevices.title}
+                            </div>
+                            <div class="section__text">
+                                ${this.insuranceForDevices.text}
+                            </div>
+                        </div>
+                        <div class="section__image" style="--image-link=${this.insuranceForDevices.imageLink}">
+                        
+                        </div>
+                    </div>
+                    <div class="body__section body__section--with-picture">
+                        <div class="section__image" style="--image-link=${this.safeIsSafe.imageLink}">
+                            
+                        </div>
+                        <div class="section__content">
+                            <div class="section__header section__header--split">
+                                ${this.safeIsSafe.title}
+                            </div>
+                            <div class="section__text">
+                                ${this.safeIsSafe.text}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="body__section body__section--no-picture">
+                        <div class="section__header">
+                            ${this.findYourTariff.title}
+                        </div>
+                        <div class="section__text">
+                            ${this.findYourTariff.text}
+                        </div>
+                    </div>
+                </div>
+            </div>
+                 
         ` : html``;
     }
 }

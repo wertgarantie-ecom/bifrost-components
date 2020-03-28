@@ -4,12 +4,12 @@ import {css} from "lit-element";
 export const landingPageStylingHead = css`
     .landing-page__head {
         width: 100%;
-        background-image: linear-gradient(to right, rgb(190, 190, 190), rgb(230, 230, 230), rgb(190, 190, 190));
+        background-image: var(--wertgarantie-landing-page-head-background-image, linear-gradient(to right, rgb(190, 190, 190), rgb(230, 230, 230), rgb(190, 190, 190)));
         border-radius: 3px;
     }
 
     .head {
-        padding-top: 100px;
+        padding-top: 125px;
         display: flex;
         flex-flow: column;
         align-items: flex-start;
@@ -29,11 +29,12 @@ export const landingPageStylingHead = css`
 
     .head__title {
         text-transform: uppercase;
-        color: white;
+        color: var(--wertgarantie-landing-page-head-banner-title-color, white);
         padding: 0.7em;
-        font-weight: 500;
-        font-size: 1.3em;
-        background-color: #141414;
+        font-weight: var(--wertgarantie-landing-page-head-banner-title-font-weight, 600);
+        font-size: var(--wertgarantie-landing-page-head-banner-title-font-size, 1.5em);
+        line-height: var(--wertgarantie-landing-page-head-banner-title-font-size, 1.5em);
+        background-color: var(--wertgarantie-landing-page-primary-color, #141414);
         letter-spacing: 1px;
 
     }
@@ -42,14 +43,14 @@ export const landingPageStylingHead = css`
         width: 0;
         height: 0;
         border-style: solid;
-        border-width: 3.5em 0 0 1.5em;
-        border-color: transparent transparent transparent #141414;
+        border-width: calc(var(--wertgarantie-landing-page-head-banner-title-font-weight, 1.5em) * 2.9) 0 0 1.5em;
+        border-color: transparent transparent transparent var(--wertgarantie-landing-page-primary-color, #141414);
     }
 
     .head__subtitle {
-        color: #353535;
-        font-size: 1.1em;
-        font-weight: 600;
+        color: var(--wertgarantie-landing-page-head-banner-subtitle-color, #353535);
+        font-size: var(--wertgarantie-landing-page-head-banner-subtitle-font-size, 1.1em);
+        font-weight: var(--wertgarantie-landing-page-head-banner-subtitle-font-weight, 600);
         margin: 1em 0;
     }
 
@@ -60,16 +61,17 @@ export const landingPageStylingHead = css`
     }
 
     .insurance-application-button {
-        background-image: linear-gradient(to right, #a82845, rgb(217, 54, 130));
+        background-image: var(--wertgarantie-landing-page-head-insurance-application-button-background-image, linear-gradient(to right, #a82845, rgb(224, 57, 94)));
         text-transform: uppercase;
         padding: 1.2em 2em;
-        color: white;
-        font-weight: 600;
-        font-size: 0.8em;
+        color: var(--wertgarantie-landing-page-head-banner-title-color, white);
+        font-weight: var(--wertgarantie-landing-page-head-insurance-application-button-font-weight, 600);
+        font-size: var(--wertgarantie-landing-page-head-insurance-application-button-font-size, 0.8em);
         letter-spacing: 0.03em;
+        font-family: var(--wertgarantie-landing-page-font-family, "Helvetica", Arial, sans-serif);
     }
 
-    .google-rating {
+    .google-rating-container {
         display: flex;
         align-items: center;
         padding: 0 1em;
@@ -101,11 +103,10 @@ export const landingPageStylingHead = css`
     }
 
     .default-google-rating {
-        --wertgarantie-rating-font-size: 0.7em;
-        --wertgarantie-rating-text-color: black;
-        --wertgarantie-rating-font-weight: 800;
-
-        --wertgarantie-rating-stars-font-size: 1.2em;
-        --wertgarantie-rating-stars-color: #ffbe42;
+        --wertgarantie-rating-font-size: var(--wertgarantie-landing-page-google-rating-text-font-size, 0.7em);
+        --wertgarantie-rating-text-color: var(--wertgarantie-landing-page-google-rating-text-color, black);
+        --wertgarantie-rating-font-weight: var(--wertgarantie-landing-page-google-rating-text-font-weight, 800);
+        --wertgarantie-rating-stars-font-size: var(--wertgarantie-landing-page-google-rating-star-font-size) 1.2em;
+        --wertgarantie-rating-stars-color: var(--wertgarantie-landing-page-google-rating-star-color, #ffa819);
     }
 `;

@@ -1,9 +1,11 @@
 import {LitElement, html} from "lit-element";
 import fetchBifrost from "../../../shared-code/fetchBifrost";
 import {unsafeHTML} from "lit-html/directives/unsafe-html";
+import '../../package-rating/dist/rating.min.js';
 import {landingPageStylingGeneral} from "./landing-page-styling-general";
 import {landingPageStylingHead} from "./landing-page-styling-head";
 import {landingPageStylingBody} from "./landing-page-styling-body";
+import {landingPageStylingTariffCalculator} from "./landing-page-styling-tariff-calculator";
 
 class LandingPage extends LitElement{
 
@@ -11,7 +13,8 @@ class LandingPage extends LitElement{
         return [
             landingPageStylingGeneral,
             landingPageStylingHead,
-            landingPageStylingBody
+            landingPageStylingBody,
+            landingPageStylingTariffCalculator
         ];
     }
 
@@ -73,20 +76,22 @@ class LandingPage extends LitElement{
                     <div class="head">
                         <div class="title-section">
                             <div class="head__title head__item">
-                                LOREM IPSUM DOLOR SIT AMET
+                                Wertgarantie Komplettschutz
                             </div>
                             <div class="head__title--edge"></div>
                         </div>
                         <div class="head__subtitle head__item">
-                            Consetetur sadipscing elitr, sed diam nonumy
+                            Der leistungsstarke Schutz für Ihre Geräte
                         </div>
                         <div class="head__bottom head__item">
                             <div class="secure-button">
-                                <button class="insurance-application-button">
-                                    Jetzt absichern
-                                </button>
+                                <a target="_blank" href="https://www.wertgarantie.de/Home/Landingpage/Banner.aspx?partner=1755805&sortiment=1">
+                                    <button class="insurance-application-button">
+                                        Jetzt absichern
+                                    </button>
+                                </a>
                             </div>
-                            <div class="google-rating">
+                            <div class="google-rating-container">
                                 <wertgarantie-rating class="default-google-rating"
                                                      data-disable-rating-number="true"
                                                      data-link-text="Google Rezensionen">
@@ -112,7 +117,7 @@ class LandingPage extends LitElement{
                         </div>
                     </div>
                     <div class="body__section body__section--with-picture">
-                        <div class="section__content">
+                        <div class="section__content section__content--split">
                             <div class="section__header section__header--split">
                                 ${this.insuranceForDevices.title}
                             </div>
@@ -128,7 +133,7 @@ class LandingPage extends LitElement{
                         <div class="section__image" style="--image-link=${this.safeIsSafe.imageLink}">
                             
                         </div>
-                        <div class="section__content">
+                        <div class="section__content section__content--split">
                             <div class="section__header section__header--split">
                                 ${this.safeIsSafe.title}
                             </div>
@@ -145,9 +150,12 @@ class LandingPage extends LitElement{
                             ${this.findYourTariff.text}
                         </div>
                     </div>
+                    <div class="body__section body__section--no-picture">
+                        ${unsafeHTML(this.tariffCalculatorHtml)}
+                    </div>
                 </div>
             </div>
-                 
+            <script src="https://wwwapi.serviceeu.com/rt/js/jq-hidden.min.js" type="text/javascript"></script>
         ` : html``;
     }
 }

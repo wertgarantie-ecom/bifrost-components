@@ -21,12 +21,13 @@ export const landingPageStylingBody = css `
         font-size: 1.3em;
         font-weight: 600;
         text-transform: uppercase;
+        color: var(--wertgarantie-landing-page-body-title-color, black);
     }
     
     .section__text {
-        color: #575757;
         font-size: 1em;
-        line-height: 1.3em;
+        line-height: 1.6em;
+        color: var(--wertgarantie-landing-page-body-text-color, #636363);
     }
 
     .section__content {
@@ -35,8 +36,12 @@ export const landingPageStylingBody = css `
         flex-flow: column;
     }
     
+    .section__content--split {
+        padding: 1em 0;
+    }
+    
     .section__image {
-        width: 45%;
-        background-color: #1a1a1a;
+        width: 48%;
+        background-image: linear-gradient(44.14deg, var(--wertgarantie-landing-page-primary-color, #141414) 0%, var(--wertgarantie-landing-page-primary-color, #141414) 100%);
     }
 `;

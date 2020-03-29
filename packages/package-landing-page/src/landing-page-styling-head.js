@@ -25,6 +25,7 @@ export const landingPageStylingHead = css`
 
     .title-section {
         display: flex;
+        height: 70px;
     }
 
     .head__title {
@@ -33,7 +34,7 @@ export const landingPageStylingHead = css`
         padding: 0.7em;
         font-weight: var(--wertgarantie-landing-page-head-banner-title-font-weight, 600);
         font-size: var(--wertgarantie-landing-page-head-banner-title-font-size, 1.5em);
-        line-height: var(--wertgarantie-landing-page-head-banner-title-font-size, 1.5em);
+        /*line-height: var(--wertgarantie-landing-page-head-banner-title-font-size, 1.5em);*/
         background-color: var(--wertgarantie-landing-page-primary-color, #141414);
         letter-spacing: 1px;
 
@@ -43,7 +44,7 @@ export const landingPageStylingHead = css`
         width: 0;
         height: 0;
         border-style: solid;
-        border-width: calc(var(--wertgarantie-landing-page-head-banner-title-font-weight, 1.5em) * 2.9) 0 0 1.5em;
+        border-width: 70px 0 0 1.5em;
         border-color: transparent transparent transparent var(--wertgarantie-landing-page-primary-color, #141414);
     }
 
@@ -69,6 +70,7 @@ export const landingPageStylingHead = css`
         font-size: var(--wertgarantie-landing-page-head-insurance-application-button-font-size, 0.8em);
         letter-spacing: 0.03em;
         font-family: var(--wertgarantie-landing-page-font-family, "Helvetica", Arial, sans-serif);
+        cursor: pointer;
     }
 
     .google-rating-container {

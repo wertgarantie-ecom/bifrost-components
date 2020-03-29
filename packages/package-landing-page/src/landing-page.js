@@ -43,7 +43,7 @@ class LandingPage extends LitElement{
         this.componentVersion = '0.0.1';
 
         this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie";
-        this.clientId = this.getAttribute('data-client-id');
+        this.partnerNumber = this.getAttribute('data-partner-number');
         this.showComponent = false;
         this.displayComponent();
     }
@@ -56,7 +56,7 @@ class LandingPage extends LitElement{
     }
 
     async fetchLandingPageData() {
-        const url = this.bifrostUri + '/components/landing-page/' + this.clientId;
+        const url = this.bifrostUri + '/components/landing-page/';
         const result = await fetchBifrost(url, 'GET', this.componentVersion);
         return result.body;
     }
@@ -85,7 +85,7 @@ class LandingPage extends LitElement{
                         </div>
                         <div class="head__bottom head__item">
                             <div class="secure-button">
-                                <a target="_blank" href="https://www.wertgarantie.de/Home/Landingpage/Banner.aspx?partner=1755805&sortiment=1">
+                                <a target="_blank" href=${"https://www.wertgarantie.de/Home/Landingpage/Banner.aspx?partner=" + this.partnerNumber + "&sortiment=1"}>
                                     <button class="insurance-application-button">
                                         Jetzt absichern
                                     </button>

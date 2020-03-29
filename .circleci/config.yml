@@ -66,9 +66,9 @@ jobs:
       - run:
           name: purge CDN cache for after sales component
           command: curl https://purge.jsdelivr.net/npm/wertgarantie-after-sales@1/dist/after-sales.min.js
-      - run:
-          name: purge CDN cache for landing page component
-          command: curl https://purge.jsdelivr.net/npm/wertgarantie-landing-page@0/dist/landing-page.min.js
+#      - run:
+#          name: purge CDN cache for landing page component
+#          command: curl https://purge.jsdelivr.net/npm/wertgarantie-landing-page@0/dist/landing-page.min.js
 
 workflows:
   version: 2

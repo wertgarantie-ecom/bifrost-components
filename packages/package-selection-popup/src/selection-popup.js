@@ -147,6 +147,11 @@ class WertgarantieSelectionPopUp extends LitElement {
             "order-button--inactive": this.selectedProductIndex === -1
         };
 
+        const productDetailsFooterClassList = {
+            "product__details-footer": true,
+            "product__details-footer--expanded": this.showDetails
+        };
+
         return (this.showComponent) ?
             //language=HTML
             html`
@@ -176,7 +181,7 @@ class WertgarantieSelectionPopUp extends LitElement {
                         <section class="checkouts" id="products">
                             ${this.products.map(this.createProductDiv)}
                         </section>
-                        <section class="product__details-footer">
+                        <section class=${classMap(productDetailsFooterClassList)}>
                             <div>
                                 <p>${this.footerHtml}</p>
                             </div>

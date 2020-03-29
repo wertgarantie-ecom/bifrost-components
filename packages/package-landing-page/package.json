@@ -1,10 +1,10 @@
 {
-  "name": "wertgarantie-confirmation",
-  "version": "2.0.6",
-  "description": "Confirmation component for Wertgarantie e-commerce push",
+  "name": "wertgarantie-landing-page",
+  "version": "0.0.1",
+  "description": "Landing Page component for Wertgarantie e-commerce push",
   "main": "index.js",
   "scripts": {
-    "version": "sed -i \"\" -E \"s/(this.componentVersion = \\')(.*)(\\';)/\\1$(node -p 'require(\"./package.json\").version')\\3/\" ./src/confirmation.js && git add ./src/confirmation.js",
+    "version": "sed -i \"\" -E \"s/(this.componentVersion = \\')(.*)(\\';)/\\1$(node -p 'require(\"./package.json\").version')\\3/\" ./src/landing-page.js && git add ./src/landing-page.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "faucet --compact",
     "fingerprint": "faucet --fingerprint",
@@ -17,7 +17,7 @@
   },
   "keywords": [
     "wertgarantie",
-    "confirmation",
+    "landing-page",
     "webcomponent",
     "e-commerce"
   ],
@@ -26,5 +26,8 @@
   "bugs": {
     "url": "https://github.com/wertgarantie-ecom/bifrost-components/issues"
   },
-  "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme"
+  "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme",
+  "dependencies": {
+    "wertgarantie-rating": "^2.0.2"
+  }
 }

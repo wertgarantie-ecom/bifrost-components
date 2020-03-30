@@ -155,7 +155,6 @@ class LandingPage extends LitElement{
                     </div>
                 </div>
             </div>
-            <script src="https://wwwapi.serviceeu.com/rt/js/jq-hidden.min.js" type="text/javascript"></script>
         ` : html``;
     }
 }

@@ -9,17 +9,15 @@
 </head>
 <body>
     <form action="" method="get" id="checkout-form">
-        <input type="hidden" id="wertgarantie-cookie-input">
         <wertgarantie-confirmation
-            data-client-id="f1eea02c-f9bd-11e9-a37a-b3513bff18fe"
-            data-hidden-input-selector="#wertgarantie-cookie-input"
+            data-client-id="5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
+            data-bifrost-uri="http://localhost:3000/wertgarantie"
             data-form-selector="#checkout-form">
         </wertgarantie-confirmation>
         <input type="submit" class="checkoutBtn" value="Checkout"/>
     </form>
     <!-- data-bifrost-uri="https://wertgarantie-bifrost.herokuapp.com/wertgarantie"> -->
-    <!-- data-bifrost-uri="http://localhost:3000/wertgarantie"> -->
 
-    <script src="../../packages/package-confirmation/src/confirmation.js"></script>
+    <script src="../../packages/package-confirmation/dist/confirmation.min.js"></script>
 </body>
 </html>

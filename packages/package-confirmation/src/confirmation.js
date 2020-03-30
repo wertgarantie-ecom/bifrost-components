@@ -1,5 +1,7 @@
 import {LitElement, html} from 'lit-element';
 import {confirmationStyling} from './confirmation-styling';
+import {confirmationStylingTabs} from "./confirmation-styling-tabs";
+import {confirmationStylingAdvantages} from "./confirmation-styling-advantages";
 import fetchBifrost from "../../../shared-code/fetchBifrost";
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from "lit-html/directives/style-map";
@@ -28,7 +30,11 @@ class WertgarantieConfirmation extends LitElement {
     }
 
     static get styles() {
-        return confirmationStyling;
+        return [
+            confirmationStyling,
+            confirmationStylingTabs,
+            confirmationStylingAdvantages
+        ];
     }
 
     constructor() {
@@ -150,18 +156,25 @@ class WertgarantieConfirmation extends LitElement {
                         <span class="product-tax product__price-info--small">${product.includedTax}</span>
                     </div>
                     <div>
-                        <div class="product__title">${product.productTitle}</div>
-                        <ul class="product__advantages">
+                        <div class="product__title">
+                            ${product.productTitle}
+                        </div>
+                        <div class="product__advantages">
                         ${product.top3.map(advantage => html`
-                            <li class="product__advantage">
-                                <svg class="advantage__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="icon__svg--white" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>
-                                ${advantage}
-                            </li>
+                            <div class="product__advantage">
+                                <div class="advantage__icon-container">
+                                    <!-- font awesome check icon -->
+                                    <svg class="advantage__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="icon__svg--white" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>
+                                </div>
+                                <div class="advantage__text-container">
+                                    ${advantage}
+                                </div>
+                            </div>
                            `)}
-                        </ul>
-                    </div>
-                    <div>
-                        <small class="product-link"><a class="wg-link" href="http://www.example.com">${product.informationSheetUri}</a></small><br>
+                        </div>
+                        <div class="product-link">
+                            <a class="wg-link" href="${product.productInformationSheetUri}http://www.example.com">${product.productInformationSheetText}</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -254,7 +267,7 @@ class WertgarantieConfirmation extends LitElement {
             Font Awesome Free by @fontawesome - https://fontawesome.com
             License - https://fontawesome.com/license (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
             -->
-            <div class="component" style="display: flex;">
+            <div class="component">
                 <section class="info">
                     <div class="header">
                         <div class="header__icon">

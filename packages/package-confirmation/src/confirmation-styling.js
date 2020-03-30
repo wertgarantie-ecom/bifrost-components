@@ -8,7 +8,7 @@ export const confirmationStyling = css`
 
     .component {
         max-width: 1100px;
-        display: none;
+        display: flex;
         background-color: white;
     }
 
@@ -59,53 +59,6 @@ export const confirmationStyling = css`
         padding: 1.7em 1em;
     }
 
-    .product__tabs {
-        padding-top: 1em;
-        padding-left: 50px;
-        display: flex;
-        flex-wrap: wrap;
-    }
-
-    .tab {
-        cursor: pointer;
-        border: 1px solid rgb(230, 230, 230);
-        width: 20%;
-        min-width: 150px;
-        margin-right: 1.5em;
-        margin-bottom: 1em;
-        font-weight: 700;
-        display: flex;
-        justify-content: space-between;
-        vertical-align: middle;
-    }
-
-    .tab__name {
-        width: 85%;
-        font-size: 0.8em;
-        padding: 0.8em 0.8em;
-    }
-
-    .tab__remove {
-        cursor: pointer;
-        width: 15%;
-        font-size: 1.5em;
-        text-align: center;
-        padding: 0.5em 0.3em;
-    }
-
-    .tab:hover {
-        background-color: rgb(230, 230, 230);
-    }
-
-    .tab--selected {
-        background-color: rgb(230, 230, 230);
-    }
-
-    .remove-product {
-        cursor: pointer;
-        font-size: 1em;
-    }
-
     .confirmation__header {
         padding-top: 1.5em;
         padding-left: 50px;
@@ -117,13 +70,11 @@ export const confirmationStyling = css`
     .confirmation__row {
         padding-top: 1em;
         display: flex;
-
     }
 
     .confirmation__checkbox-column {
         min-width: 40px;
         padding-left: 10px;
-
     }
 
     .checkbox__container {
@@ -132,7 +83,6 @@ export const confirmationStyling = css`
         display: flex;
         justify-content: center;
     }
-
 
     .confirmation--unchecked {
         border: 2px solid red;
@@ -160,10 +110,11 @@ export const confirmationStyling = css`
         justify-content: space-between;
         padding: 1em;
         color: white;
+        height: calc(100% - 2em);
     }
 
     .product--selected {
-        display: block;
+        display: flex;
     }
 
     .product--even {
@@ -195,24 +146,9 @@ export const confirmationStyling = css`
     }
 
     .product__title {
-        padding-top: 6em;
         text-transform: uppercase;
         font-weight: 800;
-    }
-
-    .product__advantages {
-        list-style-type: none;
-        padding-inline-start: 1.5em;
-    }
-
-    .product__advantage {
-        font-size: 0.8em;
-        padding-top: 0.7em;
-    }
-    
-    .advantage__icon {
-        width: 15px;
-        height: 15px;
+        padding: 2em 0;
     }
 
     .wg-link {
@@ -221,7 +157,10 @@ export const confirmationStyling = css`
     }
 
     .product-link {
-        font-size: 0.65em;
+        display: flex;
+        padding-top: 2em;
+        padding-bottom: 0.5em;
+        font-size: 0.8em;
     }
 
     @media only screen and (max-width: 768px) {

@@ -4,7 +4,11 @@ import {css} from "lit-element";
 export const landingPageStylingHead = css`
     .landing-page__head {
         width: 100%;
-        background-image: var(--wertgarantie-landing-page-head-background-image, linear-gradient(to right, rgb(190, 190, 190), rgb(230, 230, 230), rgb(190, 190, 190)));
+        --image-link: var(--wertgarantie-landing-page-head-background-image, linear-gradient(to right, rgb(190, 190, 190), rgb(230, 230, 230), rgb(190, 190, 190)));
+        background-image: var(--wertgarantie-landing-page-head-background-image, linear-gradient(to right, rgba(190, 190, 190, 0.5), rgba(230, 230, 230, 0.5), rgba(190, 190, 190, 0.5))),
+            var(--image-link);
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
         border-radius: 3px;
     }
 
@@ -37,6 +41,8 @@ export const landingPageStylingHead = css`
         /*line-height: var(--wertgarantie-landing-page-head-banner-title-font-size, 1.5em);*/
         background-color: var(--wertgarantie-landing-page-primary-color, #141414);
         letter-spacing: 1px;
+        display: flex;
+        align-items: center;
 
     }
 

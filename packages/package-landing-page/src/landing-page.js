@@ -5,7 +5,7 @@ import '../../package-rating/dist/rating.min.js';
 import {landingPageStylingGeneral} from "./landing-page-styling-general";
 import {landingPageStylingHead} from "./landing-page-styling-head";
 import {landingPageStylingBody} from "./landing-page-styling-body";
-import {landingPageStylingTariffCalculator} from "./landing-page-styling-tariff-calculator";
+// import {landingPageStylingTariffCalculator} from "./landing-page-styling-tariff-calculator";
 
 class LandingPage extends LitElement{
 
@@ -13,8 +13,7 @@ class LandingPage extends LitElement{
         return [
             landingPageStylingGeneral,
             landingPageStylingHead,
-            landingPageStylingBody,
-            landingPageStylingTariffCalculator
+            landingPageStylingBody
         ];
     }
 
@@ -22,10 +21,12 @@ class LandingPage extends LitElement{
         return {
             showComponent: {type: Boolean},
             tariffCalculatorHtml: {type: String},
+            headImageLink: {type: String},
             whyInsurance: {type: Object},
             insuranceForDevices: {type: Object},
             safeIsSafe: {type: Object},
-            findYourTariff: {type: Object}
+            findYourTariff: {type: Object},
+            bottom: {type: Object}
         };
     }
 
@@ -63,16 +64,19 @@ class LandingPage extends LitElement{
 
     setProperties(landingPageData) {
         this.tariffCalculatorHtml = landingPageData.tariffCalculatorHtml;
+        this.headImageLink = landingPageData.headImageLink;
         this.whyInsurance = landingPageData.textSections.whyInsurance;
         this.insuranceForDevices = landingPageData.textSections.insuranceForDevices;
         this.safeIsSafe = landingPageData.textSections.safeIsSafe;
         this.findYourTariff = landingPageData.textSections.findYourTariff;
+        this.bottom = landingPageData.textSections.bottom;
     }
 
     render() {
+        // language=HTML
         return this.showComponent ? html`
             <div class="landing-page">
-                <div class="landing-page__head">
+                <div class="landing-page__head" style="--image-link: url(${this.headImageLink});">
                     <div class="head">
                         <div class="title-section">
                             <div class="head__title head__item">
@@ -125,12 +129,12 @@ class LandingPage extends LitElement{
                                 ${this.insuranceForDevices.text}
                             </div>
                         </div>
-                        <div class="section__image" style="--image-link=${this.insuranceForDevices.imageLink}">
+                        <div class="section__image" style="--image-link: url(${this.insuranceForDevices.imageLink});">
                         
                         </div>
                     </div>
                     <div class="body__section body__section--with-picture">
-                        <div class="section__image" style="--image-link=${this.safeIsSafe.imageLink}">
+                        <div class="section__image" style="--image-link: url(${this.safeIsSafe.imageLink});">
                             
                         </div>
                         <div class="section__content section__content--split">
@@ -142,16 +146,16 @@ class LandingPage extends LitElement{
                             </div>
                         </div>
                     </div>
-                    <div class="body__section body__section--no-picture">
-                        <div class="section__header">
-                            ${this.findYourTariff.title}
+                    <div class="body__section body__section--with-picture body__section--small-picture-right">
+                        <div class="section__content section__content--split section__content--split-broad">
+                            <div class="section__header section__header--split">
+                                ${this.bottom.title}
+                            </div>
+                            <div class="section__text">
+                                ${this.bottom.text}
+                            </div>
                         </div>
-                        <div class="section__text">
-                            ${this.findYourTariff.text}
-                        </div>
-                    </div>
-                    <div class="body__section body__section--no-picture">
-                        ${unsafeHTML(this.tariffCalculatorHtml)}
+                        <div class="section__image section__image--small" style="--image-link: url(${this.bottom.imageLink});">
                     </div>
                 </div>
             </div>

@@ -40,8 +40,19 @@ export const landingPageStylingBody = css `
         padding: 1em 0;
     }
     
+    .section__content--split-broad {
+        width: 65%;
+    }
+    
     .section__image {
         width: 48%;
-        background-image: linear-gradient(44.14deg, var(--wertgarantie-landing-page-primary-color, #141414) 0%, var(--wertgarantie-landing-page-primary-color, #141414) 100%);
+        --image-link: linear-gradient(44.14deg, var(--wertgarantie-landing-page-primary-color, #141414) 0%, var(--wertgarantie-landing-page-primary-color, #141414) 100%);
+        background-image: var(--image-link);
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+    
+    .section__image--small {
+        width: 33%;
     }
 `;

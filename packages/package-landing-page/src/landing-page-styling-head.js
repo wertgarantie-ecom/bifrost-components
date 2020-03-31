@@ -20,6 +20,7 @@ export const landingPageStylingHead = css`
         justify-content: center;
         overflow: visible;
         width: fit-content;
+        width: -moz-fit-content;
         margin: auto;
     }
 

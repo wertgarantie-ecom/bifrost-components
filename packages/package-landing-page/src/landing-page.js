@@ -41,7 +41,7 @@ class LandingPage extends LitElement{
 
     connectedCallback() {
         super.connectedCallback();
-        this.componentVersion = '0.0.3';
+        this.componentVersion = '0.0.4';
 
         this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie";
         this.partnerNumber = this.getAttribute('data-partner-number');

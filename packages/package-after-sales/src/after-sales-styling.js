@@ -52,8 +52,14 @@ export const afterSalesStyling = css`
     }
 
     .content__box {
-        width: 50%;
         padding: 1.5em;
+    }
+    
+    .box__insured-products {
+        width: 60%;
+    }
+    .box__next-steps {
+        width: 40%;
     }
 
     .box__header {
@@ -66,15 +72,15 @@ export const afterSalesStyling = css`
     .order {
         display: flex;
         flex-wrap: wrap;
-        padding-top: 1.5em;
     }
 
     .order-item {
-        width: 28%;
+        width: 33%;
         min-width: 150px;
+        max-width: 200px;
         height: 100%;
         min-height: 250px;
-        margin-top: 0.3em;
+        margin-top: 1.5em;
         margin-right: 1.5em;
         display: flex;
     }
@@ -170,6 +176,10 @@ export const afterSalesStyling = css`
     
     .next-steps__icon--color {
         fill: black;
+    }
+
+    .explanation-list__item {
+        margin-top: 2em;
     }
 
 `;

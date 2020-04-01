@@ -108,19 +108,24 @@ class LandingPage extends LitElement {
                     </div>
                     <div class="bottom">
                         <div class="head__images">
-                            <img id="tuev-image" src="https://www.wertgarantie.de/portaldata/4/resources/Icons/tuev-logo.png" alt="">
-                            <img id="focus-money-image" src="https://www.wertgarantie.at/assets/pictures/badges/1914_FoMo_ElVers_ges_B.jpg" alt="">
-                            <img id="test-bild-image" src="https://www.wertgarantie.de/Portaldata/4/Resources/logos/test-bild-wertgarantie-109-01.png" alt="">
+                            <img id="tuev-image" src="https://wertgarantie-bifrost.s3.eu-central-1.amazonaws.com/landing-page/wertgarantie-tuev-logo.png" alt="">
+                            <img id="focus-money-image" src="https://wertgarantie-bifrost.s3.eu-central-1.amazonaws.com/landing-page/focus-money-smartphone.png" alt="">
+                            <img id="test-bild-image" src="https://wertgarantie-bifrost.s3.eu-central-1.amazonaws.com/landing-page/test-bild-wertgarantie-109-01.png" alt="">
                         </div>
                     </div>
                 </div>
                 <div class="landing-page_body body">
-                    <div class="body__section body__section--no-picture">
-                        <div class="section__header">
-                            ${this.whyInsurance.title}
+                    <div class="body__section body__section--with-picture body__section--small-picture-right">
+                        <div class="section__content section__content--split section__content--split-broad">
+                            <div class="section__header section__header--split">
+                                ${this.whyInsurance.title}
+                            </div>
+                            <div class="section__text">
+                                ${this.whyInsurance.text}
+                            </div>
                         </div>
-                        <div class="section__text">
-                            ${this.whyInsurance.text}
+                        <div class="section__image--small">
+                            <img class="wertgarantie-logo" src="https://wertgarantie-bifrost.s3.eu-central-1.amazonaws.com/landing-page/wertgarantie-logo.png" alt="">
                         </div>
                     </div>
                     <div class="body__section body__section--with-picture">
@@ -214,6 +219,7 @@ class LandingPage extends LitElement {
                             </div>
                         </div>
                         <div class="section__image section__image--small" style="--image-link: url(${this.bottom.imageLink});">
+                        </div>
                     </div>
                 </div>
             </div>

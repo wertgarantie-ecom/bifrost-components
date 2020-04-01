@@ -8,16 +8,19 @@
     <title>After Sales Component</title>
 </head>
 <body>
-<wertgarantie-after-sales
-        data-client-id="5209d6ea-1a6e-11ea-9f8d-778f0ad9137f">
-</wertgarantie-after-sales>
+<wertgarantie-after-sales></wertgarantie-after-sales>
 
 <!-- data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie"> -->
 <!-- data-bifrost-uri="http://localhost:3000/wertgarantie"> -->
 
 <script>
     const WERTGARANTIE_SESSION_ID = 'wertgarantie-session-id';
-    document.cookie = `${WERTGARANTIE_SESSION_ID}="5542c945-aee5-49a1-8c7f-393b7bb3280d";`;
+    // document.cookie = `${WERTGARANTIE_SESSION_ID}="5542c945-aee5-49a1-8c7f-393b7bb3280d";`; // 1 Produk gekauft
+
+    document.cookie = `${WERTGARANTIE_SESSION_ID}="ede8603f-c64e-4521-a23f-81199e4fd69f";`; // 2 Produkte gekauft
+    // document.cookie = `${WERTGARANTIE_SESSION_ID}="24442e0f-bb89-45a5-bebc-05eabecb660d";`; // 3 Produkte gekauft
+    // document.cookie = `${WERTGARANTIE_SESSION_ID}="d15673b8-f746-4384-92ed-a36764c1e070";`; // 4 Produkte gekauft
+
 </script>
 <script src="../../packages/package-after-sales/dist/after-sales.min.js" type="module"></script>
 </body>

@@ -42,6 +42,9 @@ The landing page offers some styling opportunities via CSS custom properties. Al
     --wertgarantie-landing-page-head-insurance-application-button-font-size
     --wertgarantie-landing-page-head-insurance-application-button-background-image
 
+    --wertgarantie-landing-page-steps-square-font-size
+    --wertgarantie-landing-page-steps-square-font-weight
+
     --wertgarantie-landing-page-body-title-color
     --wertgarantie-landing-page-body-title-font-size
     --wertgarantie-landing-page-body-title-font-weight

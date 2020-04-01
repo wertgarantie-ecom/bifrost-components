@@ -5,6 +5,8 @@ import '../../package-rating/dist/rating.min.js';
 import {landingPageStylingGeneral} from "./landing-page-styling-general";
 import {landingPageStylingHead} from "./landing-page-styling-head";
 import {landingPageStylingBody} from "./landing-page-styling-body";
+import {landingPageStylingSteps} from "./landing-page-styling-steps";
+
 // import {landingPageStylingTariffCalculator} from "./landing-page-styling-tariff-calculator";
 
 class LandingPage extends LitElement{
@@ -13,7 +15,8 @@ class LandingPage extends LitElement{
         return [
             landingPageStylingGeneral,
             landingPageStylingHead,
-            landingPageStylingBody
+            landingPageStylingBody,
+            landingPageStylingSteps
         ];
     }
 
@@ -133,6 +136,67 @@ class LandingPage extends LitElement{
                         
                         </div>
                     </div>
+                    <div class="body__section">
+                        <div class="section__header">
+                            So einfach Geht's:
+                        </div>
+                        <div class="steps">
+                            <div class="steps__step step">
+                                <div class="step__square">
+                                    1
+                                </div>
+                                <div class="step__title">
+                                    Schritt 1
+                                </div>
+                                <div class="step__text">
+                                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy 
+                                </div>
+                            </div>
+                            <div class="steps__arrow">
+                                
+                            </div>
+                            <div class="steps__step step">
+                                <div class="step__square">
+                                    2
+                                </div>
+                                <div class="step__title">
+                                    Schritt 2
+                                </div>
+                                <div class="step__text">
+                                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy 
+                                </div>
+                            </div>
+                            <div class="steps__arrow">
+                            
+                            </div>
+                            <div class="steps__step step">
+                                <div class="step__square">
+                                    3
+                                </div>
+                                <div class="step__title">
+                                    Schritt 3
+                                </div>
+                                <div class="step__text">
+                                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy 
+                                </div>
+                            </div>
+                            <div class="steps__arrow">
+                            
+                            </div>
+                            <div class="steps__step step steps__step--final">
+                                <div class="step__square">
+                                    <!-- Font Awesome Shield Icon -->
+                                    <svg class="icon__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="icon__svg--colored" d="M466.5 83.7l-192-80a48.15 48.15 0 0 0-36.9 0l-192 80C27.7 91.1 16 108.6 16 128c0 198.5 114.5 335.7 221.5 380.3 11.8 4.9 25.1 4.9 36.9 0C360.1 472.6 496 349.3 496 128c0-19.4-11.7-36.9-29.5-44.3zM256.1 446.3l-.1-381 175.9 73.3c-3.3 151.4-82.1 261.1-175.8 307.7z"/></svg>
+                                </div>
+                                <div class="step__title">
+                                    Fertig!
+                                </div>
+                                <div class="step__text">
+                                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy 
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
                     <div class="body__section body__section--with-picture">
                         <div class="section__image" style="--image-link: url(${this.safeIsSafe.imageLink});">
                             

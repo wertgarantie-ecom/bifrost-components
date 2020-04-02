@@ -62,4 +62,5 @@
     padding: 1.5em 3em 1.5em 3em;
     border: 2px solid var(--wertgarantie-popup-dark-button-background-color, rgb(32, 32, 32));
     transition: all 0.4s;
+    margin-bottom: 2em;
 }

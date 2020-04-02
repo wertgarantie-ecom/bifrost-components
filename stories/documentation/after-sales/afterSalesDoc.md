@@ -42,5 +42,5 @@ So, you have to provide the attribute `data-shop-purchase-data` with the value o
 Custom Styling is coming soon...
 
 ## Example
-<button class="example-button button-invisible" onclick="showAfterSalesExample('after-sales-component')">Click me to see the bike example</button>
-<wertgarantie-after-sales id="after-sales-component"></wertgarantie-after-sales>
+<button class="example-button" onclick="showAfterSalesExample('after-sales-comp')">Click me to see the after sales component example</button>
+<wertgarantie-after-sales id="after-sales-comp"></wertgarantie-after-sales>

@@ -112,6 +112,7 @@ export const landingPageStylingHead = css`
     }
 
     .default-google-rating {
+        --wertgarantie-rating-font-family: var(--wertgarantie-landing-page-font-family, "Helvetica", Arial, sans-serif);
         --wertgarantie-rating-font-size: var(--wertgarantie-landing-page-google-rating-text-font-size, 0.7em);
         --wertgarantie-rating-text-color: var(--wertgarantie-landing-page-google-rating-text-color, black);
         --wertgarantie-rating-font-weight: var(--wertgarantie-landing-page-google-rating-text-font-weight, 800);

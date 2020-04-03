@@ -3,7 +3,7 @@
 ## Here are all the properties that you can use for:
 ```css
     .wertgarantie-landing-page {
-        --wertgarantie-landing-page-font-family: "Helvetica", Arial, sans-serif;
+        --wertgarantie-landing-page-font-family: "Lucida Console", Courier, monospace;
         --wertgarantie-landing-page-primary-color: #2574be;
         --wertgarantie-landing-page-head-banner-title-color: rgb(255, 255, 255);
         --wertgarantie-landing-page-head-banner-title-font-size: 1.4em;

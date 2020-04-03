@@ -1,6 +1,6 @@
 {
   "name": "wertgarantie-landing-page",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Landing Page component for Wertgarantie e-commerce push",
   "main": "index.js",
   "scripts": {

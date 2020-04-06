@@ -19,7 +19,7 @@ In order to see the confirmation component here, please select a bike insurance 
 <form id="demo-html-form">
     <input id="hidden-input-bike" type="hidden" />
     <wertgarantie-confirmation
-        data-client-id="5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
+        data-client-id="public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
         data-hidden-input-selector="#hidden-input-bike"
         data-form-selector="#demo-html-form">
     </wertgarantie-confirmation>
@@ -32,7 +32,7 @@ Code for this component:
 <form id="demo-html-form">
     <input id="hidden-input-bike" type="hidden" />
     <wertgarantie-confirmation
-        data-client-id="5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
+        data-client-id="public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
         data-hidden-input-selector="#hidden-input-bike"
         data-form-selector="#demo-html-form">
     </wertgarantie-confirmation>

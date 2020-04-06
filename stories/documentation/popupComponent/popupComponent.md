@@ -46,7 +46,7 @@ document.querySelector('wertgarantie-selection-pop-up').clientId = ${clientId};
 
 <wertgarantie-selection-pop-up 
         id="basic-popup"
-        data-client-id="5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
+        data-client-id="public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
         data-shop-product-name="Super Phone"
         data-device-class="1dfd4549-9bdc-4285-9047-e5088272dade"
         data-device-price="800">
@@ -54,7 +54,7 @@ document.querySelector('wertgarantie-selection-pop-up').clientId = ${clientId};
 
 ```html
 <wertgarantie-selection-pop-up 
-        data-client-id="5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
+        data-client-id="public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
         data-shop-product-name="Super Phone"
         data-device-class="1dfd4549-9bdc-4285-9047-e5088272dade"
         data-device-price="800">
@@ -94,55 +94,5 @@ The component can be styled by providing a stylesheet with CSS properties. Avail
 * text color of advantages that are included and excluded
     * `--wertgarantie-selection-advantage-included-text-color`
     * `--wertgarantie-selection-advantage-excluded-text-color`
-
-
-### Example
-
-Provide a css file with the following code:
-
-```css
-.example {
-    /* general styling */
-    --wertgarantie-popup-font-family: Tahoma, Geneva, sans-serif;
-    --wertgarantie-popup-background-color: rgb(213, 214, 116);
-
-    /* button colors */
-    --wertgarantie-popup-light-button-background-color: rgb(254, 255, 208);
-    --wertgarantie-popup-light-button-text-color: rgb(37, 37, 37);
-    --wertgarantie-popup-dark-button-background-color: rgb(37, 37, 37);
-    --wertgarantie-popup-dark-button-text-color: rgb(254, 255, 208);
-
-    /* background image color fading for every second product */
-    --wertgarantie-popup-product-background-even:
-        linear-gradient(to bottom right, rgba(0,0,0,0), #000),
-        linear-gradient(to top right, rgb(192, 137, 17), rgba(81,61,61,0));
-
-    /* background image color fading for every second product */
-    --wertgarantie-popup-product-background-odd:
-        linear-gradient(to bottom right, rgba(81,61,61,0), rgba(190, 70, 0, 0.6)),
-        linear-gradient(to top right, rgba(0,0,0,0), #000);
-
-    /* text color of advantages that are included and excluded */ 
-    --wertgarantie-selection-advantage-included-text-color: inherit;
-    --wertgarantie-selection-advantage-excluded-text-color: rgb(180, 180, 147);
-}
-```
-
-<wertgarantie-selection-pop-up id="popup-styling-example"
-        class="example2"
-        data-client-id="5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
-        data-shop-product-name="Super Phone"
-        data-device-class="1dfd4549-9bdc-4285-9047-e5088272dade"
-        data-device-price="800">
-</wertgarantie-selection-pop-up>
-
-```html
-<wertgarantie-selection-pop-up
-        class="example"
-        data-client-id="5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
-        data-shop-product-name="Super Phone"
-        data-device-class="1dfd4549-9bdc-4285-9047-e5088272dade"
-        data-device-price="800">
-</wertgarantie-selection-pop-up>
-```
-<button class="example-button" onclick="openPopup('popup-styling-example')">Click me to see the styling example</button>
+    
+If you are looking for an example, you can select the one here in the menu and you will have an overview which properties have been styled and how.

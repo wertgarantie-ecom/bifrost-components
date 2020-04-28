@@ -16,7 +16,7 @@ class WertgarantieConfirmation extends LitElement {
             bifrostUri: {type: String},
             formSelector: {type: String},
             headerTitle: {type: String},
-            products: {type: Object},
+            orders: {type: Object},
             selectedProductIndex: {type: Number},
             confirmText: {type: String},
             generalConfirmationText: {type: String},
@@ -68,7 +68,7 @@ class WertgarantieConfirmation extends LitElement {
 
     setProperties(data) {
         this.headerTitle = data.headerTitle;
-        this.products = data.products;
+        this.orders = data.orders;
         this.selectedProductIndex = 0;
         this.confirmText = data.confirmText;
         this.generalConfirmationText = data.generalConfirmationText;
@@ -119,7 +119,7 @@ class WertgarantieConfirmation extends LitElement {
         if (!fetchedConfirmationComponentData ||
             fetchedConfirmationComponentData.constructor !== Object ||
             Object.entries(fetchedConfirmationComponentData).length === 0 ||
-            fetchedConfirmationComponentData.products.length === 0) {
+            fetchedConfirmationComponentData.orders.length === 0) {
             throw new UndefinedConfirmationDataError("fetchedConfirmationData is empty or undefined");
         }
         return fetchedConfirmationComponentData;
@@ -133,7 +133,7 @@ class WertgarantieConfirmation extends LitElement {
             .catch(() => this.showComponent = false)
     }
 
-    renderProductPanel(classAttribute, product) {
+    renderProductPanel(classAttribute, order) {
         const productDivClassList = {
             "product": true,
             "product--selected": true,
@@ -142,7 +142,7 @@ class WertgarantieConfirmation extends LitElement {
         };
 
         const productDivStyleMap = {
-            "--image-link": "url(" + product.productBackgroundImageLink + ")"
+            "--image-link": "url(" + order.productBackgroundImageLink + ")"
         };
 
         return html`
@@ -151,16 +151,16 @@ class WertgarantieConfirmation extends LitElement {
                 <div class=${classMap(productDivClassList)}
                      style=${styleMap(productDivStyleMap)}>
                     <div>
-                        <span class="payment-interval product__price-info--small">${product.paymentInterval}</span><br>
-                        <span class="product-price product__price-info--strong">${product.price}</span><br>
-                        <span class="product-tax product__price-info--small">${product.includedTax}</span>
+                        <span class="payment-interval product__price-info--small">${order.paymentInterval}</span><br>
+                        <span class="product-price product__price-info--strong">${order.price}</span><br>
+                        <span class="product-tax product__price-info--small">${order.includedTax}</span>
                     </div>
                     <div>
                         <div class="product__title">
-                            ${product.productTitle}
+                            ${order.productTitle}
                         </div>
                         <div class="product__advantages">
-                        ${product.top3.map(advantage => html`
+                        ${order.top3.map(advantage => html`
                             <div class="product__advantage">
                                 <div class="advantage__icon-container">
                                     <!-- font awesome check icon -->
@@ -173,7 +173,7 @@ class WertgarantieConfirmation extends LitElement {
                            `)}
                         </div>
                         <div class="product-link">
-                            <a class="wg-link" href="${product.productInformationSheetUri}http://www.example.com">${product.productInformationSheetText}</a>
+                            <a class="wg-link" href="${order.productInformationSheetUri}http://www.example.com">${order.productInformationSheetText}</a>
                         </div>
                     </div>
                 </div>
@@ -233,16 +233,16 @@ class WertgarantieConfirmation extends LitElement {
             </div> ` : html``;
     }
 
-    renderTab(product, index) {
+    renderTab(order, index) {
         const tabClassList = {
             "tab": true,
             "tab--selected": index === this.selectedProductIndex
         };
         return html`
             <div class="${classMap(tabClassList)}" @click="${() => this.selectedProductIndex = index}">
-                <div class="tab__name">${product.shopProductShortName}</div>
+                <div class="tab__name">${order.shopProductShortName}</div>
                 <div class="tab__remove"
-                     @click="${() => this.deleteProductOrder(product)}">
+                     @click="${() => this.deleteProductOrder(order)}">
                     ×
                 </div>
             </div>
@@ -279,9 +279,9 @@ class WertgarantieConfirmation extends LitElement {
                         </div>
                     </div>
                     <div class="product__tabs">
-                    ${this.products.map((product, index) => this.renderTab(product, index))}
+                    ${this.orders.map((order, index) => this.renderTab(order, index))}
                     </div>
-                    ${this.renderProductPanel('product__panel--mobile', this.products[this.selectedProductIndex])}
+                    ${this.renderProductPanel('product__panel--mobile', this.orders[this.selectedProductIndex])}
                     <div class="confirmation__section">
                         <div class="confirmation__header" id="please-confirm-text">${this.confirmText}</div>
                         <div class="confirmation__input">
@@ -312,7 +312,7 @@ class WertgarantieConfirmation extends LitElement {
                         
                     </div>
                 </section>
-                ${this.renderProductPanel('product__panel', this.products[this.selectedProductIndex])}
+                ${this.renderProductPanel('product__panel', this.orders[this.selectedProductIndex])}
             </div>                   `;
     }
 }

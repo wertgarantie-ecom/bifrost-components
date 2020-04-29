@@ -358,7 +358,6 @@ class WertgarantieSelectionPopUp extends LitElement {
     }
 
     async addProductToShoppingCart() {
-        const currency = "EUR";
         // fetch uri with different path for POST call to set cookie
         const selectedProduct = this.products[this.selectedProductIndex];
         if (!(this.bifrostUri && this.devicePrice && this.deviceClass && this.shopProductName && selectedProduct.id && selectedProduct.name && this.clientId)) {
@@ -375,12 +374,16 @@ class WertgarantieSelectionPopUp extends LitElement {
         }
         try {
             const response = await fetchBifrost(this.bifrostUri + '/shoppingCart/' + this.clientId, 'POST', this.componentVersion, {
-                devicePrice: parseInt(this.devicePrice),
-                deviceClass: this.deviceClass,
-                productId: selectedProduct.id,
-                productName: selectedProduct.name,
-                deviceCurrency: currency,
-                shopProductName: this.shopProductName
+                shopProduct: {
+                    price: parseInt(this.devicePrice),
+                    deviceClass: this.deviceClass,
+                    model: this.shopProductName
+                },
+                wertgarantieProduct: {
+                    id: selectedProduct.id,
+                    name: selectedProduct.name,
+                    paymentInterval: "monthly"
+                }
             });
             if (response.status !== 200) {
                 console.error('Adding product to shopping cart failed:', response);

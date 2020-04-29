@@ -101,4 +101,4 @@
     //         .waitForElementVisible('#default-confirmation', 1500)
     //         .expect.element('#default-confirmation').to.be.visible;
     // }
-}   
+// }

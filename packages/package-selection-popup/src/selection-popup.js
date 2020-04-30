@@ -323,9 +323,9 @@ class WertgarantieSelectionPopUp extends LitElement {
                         <div>
                             <p><strong>${this.termsAndConditions}</strong></p>
                             <a target="_blank" class="wg-link wg-infosheet-link wg-product-info-sheet"
-                               href="${product.detailsDocUri}">${product.detailsDocText}</a><br>
+                               href="${product.IPIDUri}">${product.IPIDText}</a><br>
                             <a target="_blank" class="wg-link wg-infosheet-link wg-avb"
-                               href="${product.infoSheetUri}">${product.infoSheetText}</a>
+                               href="${product.GTCIUri}">${product.GTCIText}</a>
                         </div>
                         <div class="product-further-info">
                             <p><strong>${this.moreProductInfoHtml}</strong></p>

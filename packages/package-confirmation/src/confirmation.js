@@ -173,7 +173,7 @@ class WertgarantieConfirmation extends LitElement {
                            `)}
                         </div>
                         <div class="product-link">
-                            <a class="wg-link" href="${order.productInformationSheetUri}http://www.example.com">${order.productInformationSheetText}</a>
+                            <a class="wg-link" href="${order.IPIDUri}">${order.IPIDText}</a>
                         </div>
                     </div>
                 </div>

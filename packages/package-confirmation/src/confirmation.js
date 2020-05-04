@@ -24,7 +24,6 @@ class WertgarantieConfirmation extends LitElement {
             moreInformationHtml: {type: String},
             pleaseConfirmText: {type: String},
             termsAndConditionsConfirmed: {type: Boolean},
-            legalAgeConfirmed: {type: Boolean},
             showUncheckedWarning: {type: Boolean}
         }
     }
@@ -51,8 +50,6 @@ class WertgarantieConfirmation extends LitElement {
         this.displayComponent = this.displayComponent.bind(this);
         this.toggleTermsAndConditionsConfirmation = this.toggleTermsAndConditionsConfirmation.bind(this);
         this.sendToggelTermsAndConditionsConfirmationRequest = this.sendToggelTermsAndConditionsConfirmationRequest.bind(this);
-        this.toggleLegalAgeConfirmationRequest = this.toggleLegalAgeConfirmationRequest.bind(this);
-        this.sendToggelLegalAgeConfirmationRequest = this.sendToggelLegalAgeConfirmationRequest.bind(this);
         this.renderValidationFailed = this.renderValidationFailed.bind(this);
         this.renderTab = this.renderTab.bind(this);
     }
@@ -72,12 +69,10 @@ class WertgarantieConfirmation extends LitElement {
         this.selectedProductIndex = 0;
         this.confirmText = data.confirmText;
         this.generalConfirmationText = data.generalConfirmationText;
-        this.legalAgeConfirmationText = data.legalAgeConfirmationText;
         this.footerText = data.footerText;
         this.moreInformationHtml = data.moreInformationHtml;
         this.pleaseConfirmText = data.pleaseConfirmText;
         this.termsAndConditionsConfirmed = data.termsAndConditionsConfirmed || false;
-        this.legalAgeConfirmed = data.legalAgeConfirmed || false;
         this.showUncheckedWarning = false;
 
     }
@@ -101,7 +96,7 @@ class WertgarantieConfirmation extends LitElement {
     }
 
     isFullyChecked() {
-        return this.termsAndConditionsConfirmed && this.legalAgeConfirmed;
+        return this.termsAndConditionsConfirmed;
     }
 
     async fetchConfirmationComponentData() {
@@ -197,21 +192,6 @@ class WertgarantieConfirmation extends LitElement {
         }
     }
 
-    toggleLegalAgeConfirmationRequest(event) {
-        if (event.target.checked) {
-            return this.sendToggelLegalAgeConfirmationRequest('PUT');
-        } else {
-            return this.sendToggelLegalAgeConfirmationRequest('DELETE');
-        }
-    }
-
-    async sendToggelLegalAgeConfirmationRequest(method) {
-        const url = this.bifrostUri + '/components/confirmation/legalAgeConfirmed';
-        const response = await fetchBifrost(url, method, this.componentVersion);
-        if (response.status === 200) {
-            this.legalAgeConfirmed = !this.legalAgeConfirmed;
-        }
-    }
 
     async deleteProductOrder(product) {
         const url = new URL(this.bifrostUri + '/components/confirmation/product');
@@ -257,10 +237,6 @@ class WertgarantieConfirmation extends LitElement {
             "checkbox__container": true,
             "confirmation--unchecked": !this.termsAndConditionsConfirmed && this.showUncheckedWarning
         };
-        const legalAgeCheckboxClassList = {
-            "checkbox__container": true,
-            "confirmation--unchecked": !this.legalAgeConfirmed && this.showUncheckedWarning
-        };
         //language=HTML
         return html`
             <!--
@@ -292,14 +268,6 @@ class WertgarantieConfirmation extends LitElement {
                                     </div>
                                 </div>
                                 <div class="confirmation__text" id="general-confirmation-text">${unsafeHTML(this.generalConfirmationText)}</div>
-                            </div>
-                            <div class="confirmation__row">
-                                <div class="confirmation__checkbox-column">
-                                    <div class=${classMap(legalAgeCheckboxClassList)}>
-                                        <input @click="${event => this.toggleLegalAgeConfirmationRequest(event)}" class="confirmation" id="confirmation_check" type="checkbox" ?checked="${this.legalAgeConfirmed}">
-                                    </div>
-                                </div>
-                                <div class="confirmation__text" id="legal-age-confirmation-text">${this.legalAgeConfirmationText}</div>
                             </div>
                             ${this.renderValidationFailed()}
                         </div>

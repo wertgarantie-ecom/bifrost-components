@@ -62,11 +62,9 @@ class WertgarantieAfterSales extends LitElement {
             fetchResult = await fetchBifrost(url, 'GET', this.componentVersion);
         } else {
             this.showComponent = false;
-            const shopDataString = atob(this.base64EncodedShopCheckoutData);
-            const shopData = JSON.parse((shopDataString));
             const url = this.bifrostUri + '/components/after-sales/checkout';
             const checkoutRequestData = {
-                webshopData: shopData
+                webshopData: this.base64EncodedShopCheckoutData
             };
             fetchResult = await fetchBifrost(url, 'POST', this.componentVersion, checkoutRequestData);
         }

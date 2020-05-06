@@ -14,21 +14,21 @@
                                data-shop-product-name="Phone X">
 </wertgarantie-selection-pop-up>
 
-<button class="example-button" id="openBtn2">Klick mich für Beispiel 2</button>
-<wertgarantie-selection-pop-up id="selection2"
-                               class="example2"
-                               data-shop-product-name="Bike X"
-                               data-quantity="1"
-                               data-device-price="10000"
-                               data-client-id="5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
-                               data-device-class="6bdd2d93-45d0-49e1-8a0c-98eb80342222">
-</wertgarantie-selection-pop-up>
+<!--<button class="example-button" id="openBtn2">Klick mich für Beispiel 2</button>-->
+<!--<wertgarantie-selection-pop-up id="selection2"-->
+<!--                               class="example2"-->
+<!--                               data-shop-product-name="Bike X"-->
+<!--                               data-quantity="1"-->
+<!--                               data-device-price="10000"-->
+<!--                               data-client-id="public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"-->
+<!--                               data-device-class="TODO Change me">-->
+<!--</wertgarantie-selection-pop-up>-->
 
-<button class="example-button" id="openBtn3">Klick mich für Beispiel 3 (Local Bifröst muss laufen)</button>
-<wertgarantie-selection-pop-up id="selection3"
-                               class="example1"
-                               data-shop-product-name="Bike X">
-</wertgarantie-selection-pop-up>
+<!--<button class="example-button" id="openBtn3">Klick mich für Beispiel 3 (Local Bifröst muss laufen)</button>-->
+<!--<wertgarantie-selection-pop-up id="selection3"-->
+<!--                               class="example1"-->
+<!--                               data-shop-product-name="Bike X">-->
+<!--</wertgarantie-selection-pop-up>-->
 
 <button class="example-button" id="openBtn4">Keine Anzeige für Quantity > 1</button>
 <wertgarantie-selection-pop-up id="selection4"
@@ -36,36 +36,37 @@
                                data-shop-product-name="Bike X"
                                data-quantity="2"
                                data-device-price="10000"
-                               data-client-id="5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
-                               data-device-class="6bdd2d93-45d0-49e1-8a0c-98eb80342222">
+                               data-client-id="public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
+                               data-device-class="Smartphone">
 </wertgarantie-selection-pop-up>
 
 <script>
     var selection1 = document.querySelector("#selection1");
     selection1.devicePrice = 100000;
-    selection1.deviceClass = "1dfd4549-9bdc-4285-9047-e5088272dade";
-    selection1.clientId = "5209d6ea-1a6e-11ea-9f8d-778f0ad9137f";
+    selection1.deviceClass = "Smartphone";
+    selection1.clientId = "public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f";
+    selection1.bifrostUri = "http://localhost:3000/wertgarantie"
 
     var openBtn1 = document.querySelector('#openBtn1');
     openBtn1.addEventListener('click', () => {
         selection1.displayComponent();
     });
 
-    var selection2 = document.querySelector("#selection2");
-    var openBtn2 = document.querySelector('#openBtn2');
-    openBtn2.addEventListener('click', () => {
-        selection2.displayComponent();
-    });
+    // var selection2 = document.querySelector("#selection2");
+    // var openBtn2 = document.querySelector('#openBtn2');
+    // openBtn2.addEventListener('click', () => {
+    //     selection2.displayComponent();
+    // });
+    //
+    // var selection3 = document.querySelector("#selection3");
+    // selection3.devicePrice = 100000;
+    // selection3.deviceClass = "6bdd2d93-45d0-49e1-8a0c-98eb80342222"; // bike
+    // selection3.clientId = "5209d6ea-1a6e-11ea-9f8d-778f0ad9137f";
 
-    var selection3 = document.querySelector("#selection3");
-    selection3.devicePrice = 100000;
-    selection3.deviceClass = "6bdd2d93-45d0-49e1-8a0c-98eb80342222"; // bike
-    selection3.clientId = "5209d6ea-1a6e-11ea-9f8d-778f0ad9137f";
-
-    var openBtn3 = document.querySelector('#openBtn3');
-    openBtn3.addEventListener('click', () => {
-        selection3.displayComponent();
-    });
+    // var openBtn3 = document.querySelector('#openBtn3');
+    // openBtn3.addEventListener('click', () => {
+    //     selection3.displayComponent();
+    // });
 
     var selection4 = document.querySelector("#selection4");
     var openBtn4 = document.querySelector('#openBtn4');

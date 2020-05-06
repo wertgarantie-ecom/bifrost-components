@@ -20,6 +20,7 @@ class WertgarantieSelectionPopUp extends LitElement {
             showDetails: {type: Boolean},
             selectedProductIndex: {type: Number},
             focusedProductIndex: {type: Number},
+            mobileView: {type: Boolean},
 
             devicePrice: {type: Number},
             deviceClass: {type: String},
@@ -71,9 +72,13 @@ class WertgarantieSelectionPopUp extends LitElement {
         this.landingPageUri = this.getAttribute("data-landing-page-uri") || "https://www.wertgarantie.de";
         this.clientId = this.getAttribute("data-client-id");
         this.shopProductName = this.getAttribute("data-shop-product-name");
+        this.mobileView = window.innerWidth <= MOBILE_WIDTH;
         window.addEventListener('resize', () => {
             if (window.innerWidth <= MOBILE_WIDTH && this.focusedProductIndex === -1) {
                 this.updateMobileFocusIndex(0);
+            }
+            if ((window.innerWidth <= MOBILE_WIDTH && !this.mobileView) || (window.innerWidth > MOBILE_WIDTH && this.mobileView)) {
+                this.mobileView = !this.mobileView;
             }
         });
         this.setDefaults();
@@ -260,7 +265,7 @@ class WertgarantieSelectionPopUp extends LitElement {
         };
         //language=HTML
         return html`
-            <div @click="${() => this.updateSelectedProductIndex(idx)}"
+            <div @click="${() => {if (!this.mobileView) this.updateSelectedProductIndex(idx); return;}}"
                  @mouseover="${() => this.focusedProductIndex = idx}"
                  @mouseleave="${() => this.focusedProductIndex = this.selectedProductIndex}"
                  class=${classMap(productDivClassList)}>
@@ -272,14 +277,16 @@ class WertgarantieSelectionPopUp extends LitElement {
                                 <strong class="price-display">${product.priceFormatted}</strong><br>
                                 <small class="tax-display">${product.taxFormatted}</small>
                             </div>
-                            <div class="product__base-info--top-right">
-                                <div class="product__selection">
-                                    <div class=${classMap(selectionCircleClassList)}>
-                                        <!-- Font Awesome check icon -->
-                                        <svg class="selection__checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="icon__svg--top3" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>
+                            ${!this.mobileView ? html`
+                                <div class="product__base-info--top-right">
+                                    <div class="product__selection">
+                                        <div class=${classMap(selectionCircleClassList)}>
+                                            <!-- Font Awesome check icon -->
+                                            <svg class="selection__checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="icon__svg--top3" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            ` : html``}
                         </div>
                         <div class="product__base-info--bottom">
                             <div class="product__title">${product.name}</div>

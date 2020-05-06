@@ -33,7 +33,7 @@ class WertgarantieSelectionPopUp extends LitElement {
             partnerShop: {type: String},
             detailsHeader: {type: String},
             furtherInformation: {type: String},
-            wertgarantieFurtherInfo: {type: String},
+            wertgarantieFurtherInfoHtml: {type: String},
             showDetailsText: {type: String},
             hideDetailsText: {type: String},
             cancelButtonText: {type: String},
@@ -68,6 +68,7 @@ class WertgarantieSelectionPopUp extends LitElement {
         this.quantity = quantity ? parseInt(quantity) : 1;
         this.deviceClass = this.getAttribute("data-device-class");
         this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie";
+        this.landingPageUri = this.getAttribute("data-landing-page-uri") || "https://www.wertgarantie.de";
         this.clientId = this.getAttribute("data-client-id");
         this.shopProductName = this.getAttribute("data-shop-product-name");
         window.addEventListener('resize', () => {
@@ -99,7 +100,7 @@ class WertgarantieSelectionPopUp extends LitElement {
         this.partnerShop = responseData.texts.partnerShop;
         this.detailsHeader = responseData.texts.detailsHeader;
         this.furtherInformation = responseData.texts.furtherInformation;
-        this.wertgarantieFurtherInfo = responseData.texts.wertgarantieFurtherInfo;
+        this.wertgarantieFurtherInfoHtml = responseData.texts.wertgarantieFurtherInfoHtml;
         this.showDetailsText = responseData.texts.showDetailsText;
         this.hideDetailsText = responseData.texts.hideDetailsText;
         this.cancelButtonText = responseData.texts.cancelButtonText;
@@ -187,7 +188,7 @@ class WertgarantieSelectionPopUp extends LitElement {
                         </section>
                         <section class=${classMap(productDetailsFooterClassList)}>
                             <div>
-                                <p>${this.wertgarantieFurtherInfo}</p>
+                                <p>${unsafeHTML(this.wertgarantieFurtherInfoHtml.replace("%s", this.landingPageUri))}</p>
                             </div>
                             <div>
                                 <p>${unsafeHTML(this.footerHtml)}</p>

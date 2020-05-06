@@ -60,6 +60,7 @@ class WertgarantieSelectionPopUp extends LitElement {
         this.updateMobileFocusIndex = this.updateMobileFocusIndex.bind(this);
         this.fadeout = this.fadeout.bind(this);
         this.setDefaults = this.setDefaults.bind(this);
+        this.checkForMobileFocusUpdate = this.checkForMobileFocusUpdate.bind(this);
     }
 
     connectedCallback() {
@@ -73,15 +74,13 @@ class WertgarantieSelectionPopUp extends LitElement {
         this.clientId = this.getAttribute("data-client-id");
         this.shopProductName = this.getAttribute("data-shop-product-name");
         this.mobileView = window.innerWidth <= MOBILE_WIDTH;
+        this.setDefaults();
         window.addEventListener('resize', () => {
-            if (window.innerWidth <= MOBILE_WIDTH && this.focusedProductIndex === -1) {
-                this.updateMobileFocusIndex(0);
-            }
+            this.checkForMobileFocusUpdate();
             if ((window.innerWidth <= MOBILE_WIDTH && !this.mobileView) || (window.innerWidth > MOBILE_WIDTH && this.mobileView)) {
                 this.mobileView = !this.mobileView;
             }
         });
-        this.setDefaults();
     }
 
     setDefaults() {
@@ -89,6 +88,7 @@ class WertgarantieSelectionPopUp extends LitElement {
         this.showDetails = false;
         this.selectedProductIndex = -1;
         this.focusedProductIndex = this.selectedProductIndex;
+        this.checkForMobileFocusUpdate();
     }
 
     setProperties(responseData) {
@@ -346,6 +346,12 @@ class WertgarantieSelectionPopUp extends LitElement {
                 </div>
             </div>
         `
+    }
+
+    checkForMobileFocusUpdate() {
+        if (window.innerWidth <= MOBILE_WIDTH && this.focusedProductIndex === -1) {
+            this.updateMobileFocusIndex(0);
+        }
     }
 
     updateMobileFocusIndex(idx) {

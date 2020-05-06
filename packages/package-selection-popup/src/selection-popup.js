@@ -4,6 +4,7 @@ import fetchBifrost from "../../../shared-code/fetchBifrost";
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from 'lit-html/directives/style-map';
 import {selectionPopUpStyling} from "./selection-popup-styling";
+import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
 
 const MOBILE_WIDTH = 878;
 
@@ -16,25 +17,29 @@ class WertgarantieSelectionPopUp extends LitElement {
     static get properties() {
         return {
             showComponent: {type: Boolean},
-            devicePrice: {type: Number},
-            deviceClass: {type: String},
-            bifrostUri: {type: String},
-            clientId: {type: String},
-            shopProductName: {type: String},
-            title: {type: String},
-            products: {type: Array},
             showDetails: {type: Boolean},
             selectedProductIndex: {type: Number},
             focusedProductIndex: {type: Number},
-            headTitle: {type: String},
-            headSubTitle: {type: String},
-            detailsHeader: {type: String},
-            termsAndConditions: {type: String},
-            moreProductInfoHtml: {type: String},
+
+            devicePrice: {type: Number},
+            deviceClass: {type: String},
+            bifrostUri: {type: String},
+            shopProductName: {type: String},
+            clientId: {type: String},
+
+            title: {type: String},
+            subtitle: {type: String},
             footerHtml: {type: String},
+            partnerShop: {type: String},
+            detailsHeader: {type: String},
+            furtherInformation: {type: String},
+            wertgarantieFurtherInfoHtml: {type: String},
             showDetailsText: {type: String},
-            doNotInsureText: {type: String},
-            bothIntoShoppingCartText: {type: String}
+            hideDetailsText: {type: String},
+            cancelButtonText: {type: String},
+            confirmButtonText: {type: String},
+
+            products: {type: Array}
         };
     }
 
@@ -63,6 +68,7 @@ class WertgarantieSelectionPopUp extends LitElement {
         this.quantity = quantity ? parseInt(quantity) : 1;
         this.deviceClass = this.getAttribute("data-device-class");
         this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie";
+        this.landingPageUri = this.getAttribute("data-landing-page-uri") || "https://www.wertgarantie.de";
         this.clientId = this.getAttribute("data-client-id");
         this.shopProductName = this.getAttribute("data-shop-product-name");
         window.addEventListener('resize', () => {
@@ -88,18 +94,17 @@ class WertgarantieSelectionPopUp extends LitElement {
             return product;
         });
 
-        this.title = responseData.title;
-        this.headTitle = responseData.headTitle || "Wird oft dazugebucht";
-        this.headSubTitle = responseData.headSubTitle || "Wählen Sie den Schutz, der Ihren Bedürfnissen am besten entspricht:";
-        this.detailsHeader = responseData.detailsHeader || "Details";
-        this.termsAndConditions = responseData.termsAndConditions || "Bedingungen";
-        this.moreProductInfoHtml = responseData.moreProductInfoHtml || "Mehr zum Produkt und der Wertgarantie";
-        this.footerHtml = responseData.footerHtml || html`Versicherung ist Vertrauenssache, deshalb setzt *PARTNERSHOP* neben <strong>500.000
-            zufriedener Kunden</strong> auf die <strong>Wertgarantie</strong>, den <strong>Testsieger
-            in Sachen Sicherheit</strong>`;
-        this.showDetailsText = responseData.showDetailsText || "Details anzeigen";
-        this.doNotInsureText = responseData.doNotInsureText || "Nicht absichern";
-        this.bothIntoShoppingCartText = responseData.bothIntoShoppingCartText || "Beides in den Warenkorb";
+        this.title = responseData.texts.title;
+        this.subtitle = responseData.texts.subtitle;
+        this.footerHtml = responseData.texts.footerHtml;
+        this.partnerShop = responseData.texts.partnerShop;
+        this.detailsHeader = responseData.texts.detailsHeader;
+        this.furtherInformation = responseData.texts.furtherInformation;
+        this.wertgarantieFurtherInfoHtml = responseData.texts.wertgarantieFurtherInfoHtml;
+        this.showDetailsText = responseData.texts.showDetailsText;
+        this.hideDetailsText = responseData.texts.hideDetailsText;
+        this.cancelButtonText = responseData.texts.cancelButtonText;
+        this.confirmButtonText = responseData.texts.confirmButtonText;
         this.products = products;
     }
 
@@ -164,7 +169,7 @@ class WertgarantieSelectionPopUp extends LitElement {
                     <div class="content">
                         <div class="head">
                             <div class="head__left">
-                                <strong class="head__title">${this.headTitle}</strong>
+                                <strong class="head__title">${this.title}</strong>
                                 <wertgarantie-rating class="wg-rating-default"
                                                      data-bifrost-uri="${this.bifrostUri}"
                                                      data-disable-rating-number="true">
@@ -174,7 +179,7 @@ class WertgarantieSelectionPopUp extends LitElement {
                                 <span @click="${() => this.fadeout()}" class="closeBtn" id="closeBtn">×</span>
                             </div>
                         </div>
-                        <p class="head__subtitle">${this.headSubTitle}</p>
+                        <p class="head__subtitle">${this.subtitle}</p>
                         <section class="product-selectors" id="product-selectors">
                             ${this.products.map(this.createMobileProductSelectionButton)}
                         </section>
@@ -183,7 +188,10 @@ class WertgarantieSelectionPopUp extends LitElement {
                         </section>
                         <section class=${classMap(productDetailsFooterClassList)}>
                             <div>
-                                <p>${this.footerHtml}</p>
+                                <p>${unsafeHTML(this.wertgarantieFurtherInfoHtml.replace("%s", this.landingPageUri))}</p>
+                            </div>
+                            <div>
+                                <p>${unsafeHTML(this.footerHtml)}</p>
                             </div>
 
                             <div class="award-image-block">
@@ -201,12 +209,12 @@ class WertgarantieSelectionPopUp extends LitElement {
                         </section>
                         <section class="button-section">
                             <div class="button-section__details-cancel">
-                                <button @click="${() => this.toggleDetailsExpansion()}" class="button button--dark" id="detailsBtn">${this.showDetailsText}</button>
-                                <button @click="${() => this.fadeout()}" class="button button--light" id="cancelOrder">${this.doNotInsureText}</button>
+                                <button @click="${() => this.toggleDetailsExpansion()}" class="button button--dark" id="detailsBtn">${this.showDetails ? this.hideDetailsText : this.showDetailsText}</button>
+                                <button @click="${() => this.fadeout()}" class="button button--light" id="cancelOrder">${this.cancelButtonText}</button>
                             </div>
                             <div class="button-section__order">
                                 <button @click="${() => this.addProductToShoppingCart()}" class=${classMap(orderButtonClassList)} id="orderBtn"
-                                        ?disabled=${this.selectedProductIndex === -1}>${this.bothIntoShoppingCartText}
+                                        ?disabled=${this.selectedProductIndex === -1}>${this.confirmButtonText}
                                 </button>
                             </div>
                         </section>
@@ -220,7 +228,7 @@ class WertgarantieSelectionPopUp extends LitElement {
             "product-selectors__button--selected": idx === this.selectedProductIndex
         };
         return html`
-            <button @click="${() => this.updateMobileFocusIndex(idx)}" class=${classMap(buttonClasses)}>${"Varinate " + (idx + 1)}</button>
+            <button @click="${() => this.updateMobileFocusIndex(idx)}" class=${classMap(buttonClasses)}>${product.name}</button>
         `;
     }
 
@@ -321,14 +329,11 @@ class WertgarantieSelectionPopUp extends LitElement {
                     </div>
                     <div class="product__terms">
                         <div>
-                            <p><strong>${this.termsAndConditions}</strong></p>
+                            <p><strong>${this.furtherInformation}</strong></p>
                             <a target="_blank" class="wg-link wg-infosheet-link wg-product-info-sheet"
                                href="${product.IPIDUri}">${product.IPIDText}</a><br>
                             <a target="_blank" class="wg-link wg-infosheet-link wg-avb"
                                href="${product.GTCIUri}">${product.GTCIText}</a>
-                        </div>
-                        <div class="product-further-info">
-                            <p><strong>${this.moreProductInfoHtml}</strong></p>
                         </div>
                     </div>
                 </div>

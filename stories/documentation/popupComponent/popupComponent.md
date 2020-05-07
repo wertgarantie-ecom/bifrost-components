@@ -48,7 +48,7 @@ document.querySelector('wertgarantie-selection-pop-up').clientId = ${clientId};
         id="basic-popup"
         data-client-id="public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
         data-shop-product-name="Super Phone"
-        data-device-class="1dfd4549-9bdc-4285-9047-e5088272dade"
+        data-device-class="Smartphone"
         data-device-price="800">
 </wertgarantie-selection-pop-up>
 
@@ -56,7 +56,7 @@ document.querySelector('wertgarantie-selection-pop-up').clientId = ${clientId};
 <wertgarantie-selection-pop-up 
         data-client-id="public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
         data-shop-product-name="Super Phone"
-        data-device-class="1dfd4549-9bdc-4285-9047-e5088272dade"
+        data-device-class="Smartphone"
         data-device-price="800">
 </wertgarantie-selection-pop-up>
 ```

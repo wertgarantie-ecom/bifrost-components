@@ -3,13 +3,14 @@ import {css} from 'lit-element';
 //language=CSS
 export const confirmationStyling = css`
     :host {
-        font-family: var(--wertgarantie-popup-font-family, Arial, Helvetica), sans-serif;
+        font-family: var(--wertgarantie-confirmation-font-family, Arial, Helvetica), sans-serif;
     }
 
     .component {
         max-width: 1100px;
         display: flex;
-        background-color: white;
+        color: var(--wertgarantie-confirmation-text-color, black);
+        background-color: var(--wertgarantie-confirmation-background-color, white);
     }
 
     .info {
@@ -28,43 +29,43 @@ export const confirmationStyling = css`
     .header {
         display: flex;
         width: 100%;
-        background-color: rgb(230, 230, 230);
+        background-color: var(--wertgarantie-confirmation-header-background-color, rgb(230, 230, 230));
     }
 
     .header__icon {
         flex: 1;
         min-width: 50px;
-        background-color: rgb(50, 50, 50);
+        background-color: var(--wertgarantie-confirmation-header-icon-background-color, rgb(50, 50, 50));
         display: flex;
         justify-content: center;
         align-items: center;
     }
-    
+
     .icon__svg {
         width: 50%;
         height: 50%;
     }
 
     .icon__svg--white {
-        fill: white;
+        fill: var(--wertgarantie-confirmation-header-icon-fill-color, white);
     }
 
     .header__title {
         flex: 12.5;
         text-align: center;
-        font-weight: 700;
-        text-transform: uppercase;
-        font-size: 0.7em;
-        line-height: 1.2em;
+        font-weight: var(--wertgarantie-confirmation-header-title-font-weight, 700);
+        text-transform: var(--wertgarantie-confirmation-header-title-text-transform, uppercase);
+        font-size: var(--wertgarantie-confirmation-header-title-font-size, 0.7em);
+        line-height: var(--wertgarantie-confirmation-header-title-line-height, 1.2em);
         padding: 1.7em 1em;
     }
 
     .confirmation__header {
         padding-top: 1.5em;
         padding-left: 50px;
-        font-weight: 700;
-        font-size: 0.8em;
-        text-transform: uppercase;
+        font-weight: var(--wertgarantie-confirmation-body-subtitle-font-weight, 700);
+        font-size: var(--wertgarantie-confirmation-body-subtitle-font-size, 0.8em);
+        text-transform: var(--wertgarantie-confirmation-body-subtitle-text-transform, uppercase);
     }
 
     .confirmation__row {
@@ -109,7 +110,7 @@ export const confirmationStyling = css`
         flex-direction: column;
         justify-content: space-between;
         padding: 1em;
-        color: white;
+        color: var(--wertgarantie-confirmation-product-panel-text-color, white);
         height: calc(100% - 2em);
     }
 
@@ -119,7 +120,7 @@ export const confirmationStyling = css`
 
     .product--even {
         --image-link: linear-gradient(to top right, #006EFF, rgba(81, 61, 61, 0));
-        background-image: var(--wertgarantie-popup-product-background-even,
+        background-image: var(--wertgarantie-confirmation-product-background-even,
         linear-gradient(to bottom right, rgba(0, 0, 0, 0), #000),
         linear-gradient(to top right, #006EFF, rgba(81, 61, 61, 0))),
         var(--image-link);
@@ -128,21 +129,21 @@ export const confirmationStyling = css`
 
     .product--odd {
         --image-link: linear-gradient(to top right, rgba(0, 0, 0, 0), #000);
-        background-image: var(--wertgarantie-popup-product-background-odd,
-        linear-gradient(to bottom right, rgba(81, 61, 61, 0), rgba(255, 145, 0, 0.6)),
-        linear-gradient(to top right, rgba(0, 0, 0, 0), #000)),
+        background-image: var(--wertgarantie-confirmation-product-background-odd,
+        linear-gradient(to bottom right, rgba(44, 25, 25, 0), rgba(255, 145, 0, 0.6)),
+        linear-gradient(to top right, #000, rgba(0, 0, 0, 0.3))),
         var(--image-link);
         background-size: cover;
     }
 
     .product__price-info--small {
         font-size: 0.7em;
-        opacity: 0.7;
+        opacity: 0.8;
     }
 
     .product__price-info--strong {
         font-weight: 700;
-        font-size: 0.9em;
+        font-size: 1.3em;
     }
 
     .product__title {

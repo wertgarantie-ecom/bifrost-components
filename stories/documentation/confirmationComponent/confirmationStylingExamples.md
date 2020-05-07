@@ -14,7 +14,6 @@ Otherwise no styling example will be seen here. To see the different background 
 
 <wertgarantie-confirmation class="confirmationStylingExample1"
         data-client-id="public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
-        data-bifrost-uri="http://localhost:3000/wertgarantie"
 </wertgarantie-confirmation>
 
 ### Styling for Example 1

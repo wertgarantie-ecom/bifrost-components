@@ -64,7 +64,7 @@ class WertgarantieConfirmation extends LitElement {
 
     setProperties(data) {
         this.title = data.texts.title;
-        this.confirmText = data.texts.confirmText;
+        this.subtitle = data.texts.subtitle;
         this.confirmationTextTermsAndConditions = data.texts.confirmationTextTermsAndConditions;
         this.confirmationPrompt = data.texts.confirmationPrompt;
         this.orders = data.orders;

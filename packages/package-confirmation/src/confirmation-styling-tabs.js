@@ -42,11 +42,11 @@ export const confirmationStylingTabs = css`
     }
 
     .tab:hover {
-        background-color: rgb(230, 230, 230);
+        background-color: var(--wertgarantie-confirmation-product-tab-background-color-hover, rgb(230, 230, 230));
     }
 
     .tab--selected {
-        background-color: rgb(230, 230, 230);
+        background-color: var(--wertgarantie-confirmation-product-tab-background-color-selected, rgb(230, 230, 230));
     }
 
     .remove-product {

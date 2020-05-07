@@ -15,16 +15,15 @@ class WertgarantieConfirmation extends LitElement {
             clientId: {type: String},
             bifrostUri: {type: String},
             formSelector: {type: String},
-            headerTitle: {type: String},
             orders: {type: Object},
             selectedProductIndex: {type: Number},
-            confirmText: {type: String},
-            generalConfirmationText: {type: String},
-            footerText: {type: String},
-            moreInformationHtml: {type: String},
-            pleaseConfirmText: {type: String},
             termsAndConditionsConfirmed: {type: Boolean},
-            showUncheckedWarning: {type: Boolean}
+            showUncheckedWarning: {type: Boolean},
+
+            title: {type: String},
+            subtitle: {type: String},
+            confirmationTextTermsAndConditions: {type: String},
+            confirmationPrompt: {type: String}
         }
     }
 
@@ -64,14 +63,12 @@ class WertgarantieConfirmation extends LitElement {
     }
 
     setProperties(data) {
-        this.headerTitle = data.headerTitle;
+        this.title = data.texts.title;
+        this.confirmText = data.texts.confirmText;
+        this.confirmationTextTermsAndConditions = data.texts.confirmationTextTermsAndConditions;
+        this.confirmationPrompt = data.texts.confirmationPrompt;
         this.orders = data.orders;
         this.selectedProductIndex = 0;
-        this.confirmText = data.confirmText;
-        this.generalConfirmationText = data.generalConfirmationText;
-        this.footerText = data.footerText;
-        this.moreInformationHtml = data.moreInformationHtml;
-        this.pleaseConfirmText = data.pleaseConfirmText;
         this.termsAndConditionsConfirmed = data.termsAndConditionsConfirmed || false;
         this.showUncheckedWarning = false;
 
@@ -209,7 +206,7 @@ class WertgarantieConfirmation extends LitElement {
     renderValidationFailed() {
         return this.showUncheckedWarning ? html`
             <div class="confirmation__footer confirmation__footer--notification" >
-                <strong>${this.pleaseConfirmText}</strong>
+                <strong>${this.confirmationPrompt}</strong>
             </div> ` : html``;
     }
 
@@ -251,7 +248,7 @@ class WertgarantieConfirmation extends LitElement {
                             <svg class="icon__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="icon__svg--white" d="M466.5 83.7l-192-80a48.15 48.15 0 0 0-36.9 0l-192 80C27.7 91.1 16 108.6 16 128c0 198.5 114.5 335.7 221.5 380.3 11.8 4.9 25.1 4.9 36.9 0C360.1 472.6 496 349.3 496 128c0-19.4-11.7-36.9-29.5-44.3zM256.1 446.3l-.1-381 175.9 73.3c-3.3 151.4-82.1 261.1-175.8 307.7z"/></svg>
                         </div>
                         <div class="header__title">
-                            ${this.headerTitle}
+                            ${this.title}
                         </div>
                     </div>
                     <div class="product__tabs">
@@ -259,7 +256,7 @@ class WertgarantieConfirmation extends LitElement {
                     </div>
                     ${this.renderProductPanel('product__panel--mobile', this.orders[this.selectedProductIndex])}
                     <div class="confirmation__section">
-                        <div class="confirmation__header" id="please-confirm-text">${this.confirmText}</div>
+                        <div class="confirmation__header" id="please-confirm-text">${this.subtitle}</div>
                         <div class="confirmation__input">
                             <div class="confirmation__row">
                                 <div class="confirmation__checkbox-column">
@@ -267,17 +264,10 @@ class WertgarantieConfirmation extends LitElement {
                                         <input @click="${event => this.toggleTermsAndConditionsConfirmation(event)}" class="confirmation" id="confirmation_check" type="checkbox" ?checked="${this.termsAndConditionsConfirmed}">
                                     </div>
                                 </div>
-                                <div class="confirmation__text" id="general-confirmation-text">${unsafeHTML(this.generalConfirmationText)}</div>
+                                <div class="confirmation__text" id="general-confirmation-text">${unsafeHTML(this.confirmationTextTermsAndConditions)}</div>
                             </div>
                             ${this.renderValidationFailed()}
                         </div>
-                        <div class="confirmation__footer">
-                            <strong>${this.footerText}</strong>
-                        </div>
-                        <div class="confirmation__footer">
-                            <strong>${this.moreInformationHtml}</strong>
-                        </div>
-                        
                     </div>
                 </section>
                 ${this.renderProductPanel('product__panel', this.orders[this.selectedProductIndex])}

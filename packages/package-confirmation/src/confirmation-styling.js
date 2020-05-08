@@ -7,6 +7,7 @@ export const confirmationStyling = css`
     }
 
     .component {
+        text-align: left;
         max-width: 1100px;
         display: flex;
         color: var(--wertgarantie-confirmation-text-color, black);
@@ -161,7 +162,7 @@ export const confirmationStyling = css`
         display: flex;
         padding-top: 2em;
         padding-bottom: 0.5em;
-        font-size: 0.8em;
+        font-size: 0.7em;
     }
 
     @media only screen and (max-width: 768px) {

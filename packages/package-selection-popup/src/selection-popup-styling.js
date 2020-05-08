@@ -12,7 +12,7 @@ export const selectionPopUpStyling = css`
         width: 100%;
         height: 100%;
         position: absolute;
-        z-index: 1;
+        z-index: 1000;
         top: 0;
         left: 0;
         overflow: auto;

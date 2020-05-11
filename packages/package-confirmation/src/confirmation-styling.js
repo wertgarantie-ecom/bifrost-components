@@ -6,13 +6,37 @@ export const confirmationStyling = css`
         font-family: var(--wertgarantie-confirmation-font-family, Arial, Helvetica), sans-serif;
     }
 
-    .component {
+    .box {
+        border: var(--wertgarantie-confirmation-box-border, 1px solid rgb(230, 230, 230));
+        display: flex;
+        flex-direction: column;
+        margin: var(--wertgarantie-confirmation-box-margin, 0 0 20px 0);
+    }
+
+    .box__title {
+        background-color: var(--wertgarantie-confirmation-box-background-color, rgb(230, 230, 230));
+        line-height: var(--wertgarantie-confirmation-box-title-line-height, 1em);
+        padding: var(--wertgarantie-confirmation-box-title-padding, 9px 0 9px 0);
         text-align: left;
+    }
+
+    .box__title--text {
+        font-size: var(--wertgarantie-confirmation-box-title-font-size, 1.2em);
+        margin: var(--wertgarantie-confirmation-box-title-margin, 0 63px 0 63px);
+    }
+
+    .component {
+        box-sizing: border-box;
+        text-align: left;
+        line-height: 1em;
         max-width: 1100px;
         display: flex;
+        flex-direction: row;
+        padding: var(--wertgarantie-confirmation-component-padding, '0px 0px 0px 0px');
         color: var(--wertgarantie-confirmation-text-color, black);
         background-color: var(--wertgarantie-confirmation-background-color, white);
     }
+
 
     .info {
         width: 65%;

@@ -221,13 +221,13 @@ export const selectionPopUpStyling = css`
         display: flex;
         flex-flow: column;
     }
-    
+
     .advantage {
         display: flex;
         font-size: 0.9em;
         padding-top: 0.9em;
     }
-    
+
     .advantage__icon-container {
         width: auto;
         padding-right: 1em;
@@ -235,7 +235,7 @@ export const selectionPopUpStyling = css`
         justify-content: left;
         align-items: center;
     }
-    
+
     .advantage__text-container {
         width: 95%;
         line-height: 1.5em;
@@ -391,10 +391,10 @@ export const selectionPopUpStyling = css`
 
     .wg-rating-default {
         --wertgarantie-rating-font-family: var(--wertgarantie-embedded-rating-font-family, "Open Sans", sans-serif);
-        --wertgarantie-rating-font-size: 0.7rem;
+        --wertgarantie-rating-font-size: 1.2em;
         --wertgarantie-rating-text-color: rgb(134, 134, 134);
 
-        --wertgarantie-rating-stars-font-size: 15px;
+        --wertgarantie-rating-stars-font-size: 1.2em;
         --wertgarantie-rating-stars-color: orange;
     }
 

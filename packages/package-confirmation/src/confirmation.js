@@ -20,6 +20,7 @@ class WertgarantieConfirmation extends LitElement {
             termsAndConditionsConfirmed: {type: Boolean},
             showUncheckedWarning: {type: Boolean},
 
+            boxTitle: {type: String},
             title: {type: String},
             subtitle: {type: String},
             confirmationTextTermsAndConditions: {type: String},
@@ -51,6 +52,7 @@ class WertgarantieConfirmation extends LitElement {
         this.sendToggelTermsAndConditionsConfirmationRequest = this.sendToggelTermsAndConditionsConfirmationRequest.bind(this);
         this.renderValidationFailed = this.renderValidationFailed.bind(this);
         this.renderTab = this.renderTab.bind(this);
+        this.renderComponent = this.renderComponent.bind(this);
     }
 
 
@@ -63,6 +65,7 @@ class WertgarantieConfirmation extends LitElement {
     }
 
     setProperties(data) {
+        this.boxTitle = data.texts.boxTitle;
         this.title = data.texts.title;
         this.subtitle = data.texts.subtitle;
         this.confirmationTextTermsAndConditions = data.texts.confirmationTextTermsAndConditions;
@@ -226,21 +229,19 @@ class WertgarantieConfirmation extends LitElement {
         `
     }
 
-    render() {
-        if (!this.showComponent) {
-            return html``;
-        }
+    renderComponent() {
         const termsAndConditionsCheckboxClassList = {
             "checkbox__container": true,
             "confirmation--unchecked": !this.termsAndConditionsConfirmed && this.showUncheckedWarning
         };
-        //language=HTML
         return html`
             <!--
             Font Awesome Free by @fontawesome - https://fontawesome.com
             License - https://fontawesome.com/license (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
             -->
             <div class="component">
+             <div class="boxTitle">
+             </div>
                 <section class="info">
                     <div class="header">
                         <div class="header__icon">
@@ -271,7 +272,25 @@ class WertgarantieConfirmation extends LitElement {
                     </div>
                 </section>
                 ${this.renderProductPanel('product__panel', this.orders[this.selectedProductIndex])}
-            </div>                   `;
+            </div>
+        
+        `;
+    }
+
+    render() {
+        if (!this.showComponent) {
+            return html``;
+        }
+        //language=HTML
+        return (this.boxTitle) ?
+            html`
+            <div class="box">
+                <div class="box__title">
+                    <span class="box__title--text">${this.boxTitle}</span>
+                </div>
+               ${this.renderComponent()}
+            </div> `
+            : this.renderComponent();
     }
 }
 

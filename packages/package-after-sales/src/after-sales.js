@@ -14,9 +14,10 @@ class WertgarantieAfterSales extends LitElement {
 
     static get properties() {
         return {
-            headerTitle: {type: String},
-            productBoxTitle: {type: String},
-            orderItems: {type: Array},
+            title: {type: String},
+            subtitle: {type: String},
+            contractNumberText: {type: String},
+            successfulOrders: {type: Array},
             nextStepsTitle: {type: String},
             nextSteps: {type: Array},
             base64EncodedShopCheckoutData: {type: String},
@@ -25,11 +26,12 @@ class WertgarantieAfterSales extends LitElement {
     }
 
     setProperties(data) {
-        this.headerTitle = data.headerTitle || "Ihre Geräte wurden erfolgreich versichert!";
-        this.productBoxTitle = data.productBoxTitle || "Folgende Geräte wurden versichert:";
-        this.nextStepsTitle = data.nextStepsTitle || "Die nächsten Schritte:";
-        this.nextSteps = data.nextSteps || [];
-        this.orderItems = data.orderItems || [];
+        this.title = data.texts.success.title;
+        this.subtitle = data.texts.success.subtitle;
+        this.contractNumberText = data.texts.success.contractNumber;
+        this.nextStepsTitle = data.texts.success.nextStepsTitle;
+        this.nextSteps = data.texts.success.nextSteps;
+        this.successfulOrders = data.successfulOrders;
 
     }
 
@@ -81,7 +83,7 @@ class WertgarantieAfterSales extends LitElement {
         //language=HTML
         return html`
             <div class="order">
-                ${this.orderItems.map((item, index) => this.renderOrderItem(item, index))}
+                ${this.successfulOrders.map((item, index) => this.renderOrderItem(item, index))}
             </div>
         `;
     }
@@ -109,6 +111,9 @@ class WertgarantieAfterSales extends LitElement {
                     </div>
                     <div class="panel__content--bottom">
                         <div class="panel__content">
+                            <span">${this.contractNumberText + " " + item.contractNumber}</span>
+                        </div>
+                        <div class="panel__content">
                             <span class="panel__product-name">${item.productTitle}</span>
                         </div>
                     </div>
@@ -131,12 +136,12 @@ class WertgarantieAfterSales extends LitElement {
                             <!-- Font Awesome check icon: -->
                             <svg class="icon__svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="icon__svg--white" d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>
                         </div>
-                        <div class="header__title">${this.headerTitle}</div>
+                        <div class="header__title">${this.title}</div>
                     </div>
                     <div class="content">
                         <div class="content__box box__insured-products">
                             <div class="box__header">
-                                ${this.productBoxTitle}
+                                ${this.subtitle}
                             </div>
                             ${this.renderOrder()}
                         </div>

@@ -63,12 +63,10 @@ export const selectionPopUpStyling = css`
     }
 
     .closeBtn {
-        color: white;
-        background-color: var(--wertgarantie-popup-dark-button-background-color, rgb(32, 32, 32));
-        padding: 0.8em 1.2em 0.8em 1.2em;
+        color: var(--wertgarantie-popup-dark-button-background-color, rgb(32, 32, 32));
         text-align: center;
         cursor: pointer;
-        font-size: 1.2em;
+        font-size: 2em;
         position: absolute;
         top: 0;
         right: 0;
@@ -100,7 +98,7 @@ export const selectionPopUpStyling = css`
         color: var(--wertgarantie-popup-dark-button-text-color, rgb(244, 244, 244));
     }
 
-    .checkouts {
+    .product-offers {
         display: flex;
         position: relative;
     }
@@ -127,8 +125,8 @@ export const selectionPopUpStyling = css`
     .product__head--background-odd {
         --image-link: linear-gradient(to top right, rgba(0, 0, 0, 0), #000);
         background-image: var(--wertgarantie-popup-product-background-odd,
-        linear-gradient(to bottom right, rgba(81, 61, 61, 0), rgba(255, 145, 0, 0.6)),
-        linear-gradient(to top right, rgba(0, 0, 0, 0), #000)),
+        linear-gradient(to bottom right, rgba(81, 61, 61, 0.4), rgba(255, 145, 0, 0.84)),
+        linear-gradient(to top right, rgba(0, 0, 0, 0.31), #000)),
         var(--image-link);
         background-size: cover;
     }
@@ -169,6 +167,11 @@ export const selectionPopUpStyling = css`
 
     .product__base-info--top-left {
         width: calc(100% - 25px);
+        font-size: 1.1em;
+    }
+
+    .price-display {
+        font-size: 2.3em;
     }
 
     .product__base-info--top-right {
@@ -368,7 +371,8 @@ export const selectionPopUpStyling = css`
         outline: none;
         padding: 1.5em 3em 1.5em 3em;
         margin: 3px;
-        border: 2px solid var(--wertgarantie-popup-dark-button-background-color, rgb(32, 32, 32));
+        border: none;
+        /*border: 2px solid var(--wertgarantie-popup-dark-button-background-color, rgb(32, 32, 32));*/
         transition: all 0.4s;
     }
 

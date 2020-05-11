@@ -1,10 +1,9 @@
 {
   "name": "wertgarantie-integrations",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Mostly shop specific styling to smoothly integrate our components",
   "main": "index.js",
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/wertgarantie-ecom/bifrost-components.git"

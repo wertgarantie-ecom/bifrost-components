@@ -69,7 +69,9 @@ jobs:
       - run:
           name: purge CDN cache for landing page component
           command: curl https://purge.jsdelivr.net/npm/wertgarantie-landing-page@0/dist/landing-page.min.js
-
+      - run:
+          name: purge CDN cache for landing page component
+          command: curl https://purge.jsdelivr.net/npm/wertgarantie-integrations@0/src/handyflash/wertgarantie-confirmation.css
 workflows:
   version: 2
   build_and_publish:

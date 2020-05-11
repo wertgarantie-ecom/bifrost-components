@@ -1,0 +1,1 @@
+import '../dist/handyflash/wertgarantie-confirmation.css'

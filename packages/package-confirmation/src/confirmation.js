@@ -59,7 +59,8 @@ class WertgarantieConfirmation extends LitElement {
     connectedCallback() {
         super.connectedCallback();
         this.bifrostUri = this.getAttribute('data-bifrost-uri') || "https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie";
-        this.formSelector = this.getAttribute('data-form-selector');
+        this.validationTriggerSelector = this.getAttribute('data-validation-trigger-selector');
+        this.validationTriggerEvent = this.getAttribute('data-validation-trigger-event') || 'submit';
         this.initListeners();
         this.displayComponent();
     }
@@ -78,9 +79,9 @@ class WertgarantieConfirmation extends LitElement {
     }
 
     initListeners() {
-        if (this.formSelector) {
-            const form = document.querySelector(this.formSelector);
-            form.addEventListener('submit', this.checkStateOnSubmit);
+        if (this.validationTriggerSelector) {
+            const form = document.querySelector(this.validationTriggerSelector);
+            form.addEventListener(this.validationTriggerEvent, this.checkStateOnSubmit);
         }
         document.addEventListener('wertgarantie-product-added', () => {
             this.displayComponent();

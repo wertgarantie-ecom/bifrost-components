@@ -1,0 +1,13 @@
+.wertgarantie-confirmation {
+    --wertgarantie-confirmation-component-padding: 18px;
+    --wertgarantie-confirmation-header-background-color: rgb(241, 241, 241);
+    --wertgarantie-confirmation-product-tab-background-color-hover: rgb(241, 241, 241);
+    --wertgarantie-confirmation-product-tab-background-color-selected: rgb(241, 241, 241);
+    --wertgarantie-confirmation-box-border: 1px solid rgb(241, 241, 241);
+    --wertgarantie-confirmation-box-margin: 0 0 20px 0;
+    --wertgarantie-confirmation-box-background-color: rgb(241, 241, 241);
+    --wertgarantie-confirmation-box-title-line-height: 22px;
+    --wertgarantie-confirmation-box-title-padding: 9px 0 9px 0;
+    --wertgarantie-confirmation-box-title-font-size: 18px;
+    --wertgarantie-confirmation-box-title-margin: 0 63px 0 63px;
+}

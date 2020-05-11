@@ -1,1 +1,1 @@
-import '../dist/handyflash/wertgarantie-confirmation.css'
+import './handyflash/wertgarantie-confirmation.css'

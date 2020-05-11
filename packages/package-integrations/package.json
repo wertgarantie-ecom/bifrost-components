@@ -4,11 +4,6 @@
   "description": "Mostly shop specific styling to smoothly integrate our components",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "faucet --compact",
-    "fingerprint": "faucet --fingerprint",
-    "watch": "faucet -w",
-    "serve": "faucet --liveservice 9999"
   },
   "repository": {
     "type": "git",

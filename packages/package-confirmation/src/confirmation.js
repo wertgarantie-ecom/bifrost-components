@@ -38,7 +38,7 @@ class WertgarantieConfirmation extends LitElement {
 
     constructor() {
         super();
-        this.componentVersion = '2.0.17';
+        this.componentVersion = '2.0.18';
 
         //method binding
         this.setProperties = this.setProperties.bind(this);
@@ -92,6 +92,7 @@ class WertgarantieConfirmation extends LitElement {
         if (!this.isFullyChecked()) {
             this.showUncheckedWarning = true;
             e.preventDefault();
+            e.target.scrollIntoView();
             return false;
         }
     }

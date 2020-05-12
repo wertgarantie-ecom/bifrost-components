@@ -92,6 +92,7 @@ class WertgarantieConfirmation extends LitElement {
         if (!this.isFullyChecked()) {
             this.showUncheckedWarning = true;
             e.preventDefault();
+            e.target.scrollIntoView();
             return false;
         }
     }

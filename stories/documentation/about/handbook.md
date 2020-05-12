@@ -3,21 +3,6 @@
 Willkommen bei der Komponentenlösung der Wertgarantie. Sie haben sich dazu entschieden, Cross-Selling für Wertgarantie-Produkte auf Ihrer Seite zu betreiben.
 In diesem Handbuch werden wir Sie Schritt für Schritt durch die zu erledigenden Punkte führen, die dafür notwendig sind. 
 
-1. Konfiguration
-    - versicherbare Geräteklassen
-    - gewünschte Versicherungen
-    - Zugangsdaten
-    - E-Mail-Adresse des Shops
-
-2. Integration der Komponenten
-    - Einleitung
-    - Selection Pop Up
-    - Confirmation
-    - After Sales
-    
-3. Benachrichtigung
-    - E-mail bei Übermittlung von Versicherungsanträgen
-
 
 ## Konfiguration
 
@@ -25,8 +10,10 @@ In diesem Handbuch werden wir Sie Schritt für Schritt durch die zu erledigenden
 Als Partner der Wertgarantie müssen Sie entscheiden, welche Geräteklassen versichert werden sollen. 
 Diese müssen Sie unserem Team übermitteln. Die Geräteklasse muss ein eindeutiger Identifier sein (z. B. "Smartphone).
 
+
 ### Gewünschte Versicherungen
 Für jede ausgewählte Geräteklasse können Sie zusammen mit uns passende Versicherungsangebote konfigurieren.
+
 
 ### Zugangsdaten 
 Für den weiteren Verlauf legen wir Zugangsdaten für Sie an. Hierbei handelt es sich um eine öffentliche (public) und eine geheime (secret) client ID.
@@ -34,9 +21,11 @@ Mittels der öffentlichen client ID initialisieren Sie unsere Web-Komponenten, d
 Mithilfe der geheimen client ID wird der Kauf der Versicherung abgesichert. Die `geheime Client ID` muss `unbedingt sicher aufbewahrt` werden.
  Sollte sie versehentlich veröffentlicht werden, kontaktieren Sie uns bitte schnellstmöglich unter <a href="mailto:ecommerce@wertgarantie.com">ecommerce@wertgarantie.com</a>.
  
+ 
 ### E-Mail-Adresse des Shops
 Bitte übermitteln Sie uns eine E-Mail-Adresse, über die wir Sie über Versicherungsanträge informieren können, die über Ihren Shop bei uns eingegangen sind.
-Künftig werden wir diesen Mechanismus durch ein entsprechendes Reporting ablösen. 
+Künftig werden wir diesen Mechanismus durch ein entsprechendes Reporting ablösen.
+
 
 
 ## Integration der Komponenten
@@ -48,6 +37,7 @@ Um den kompletten Cross-Selling-Prozess abzubilden, sind folgende drei Komponent
     - Listet alle ausgewählten Versicherungsprodukte und relevanten Dokumente auf und holt die Einverständniserklärung des Kunden zum Kauf der Versicherungen ein
 3. [After Sales](https://wertgarantie-ecom.github.io/bifrost-components/?path=/story/components-after-sales--after-sales-general): 
     - Zeigt eine Zusammenfassung der gekauften Versicherungsprodukte und zugehörigen Wertgarantie-Vertragsnummern an
+
 
 
 ## Benachrichtigung

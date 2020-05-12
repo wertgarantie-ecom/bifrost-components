@@ -1,7 +1,7 @@
 import {storiesOf} from '@storybook/html';
 
 import handbook from './documentation/about/handbook.md';
-import about from './documentation/about/about.md.md';
+import about from './documentation/about/about.md';
 
 import showdown from 'showdown';
 

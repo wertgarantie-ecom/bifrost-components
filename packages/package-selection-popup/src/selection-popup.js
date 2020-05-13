@@ -70,7 +70,7 @@ class WertgarantieSelectionPopUp extends LitElement {
         const quantity = this.getAttribute("data-quantity");
         this.quantity = quantity ? parseInt(quantity) : 1;
         this.deviceClass = this.getAttribute("data-device-class");
-        this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie";
+        this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://ecommerce.wertgarantie.com/wertgarantie";
         this.landingPageUri = this.getAttribute("data-landing-page-uri") || "https://www.wertgarantie.de";
         this.clientId = this.getAttribute("data-client-id");
         this.shopProductName = this.getAttribute("data-shop-product-name");

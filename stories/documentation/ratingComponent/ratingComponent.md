@@ -41,7 +41,9 @@ The endpoint will return a JSON object like
 ```
 This is all the data, the component needs in order to be displayed in your web page.
 
-<wertgarantie-rating></wertgarantie-rating>
+<wertgarantie-rating
+    data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie">
+</wertgarantie-rating>
 
 ```html
 <wertgarantie-rating></wertgarantie-rating>
@@ -56,6 +58,7 @@ Another way to configure the component is to provide all of the following three 
 
 <wertgarantie-rating data-link-text="Reviews on Google"
                      data-ratings-total="5000"
+                     data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie"
                      data-uri="https://www.google.de/"
                      data-rating="3.5">
 </wertgarantie-rating>
@@ -72,7 +75,10 @@ Another way to configure the component is to provide all of the following three 
 <strong>Note</strong> that you either have to provide `data-bifrost-uri` or <i>all</i> four attributes for manual data providing
 
 The attribute `data-disable-rating-number` can be set to true in order to hide the number and just show the stars:
-<wertgarantie-rating data-disable-rating-number="true"></wertgarantie-rating>
+<wertgarantie-rating 
+    data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie"
+    data-disable-rating-number="true">
+</wertgarantie-rating>
 ```html
 <wertgarantie-rating 
                      data-disable-rating-number="true">
@@ -103,7 +109,8 @@ Provide a css file with the following code:
     --wertgarantie-rating-stars-color: green;
 }
 ```
-<wertgarantie-rating class="example">
+<wertgarantie-rating class="example"
+    data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie">
 </wertgarantie-rating>
 
 ```html

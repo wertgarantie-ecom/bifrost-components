@@ -45,5 +45,6 @@
 
 <wertgarantie-landing-page
     class="wertgarantie-landing-page"
+    data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie"
     data-partner-number="1755805">
 </wertgarantie-landing-page>

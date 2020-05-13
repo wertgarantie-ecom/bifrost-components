@@ -20,7 +20,8 @@ To show Wertgarantie's landing page component in your website, you need to take 
 The landing page needs a little bit of configuration. As a partner of Wertgarantie, you have a partner number that needs to be set as an attribute within the custom element:
 ```html
 <wertgarantie-landing-page
-    data-partner-number="1755805">
+    data-partner-number="1755805"
+    data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie">
 </wertgarantie-landing-page>
 ```
 
@@ -63,5 +64,6 @@ There is a [concrete styling example](https://wertgarantie-ecom.github.io/bifros
 Here is the example with the default styling when no custom styling is provided:
 
 <wertgarantie-landing-page
+    data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie"
     data-partner-number="1755805">
 </wertgarantie-landing-page>

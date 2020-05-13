@@ -21,6 +21,7 @@ In order to see the confirmation component here, please select a phone insurance
     <wertgarantie-confirmation
         data-client-id="public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
         data-hidden-input-selector="#hidden-input-phone"
+        data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie">
         data-validation-trigger-selector="#demo-html-form">
     </wertgarantie-confirmation>
     <input type="submit" class="checkoutBtn" value="Checkout" />

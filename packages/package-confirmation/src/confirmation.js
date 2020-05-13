@@ -58,7 +58,7 @@ class WertgarantieConfirmation extends LitElement {
 
     connectedCallback() {
         super.connectedCallback();
-        this.bifrostUri = this.getAttribute('data-bifrost-uri') || "https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie";
+        this.bifrostUri = this.getAttribute('data-bifrost-uri') || "https://ecommerce.wertgarantie.com/wertgarantie";
         this.validationTriggerSelector = this.getAttribute('data-validation-trigger-selector');
         this.validationTriggerEvent = this.getAttribute('data-validation-trigger-event') || 'submit';
         this.initListeners();

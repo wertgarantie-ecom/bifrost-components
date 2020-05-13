@@ -46,7 +46,7 @@ class WertgarantieAfterSales extends LitElement {
 
     async connectedCallback() {
         super.connectedCallback();
-        this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie";
+        this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://ecommerce.wertgarantie.com/wertgarantie";
         this.base64EncodedShopCheckoutData = this.getAttribute('data-shop-purchase-data');
 
         this.displayComponent();

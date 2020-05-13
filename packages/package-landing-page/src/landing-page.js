@@ -46,7 +46,7 @@ class LandingPage extends LitElement {
         super.connectedCallback();
         this.componentVersion = '0.0.8';
 
-        this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie";
+        this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://ecommerce.wertgarantie.com/wertgarantie";
         this.partnerNumber = this.getAttribute('data-partner-number');
         this.showComponent = false;
         this.displayComponent();
@@ -76,7 +76,6 @@ class LandingPage extends LitElement {
     }
 
     render() {
-        // language=HTML
         return this.showComponent ? html`
             <div class="landing-page">
                 <div class="landing-page__head" style="--image-link: url(${this.headImageLink});">
@@ -101,6 +100,7 @@ class LandingPage extends LitElement {
                             <div class="google-rating-container">
                                 <wertgarantie-rating class="default-google-rating"
                                                      data-disable-rating-number="true"
+                                                     data-bifrost-uri="${this.bifrostUri}"
                                                      data-link-text="Google Rezensionen">
                                 </wertgarantie-rating>
                             </div>
@@ -224,6 +224,7 @@ class LandingPage extends LitElement {
                 </div>
             </div>
         ` : html``;
+        // language=HTML
     }
 
     renderArrowBetweenSteps() {

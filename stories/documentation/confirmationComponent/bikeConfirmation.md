@@ -21,6 +21,7 @@ In order to see the confirmation component here, please select a bike insurance 
     <wertgarantie-confirmation
         data-client-id="public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
         data-hidden-input-selector="#hidden-input-bike"
+        data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie">
         data-validation-trigger-selector="#demo-html-form">
     </wertgarantie-confirmation>
     <input type="submit" class="checkoutBtn" value="Checkout" />
@@ -46,6 +47,7 @@ There are several attributes in the component that are configurable:
 * `data-hidden-input-selector`: a css-selector that selects a hidden input tag in your HTML-form. When initialized, the component will set the value of the input tag (cookie data with signature) that you can use for the checkout call to bifrost in your web shop.
 * `data-validation-trigger-selector`: a css-selector that selects your checkout form (e. g. '#checkout-form') 
 * `data-bifrost-uri`: Uri of the backend. Defaults to `"https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie"`
+"`
 
 
 ## Validation

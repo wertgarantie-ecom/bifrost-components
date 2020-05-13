@@ -43,4 +43,6 @@ Custom Styling is coming soon...
 
 ## Example
 <button class="example-button" onclick="showAfterSalesExample('after-sales-comp')">Click me to see the after sales component example</button>
-<wertgarantie-after-sales id="after-sales-comp"></wertgarantie-after-sales>
+<wertgarantie-after-sales id="after-sales-comp"
+        data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie">
+</wertgarantie-after-sales>

@@ -31,7 +31,7 @@ class WertgarantieRating extends LitElement {
 
     connectedCallback() {
         super.connectedCallback();
-        this.bifrostUri = this.getAttribute('data-bifrost-uri') || "https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie";
+        this.bifrostUri = this.getAttribute('data-bifrost-uri') || "https://ecommerce.wertgarantie.com/wertgarantie";
         this.rating = this.getAttribute('data-rating');
         this.link = this.getAttribute('data-link');
         this.linkText = this.getAttribute('data-link-text');

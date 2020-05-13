@@ -32,9 +32,10 @@ To configure the component correctly, you need to generate a base64 encoded json
 ```
 const encryptedSessionId = CryptoJS.HmacSHA256(sessionId, "yourSecretClientIDFromWertgarantie").toString();
 ### Code snippets for creating base64 string
-- JavaScript:
+<details>
+<summary>JavaScript</summary>
 ```javascript
-const CryptoJS = require('crypto-js'); 
+const CryptoJS = require('crypto-js');
 
 // retrieve cookie from request
 const sessionId = req.cookies['wertgarantie-session-id'];
@@ -67,7 +68,7 @@ const wertgarantieCheckoutDataBuffer = Buffer.from(JSON.stringify({
     }));
 const dataShopPurchaseData = wertgarantieCheckoutDataBuffer.toString('base64');
 ```
-
+</details>
 
 ## Example
 <button class="example-button" onclick="showAfterSalesExample('after-sales-comp')">Click me to see the after sales component example</button>

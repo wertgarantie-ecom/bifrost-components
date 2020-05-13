@@ -48,7 +48,8 @@ document.querySelector('wertgarantie-selection-pop-up').clientId = ${clientId};
         id="basic-popup"
         data-client-id="public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
         data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie"
-        data-shop-product-name="Super Phone"
+        data-product-model="Super Phone"
+        data-order-item-id="order345"
         data-device-class="Smartphone"
         data-device-price="800">
 </wertgarantie-selection-pop-up>
@@ -56,8 +57,9 @@ document.querySelector('wertgarantie-selection-pop-up').clientId = ${clientId};
 ```html
 <wertgarantie-selection-pop-up 
         data-client-id="public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
-        data-shop-product-name="Super Phone"
+        data-product-model="Super Phone"
         data-device-class="Smartphone"
+        data-order-item-id="order345"
         data-device-price="800">
 </wertgarantie-selection-pop-up>
 ```

@@ -37,7 +37,7 @@ class WertgarantieAfterSales extends LitElement {
 
     constructor() {
         super();
-        this.componentVersion = '1.0.10';
+        this.componentVersion = '1.0.11';
         this.setProperties = this.setProperties.bind(this);
         this.renderOrder = this.renderOrder.bind(this);
         this.renderOrderItem = this.renderOrderItem.bind(this);

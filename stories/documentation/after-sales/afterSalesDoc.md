@@ -30,7 +30,6 @@ To configure the component correctly, you need to generate a base64 encoded json
         data-shop-purchase-data="eyJwdXJjaGFzZWRQcm9kdWN0cyI6W3sicHJpY2UiOjg...">
     </wertgarantie-after-sales>
 ```
-const encryptedSessionId = CryptoJS.HmacSHA256(sessionId, "yourSecretClientIDFromWertgarantie").toString();
 ### Code snippets for creating base64 string
 <details>
 <summary>JavaScript</summary>

@@ -2,7 +2,6 @@
 
 * [Install / Include](#install)
 * [Configuration](#configure-the-after-sales-component)
-* [Styling](#styling)
 * [Example](#example)
 
 ## Install
@@ -18,28 +17,57 @@ In order to include Wertgarantie's after sales component in your website, you ne
 ```
 
 ## Configure the After Sales Component
-The after sales component works in two different ways that you, as a partner shop of Wertgarantie, can choose.
-The two different ways also determine how to configure the component.
-First, let's discuss the two ways:
-    
-1. Checkout Call is made by the partner shop.
-In this case, you just need to use the custom elements - no more attributes required
-
-2. Checkout Call is made by the after sales component itself.
-In this case, you need to generate a base64 encoded json object that contains the checkout data:
+Checkout Call for insurance products is made by the after sales component itself.
+To configure the component correctly, you need to generate a base64 encoded json object that contains the checkout data from you, the partner shop:
    - customer data
    - shop product data
-   - encrypted Wertgarantie session ID (encrypted with your client secret - provided by Wertgarantie)
-An instruction on how to assemble this exactly will come soon and/or will be worked out with you and the Wertgarantie developers.
-So, you have to provide the attribute `data-shop-purchase-data` with the value of the base64-string.
+   - encrypted Wertgarantie session ID (encrypted with your client secret - provided by Wertgarantie using [HmacSHA256](https://en.wikipedia.org/wiki/HMAC))
+    The session ID is set in a cookie within the shop domain. The cookie name is `wertgarantie-session-id`.
+    A schema for this data can be found [here](https://github.com/wertgarantie-ecom/bifrost/blob/master/src/shoppingcart/schemas/checkoutSchema.js).
+    The generated base64 string is set in the component through the `data-shop-purchase-data` attribute.
 ```html
     <wertgarantie-after-sales
         data-shop-purchase-data="eyJwdXJjaGFzZWRQcm9kdWN0cyI6W3sicHJpY2UiOjg...">
     </wertgarantie-after-sales>
 ```
+const encryptedSessionId = CryptoJS.HmacSHA256(sessionId, "yourSecretClientIDFromWertgarantie").toString();
+### Code snippets for creating base64 string
+- JavaScript:
+```javascript
+const CryptoJS = require('crypto-js'); 
 
-## Styling
-Custom Styling is coming soon...
+// retrieve cookie from request
+const sessionId = req.cookies['wertgarantie-session-id'];
+
+// encrypt retrieved sessionID with secret client ID provided by Wertgarantie team
+const encryptedSessionId = CryptoJS.HmacSHA256(sessionId, "yourSecretClientIDFromWertgarantie").toString();
+
+// Buffer stringified Object and convert to base64
+const wertgarantieCheckoutDataBuffer = Buffer.from(JSON.stringify({
+        purchasedProducts: [
+            {
+                price: 86000, // in minor units (cent)
+                manufacturer: "XXXPhones Inc.",
+                deviceClass: "Smartphone",
+                model: "Example Phone",
+                orderId: "orderNo1"
+            }       
+        ],
+        customer: {
+            salutation: 'Herr',
+            firstname: 'Otto',
+            lastname: 'Normalverbraucher',
+            street: 'Beispielstraße 9',
+            zip: '52345',
+            city: 'Köln',
+            country: 'Deutschland',
+            email: 'otto@normalverbraucher.com'
+        },
+        encryptedSessionId: encryptedSessionId
+    }));
+const dataShopPurchaseData = wertgarantieCheckoutDataBuffer.toString('base64');
+```
+
 
 ## Example
 <button class="example-button" onclick="showAfterSalesExample('after-sales-comp')">Click me to see the after sales component example</button>

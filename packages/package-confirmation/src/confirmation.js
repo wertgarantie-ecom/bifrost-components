@@ -89,7 +89,7 @@ class WertgarantieConfirmation extends LitElement {
     }
 
     checkStateOnSubmit(e) {
-        if (!this.isFullyChecked()) {
+        if (!this.isFullyChecked() && this.showComponent) {
             this.showUncheckedWarning = true;
             e.preventDefault();
             e.target.scrollIntoView();

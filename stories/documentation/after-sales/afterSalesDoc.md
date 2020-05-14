@@ -8,11 +8,11 @@
 
 In order to include Wertgarantie's after sales component in your website, you need to take out the following steps:
 - include the script-tag in your page: 
-```html
+```htmlembedded=
     <script src="https://cdn.jsdelivr.net/npm/wertgarantie-after-sales/dist/after-sales.min.js" type="module"></script>
 ```
 - use the now available custom element 
-```html
+```htmlembedded=
     <wertgarantie-after-sales></wertgarantie-after-sales>
 ```
 
@@ -33,6 +33,7 @@ To configure the component correctly, you need to generate a base64 encoded json
 ### Code snippets for creating base64 string
 <details>
 <summary>JavaScript</summary>
+
 ```javascript
 const CryptoJS = require('crypto-js');
 

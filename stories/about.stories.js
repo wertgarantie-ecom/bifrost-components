@@ -2,6 +2,7 @@ import {storiesOf} from '@storybook/html';
 
 import handbook from './documentation/about/handbook.md';
 import about from './documentation/about/about.md';
+import email from './documentation/about/email.md';
 
 import showdown from 'showdown';
 
@@ -19,4 +20,10 @@ storiesOf('About|About', module)
         `<div class="markdown-body">` +
             converter.makeHtml(handbook) +
         `</div>`
-);
+    );
+storiesOf('About|Content', module)
+    .add("Email", () =>
+        `<div class="markdown-body">` +
+            converter.makeHtml(email) +
+        `</div>`
+    );

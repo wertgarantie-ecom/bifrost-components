@@ -47,7 +47,7 @@ class WertgarantieSelectionPopUp extends LitElement {
     constructor() {
         super();
         this.initialized = false;
-        this.componentVersion = '2.0.22';
+        this.componentVersion = '2.0.23';
 
         // method binding
         this.setProperties = this.setProperties.bind(this);
@@ -73,7 +73,8 @@ class WertgarantieSelectionPopUp extends LitElement {
         this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://ecommerce.wertgarantie.com/wertgarantie";
         this.landingPageUri = this.getAttribute("data-landing-page-uri") || "https://www.wertgarantie.de";
         this.clientId = this.getAttribute("data-client-id");
-        this.shopProductName = this.getAttribute("data-shop-product-name");
+        this.model = this.getAttribute("data-product-model");
+        this.orderItemId = this.getAttribute("data-order-item-id") || undefined;
         this.mobileView = window.innerWidth <= MOBILE_WIDTH;
         this.setDefaults();
         window.addEventListener('resize', () => {
@@ -126,14 +127,14 @@ class WertgarantieSelectionPopUp extends LitElement {
     }
 
     async fetchPolicy() {
-        if (!(this.bifrostUri && this.devicePrice && this.deviceClass && this.clientId && this.shopProductName)) {
+        if (!(this.bifrostUri && this.devicePrice && this.deviceClass && this.clientId && this.model)) {
             this.remove();
             throw new Error("fetch data incomplete\n" +
                 "bifrostUri: " + this.bifrostUri + "\n" +
                 "clientId: " + this.clientId + "\n" +
                 "devicePrice: " + this.devicePrice + "\n" +
                 "deviceClass: " + this.deviceClass + "\n" +
-                "shopProductName: " + this.shopProductName
+                "model: " + this.model
             );
         }
         const url = new URL(this.bifrostUri + '/components/selection-popup');
@@ -266,7 +267,10 @@ class WertgarantieSelectionPopUp extends LitElement {
         };
         //language=HTML
         return html`
-            <div @click="${() => {if (!this.mobileView) this.updateSelectedProductIndex(idx); return;}}"
+            <div @click="${() => {
+            if (!this.mobileView) this.updateSelectedProductIndex(idx);
+            return;
+        }}"
                  @mouseover="${() => this.focusedProductIndex = idx}"
                  @mouseleave="${() => this.focusedProductIndex = this.selectedProductIndex}"
                  class=${classMap(productDivClassList)}>
@@ -371,7 +375,7 @@ class WertgarantieSelectionPopUp extends LitElement {
     async addProductToShoppingCart() {
         // fetch uri with different path for POST call to set cookie
         const selectedProduct = this.products[this.selectedProductIndex];
-        if (!(this.bifrostUri && this.devicePrice && this.deviceClass && this.shopProductName && selectedProduct.id && selectedProduct.name && this.clientId)) {
+        if (!(this.bifrostUri && this.devicePrice && this.deviceClass && this.model && selectedProduct.id && selectedProduct.name && this.clientId)) {
             this.fadeout();
             throw new Error("order data incomplete: \n" +
                 "bifrostUri: " + this.bifrostUri + "\n" +
@@ -380,7 +384,7 @@ class WertgarantieSelectionPopUp extends LitElement {
                 "clientId: " + this.clientId + "\n" +
                 "selectedProductId: " + selectedProduct.id + "\n" +
                 "selectedProductName: " + selectedProduct.name + "\n" +
-                "shopProductName: " + this.shopProductName
+                "shopProductName: " + this.model
             );
         }
         try {
@@ -388,7 +392,8 @@ class WertgarantieSelectionPopUp extends LitElement {
                 shopProduct: {
                     price: parseInt(this.devicePrice),
                     deviceClass: this.deviceClass,
-                    model: this.shopProductName
+                    model: this.model,
+                    orderItemId: this.orderItemId
                 },
                 wertgarantieProduct: {
                     id: selectedProduct.id,

@@ -62,11 +62,12 @@ class WertgarantieSelectionPopUp extends LitElement {
         this.setDefaults = this.setDefaults.bind(this);
         this.checkForMobileFocusUpdate = this.checkForMobileFocusUpdate.bind(this);
         this.renderAdvantage = this.renderAdvantage.bind(this);
+        this.checkConfiguration = this.checkConfiguration.bind(this);
     }
 
     connectedCallback() {
         super.connectedCallback();
-        this.devicePrice = this.getAttribute("data-device-price");
+        this.devicePrice = parseInt(this.getAttribute("data-device-price"));
         const quantity = this.getAttribute("data-quantity");
         this.quantity = quantity ? parseInt(quantity) : 1;
         this.deviceClass = this.getAttribute("data-device-class");
@@ -94,6 +95,10 @@ class WertgarantieSelectionPopUp extends LitElement {
     }
 
     setProperties(responseData) {
+        if (!responseData) {
+            this.showComponent = false;
+            return;
+        }
         const products = responseData.products.map(product => {
             product.displayAttributes = {
                 isSelected: false
@@ -113,6 +118,8 @@ class WertgarantieSelectionPopUp extends LitElement {
         this.cancelButtonText = responseData.texts.cancelButtonText;
         this.confirmButtonText = responseData.texts.confirmButtonText;
         this.products = products;
+
+        this.showComponent = true;
     }
 
     displayComponent() {
@@ -120,13 +127,15 @@ class WertgarantieSelectionPopUp extends LitElement {
             this.showComponent = false;
             return;
         }
+
+        this.checkConfiguration();
+
         this.fetchPolicy()
             .then(this.setProperties)
-            .then(() => this.showComponent = true)
             .catch(console.error);
     }
 
-    async fetchPolicy() {
+    checkConfiguration() {
         if (!(this.bifrostUri && this.devicePrice && this.deviceClass && this.clientId && this.model)) {
             this.remove();
             throw new Error("fetch data incomplete\n" +
@@ -137,14 +146,19 @@ class WertgarantieSelectionPopUp extends LitElement {
                 "model: " + this.model
             );
         }
+    }
+
+    async fetchPolicy() {
         const url = new URL(this.bifrostUri + '/components/selection-popup');
-        const queryParams = {
+        const response = await fetchBifrost(url, 'PUT', this.componentVersion, {
             devicePrice: this.devicePrice,
             deviceClass: this.deviceClass,
-            clientId: this.clientId
-        };
-        Object.keys(queryParams).forEach(key => url.searchParams.append(key, queryParams[key]));
-        const response = await fetchBifrost(url, 'GET', this.componentVersion);
+            clientId: this.clientId,
+            orderItemId: this.orderItemId
+        });
+        if (response.status === 204) {
+            return undefined;
+        }
         if (response.status !== 200) {
             throw new Error(`invalid bifrost response: ${response.status}`);
         }
@@ -390,7 +404,7 @@ class WertgarantieSelectionPopUp extends LitElement {
         try {
             const response = await fetchBifrost(this.bifrostUri + '/shoppingCart/' + this.clientId, 'POST', this.componentVersion, {
                 shopProduct: {
-                    price: parseInt(this.devicePrice),
+                    price: this.devicePrice,
                     deviceClass: this.deviceClass,
                     model: this.model,
                     orderItemId: this.orderItemId

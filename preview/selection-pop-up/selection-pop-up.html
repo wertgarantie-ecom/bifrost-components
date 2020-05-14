@@ -11,7 +11,8 @@
 <button class="example-button" id="openBtn1">Klick mich für Beispiel 1</button>
 <wertgarantie-selection-pop-up id="selection1"
                                class="example1"
-                               data-shop-product-name="Phone X">
+                               data-bifrost-uri="http://localhost:3000/wertgarantie"
+                               data-product-model="Phone X">
 </wertgarantie-selection-pop-up>
 
 <!--<button class="example-button" id="openBtn2">Klick mich für Beispiel 2</button>-->
@@ -33,11 +34,22 @@
 <button class="example-button" id="openBtn4">Keine Anzeige für Quantity > 1</button>
 <wertgarantie-selection-pop-up id="selection4"
                                class="example1"
-                               data-shop-product-name="Bike X"
+                               data-product-model="Bike X"
                                data-quantity="2"
                                data-device-price="10000"
                                data-client-id="public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
                                data-device-class="Smartphone">
+</wertgarantie-selection-pop-up>
+
+<button class="example-button" id="openBtn5">Mit gesetzter OrderItemId</button>
+<wertgarantie-selection-pop-up id="selection5"
+                               class="example5"
+                               data-order-item-id="orderItemId1"
+                               data-bifrost-uri="http://localhost:3000/wertgarantie"
+                               data-device-price=100000
+                               data-device-class="Smartphone"
+                               data-client-id="public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
+                               data-product-model="Phone X">
 </wertgarantie-selection-pop-up>
 
 <script>
@@ -73,6 +85,9 @@
     var openBtn4 = document.querySelector('#openBtn4');
     openBtn4.addEventListener('click', () => {
         selection4.displayComponent();
+    })
+    openBtn5.addEventListener('click', () => {
+        selection5.displayComponent();
     })
 </script>
 <script src="../../packages/package-selection-popup/dist/selection-popup.min.js"></script>

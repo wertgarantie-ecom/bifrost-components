@@ -283,7 +283,6 @@ class WertgarantieSelectionPopUp extends LitElement {
         return html`
             <div @click="${() => {
             if (!this.mobileView) this.updateSelectedProductIndex(idx);
-            return;
         }}"
                  @mouseover="${() => this.focusedProductIndex = idx}"
                  @mouseleave="${() => this.focusedProductIndex = this.selectedProductIndex}"
@@ -412,7 +411,8 @@ class WertgarantieSelectionPopUp extends LitElement {
                 wertgarantieProduct: {
                     id: selectedProduct.id,
                     name: selectedProduct.name,
-                    paymentInterval: "monthly"
+                    paymentInterval: "monthly",
+                    price: selectedProduct.price
                 }
             });
             if (response.status !== 200) {

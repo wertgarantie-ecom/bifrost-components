@@ -1,6 +1,6 @@
 {
   "name": "wertgarantie-selection-popup",
-  "version": "2.0.23",
+  "version": "2.0.24",
   "description": "wertgarantie web component to select policy products",
   "main": "selection-popup.js",
   "scripts": {

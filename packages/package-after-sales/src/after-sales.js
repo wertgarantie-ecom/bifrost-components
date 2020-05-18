@@ -48,12 +48,19 @@ class WertgarantieAfterSales extends LitElement {
         super.connectedCallback();
         this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://ecommerce.wertgarantie.com/wertgarantie";
         this.base64EncodedShopCheckoutData = this.getAttribute('data-shop-purchase-data');
+        const testData = this.getAttribute('data-test-data');
+        this.testData = testData ? JSON.parse(testData) : undefined;
 
-        this.displayComponent();
+        await this.displayComponent();
     }
 
     async displayComponent() {
         let fetchResult;
+        if (this.testData) {
+            this.setProperties(this.testData);
+            this.showComponent = true;
+            return;
+        }
         if (!this.base64EncodedShopCheckoutData) {
             const sessionId = getWertgarantieCookieValue(WERTGARANTIE_SESSION_ID_COOKIE);
             if (!sessionId) {

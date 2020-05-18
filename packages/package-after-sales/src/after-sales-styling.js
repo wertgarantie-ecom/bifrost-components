@@ -11,6 +11,7 @@ export const afterSalesStyling = css`
         max-width: 1350px;
         border: var(--wertgarantie-after-sales-border, 1px solid #F2F2F2);
         color: var(--wertgarantie-after-sales-text-color, black);
+        margin: var(--wertgarantie-after-sales-margin, 0 0 0 0);
     }
 
     .header {
@@ -42,6 +43,7 @@ export const afterSalesStyling = css`
         font-weight: var(--wertgarantie-after-sales-header-title-font-weight, 700);
         line-height: var(--wertgarantie-after-sales-header-title-line-height, 1.2em);
         background-color: var(--wertgarantie-after-sales-header-title-background-color, #CDFFCC);
+        color: var(--wertgarantie-after-sales-header-title-color, black);
         text-transform: var(--wertgarantie-after-sales-header-title-text-transform, uppercase);
     }
 

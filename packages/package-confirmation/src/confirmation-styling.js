@@ -43,6 +43,17 @@ export const confirmationStyling = css`
         padding: 1em;
     }
 
+    .flash-message {
+        background-color: #ee6767;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        padding: 8px;
+        margin: 16px 50px 0px 50px;
+        font-weight: 700;
+        font-size: 0.8em;
+    }
+
     .product__panel {
         width: 35%;
     }
@@ -111,7 +122,7 @@ export const confirmationStyling = css`
     }
 
     .confirmation--unchecked {
-        border: 2px solid red;
+        border: 2px solid #ee6767;
     }
 
     .confirmation__text {
@@ -119,16 +130,6 @@ export const confirmationStyling = css`
         font-size: 0.8em;
     }
 
-    .confirmation__footer {
-        padding-top: 1.5em;
-        padding-left: 50px;
-        font-weight: 700;
-        font-size: 0.7em;
-    }
-
-    .confirmation__footer--notification {
-        color: red;
-    }
 
     .product {
         display: none;

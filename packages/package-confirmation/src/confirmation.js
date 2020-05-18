@@ -18,8 +18,13 @@ class WertgarantieConfirmation extends LitElement {
             orders: {type: Object},
             selectedProductIndex: {type: Number},
             termsAndConditionsConfirmed: {type: Boolean},
-            showUncheckedWarning: {type: Boolean},
 
+            showUncheckedWarning: {type: Boolean},
+            showPriceChangedWarning: {type: Boolean},
+
+            flashMessage: {type: String},
+
+            priceChangedWarning: {type: String},
             boxTitle: {type: String},
             title: {type: String},
             subtitle: {type: String},
@@ -50,15 +55,16 @@ class WertgarantieConfirmation extends LitElement {
         this.displayComponent = this.displayComponent.bind(this);
         this.toggleTermsAndConditionsConfirmation = this.toggleTermsAndConditionsConfirmation.bind(this);
         this.sendToggelTermsAndConditionsConfirmationRequest = this.sendToggelTermsAndConditionsConfirmationRequest.bind(this);
-        this.renderValidationFailed = this.renderValidationFailed.bind(this);
         this.renderTab = this.renderTab.bind(this);
         this.renderComponent = this.renderComponent.bind(this);
+        this.clearWarnings = this.clearWarnings.bind(this);
     }
 
 
     connectedCallback() {
         super.connectedCallback();
         this.bifrostUri = this.getAttribute('data-bifrost-uri') || "https://ecommerce.wertgarantie.com/wertgarantie";
+        this.shopOrderBase64 = this.getAttribute('data-shop-order-base64');
         this.validationTriggerSelector = this.getAttribute('data-validation-trigger-selector');
         this.validationTriggerEvent = this.getAttribute('data-validation-trigger-event') || 'submit';
         this.initListeners();
@@ -69,6 +75,8 @@ class WertgarantieConfirmation extends LitElement {
         this.boxTitle = data.texts.boxTitle;
         this.title = data.texts.title;
         this.subtitle = data.texts.subtitle;
+        this.showPriceChangedWarning = data.showPriceChangedWarning;
+        this.priceChangedWarning = data.texts.priceChangedWarning;
         this.confirmationTextTermsAndConditions = data.texts.confirmationTextTermsAndConditions;
         this.confirmationPrompt = data.texts.confirmationPrompt;
         this.orders = data.orders;
@@ -76,6 +84,7 @@ class WertgarantieConfirmation extends LitElement {
         this.termsAndConditionsConfirmed = data.termsAndConditionsConfirmed || false;
         this.showUncheckedWarning = false;
 
+        this.flashMessage = this.showPriceChangedWarning ? this.priceChangedWarning : undefined;
     }
 
     initListeners() {
@@ -90,9 +99,11 @@ class WertgarantieConfirmation extends LitElement {
 
     checkStateOnSubmit(e) {
         if (!this.isFullyChecked() && this.showComponent) {
+            this.showPriceChangedWarning = false;
             this.showUncheckedWarning = true;
-            e.preventDefault();
+            this.flashMessage = this.confirmationPrompt;
             e.target.scrollIntoView();
+            e.preventDefault();
             return false;
         }
     }
@@ -103,7 +114,9 @@ class WertgarantieConfirmation extends LitElement {
 
     async fetchConfirmationComponentData() {
         const url = new URL(this.bifrostUri + '/components/confirmation');
-        const response = await fetchBifrost(url, 'PUT', this.componentVersion);
+        const response = await fetchBifrost(url, 'PUT', this.componentVersion, {
+            shopShoppingCart: this.shopOrderBase64
+        });
 
         if (response.status !== 200) {
             return undefined;
@@ -180,6 +193,7 @@ class WertgarantieConfirmation extends LitElement {
 
     toggleTermsAndConditionsConfirmation(event) {
         if (event.target.checked) {
+            this.clearWarnings();
             return this.sendToggelTermsAndConditionsConfirmationRequest('PUT');
         } else {
             return this.sendToggelTermsAndConditionsConfirmationRequest('DELETE');
@@ -208,17 +222,12 @@ class WertgarantieConfirmation extends LitElement {
         }
     }
 
-    renderValidationFailed() {
-        return this.showUncheckedWarning ? html`
-            <div class="confirmation__footer confirmation__footer--notification" >
-                <strong>${this.confirmationPrompt}</strong>
-            </div> ` : html``;
-    }
 
     renderTab(order, index) {
         const tabClassList = {
             "tab": true,
-            "tab--selected": index === this.selectedProductIndex
+            "tab--selected": index === this.selectedProductIndex,
+            "tab--warning": order.updated && this.showPriceChangedWarning
         };
         return html`
             <div class="${classMap(tabClassList)}" @click="${() => this.selectedProductIndex = index}">
@@ -229,6 +238,19 @@ class WertgarantieConfirmation extends LitElement {
                 </div>
             </div>
         `
+    }
+
+    clearWarnings() {
+        this.flashMessage = undefined;
+        this.showPriceChangedWarning = false;
+        this.showUncheckedWarning = false;
+    }
+
+    renderFlashMessage() {
+        return this.flashMessage
+            ? html`
+                    <div class="flash-message">${this.flashMessage}</div>
+        ` : html``;
     }
 
     renderComponent() {
@@ -242,8 +264,6 @@ class WertgarantieConfirmation extends LitElement {
             License - https://fontawesome.com/license (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
             -->
             <div class="component">
-             <div class="boxTitle">
-             </div>
                 <section class="info">
                     <div class="header">
                         <div class="header__icon">
@@ -269,9 +289,9 @@ class WertgarantieConfirmation extends LitElement {
                                 </div>
                                 <div class="confirmation__text" id="general-confirmation-text">${unsafeHTML(this.confirmationTextTermsAndConditions)}</div>
                             </div>
-                            ${this.renderValidationFailed()}
                         </div>
                     </div>
+                    ${this.renderFlashMessage()}
                 </section>
                 ${this.renderProductPanel('product__panel', this.orders[this.selectedProductIndex])}
             </div>

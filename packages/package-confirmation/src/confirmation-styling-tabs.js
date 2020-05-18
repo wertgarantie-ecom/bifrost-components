@@ -49,6 +49,10 @@ export const confirmationStylingTabs = css`
         background-color: var(--wertgarantie-confirmation-product-tab-background-color-selected, rgb(230, 230, 230));
     }
 
+    .tab--warning {
+        border: 4px solid #ee6767;
+    }
+
     .remove-product {
         cursor: pointer;
         font-size: 1em;

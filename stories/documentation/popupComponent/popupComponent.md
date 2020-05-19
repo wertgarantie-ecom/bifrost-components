@@ -27,14 +27,18 @@ Once the JavaScript file is included the following tag is available
 ## Configure the selection popup
 
 ### Fetch Data
-The popup component fetches data from the value behind the attribute `data-bifrost-uri`. If this is not provided, it defaults to `https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie`. The component will fetch a JSON object from this server.
-It also needs the following attributes:
+The popup component fetches data from the URI behind the attribute `data-bifrost-uri`. If this is not provided, it defaults to `https://ecommerce.wertgarantie.com/wertgarantie`. The component will fetch a JSON object from this server.
+If you include the component in your test/staging environment, you should use `https://wertgarantie-bifrost-staging.herokuapp.com/wertgarantie`. 
+
+It also needs the following HTML attributes:
 * `data-device-class`
 * `data-device-price`
 * `data-shop-product-name`
-* `data-client-id` (specific Client ID for the partner shop)
+* `data-client-id` (public Client ID for the specific stage (test/staging or production))
 
-which can be set via the attributes within the html tag or via JavaScript
+The public client ID for the specific environments will be provided by Wertgarantie's e-commerce team.
+
+Alternatively you can set the attributes via JavaScript as well. We recommend using the HTML attributes though.
 ```javascript
 document.querySelector('wertgarantie-selection-pop-up').deviceClass = ${deviceClass};
 document.querySelector('wertgarantie-selection-pop-up').devicePrice = ${devicePrice};

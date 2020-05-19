@@ -36,7 +36,8 @@ Um den kompletten Cross-Selling-Prozess abzubilden, sind folgende drei Komponent
 2. [Confirmation](https://wertgarantie-ecom.github.io/bifrost-components/?path=/story/components-confirmation--confirmation-component-phone-shop):
     - Listet alle ausgewählten Versicherungsprodukte und relevanten Dokumente auf und holt die Einverständniserklärung des Kunden zum Kauf der Versicherungen ein
 3. [After Sales](https://wertgarantie-ecom.github.io/bifrost-components/?path=/story/components-after-sales--after-sales-general): 
-    - Zeigt eine Zusammenfassung der gekauften Versicherungsprodukte und zugehörigen Wertgarantie-Vertragsnummern an
+    - erstellt bei Initialisierung die vom Kunden gewählten Versicherungsanträge.
+    - Zeigt eine Zusammenfassung der gekauften Versicherungsprodukte und zugehörigen Wertgarantie-Vertragsnummern an.
 
 
 

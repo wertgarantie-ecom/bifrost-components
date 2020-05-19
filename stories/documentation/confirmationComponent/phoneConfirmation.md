@@ -10,7 +10,7 @@ It is, so to say, the shopping cart for Wertgarantie's products.
 ## Include
 To make the html `wertgarantie-confirmation`-tag available, just include this JS file in your web page:
 ```html
-<script src="https://cdn.jsdelivr.net/npm/package-confirmation/dist/confirmation.min.js" type="module">
+<script src="https://cdn.jsdelivr.net/npm/wertgarantie-confirmation@2/dist/confirmation.min.js" type="module">
 ```
 `NOTE` that `type="module"` is required to ensure that older browsers without ES6 support will not misinterpret the file and throw errors.
 

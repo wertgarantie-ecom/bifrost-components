@@ -15,7 +15,7 @@ npm install wertgarantie-selection-popup
 
 Or directly include it into your web page
 ```html
-<script src="https://cdn.jsdelivr.net/npm/wertgarantie-selection-popup/dist/selection-popup.min.js" type="module">
+<script src="https://cdn.jsdelivr.net/npm/wertgarantie-selection-popup@2/dist/selection-popup.min.js" type="module">
 ```
 `NOTE` that `type="module"` is required to ensure that older browsers without ES6 support will not misinterpret the file and throw errors.
 
@@ -67,6 +67,10 @@ document.querySelector('wertgarantie-selection-pop-up').clientId = ${clientId};
         data-device-price="800">
 </wertgarantie-selection-pop-up>
 ```
+
+### Optional data attributes
+
+* `quantity`: Currently we only support quantity= 1, in every other case the popup will not show up. 
 
 ### Open the Pop Up
 Note that the component does not open up automatically. There is one line of code that needs to be implemented for the pop up to appear:

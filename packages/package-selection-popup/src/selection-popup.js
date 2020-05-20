@@ -5,7 +5,6 @@ import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from 'lit-html/directives/style-map';
 import {selectionPopUpStyling} from "./selection-popup-styling";
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
-import * as Sentry from "@sentry/browser";
 
 const MOBILE_WIDTH = 878;
 
@@ -70,35 +69,6 @@ class WertgarantieSelectionPopUp extends LitElement {
         super.connectedCallback();
         this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://ecommerce.wertgarantie.com/wertgarantie";
         this.clientId = this.getAttribute("data-client-id");
-        let environment;
-        switch (this.bifrostUri) {
-            case 'https://ecommerce.wertgarantie.com/wertgarantie':
-                environment = 'production';
-                break;
-            case 'https://wertgarantie-bifrost-staging.herokuapp.com/wertgarantie':
-                environment = 'staging';
-                break;
-            case 'https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie':
-                environment = 'dev';
-                break;
-            case 'http://localhost:3000/wertgarantie':
-                environment = 'local';
-                break;
-            default:
-                environment = 'unknown';
-                break;
-        }
-        if (environment === 'production' || environment === 'staging') {
-            Sentry.init({
-                dsn: 'https://10a2bf1226744e9f908e7939ec5e65c9@o395559.ingest.sentry.io/5247546',
-                release: this.componentVersion,
-                environment: environment
-            });
-            Sentry.configureScope(function (scope) {
-                scope.setTag("clientId", this.clientId);
-                scope.setTag("component", 'selection-pop-up');
-            });
-        }
         this.devicePrice = parseInt(this.getAttribute("data-device-price"));
         const quantity = this.getAttribute("data-quantity");
         this.quantity = quantity ? parseInt(quantity) : 1;

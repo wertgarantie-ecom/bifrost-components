@@ -6,7 +6,6 @@ import fetchBifrost from "../../../shared-code/fetchBifrost";
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from "lit-html/directives/style-map";
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
-import * as Sentry from "@sentry/browser";
 
 class WertgarantieConfirmation extends LitElement {
 
@@ -68,36 +67,6 @@ class WertgarantieConfirmation extends LitElement {
         this.shopOrderBase64 = this.getAttribute('data-shop-order-base64');
         this.validationTriggerSelector = this.getAttribute('data-validation-trigger-selector');
         this.validationTriggerEvent = this.getAttribute('data-validation-trigger-event') || 'submit';
-
-        let environment;
-        switch (this.bifrostUri) {
-            case 'https://ecommerce.wertgarantie.com/wertgarantie':
-                environment = 'production';
-                break;
-            case 'https://wertgarantie-bifrost-staging.herokuapp.com/wertgarantie':
-                environment = 'staging';
-                break;
-            case 'https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie':
-                environment = 'dev';
-                break;
-            case 'http://localhost:3000/wertgarantie':
-                environment = 'local';
-                break;
-            default:
-                environment = 'unknown';
-                break;
-        }
-        if (environment === 'production' || environment === 'staging') {
-            Sentry.init({
-                dsn: 'https://10a2bf1226744e9f908e7939ec5e65c9@o395559.ingest.sentry.io/5247546',
-                release: this.componentVersion,
-                environment: environment
-            });
-            Sentry.configureScope(function (scope) {
-                scope.setTag("clientId", this.clientId);
-                scope.setTag("component", 'confirmation');
-            });
-        }
 
         this.initListeners();
         this.displayComponent();

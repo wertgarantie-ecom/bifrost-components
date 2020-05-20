@@ -27,6 +27,7 @@ To configure the component correctly, you need to generate a base64 encoded json
     The generated base64 string is set in the component through the `data-shop-purchase-data` attribute.
 ```html
     <wertgarantie-after-sales
+        data-client-id="clientId"
         data-shop-purchase-data="eyJwdXJjaGFzZWRQcm9kdWN0cyI6W3sicHJpY2UiOjg...">
     </wertgarantie-after-sales>
 ```
@@ -73,5 +74,6 @@ const dataShopPurchaseData = wertgarantieCheckoutDataBuffer.toString('base64');
 ## Example
 <button class="example-button" onclick="showAfterSalesExample('after-sales-comp')">Click me to see the after sales component example</button>
 <wertgarantie-after-sales id="after-sales-comp"
+        data-client-id="clientId"
         data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie">
 </wertgarantie-after-sales>

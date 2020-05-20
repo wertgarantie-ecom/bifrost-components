@@ -1,6 +1,7 @@
 import {LitElement, html} from 'lit-element';
 import {ratingStyling} from './rating-styling';
 import fetchBifrost from "../../../shared-code/fetchBifrost";
+import * as Sentry from '@sentry/browser';
 
 const starText = '★★★★★';
 
@@ -98,6 +99,7 @@ class WertgarantieRating extends LitElement {
         }
     }
 }
+
 if (!customElements.get('wertgarantie-rating')) {
     customElements.define('wertgarantie-rating', WertgarantieRating);
 }

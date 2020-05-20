@@ -6,6 +6,7 @@ import fetchBifrost from "../../../shared-code/fetchBifrost";
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from "lit-html/directives/style-map";
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
+import initSentry from "../../../shared-code/sentry";
 
 class WertgarantieConfirmation extends LitElement {
 
@@ -64,9 +65,12 @@ class WertgarantieConfirmation extends LitElement {
     connectedCallback() {
         super.connectedCallback();
         this.bifrostUri = this.getAttribute('data-bifrost-uri') || "https://ecommerce.wertgarantie.com/wertgarantie";
+        this.clientId = this.getAttribute('data-client-id');
+        initSentry('confirmation', this.componentVersion, this.bifrostUri, this.clientId);
         this.shopOrderBase64 = this.getAttribute('data-shop-order-base64');
         this.validationTriggerSelector = this.getAttribute('data-validation-trigger-selector');
         this.validationTriggerEvent = this.getAttribute('data-validation-trigger-event') || 'submit';
+
         this.initListeners();
         this.displayComponent();
     }

@@ -5,6 +5,7 @@ import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from 'lit-html/directives/style-map';
 import {selectionPopUpStyling} from "./selection-popup-styling";
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
+import initSentry from "../../../shared-code/sentry";
 
 const MOBILE_WIDTH = 878;
 
@@ -67,13 +68,14 @@ class WertgarantieSelectionPopUp extends LitElement {
 
     connectedCallback() {
         super.connectedCallback();
+        this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://ecommerce.wertgarantie.com/wertgarantie";
+        this.clientId = this.getAttribute("data-client-id");
+        initSentry('selection-pop-up', this.componentVersion, this.bifrostUri, this.clientId);
         this.devicePrice = parseInt(this.getAttribute("data-device-price"));
         const quantity = this.getAttribute("data-quantity");
         this.quantity = quantity ? parseInt(quantity) : 1;
         this.deviceClass = this.getAttribute("data-device-class");
-        this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://ecommerce.wertgarantie.com/wertgarantie";
         this.landingPageUri = this.getAttribute("data-landing-page-uri") || "https://www.wertgarantie.de";
-        this.clientId = this.getAttribute("data-client-id");
         this.model = this.getAttribute("data-product-model");
         this.orderItemId = this.getAttribute("data-order-item-id") || undefined;
         this.mobileView = window.innerWidth <= MOBILE_WIDTH;

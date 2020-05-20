@@ -93,8 +93,6 @@ class WertgarantieSelectionPopUp extends LitElement {
                 dsn: 'https://10a2bf1226744e9f908e7939ec5e65c9@o395559.ingest.sentry.io/5247546',
                 release: this.componentVersion,
                 environment: environment
-
-
             });
             Sentry.configureScope(function (scope) {
                 scope.setTag("clientId", this.clientId);

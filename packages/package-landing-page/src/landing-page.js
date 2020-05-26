@@ -62,7 +62,7 @@ class LandingPage extends LitElement {
     }
 
     async fetchLandingPageData() {
-        const url = this.bifrostUri + '/components/landing-page/';
+        const url = `${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/landing-page/`;
         const result = await fetchBifrost(url, 'GET', this.componentVersion);
         return result.body;
     }

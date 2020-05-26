@@ -151,7 +151,7 @@ class WertgarantieSelectionPopUp extends LitElement {
     }
 
     async fetchPolicy() {
-        const url = new URL(this.bifrostUri + '/components/selection-popup');
+        const url = new URL(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-popup`);
         const response = await fetchBifrost(url, 'PUT', this.componentVersion, {
             devicePrice: this.devicePrice,
             deviceClass: this.deviceClass,
@@ -403,7 +403,7 @@ class WertgarantieSelectionPopUp extends LitElement {
             );
         }
         try {
-            const response = await fetchBifrost(this.bifrostUri + '/shoppingCart/' + this.clientId, 'POST', this.componentVersion, {
+            const response = await fetchBifrost(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/shoppingCart/`, 'POST', this.componentVersion, {
                 shopProduct: {
                     price: this.devicePrice,
                     deviceClass: this.deviceClass,

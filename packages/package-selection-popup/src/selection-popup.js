@@ -64,6 +64,7 @@ class WertgarantieSelectionPopUp extends LitElement {
         this.checkForMobileFocusUpdate = this.checkForMobileFocusUpdate.bind(this);
         this.renderAdvantage = this.renderAdvantage.bind(this);
         this.checkConfiguration = this.checkConfiguration.bind(this);
+        this.cancelPopUp = this.cancelPopUp.bind(this);
     }
 
     connectedCallback() {
@@ -199,7 +200,7 @@ class WertgarantieSelectionPopUp extends LitElement {
                                 </wertgarantie-rating>
                             </div>
                             <div class="head__right">
-                                <span @click="${() => this.fadeout()}" class="closeBtn" id="closeBtn">×</span>
+                                <span @click="${() => this.cancelPopUp()}" class="closeBtn" id="closeBtn">×</span>
                             </div>
                         </div>
                         <p class="head__subtitle">${this.subtitle}</p>
@@ -233,7 +234,7 @@ class WertgarantieSelectionPopUp extends LitElement {
                         <section class="button-section">
                             <div class="button-section__details-cancel">
                                 <button @click="${() => this.toggleDetailsExpansion()}" class="button button--light" id="detailsBtn">${this.showDetails ? this.hideDetailsText : this.showDetailsText}</button>
-                                <button @click="${() => this.fadeout()}" class="button button--light" id="cancelOrder">${this.cancelButtonText}</button>
+                                <button @click="${() => this.cancelPopUp()}" class="button button--light" id="cancelOrder">${this.cancelButtonText}</button>
                             </div>
                             <div class="button-section__order">
                                 <button @click="${() => this.addProductToShoppingCart()}" class=${classMap(orderButtonClassList)} id="orderBtn"
@@ -427,6 +428,12 @@ class WertgarantieSelectionPopUp extends LitElement {
             console.error('Error:', error);
         }
     }
+
+    async cancelPopUp() {
+        await fetchBifrost(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-popup/cancel`, 'POST', this.componentVersion);
+        this.fadeout();
+    }
+
 
     fadeout() {
         const fadeTarget = this.shadowRoot.getElementById('modal');

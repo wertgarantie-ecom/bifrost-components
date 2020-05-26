@@ -117,7 +117,7 @@ class WertgarantieConfirmation extends LitElement {
     }
 
     async fetchConfirmationComponentData() {
-        const url = new URL(this.bifrostUri + '/components/confirmation');
+        const url = new URL(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/confirmation`);
         const response = await fetchBifrost(url, 'PUT', this.componentVersion, {
             shopShoppingCart: this.shopOrderBase64
         });
@@ -205,7 +205,7 @@ class WertgarantieConfirmation extends LitElement {
     }
 
     async sendToggelTermsAndConditionsConfirmationRequest(method) {
-        const url = this.bifrostUri + '/components/confirmation/termsAndConditionsConfirmed';
+        const url = `${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/confirmation/termsAndConditionsConfirmed`;
         const response = await fetchBifrost(url, method, this.componentVersion);
         if (response.status === 200) {
             this.termsAndConditionsConfirmed = !this.termsAndConditionsConfirmed;
@@ -214,7 +214,7 @@ class WertgarantieConfirmation extends LitElement {
 
 
     async deleteProductOrder(product) {
-        const url = new URL(this.bifrostUri + '/components/confirmation/product');
+        const url = new URL(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/confirmation/product`);
 
         const result = await fetchBifrost(url, 'DELETE', this.componentVersion, {
             orderId: product.orderId

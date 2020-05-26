@@ -69,11 +69,11 @@ class WertgarantieAfterSales extends LitElement {
                 this.showComponent = false;
                 return;
             }
-            const url = this.bifrostUri + '/components/after-sales/' + sessionId;
+            const url = `${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/after-sales/${sessionId}`;
             fetchResult = await fetchBifrost(url, 'GET', this.componentVersion);
         } else {
             this.showComponent = false;
-            const url = this.bifrostUri + '/components/after-sales/checkout';
+            const url = `${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/after-sales/checkout`;
             const checkoutRequestData = {
                 webshopData: this.base64EncodedShopCheckoutData
             };

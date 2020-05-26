@@ -38,7 +38,7 @@ class WertgarantieRating extends LitElement {
         this.linkText = this.getAttribute('data-link-text');
         this.ratingsTotal = this.getAttribute('data-ratings-total');
         this.disableRatingNumber = this.getAttribute('data-disable-rating-number') === "true";
-        this.fetchRating(this.bifrostUri + '/rating')
+        this.fetchRating(this.bifrostUri + '/ecommerce/rating')
             .then(this.checkIfRatingDefined)
             .then(this.setProperties)
     }

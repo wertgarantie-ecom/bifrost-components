@@ -3,6 +3,7 @@
 ## Example 1 - Default
 <button class="example-button" onclick="showAfterSalesExample('after-sales-default')">Click me to see the after sales component with default styling</button>
 <wertgarantie-after-sales class="after-sales-default" id="after-sales-default"
+        data-client-id="public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
         data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie">
 </wertgarantie-after-sales>
 ```html
@@ -40,6 +41,7 @@
 ## Example 2 - Custom
 <button class="example-button" onclick="showAfterSalesExample('after-sales-example')">Click me to see the after sales component with custom styling</button>
 <wertgarantie-after-sales class="after-sales-example" id="after-sales-example"
+        data-client-id="public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
         data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie">
 </wertgarantie-after-sales>
 ```html

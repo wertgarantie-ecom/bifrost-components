@@ -74,6 +74,6 @@ const dataShopPurchaseData = wertgarantieCheckoutDataBuffer.toString('base64');
 ## Example
 <button class="example-button" onclick="showAfterSalesExample('after-sales-comp')">Click me to see the after sales component example</button>
 <wertgarantie-after-sales id="after-sales-comp"
-        data-client-id="clientId"
+        data-client-id="public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
         data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie">
 </wertgarantie-after-sales>

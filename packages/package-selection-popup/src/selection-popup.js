@@ -414,7 +414,7 @@ class WertgarantieSelectionPopUp extends LitElement {
                 wertgarantieProduct: {
                     id: selectedProduct.id,
                     name: selectedProduct.name,
-                    paymentInterval: "monthly",
+                    paymentInterval: selectedProduct.intervalCode,
                     price: selectedProduct.price
                 }
             });

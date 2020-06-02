@@ -57,7 +57,7 @@ class WertgarantieSelectionPopUp extends LitElement {
     constructor() {
         super();
         this.initialized = false;
-        this.componentVersion = '2.0.29';
+        this.componentVersion = '2.0.30';
 
         // method binding
         this.setProperties = this.setProperties.bind(this);
@@ -465,7 +465,7 @@ class WertgarantieSelectionPopUp extends LitElement {
                 wertgarantieProduct: {
                     id: selectedProduct.id,
                     name: selectedProduct.name,
-                    paymentInterval: "monthly",
+                    paymentInterval: selectedProduct.intervalCode,
                     price: selectedProduct.price
                 }
             });

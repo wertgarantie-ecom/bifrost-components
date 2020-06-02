@@ -52,6 +52,16 @@
                                data-product-model="Phone X">
 </wertgarantie-selection-pop-up>
 
+<wertgarantie-selection-pop-up id="selection6"
+                               class="example6"
+                               data-bifrost-uri="http://localhost:3000/wertgarantie"
+                               data-device-price=100000
+                               data-device-class="Smartphone"
+                               data-client-id="public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
+                               data-display-mode="button"
+                               data-product-model="Phone X">
+</wertgarantie-selection-pop-up>
+
 <script>
     var selection1 = document.querySelector("#selection1");
     selection1.devicePrice = 100000;
@@ -62,7 +72,7 @@
 
     var openBtn1 = document.querySelector('#openBtn1');
     openBtn1.addEventListener('click', () => {
-        selection1.displayComponent();
+        selection1.triggerDisplay();
     });
 
     // var selection2 = document.querySelector("#selection2");
@@ -84,10 +94,10 @@
     var selection4 = document.querySelector("#selection4");
     var openBtn4 = document.querySelector('#openBtn4');
     openBtn4.addEventListener('click', () => {
-        selection4.displayComponent();
+        selection4.triggerDisplay();
     })
     openBtn5.addEventListener('click', () => {
-        selection5.displayComponent();
+        selection5.triggerDisplay();
     })
 </script>
 <script src="../../packages/package-selection-popup/dist/selection-popup.min.js"></script>

@@ -8,6 +8,11 @@ import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
 import initSentry from "../../../shared-code/sentry";
 
 const MOBILE_WIDTH = 878;
+const DISPLAY_MODES = {
+    button: "button",
+    self: "self",
+    trigger: "trigger"
+}
 
 class WertgarantieSelectionPopUp extends LitElement {
 
@@ -18,6 +23,7 @@ class WertgarantieSelectionPopUp extends LitElement {
     static get properties() {
         return {
             showComponent: {type: Boolean},
+            displayMode: {type: String},
             showDetails: {type: Boolean},
             selectedProductIndex: {type: Number},
             focusedProductIndex: {type: Number},
@@ -29,6 +35,8 @@ class WertgarantieSelectionPopUp extends LitElement {
             shopProductName: {type: String},
             clientId: {type: String},
 
+            showPopUp: {type: Boolean},
+            showDisplayButton: {type: Boolean},
             title: {type: String},
             subtitle: {type: String},
             footerHtml: {type: String},
@@ -40,6 +48,7 @@ class WertgarantieSelectionPopUp extends LitElement {
             hideDetailsText: {type: String},
             cancelButtonText: {type: String},
             confirmButtonText: {type: String},
+            displayButtonText: {type: String},
 
             products: {type: Array}
         };
@@ -65,6 +74,8 @@ class WertgarantieSelectionPopUp extends LitElement {
         this.renderAdvantage = this.renderAdvantage.bind(this);
         this.checkConfiguration = this.checkConfiguration.bind(this);
         this.cancelPopUp = this.cancelPopUp.bind(this);
+        this.renderDisplayButton = this.renderDisplayButton.bind(this);
+        this.renderPopUp = this.renderPopUp.bind(this);
     }
 
     connectedCallback() {
@@ -79,6 +90,7 @@ class WertgarantieSelectionPopUp extends LitElement {
         this.landingPageUri = this.getAttribute("data-landing-page-uri") || "https://www.wertgarantie.de";
         this.model = this.getAttribute("data-product-model");
         this.orderItemId = this.getAttribute("data-order-item-id") || undefined;
+        this.displayMode = DISPLAY_MODES[this.getAttribute('data-display-mode')] || DISPLAY_MODES.trigger;
         this.mobileView = window.innerWidth <= MOBILE_WIDTH;
         this.setDefaults();
         window.addEventListener('resize', () => {
@@ -87,6 +99,30 @@ class WertgarantieSelectionPopUp extends LitElement {
                 this.mobileView = !this.mobileView;
             }
         });
+
+        switch (this.displayMode) {
+            case DISPLAY_MODES.button:
+                this.showDisplayButton = true;
+                this.showPopUp = false;
+                this.displayComponent();
+                break;
+            case DISPLAY_MODES.self:
+                this.showDisplayButton = false;
+                this.showPopUp = true;
+                this.displayComponent();
+                break;
+            case DISPLAY_MODES.trigger:
+                this.showDisplayButton = false;
+                this.showPopUp = true;
+                this.triggerDisplay = () => {
+                    this.showPopUp = true;
+                    this.displayComponent();
+                };
+                this.triggerDisplay = this.triggerDisplay.bind(this);
+                break;
+            default:
+                throw new Error(`unsupported data-display-mode: ${this.displayMode}, supported modes: ${DISPLAY_MODES}`)
+        }
     }
 
     setDefaults() {
@@ -120,6 +156,7 @@ class WertgarantieSelectionPopUp extends LitElement {
         this.hideDetailsText = responseData.texts.hideDetailsText;
         this.cancelButtonText = responseData.texts.cancelButtonText;
         this.confirmButtonText = responseData.texts.confirmButtonText;
+        this.displayButtonText = responseData.texts.displayButtonText || 'Extra Schutz? Jetzt direkt prüfen.';
         this.products = products;
 
         this.showComponent = true;
@@ -169,6 +206,14 @@ class WertgarantieSelectionPopUp extends LitElement {
     }
 
     render() {
+        return (this.showComponent)
+            ? html`
+            ${this.renderDisplayButton()}
+            ${this.renderPopUp()} `
+            : html``;
+    }
+
+    renderPopUp() {
         const orderButtonClassList = {
             "button": true,
             "button--dark": true,
@@ -180,11 +225,9 @@ class WertgarantieSelectionPopUp extends LitElement {
             "product__details-footer": true,
             "product__details-footer--expanded": this.showDetails
         };
-
-        return (this.showComponent) ?
-            //language=HTML
-            html`
-            <!--
+        return this.showPopUp
+            ? html`
+             <!--
             Font Awesome Free by @fontawesome - https://fontawesome.com
             License - https://fontawesome.com/license (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
             -->
@@ -243,7 +286,9 @@ class WertgarantieSelectionPopUp extends LitElement {
                             </div>
                         </section>
                     </div>
-                </div>` : html``;
+                </div>
+            `
+            : html``;
     }
 
     createMobileProductSelectionButton(product, idx) {
@@ -254,6 +299,12 @@ class WertgarantieSelectionPopUp extends LitElement {
         return html`
             <button @click="${() => this.updateMobileFocusIndex(idx)}" class=${classMap(buttonClasses)}>${product.name}</button>
         `;
+    }
+
+    renderDisplayButton() {
+        return this.displayMode === DISPLAY_MODES.button
+            ? html` <button @click="${() => this.showPopUp = true}">${this.displayButtonText}</button> `
+            : html``;
     }
 
     createProductDiv(product, idx) {
@@ -446,7 +497,7 @@ class WertgarantieSelectionPopUp extends LitElement {
                 fadeTarget.style.opacity -= 0.05;
             } else {
                 clearInterval(fadeEffect);
-                self.showComponent = false;
+                self.showPopUp = false;
             }
         }, 20);
     }

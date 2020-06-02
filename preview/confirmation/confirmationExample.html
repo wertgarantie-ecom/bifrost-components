@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .confirmationStylingExample {
+            --wertgarantie-confirmation-font-family: "Comic Sans MS", sans-serif;
+            --wertgarantie-confirmation-text-color: #444444;
+            --wertgarantie-confirmation-background-color: lightgrey;
+
+            --wertgarantie-confirmation-header-background-color: rgba(255, 108, 0, 0.61);
+            --wertgarantie-confirmation-header-icon-background-color: #6e3100;
+            --wertgarantie-confirmation-header-icon-fill-color: lightgrey;
+
+            --wertgarantie-confirmation-header-title-font-weight: 800;
+            --wertgarantie-confirmation-header-title-font-size: 0.8em;
+            --wertgarantie-confirmation-header-title-line-height: 1.3em;
+            --wertgarantie-confirmation-header-title-text-transform: uppercase;
+
+            --wertgarantie-confirmation-body-subtitle-font-weight: 800;
+            --wertgarantie-confirmation-body-subtitle-font-size: 0.9em;
+            --wertgarantie-confirmation-body-subtitle-text-transform: none;
+            --wertgarantie-confirmation-product-tab-background-color-hover: #dcdcdc;
+            --wertgarantie-confirmation-product-tab-background-color-selected: #ececec;
+
+            --wertgarantie-confirmation-product-panel-text-color: #e7e7e7;
+            --wertgarantie-confirmation-product-background-even: linear-gradient(to bottom right, rgba(0, 0, 0, 0), #000),
+            linear-gradient(to top right, #006EFF, rgba(81, 61, 61, 0));
+            --wertgarantie-confirmation-product-background-odd: linear-gradient(to bottom right, rgba(44, 25, 25, 0), rgba(255, 145, 0, 0.6)),
+            linear-gradient(to top right, #000, rgba(0, 0, 0, 0.3));
+        }
+    </style>
+    <title>Confirmation Component</title>
+</head>
+<body>
+<form action="" method="get" id="checkout-form">
+    <wertgarantie-confirmation
+            class="confirmationStylingExample"
+            data-validation-trigger-selector="#checkout-form"
+            data-client-id="public:5a576bd2-1953-4d20-80de-4de00d65fdc7"
+            data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie">
+    </wertgarantie-confirmation>
+    <input type="submit" class="checkoutBtn" value="Checkout"/>
+</form>
+
+<wertgarantie-selection-pop-up id="selection"
+                               data-product-model="Mega Bike 3000 Pro 7 Gänge"
+                               data-device-price="80000"
+                               data-device-class="Bike"
+                               data-order-item-id="5370e324-623b-48bd-8e34-e7f392060155"
+                               data-client-id="public:5a576bd2-1953-4d20-80de-4de00d65fdc7"
+                               data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie">
+</wertgarantie-selection-pop-up>
+
+<script type="module" src="https://cdn.jsdelivr.net/npm/wertgarantie-confirmation@2/dist/confirmation.min.js" crossorigin="anonymous"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/wertgarantie-selection-popup@2/dist/selection-popup.min.js" crossorigin="anonymous"></script>
+<script>
+    window.onload(window.onload = function () {
+        var selection = document.getElementById('selection');
+        if (selection) {
+            selection.displayComponent();
+        }
+    })
+</script>
+</body>
+</html>

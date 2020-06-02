@@ -24,6 +24,7 @@ class WertgarantieSelectionPopUp extends LitElement {
         return {
             showComponent: {type: Boolean},
             displayMode: {type: String},
+            displayModeButtonSelector: {type: String},
             showDetails: {type: Boolean},
             selectedProductIndex: {type: Number},
             focusedProductIndex: {type: Number},
@@ -76,6 +77,7 @@ class WertgarantieSelectionPopUp extends LitElement {
         this.cancelPopUp = this.cancelPopUp.bind(this);
         this.renderDisplayButton = this.renderDisplayButton.bind(this);
         this.renderPopUp = this.renderPopUp.bind(this);
+        this.getSelectedProductText = this.getSelectedProductText.bind(this);
     }
 
     connectedCallback() {
@@ -91,6 +93,8 @@ class WertgarantieSelectionPopUp extends LitElement {
         this.model = this.getAttribute("data-product-model");
         this.orderItemId = this.getAttribute("data-order-item-id") || undefined;
         this.displayMode = DISPLAY_MODES[this.getAttribute('data-display-mode')] || DISPLAY_MODES.trigger;
+        this.displayModeButtonSelector = this.getAttribute('data-display-mode-button-selector');
+        this.displayModeButtonSelectionTriggerEvent = this.getAttribute('data-display-mode-button-selection-trigger-event') || 'submit';
         this.mobileView = window.innerWidth <= MOBILE_WIDTH;
         this.setDefaults();
         window.addEventListener('resize', () => {
@@ -104,6 +108,13 @@ class WertgarantieSelectionPopUp extends LitElement {
             case DISPLAY_MODES.button:
                 this.showDisplayButton = true;
                 this.showPopUp = false;
+                document.querySelector(this.displayModeButtonSelector).addEventListener(this.displayModeButtonSelectionTriggerEvent, (event) => {
+                    if (this.selectedProductIndex >= 0) {
+                        this.addProductToShoppingCart().catch((e) => console.error(e));
+
+                    }
+                    return true;
+                });
                 this.displayComponent();
                 break;
             case DISPLAY_MODES.self:
@@ -280,7 +291,7 @@ class WertgarantieSelectionPopUp extends LitElement {
                                 <button @click="${() => this.cancelPopUp()}" class="button button--light" id="cancelOrder">${this.cancelButtonText}</button>
                             </div>
                             <div class="button-section__order">
-                                <button @click="${() => this.addProductToShoppingCart()}" class=${classMap(orderButtonClassList)} id="orderBtn"
+                                <button @click="${() => this.displayMode === DISPLAY_MODES.button ? this.preOrderProduct() : this.addProductToShoppingCart()}" class=${classMap(orderButtonClassList)} id="orderBtn"
                                         ?disabled=${this.selectedProductIndex === -1}>${this.confirmButtonText}
                                 </button>
                             </div>
@@ -289,6 +300,46 @@ class WertgarantieSelectionPopUp extends LitElement {
                 </div>
             `
             : html``;
+    }
+
+    async preOrderProduct() {
+        // fetch uri with different path for POST call to set cookie
+        const selectedProduct = this.products[this.selectedProductIndex];
+        if (!(this.bifrostUri && this.devicePrice && this.deviceClass && this.model && selectedProduct.id && selectedProduct.name && this.clientId)) {
+            this.fadeout();
+            throw new Error("order data incomplete: \n" +
+                "bifrostUri: " + this.bifrostUri + "\n" +
+                "devicePrice: " + this.devicePrice + "\n" +
+                "deviceClass: " + this.deviceClass + "\n" +
+                "clientId: " + this.clientId + "\n" +
+                "selectedProductId: " + selectedProduct.id + "\n" +
+                "selectedProductName: " + selectedProduct.name + "\n" +
+                "shopProductName: " + this.model
+            );
+        }
+        try {
+            const response = await fetchBifrost(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/shoppingCart/preOrder`, 'POST', this.componentVersion, {
+                shopProduct: {
+                    price: this.devicePrice,
+                    deviceClass: this.deviceClass,
+                    model: this.model,
+                    orderItemId: this.orderItemId
+                },
+                wertgarantieProduct: {
+                    id: selectedProduct.id,
+                    name: selectedProduct.name,
+                    paymentInterval: selectedProduct.intervalCode,
+                    price: selectedProduct.price
+                }
+            });
+            if (response.status !== 200) {
+                console.error('Adding product to shopping cart failed:', response);
+                return {};
+            }
+            this.fadeout();
+        } catch (error) {
+            console.error('Error:', error);
+        }
     }
 
     createMobileProductSelectionButton(product, idx) {
@@ -303,8 +354,12 @@ class WertgarantieSelectionPopUp extends LitElement {
 
     renderDisplayButton() {
         return this.displayMode === DISPLAY_MODES.button
-            ? html` <button @click="${() => this.showPopUp = true}">${this.displayButtonText}</button> `
+            ? html` <button @click="${() => this.showPopUp = true}">${this.selectedProductIndex >= 0 ? this.getSelectedProductText() : this.displayButtonText}</button> `
             : html``;
+    }
+
+    getSelectedProductText() {
+        return this.products[this.selectedProductIndex].name + " ausgewählt";
     }
 
     createProductDiv(product, idx) {

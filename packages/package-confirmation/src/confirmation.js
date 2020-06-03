@@ -18,7 +18,7 @@ class WertgarantieConfirmation extends LitElement {
             formSelector: {type: String},
             orders: {type: Object},
             selectedProductIndex: {type: Number},
-            termsAndConditionsConfirmed: {type: Boolean},
+            confirmations: {type: Boolean},
 
             showUncheckedWarning: {type: Boolean},
             showPriceChangedWarning: {type: Boolean},
@@ -29,7 +29,6 @@ class WertgarantieConfirmation extends LitElement {
             boxTitle: {type: String},
             title: {type: String},
             subtitle: {type: String},
-            confirmationTextTermsAndConditions: {type: String},
             confirmationPrompt: {type: String}
         }
     }
@@ -54,11 +53,11 @@ class WertgarantieConfirmation extends LitElement {
         this.productDataAvailable = this.productDataAvailable.bind(this);
         this.deleteProductOrder = this.deleteProductOrder.bind(this);
         this.displayComponent = this.displayComponent.bind(this);
-        this.toggleTermsAndConditionsConfirmation = this.toggleTermsAndConditionsConfirmation.bind(this);
-        this.sendToggelTermsAndConditionsConfirmationRequest = this.sendToggelTermsAndConditionsConfirmationRequest.bind(this);
         this.renderTab = this.renderTab.bind(this);
         this.renderComponent = this.renderComponent.bind(this);
         this.clearWarnings = this.clearWarnings.bind(this);
+        this.toggleConfirmation = this.toggleConfirmation.bind(this);
+        this.sendToggleConfirmationRequest = this.sendToggleConfirmationRequest.bind(this);
     }
 
 
@@ -85,7 +84,7 @@ class WertgarantieConfirmation extends LitElement {
         this.confirmationPrompt = data.texts.confirmationPrompt;
         this.orders = data.orders;
         this.selectedProductIndex = 0;
-        this.termsAndConditionsConfirmed = data.termsAndConditionsConfirmed || false;
+        this.confirmations = data.confirmations;
         this.showUncheckedWarning = false;
 
         this.flashMessage = this.showPriceChangedWarning ? this.priceChangedWarning : undefined;
@@ -113,7 +112,14 @@ class WertgarantieConfirmation extends LitElement {
     }
 
     isFullyChecked() {
-        return this.termsAndConditionsConfirmed;
+        let allChecked = true;
+        const checkboxes = this.shadowRoot.querySelectorAll('.confirmation');
+        for (var i = 0; i < checkboxes.length; i++) {
+            if (!checkboxes[i].checked) {
+                allChecked = false;
+            }
+        }
+        return allChecked;
     }
 
     async fetchConfirmationComponentData() {
@@ -195,20 +201,30 @@ class WertgarantieConfirmation extends LitElement {
        `;
     }
 
-    toggleTermsAndConditionsConfirmation(event) {
+    toggleConfirmation(event, confirmationName) {
         if (event.target.checked) {
-            this.clearWarnings();
-            return this.sendToggelTermsAndConditionsConfirmationRequest('PUT');
+            if (this.isFullyChecked()) {
+                this.clearWarnings();
+            }
+            return this.sendToggleConfirmationRequest('PUT', confirmationName);
         } else {
-            return this.sendToggelTermsAndConditionsConfirmationRequest('DELETE');
+            return this.sendToggleConfirmationRequest('DELETE', confirmationName);
         }
     }
 
-    async sendToggelTermsAndConditionsConfirmationRequest(method) {
-        const url = `${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/confirmation/termsAndConditionsConfirmed`;
+    async sendToggleConfirmationRequest(method, confirmationName) {
+        const url = `${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/confirmation/${confirmationName}`;
         const response = await fetchBifrost(url, method, this.componentVersion);
         if (response.status === 200) {
-            this.termsAndConditionsConfirmed = !this.termsAndConditionsConfirmed;
+            if (this.confirmations[confirmationName] !== undefined) {
+                this.confirmations[confirmationName] = !this.confirmations[confirmationName];
+            } else {
+                this.confirmations.furtherConfirmations.map(conf => {
+                    if (conf.name === confirmationName) {
+                        conf.confirmed = !conf.confirmed;
+                    }
+                });
+            }
         }
     }
 
@@ -257,11 +273,14 @@ class WertgarantieConfirmation extends LitElement {
         ` : html``;
     }
 
-    renderComponent() {
-        const termsAndConditionsCheckboxClassList = {
+    getCheckboxClassList(confirmed) {
+        return {
             "checkbox__container": true,
-            "confirmation--unchecked": !this.termsAndConditionsConfirmed && this.showUncheckedWarning
-        };
+            "confirmation--unchecked": !confirmed && this.showUncheckedWarning
+        }
+    }
+
+    renderComponent() {
         return html`
             <!--
             Font Awesome Free by @fontawesome - https://fontawesome.com
@@ -287,12 +306,22 @@ class WertgarantieConfirmation extends LitElement {
                         <div class="confirmation__input">
                             <div class="confirmation__row">
                                 <div class="confirmation__checkbox-column">
-                                    <div class=${classMap(termsAndConditionsCheckboxClassList)}>
-                                        <input @click="${event => this.toggleTermsAndConditionsConfirmation(event)}" class="confirmation" id="confirmation_check" type="checkbox" ?checked="${this.termsAndConditionsConfirmed}">
+                                    <div class=${classMap(this.getCheckboxClassList(this.confirmations.termsAndConditionsConfirmed))}>
+                                        <input @click="${event => this.toggleConfirmation(event, 'termsAndConditionsConfirmed')}" class="confirmation" type="checkbox" ?checked="${this.confirmations.termsAndConditionsConfirmed}">
                                     </div>
                                 </div>
-                                <div class="confirmation__text" id="general-confirmation-text">${unsafeHTML(this.confirmationTextTermsAndConditions)}</div>
+                                <div class="confirmation__text">${unsafeHTML(this.confirmations.confirmationTextTermsAndConditions)}</div>
                             </div>
+                            ${this.confirmations.furtherConfirmations.map(confirmation => html`
+                                <div class="confirmation__row">
+                                    <div class="confirmation__checkbox-column">
+                                        <div class=${classMap(this.getCheckboxClassList(confirmation.confirmed))}>
+                                            <input @click="${event => this.toggleConfirmation(event, confirmation.name)}" class="confirmation" type="checkbox" ?checked="${confirmation.confirmed}">
+                                        </div>
+                                    </div>
+                                    <div class="confirmation__text">${unsafeHTML(confirmation.confirmationText)}</div>
+                                </div>`
+                            )}
                         </div>
                     </div>
                     ${this.renderFlashMessage()}

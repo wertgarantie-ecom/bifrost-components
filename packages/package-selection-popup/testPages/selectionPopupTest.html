@@ -8,43 +8,45 @@
 </head>
 <body>
 
-    <button id="default-component-button">Default Component</button>
-    <wertgarantie-selection-pop-up id="default-component"
-        data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie"
-        data-product-model="Phone X">
-    </wertgarantie-selection-pop-up>
+<button id="default-component-button">Default Component</button>
+<wertgarantie-selection-pop-up id="default-component"
+                               data-display-self="false"
+                               data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie"
+                               data-product-model="Phone X">
+</wertgarantie-selection-pop-up>
 
 
-    <button id="invalid-fetch-uri-button">Invalid Fetch Uri</button>
-    <wertgarantie-selection-pop-up id="invalid-fetch-uri"
-        class="example1"
-        data-product-model="Phone X"
-        data-bifrost-uri="https://www.google.com">
-    </wertgarantie-selection-pop-up>
+<button id="invalid-fetch-uri-button">Invalid Fetch Uri</button>
+<wertgarantie-selection-pop-up id="invalid-fetch-uri"
+                               class="example1"
+                               data-display-self="false"
+                               data-product-model="Phone X"
+                               data-bifrost-uri="https://www.google.com">
+</wertgarantie-selection-pop-up>
 
-    <script src="../dist/selection-popup.min.js"></script>
-    <script>
-        var defaultComponent = document.querySelector("#default-component");
-        defaultComponent.devicePrice = 1000;
-        defaultComponent.deviceClass = "Smartphone";
-        defaultComponent.clientId = "public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f";
+<script src="../dist/selection-popup.min.js"></script>
+<script>
+    var defaultComponent = document.querySelector("#default-component");
+    defaultComponent.devicePrice = 1000;
+    defaultComponent.deviceClass = "Smartphone";
+    defaultComponent.clientId = "public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f";
 
-        var defaultComponentBtn = document.querySelector('#default-component-button');
-        defaultComponentBtn.addEventListener('click', () => {
-            defaultComponent.displayComponent();
-        });
+    var defaultComponentBtn = document.querySelector('#default-component-button');
+    defaultComponentBtn.addEventListener('click', () => {
+        defaultComponent.displayComponent();
+    });
 
 
-        var invalidFetchUri = document.querySelector("#invalid-fetch-uri");
-        invalidFetchUri.devicePrice = 1000;
-        invalidFetchUri.deviceClass = "Smartphone";
-        invalidFetchUri.clientId = "public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f";
+    var invalidFetchUri = document.querySelector("#invalid-fetch-uri");
+    invalidFetchUri.devicePrice = 1000;
+    invalidFetchUri.deviceClass = "Smartphone";
+    invalidFetchUri.clientId = "public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f";
 
-        var invalidFetchUriBtn = document.querySelector('#invalid-fetch-uri-button');
-        invalidFetchUriBtn.addEventListener('click', () => {
-            invalidFetchUri.displayComponent();
-        });
+    var invalidFetchUriBtn = document.querySelector('#invalid-fetch-uri-button');
+    invalidFetchUriBtn.addEventListener('click', () => {
+        invalidFetchUri.displayComponent();
+    });
 
-    </script>
+</script>
 </body>
 </html>

@@ -51,6 +51,7 @@ document.querySelector('wertgarantie-selection-pop-up').clientId = ${clientId};
 <wertgarantie-selection-pop-up 
         id="basic-popup"
         data-client-id="public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
+        data-display-self=false
         data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie"
         data-product-model="Super Phone"
         data-order-item-id="order345"
@@ -73,18 +74,9 @@ document.querySelector('wertgarantie-selection-pop-up').clientId = ${clientId};
 * `quantity`: Currently we only support quantity= 1, in every other case the popup will not show up. 
 
 ### Open the Pop Up
-Note that the component does not open up automatically. There is one line of code that needs to be implemented for the pop up to appear:
+The popup opens automatically by calling `displayComponent` on itself. In case this is not desired and you want more control just disable this with `data-display-self=true` and manually call `displayComponent` 
 ```javascript
-window.wertgarantieSelectionPopUpOpen('#popup-id');
-```
-When initialized, the component registers the `window.wertgarantieSelectionPopUpOpen` method which expects the id of the `<wertgarantie-selection-pop-up>` tag. If you want the pop up to show without user interaction when your page is loaded, you can set the `window.onload` method.
-Here is an example:
-```javascript
-window.onload = function() {
-    if (window.wertgarantieSelectionPopUpOpen) {
-        window.wertgarantieSelectionPopUpOpen('#popup-id');
-    }
-}
+document.querySelector('wertgarantie-selection-popup').displayComponent();
 ```
 
 

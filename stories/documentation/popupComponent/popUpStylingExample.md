@@ -37,7 +37,8 @@ This is the css code for the example here:
         class="example2"
         data-client-id="public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
         data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie"
-        data-shop-product-name="Super Phone"
+        data-product-model="Super Phone"
+        data-display-self=false
         data-device-class="Smartphone"
         data-device-price="800">
 </wertgarantie-selection-pop-up>
@@ -46,7 +47,7 @@ This is the css code for the example here:
 <wertgarantie-selection-pop-up
         class="example"
         data-client-id="5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
-        data-shop-product-name="Super Phone"
+        data-product-model="Super Phone"
         data-device-class="Smartphone"
         data-device-price="800">
 </wertgarantie-selection-pop-up>

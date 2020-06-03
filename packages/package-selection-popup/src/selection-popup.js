@@ -80,7 +80,6 @@ class WertgarantieSelectionPopUp extends LitElement {
         this.model = this.getAttribute("data-product-model");
         this.orderItemId = this.getAttribute("data-order-item-id") || undefined;
         const dataDisplaySelf = (this.getAttribute('data-display-self') || 'true') === 'true';
-        console.log(`data display self: ${dataDisplaySelf}`)
         this.mobileView = window.innerWidth <= MOBILE_WIDTH;
         this.setDefaults();
         window.addEventListener('resize', () => {
@@ -91,7 +90,6 @@ class WertgarantieSelectionPopUp extends LitElement {
         });
 
         if (dataDisplaySelf) {
-            console.log("display self!");
             this.displayComponent();
         }
     }

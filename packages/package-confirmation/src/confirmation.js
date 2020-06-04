@@ -92,8 +92,12 @@ class WertgarantieConfirmation extends LitElement {
 
     initListeners() {
         if (this.validationTriggerSelector) {
-            const form = document.querySelector(this.validationTriggerSelector);
-            form.addEventListener(this.validationTriggerEvent, this.checkStateOnSubmit);
+            const element = document.querySelector(this.validationTriggerSelector);
+            if (element) {
+                element.addEventListener(this.validationTriggerEvent, this.checkStateOnSubmit);
+            } else {
+                console.warn(`validation trigger configuration invalid. Couldn't find specified element: ${this.validationTriggerSelector}`)
+            }
         }
         document.addEventListener('wertgarantie-product-added', () => {
             this.displayComponent();

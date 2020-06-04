@@ -1,4 +1,5 @@
 import * as Sentry from "@sentry/browser";
+import {CaptureConsole} from '@sentry/integrations'
 
 export default function initSentry(componentName, componentVersion, bifrostUri, clientId) {
     let environment;
@@ -23,9 +24,12 @@ export default function initSentry(componentName, componentVersion, bifrostUri, 
         Sentry.init({
             dsn: 'https://10a2bf1226744e9f908e7939ec5e65c9@o395559.ingest.sentry.io/5247546',
             release: componentVersion,
-            environment: environment
-
-
+            environment: environment,
+            integrations: [
+                new CaptureConsole({
+                    levels: ['warn', 'error']
+                })
+            ]
         });
         Sentry.configureScope(function (scope) {
             scope.setTag("clientId", clientId);

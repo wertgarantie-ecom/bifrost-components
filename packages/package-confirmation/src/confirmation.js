@@ -18,7 +18,7 @@ class WertgarantieConfirmation extends LitElement {
             formSelector: {type: String},
             orders: {type: Object},
             selectedProductIndex: {type: Number},
-            confirmations: {type: Boolean},
+            confirmations: {type: Object},
 
             showUncheckedWarning: {type: Boolean},
             showPriceChangedWarning: {type: Boolean},

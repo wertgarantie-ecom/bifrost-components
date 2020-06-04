@@ -3,91 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
-    <style>
-        :root {
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-        }
-
-        .component {
-            display: flex;
-            flex-direction: column;
-            border: 1px solid black;
-            padding: 1em;
-            max-width: 350px;
-        }
-
-        .head__title {
-            font-size: 1.2em;
-            font-weight: 700;
-        }
-
-        .head__rating {
-            margin: 0.3em;
-            --wertgarantie-rating-font-size: 0.8em;
-        }
-
-        .products__product {
-            display: flex;
-            justify-content: space-between;
-            border: 1px solid black;
-            padding: 0.5em;
-            margin: 0.7em 0;
-            font-size: 0.8em;
-            font-weight: 500;
-        }
-
-        .product__selection {
-            display: flex;
-            align-items: center;
-
-        }
-
-        .selection__checkbox {
-            margin: 0 0.5em;
-            border: 1px solid black;
-            height: 12px;
-            width: 12px;
-        }
-
-        .component__footer {
-            margin: 0.5em 0;
-            font-size: 0.7em;
-        }
-
-    </style>
 </head>
 <body>
-<div class="component">
-    <div class="component__head head">
-        <div class="head__title">
-            WERTGARANTIE Versicherung?
-        </div>
-        <wertgarantie-rating class="head__rating"
-                             data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie"
-                             data-link-text=" ">
-        </wertgarantie-rating>
-    </div>
-    <div class="component__products prodcuts">
-        <div class="products__product product">
-            <div class="product__selection selection">
-                <div class="selection__checkbox"></div>
-                <div class="selection__name">Premiumschutz</div>
-            </div>
-            <div class="product__price">x.xx € / Monat</div>
-        </div>
-        <div class="products__product product">
-            <div class="product__selection selection">
-                <div class="selection__checkbox"></div>
-                <div class="selection__name">Basisschutz</div>
-            </div>
-            <div class="product__price">x.xx € / Monat</div>
-        </div>
-    </div>
-    <div class="component__footer">
-        Inkl. 19% Versicherungssteuer. <a href="www.wertgarantie.de">Mehr erfahren</a>
-    </div>
-</div>
+<wertgarantie-selection-embedded
+    data-client-id="public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
+    data-bifrost-uri="http://localhost:3000/wertgarantie"
+    data-device-class="Smartphone"
+    data-device-price="79900"
+    data-product-base-model="iPhone SE">
+</wertgarantie-selection-embedded>
 </body>
-<script type="module" src="http://localhost:3334/packages/package-rating/dist/rating.min.js"
+<script type="module" src="http://localhost:3334/packages/package-selection-embedded/dist/selection-embedded.min.js"
         crossorigin="anonymous"></script>
 </html>

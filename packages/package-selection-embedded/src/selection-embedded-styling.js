@@ -2,8 +2,8 @@ import {css} from 'lit-element';
 
 //language=CSS
 export const selectionEmbeddedStyling = css`
-    :root {
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    :host {
+        font-family: var(--wertgarantie-selection-embedded-font-family, Arial, Helvetica), sans-serif;
     }
 
     .component {
@@ -11,6 +11,7 @@ export const selectionEmbeddedStyling = css`
         flex-direction: column;
         border: 1px solid black;
         padding: 1em;
+        width: fit-content;
         max-width: 350px;
     }
 
@@ -27,6 +28,13 @@ export const selectionEmbeddedStyling = css`
     .products__product {
         display: flex;
         justify-content: space-between;
+    }
+    
+    .product__overview {
+        display: flex;
+        width: 90%;
+        justify-content: space-between;
+        align-items: center;
         border: 1px solid black;
         padding: 0.5em;
         margin: 0.7em 0;
@@ -34,10 +42,21 @@ export const selectionEmbeddedStyling = css`
         font-weight: 500;
     }
 
-    .product__selection {
+    .product__information {
+        width: 10%;
+        padding: 0 0.5em;
+        margin: 0.7em 0px;
+        align-items: center;
+        text-align: center;
+    }
+
+    .overview__selection {
         display: flex;
         align-items: center;
-
+    }
+    
+    .overview-price {
+        align-items: center;
     }
 
     .selection__checkbox {

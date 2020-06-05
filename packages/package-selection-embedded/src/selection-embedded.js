@@ -3,13 +3,18 @@ import fetchBifrost from "../../../shared-code/fetchBifrost";
 import '../../package-rating/dist/rating.min.js';
 import initSentry from "../../../shared-code/sentry";
 import {selectionEmbeddedStyling} from "./selection-embedded-styling";
+import {selectionEmbeddedProductPanelStyling} from "./selection-embedded-product-panel-styling";
+import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
+import {classMap} from "lit-html/directives/class-map";
+import {styleMap} from "lit-html/directives/style-map";
 
 
 class WertgarantieSelectionEmbedded extends LitElement {
 
     static get styles() {
         return [
-            selectionEmbeddedStyling
+            selectionEmbeddedStyling,
+            selectionEmbeddedProductPanelStyling
         ];
     }
 
@@ -18,7 +23,14 @@ class WertgarantieSelectionEmbedded extends LitElement {
             showComponent: {type: Boolean},
             title: {type: String},
             wertgarantieFurtherInfoHtml: {type: String},
-            products: {type: Object}
+            includedTax: {type: String},
+
+            products: {type: Object},
+            displayedProductInfoPanelIndex: {type: Number},
+
+            productPanelTitle: {type: String},
+            productPanelDetailsHeader: {type: String},
+            productFurtherInformation: {type: String}
         };
     }
 
@@ -29,6 +41,8 @@ class WertgarantieSelectionEmbedded extends LitElement {
         this.displayComponent = this.displayComponent.bind(this);
         this.fetchSelectionData = this.fetchSelectionData.bind(this);
         this.setProperties = this.setProperties.bind(this);
+        this.renderProductInfoPanel = this.renderProductInfoPanel.bind(this);
+        this.renderAdvantage = this.renderAdvantage.bind(this);
     }
 
     connectedCallback() {
@@ -42,6 +56,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
         this.landingPageUri = this.getAttribute("data-landing-page-uri") || "https://www.wertgarantie.de";
         this.productBaseModel = this.getAttribute("data-product-base-model");
         this.showComponent = false;
+        this.displayedProductInfoPanelIndex = -1;
         this.displayComponent();
     }
 
@@ -64,11 +79,147 @@ class WertgarantieSelectionEmbedded extends LitElement {
     setProperties(selectionData) {
         this.title = selectionData.texts.title;
         this.wertgarantieFurtherInfoHtml = selectionData.texts.wertgarantieFurtherInfoHtml.replace("%s", this.landingPageUri);
+        this.includedTax = selectionData.texts.includedTax;
+        this.footerHtml = selectionData.texts.footerHtml;
+
+        this.productPanelTitle = selectionData.texts.productPanelTitle;
+        this.productPanelDetailsHeader = selectionData.texts.productPanelDetailsHeader;
+        this.productFurtherInformation = selectionData.texts.productFurtherInformation;
+
         this.products = selectionData.products;
     }
 
+    fadeOut() {
+        const fadeTarget = this.shadowRoot.querySelector('.product-modal');
+        const self = this;
+        const fadeEffect = setInterval(function () {
+            if (!fadeTarget.style.opacity) {
+                fadeTarget.style.opacity = 1;
+            }
+            if (fadeTarget.style.opacity > 0) {
+                fadeTarget.style.opacity -= 0.05;
+            } else {
+                clearInterval(fadeEffect);
+                self.displayedProductInfoPanelIndex = -1;
+            }
+        }, 20);
+    }
+
+    renderAdvantage(advantage, isTop3) {
+        if (advantage.included) {
+            return html`
+                <div class="advantage advantage--included">
+                    <div class="advantage__icon-container">
+                        <!-- Font Awesome check icon-->
+                        <svg class="advantage__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class=${isTop3 ? "icon__svg--top3" : "icon__svg--included"} d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>
+                    </div>
+                    <div class="advantage__text-container">
+                        ${advantage.text}
+                    </div>
+                </div>`;
+        }
+        return html`
+            <div class="advantage advantage--excluded">
+                <!-- Font Awesome ban icon-->
+                <div class="advantage__icon-container">
+                    <svg class="advantage__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="icon__svg--excluded" d="M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z"/></svg>
+                </div>        
+                <div class="advantage__text-container">                        
+                    ${advantage.text}
+                </div>
+            </div>`;
+    }
+
+    renderProductInfoPanel(product, idx) {
+        const productHeadClassList = {
+            "product-card--background-even": idx % 2 === 0,
+            "product-card--background-odd": idx % 2 !== 0
+        };
+        const productDetailsClassList = {
+            "product-panel__details": true,
+        };
+        const productImageLinkStyleList = {
+            "--image-link": "url(" + product.imageLink + ")"
+        };
+        //language=HTML
+        return html`
+            <div class="product-modal">
+                <div class="content">
+                    <div class="content__head header">
+                        <div class="header__row">
+                            <strong class="header__title">${this.productPanelTitle}</strong>
+                            <span @click="${this.fadeOut}" class="closeBtn" id="closeBtn">×</span>
+                        </div>
+                        <div class="header__row">
+                            <wertgarantie-rating class="wg-rating-default"
+                                                 data-bifrost-uri="${this.bifrostUri}"
+                                                 data-disable-rating-number="true">
+                            </wertgarantie-rating>
+                        </div>
+                    </div>
+                    <div class="content__product-card">
+                        <div class=${classMap(productHeadClassList)} style=${styleMap(productImageLinkStyleList)}>
+                            <div class="product-card__base-info">
+                                <div class="product-card__base-info--top">
+                                    <div class="product-card__base-info--top-left">
+                                        <small class="payment-interval">${product.paymentInterval}</small><br>
+                                        <strong class="price-display">${product.priceFormatted}</strong><br>
+                                        <small class="tax-display">${product.taxFormatted}</small>
+                                    </div>
+                                </div>
+                                <div class="product-card__base-info--bottom">
+                                    <div class="product-card__title">${product.name}</div>
+                                    <div class="product-card__advantages">
+                                        ${product.top3.map(adv => this.renderAdvantage(adv, true))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content__details details">
+                        <div class="details__title">
+                            ${this.productPanelDetailsHeader}
+                        </div>
+                        <div class="product__advantages product__advantages--details">
+                            ${product.advantages.map(adv => this.renderAdvantage(adv, false))}
+                        </div>
+                        <div class="product__footer-section">
+                            <p><strong>${this.productFurtherInformation}</strong></p>
+                            <a target="_blank" class="wg-link"
+                               href="${product.IPIDUri}">${product.IPIDText}</a><br>
+                            <a target="_blank" class="wg-link"
+                               href="${product.GTCIUri}">${product.GTCIText}</a>
+                        </div>
+                        <div class="product__footer-section">
+<!--                            <div class="trust-text">-->
+<!--                                 <p>${unsafeHTML(this.footerHtml)}</p>-->
+<!--                            </div>-->
+                            <div class="award-image-block">
+                                <a target="_blank" href="https://www.certipedia.com/quality_marks/9105052129">
+                                    <img class="award-image"
+                                         src="https://www.wertgarantie.de/portaldata/4/resources/Icons/tuev-logo.png"
+                                         alt="tuev-logo">
+                                     </a>
+                                <a target="_blank" href="https://www.wertgarantie.de/Home.aspx#">
+                                    <img class="award-image"
+                                         src="https://www.wertgarantie.de/Portaldata/4/Resources/logos/test-bild-wertgarantie-109-01.png"
+                                         alt="test-bild">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `
+    }
+
     render() {
-        return this.showComponent ? html`<div class="component">
+        return this.showComponent ? html`
+            <!--
+                Font Awesome Free by @fontawesome - https://fontawesome.com
+                License - https://fontawesome.com/license (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+            -->
+        <div class="component">
             <div class="component__head head">
                 <div class="head__title">
                     ${this.title}
@@ -78,18 +229,27 @@ class WertgarantieSelectionEmbedded extends LitElement {
                                      data-link-text=" ">
                 </wertgarantie-rating>
             </div>
-            <div class="component__products prodcuts">
-                ${this.products.map(product => html`
+            <div class="products">
+                ${this.products.map((product, idx) => html`
                     <div class="products__product product">
-                        <div class="product__selection selection">
-                            <div class="selection__checkbox"></div>
-                            <div class="selection__name">${product.shortName}</div>
+                        <div class="product__overview overview">
+                            <div class="overview__selection selection">
+                                <div class="selection__checkbox"></div>
+                                <div class="selection__name">${product.shortName}</div>
+                            </div>
+                            <div class="overview__price">${product.priceFormatted + " / " + product.paymentInterval + "*"}</div>
                         </div>
-                        <div class="product__price">${product.priceFormatted + " / " + product.paymentInterval + "*"}</div>
-                    </div>`
-                )}
+                        <div class="product__information" @click="${() => this.displayedProductInfoPanelIndex = idx}">
+<!--                            Font Awesome info icon -->
+                            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="info-circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                <path class="info-icon" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    ${idx === this.displayedProductInfoPanelIndex ? this.renderProductInfoPanel(product, idx) : html``}`
+        )}
             <div class="component__footer">
-                *Inkl. 19% Versicherungssteuer
+                ${this.includedTax}
             </div>
         </div>` : html``;
     }

@@ -12,13 +12,13 @@ showdown.setFlavor('github');
 var converter = new showdown.Converter();
 
 storiesOf('Components|Confirmation', module)
-.add("Confirmation component phone shop", () =>
-    `<div class="markdown-body">` + 
-        converter.makeHtml(phoneConfirmationReadme) + 
-    `</div>`
-)
-.add("Confirmation styling examples", () =>
-    `<div class="markdown-body">` +
+    .add("Confirmation component phone shop", () =>
+        `<div class="markdown-body">` +
+        converter.makeHtml(phoneConfirmationReadme) +
+        `</div>`
+    )
+    .add("Confirmation styling examples", () =>
+        `<div class="markdown-body">` +
         converter.makeHtml(confirmationStylingExamples) +
-    `</div>`
-);
+        `</div>`
+    );

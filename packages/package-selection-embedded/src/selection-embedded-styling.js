@@ -10,9 +10,8 @@ export const selectionEmbeddedStyling = css`
         display: flex;
         flex-direction: column;
         padding: 1em;
-        width: fit-content;
+        width: 100%;
         max-width: 350px;
-        min-width: 300px;
     }
 
     .head__title {

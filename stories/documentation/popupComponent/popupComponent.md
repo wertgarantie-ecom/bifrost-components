@@ -54,7 +54,6 @@ document.querySelector('wertgarantie-selection-pop-up').clientId = ${clientId};
         data-display-self=false
         data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie"
         data-product-name="Super Phone"
-        data-order-item-id="order345"
         data-device-class="Smartphone"
         data-device-price="800">
 </wertgarantie-selection-pop-up>

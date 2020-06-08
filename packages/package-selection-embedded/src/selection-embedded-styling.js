@@ -12,10 +12,11 @@ export const selectionEmbeddedStyling = css`
         padding: 1em;
         width: fit-content;
         max-width: 350px;
+        min-width: 300px;
     }
 
     .head__title {
-        font-size: 1.2em;
+        font-size: 1em;
         font-weight: 700;
     }
 
@@ -44,10 +45,10 @@ export const selectionEmbeddedStyling = css`
         justify-content: space-between;
         align-items: center;
         border: 1px solid black;
-        padding: 0.8em;
-        font-size: 0.8em;
+        padding: 0.6em;
+        font-size: 0.9em;
         font-weight: 500;
-        opacity: 0.5;
+        opacity: 0.4;
         transition: opacity 0.5s;
     }
     
@@ -70,6 +71,8 @@ export const selectionEmbeddedStyling = css`
         width: 90%;
         display: flex;
         justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
     }
 
     .selection__overview {
@@ -92,7 +95,6 @@ export const selectionEmbeddedStyling = css`
         border: 1px solid black;
         height: 12px;
         width: 12px;
-        cursor: pointer;
     }
     
     .selection__information-icon {
@@ -100,11 +102,17 @@ export const selectionEmbeddedStyling = css`
         margin: 0.7em 0px;
         width: 10%;
         cursor: pointer;
+        display: flex;
+        justify-content: flex-end;
     }
 
     .info-icon {
-        width: 15px;
-        height: 15px;
+        width: 17px;
+        height: 17px;
+    }
+    
+    .selection__checkmark {
+        padding-bottom: 1em;
     }
 
 

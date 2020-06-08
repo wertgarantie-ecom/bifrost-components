@@ -81,6 +81,7 @@ class WertgarantieSelectionPopUp extends LitElement {
         this.orderItemId = this.getAttribute("data-order-item-id") || undefined;
         const dataDisplaySelf = (this.getAttribute('data-display-self') || 'true') === 'true';
         this.mobileView = window.innerWidth <= MOBILE_WIDTH;
+
         this.setDefaults();
         window.addEventListener('resize', () => {
             this.checkForMobileFocusUpdate();

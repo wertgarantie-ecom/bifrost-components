@@ -1,5 +1,6 @@
 import {LitElement, html} from "lit-element";
 import fetchBifrost from "../../../shared-code/fetchBifrost";
+import {saveProductSelection, findProductSelection, deleteProductSelection} from "../../../shared-code/wertgarantieShoppingCartRepository";
 import '../../package-rating/dist/rating.min.js';
 import initSentry from "../../../shared-code/sentry";
 import {selectionEmbeddedStyling} from "./selection-embedded-styling";
@@ -27,6 +28,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
 
             products: {type: Object},
             displayedProductInfoPanelIndex: {type: Number},
+            selectedProductIndex: {type: Number},
 
             productPanelTitle: {type: String},
             productPanelDetailsHeader: {type: String},
@@ -43,6 +45,8 @@ class WertgarantieSelectionEmbedded extends LitElement {
         this.setProperties = this.setProperties.bind(this);
         this.renderProductInfoPanel = this.renderProductInfoPanel.bind(this);
         this.renderAdvantage = this.renderAdvantage.bind(this);
+        this.updateSelectedProductIndex = this.updateSelectedProductIndex.bind(this);
+        this.allDataAvailable = this.allDataAvailable.bind(this);
     }
 
     connectedCallback() {
@@ -51,12 +55,17 @@ class WertgarantieSelectionEmbedded extends LitElement {
         this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://ecommerce.wertgarantie.com/wertgarantie";
         this.clientId = this.getAttribute("data-client-id");
         initSentry('selection-embedded', this.componentVersion, this.bifrostUri, this.clientId);
+
         this.devicePrice = parseInt(this.getAttribute("data-device-price"));
         this.deviceClass = this.getAttribute("data-device-class");
         this.landingPageUri = this.getAttribute("data-landing-page-uri") || "https://www.wertgarantie.de";
-        this.productBaseModel = this.getAttribute("data-product-base-model");
+        this.productBaseIdentifier = this.getAttribute("data-product-base-identifier");
+        this.completeProductName = this.getAttribute("data-complete-product-name");
+        this.selectionTriggerElementIdentifier = this.getAttribute('data-product-selection-trigger-element-identifier');
+        this.selectionTriggerEvent = this.getAttribute('data-product-selection-trigger-event');
         this.showComponent = false;
         this.displayedProductInfoPanelIndex = -1;
+        this.selectedProductIndex = -1;
         this.displayComponent();
     }
 
@@ -67,7 +76,26 @@ class WertgarantieSelectionEmbedded extends LitElement {
             .catch(() => this.showComponent = false)
     }
 
+    allDataAvailable() {
+        const selectionTriggerExists = document.querySelector(this.selectionTriggerElementIdentifier);
+        return selectionTriggerExists && this.devicePrice && this.deviceClass && this.clientId && this.productBaseIdentifier && this.completeProductName && this.selectionTriggerEvent;
+    }
+
     async fetchSelectionData() {
+        if (!this.allDataAvailable()) {
+            const errorMessage = `component data incomplete: 
+                ${JSON.stringify({
+                deviceClass: this.deviceClass,
+                devicePrice: this.devicePrice,
+                clientId: this.clientId,
+                productBaseIdentifier: this.productBaseIdentifier,
+                completeProductName: this.completeProductName,
+                selectionTriggerElementIdentifier: this.selectionTriggerElementIdentifier,
+                selectionTriggerEvent: this.selectionTriggerEvent
+            }, null, 2)}`;
+            console.error(errorMessage);
+            throw new Error(errorMessage);
+        }
         const url = `${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-embedded/`;
         const result = await fetchBifrost(url, 'PUT', this.componentVersion, {
             deviceClass: this.deviceClass,
@@ -76,7 +104,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
         return result.body;
     }
 
-    setProperties(selectionData) {
+    async setProperties(selectionData) {
         this.title = selectionData.texts.title;
         this.wertgarantieFurtherInfoHtml = selectionData.texts.wertgarantieFurtherInfoHtml.replace("%s", this.landingPageUri);
         this.includedTax = selectionData.texts.includedTax;
@@ -87,6 +115,27 @@ class WertgarantieSelectionEmbedded extends LitElement {
         this.productFurtherInformation = selectionData.texts.productFurtherInformation;
 
         this.products = selectionData.products;
+
+        this.selectedProductIndex = await findProductSelection(this.productBaseIdentifier);
+    }
+
+    async updateSelectedProductIndex(idx) {
+        const updatedProductSelection = {
+            productId: this.products[idx].id,
+            productName: this.products[idx].name,
+            productIndex: idx,
+            productBaseIdentifier: this.productBaseIdentifier
+        };
+        if (this.selectedProductIndex === idx) {
+            // await fetchBifrost(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-embedded/unselect`, "POST", this.componentVersion, updatedProductSelection);
+            await deleteProductSelection(updatedProductSelection.productBaseIdentifier);
+            this.selectedProductIndex = -1;
+        } else {
+            // await fetchBifrost(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-embedded/select`, "POST", this.componentVersion, updatedProductSelection);
+            await saveProductSelection(updatedProductSelection);
+            this.selectedProductIndex = idx;
+
+        }
     }
 
     fadeOut() {
@@ -134,9 +183,6 @@ class WertgarantieSelectionEmbedded extends LitElement {
         const productHeadClassList = {
             "product-card--background-even": idx % 2 === 0,
             "product-card--background-odd": idx % 2 !== 0
-        };
-        const productDetailsClassList = {
-            "product-panel__details": true,
         };
         const productImageLinkStyleList = {
             "--image-link": "url(" + product.imageLink + ")"
@@ -226,32 +272,53 @@ class WertgarantieSelectionEmbedded extends LitElement {
                 </div>
                 <wertgarantie-rating class="head__rating"
                                      data-bifrost-uri="${this.bifrostUri}"
+                                     data-disable-rating-number="true"
                                      data-link-text=" ">
                 </wertgarantie-rating>
             </div>
             <div class="products">
-                ${this.products.map((product, idx) => html`
-                    <div class="products__product product">
-                        <div class="product__overview overview">
-                            <div class="overview__selection selection">
-                                <div class="selection__checkbox"></div>
-                                <div class="selection__name">${product.shortName}</div>
-                            </div>
-                            <div class="overview__price">${product.priceFormatted + " / " + product.paymentInterval + "*"}</div>
-                        </div>
-                        <div class="product__information" @click="${() => this.displayedProductInfoPanelIndex = idx}">
-<!--                            Font Awesome info icon -->
-                            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="info-circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                                <path class="info-icon" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"></path>
-                            </svg>
-                        </div>
-                    </div>
-                    ${idx === this.displayedProductInfoPanelIndex ? this.renderProductInfoPanel(product, idx) : html``}`
-        )}
+                ${this.products.map((product, idx) => this.renderProductTag(idx, product)
+                )}
             <div class="component__footer">
                 ${this.includedTax}
             </div>
         </div>` : html``;
+    }
+
+    renderProductTag(idx, product) {
+        const selectionClassList = {
+            "selection": true,
+            "product__selection": true,
+            "product__selection--first": idx === 0,
+            "product__selection--last": idx === (this.products.length - 1),
+            "product__selection--selected": idx === this.selectedProductIndex
+
+        };
+
+        return html`
+            <div class="products__product product">
+                <div class="${classMap(selectionClassList)}">
+                    <div class="selection__clickable" @click="${() => this.updateSelectedProductIndex(idx)}">
+                        <div class="selection__overview overview">
+                            <div class="overview__checkbox">
+                                <!-- Font Awesome check icon -->
+                                ${this.selectedProductIndex === idx ?
+                                    html`<svg class="selection__checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>`
+                                    : html``}
+                            </div>
+                            <div class="overview__name">${product.shortName}</div>
+                        </div>
+                        <div class="selection__price">${product.priceFormatted + " / " + product.paymentInterval + "*"}</div>
+                    </div>
+                    <div class="selection__information-icon" @click="${() => this.displayedProductInfoPanelIndex = idx}">
+                        <!-- Font Awesome info icon -->
+                        <svg class="info-icon" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="info-circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                            <path class="info-icon" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            ${idx === this.displayedProductInfoPanelIndex ? this.renderProductInfoPanel(product, idx) : html``}`;
     }
 }
 

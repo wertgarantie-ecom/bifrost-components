@@ -77,7 +77,7 @@ class WertgarantieSelectionPopUp extends LitElement {
         this.quantity = quantity ? parseInt(quantity) : 1;
         this.deviceClass = this.getAttribute("data-device-class");
         this.landingPageUri = this.getAttribute("data-landing-page-uri") || "https://www.wertgarantie.de";
-        this.model = this.getAttribute("data-product-model");
+        this.name = this.getAttribute("data-product-name");
         this.orderItemId = this.getAttribute("data-order-item-id") || undefined;
         const dataDisplaySelf = (this.getAttribute('data-display-self') || 'true') === 'true';
         this.mobileView = window.innerWidth <= MOBILE_WIDTH;
@@ -144,14 +144,14 @@ class WertgarantieSelectionPopUp extends LitElement {
     }
 
     checkConfiguration() {
-        if (!(this.bifrostUri && this.devicePrice && this.deviceClass && this.clientId && this.model)) {
+        if (!(this.bifrostUri && this.devicePrice && this.deviceClass && this.clientId && this.name)) {
             this.remove();
             throw new Error("fetch data incomplete\n" +
                 "bifrostUri: " + this.bifrostUri + "\n" +
                 "clientId: " + this.clientId + "\n" +
                 "devicePrice: " + this.devicePrice + "\n" +
                 "deviceClass: " + this.deviceClass + "\n" +
-                "model: " + this.model
+                "name: " + this.name
             );
         }
     }
@@ -396,7 +396,7 @@ class WertgarantieSelectionPopUp extends LitElement {
     async addProductToShoppingCart() {
         // fetch uri with different path for POST call to set cookie
         const selectedProduct = this.products[this.selectedProductIndex];
-        if (!(this.bifrostUri && this.devicePrice && this.deviceClass && this.model && selectedProduct.id && selectedProduct.name && this.clientId)) {
+        if (!(this.bifrostUri && this.devicePrice && this.deviceClass && this.name && selectedProduct.id && selectedProduct.name && this.clientId)) {
             this.fadeout();
             throw new Error("order data incomplete: \n" +
                 "bifrostUri: " + this.bifrostUri + "\n" +
@@ -405,7 +405,7 @@ class WertgarantieSelectionPopUp extends LitElement {
                 "clientId: " + this.clientId + "\n" +
                 "selectedProductId: " + selectedProduct.id + "\n" +
                 "selectedProductName: " + selectedProduct.name + "\n" +
-                "shopProductName: " + this.model
+                "shopProductName: " + this.name
             );
         }
         try {
@@ -413,7 +413,7 @@ class WertgarantieSelectionPopUp extends LitElement {
                 shopProduct: {
                     price: this.devicePrice,
                     deviceClass: this.deviceClass,
-                    model: this.model,
+                    name: this.name,
                     orderItemId: this.orderItemId
                 },
                 wertgarantieProduct: {

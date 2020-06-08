@@ -58,6 +58,7 @@ export const selectionPopUpStyling = css`
 
     .head__title {
         font-size: 1.5em;
+        color: var(--wertgarantie-popup-title-color, black);
         padding-right: 2em;
         text-transform: uppercase;
     }

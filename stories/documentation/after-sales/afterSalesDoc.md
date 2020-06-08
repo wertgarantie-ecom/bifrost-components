@@ -51,7 +51,7 @@ const wertgarantieCheckoutDataBuffer = Buffer.from(JSON.stringify({
                 price: 86000, // in minor units (cent)
                 manufacturer: "XXXPhones Inc.",
                 deviceClass: "Smartphone",
-                model: "Example Phone",
+                name: "Example Phone",
                 orderId: "orderNo1"
             }       
         ],

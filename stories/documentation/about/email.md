@@ -40,7 +40,7 @@ Wertgarantie Versicherungsantrag 57416179 erstellt für Order d4996a24-5bf7-46eb
 ### Partnershop-Produkt:
 
 OrderId: d4996a24-5bf7-46eb-8b49-632d1204b289
-Modell: `Produktname`
+Name: `Produktname`
 DeviceClass: Smartphone
 Preis: 100000
 <br/><br/>

@@ -58,7 +58,7 @@ the `data-shop-order-base64` attribute that contains the your shopping cart as b
         "price": 86000,
         "manufacturer": "XXXPhones Inc.",
         "deviceClass": "Smartphone",
-        "model": "Example Phone Xs",
+        "name": "Example Phone Xs",
         "orderId": "orderNo1"
     },
     {
@@ -95,7 +95,7 @@ confirmationCompData.push(...shoppingCartData.products.map(product => {
         price: product.selectedVariant.devicePrice,
         manufacturer: product.manufacturer,
         deviceClass: product.deviceClass,
-        model: product.productName,
+        name: product.productName,
         orderItemId: product.orderItemId
     }
 }));

@@ -58,8 +58,11 @@ jobs:
           name: purge CDN cache for confirmation component
           command: curl https://purge.jsdelivr.net/npm/wertgarantie-confirmation@2/dist/confirmation.min.js
       - run:
-          name: purge CDN cache for selection component
+          name: purge CDN cache for selection pop up component
           command: curl https://purge.jsdelivr.net/npm/wertgarantie-selection-popup@2/dist/selection-popup.min.js
+      - run:
+          name: purge CDN cache for embedded selection component
+          command: curl https://purge.jsdelivr.net/npm/wertgarantie-embedded-selection@0/dist/selection-embedded.min.js
       - run:
           name: purge CDN cache for rating component
           command: curl https://purge.jsdelivr.net/npm/wertgarantie-rating@2/dist/rating.min.js

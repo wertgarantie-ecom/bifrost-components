@@ -45,6 +45,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
         this.setProperties = this.setProperties.bind(this);
         this.renderProductInfoPanel = this.renderProductInfoPanel.bind(this);
         this.renderAdvantage = this.renderAdvantage.bind(this);
+        this.renderProductTag = this.renderProductTag.bind(this);
         this.updateSelectedProductIndex = this.updateSelectedProductIndex.bind(this);
         this.allDataAvailable = this.allDataAvailable.bind(this);
     }
@@ -297,25 +298,22 @@ class WertgarantieSelectionEmbedded extends LitElement {
 
         return html`
             <div class="products__product product">
-                <div class="${classMap(selectionClassList)}">
-                    <div class="selection__clickable" @click="${() => this.updateSelectedProductIndex(idx)}">
-                        <div class="selection__overview overview">
-                            <div class="overview__checkbox">
-                                <!-- Font Awesome check icon -->
-                                ${this.selectedProductIndex === idx ?
-                                    html`<svg class="selection__checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>`
-                                    : html``}
-                            </div>
-                            <div class="overview__name">${product.shortName}</div>
+                <div class="${classMap(selectionClassList)}" @click="${() => this.updateSelectedProductIndex(idx)}">
+                    <div class="selection__overview overview">
+                        <div class="overview__checkbox">
+                            <!-- Font Awesome check icon -->
+                            ${this.selectedProductIndex === idx ?
+                                html`<svg class="selection__checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>`
+                                : html``}
                         </div>
-                        <div class="selection__price">${product.priceFormatted + " / " + product.paymentInterval + "*"}</div>
+                        <div class="overview__name">${product.shortName}</div>
                     </div>
-                    <div class="selection__information-icon" @click="${() => this.displayedProductInfoPanelIndex = idx}">
-                        <!-- Font Awesome info icon -->
-                        <svg class="info-icon" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="info-circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                            <path class="info-icon" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"></path>
-                        </svg>
-                    </div>
+                    <div class="selection__price">${product.priceFormatted + " / " + product.paymentInterval + "*"}</div>
+                </div>
+                <div class="selection__information-icon" @click="${() => this.displayedProductInfoPanelIndex = idx}">
+                    <!-- Font Awesome info icon -->
+                    <svg class="info-icon" aria-hidden="true" focusable="false" data-prefix="far" data-icon="question-circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 448c-110.532 0-200-89.431-200-200 0-110.495 89.472-200 200-200 110.491 0 200 89.471 200 200 0 110.53-89.431 200-200 200zm107.244-255.2c0 67.052-72.421 68.084-72.421 92.863V300c0 6.627-5.373 12-12 12h-45.647c-6.627 0-12-5.373-12-12v-8.659c0-35.745 27.1-50.034 47.579-61.516 17.561-9.845 28.324-16.541 28.324-29.579 0-17.246-21.999-28.693-39.784-28.693-23.189 0-33.894 10.977-48.942 29.969-4.057 5.12-11.46 6.071-16.666 2.124l-27.824-21.098c-5.107-3.872-6.251-11.066-2.644-16.363C184.846 131.491 214.94 112 261.794 112c49.071 0 101.45 38.304 101.45 88.8zM298 368c0 23.159-18.841 42-42 42s-42-18.841-42-42 18.841-42 42-42 42 18.841 42 42z"></path>
+                    </svg>
                 </div>
             </div>
             ${idx === this.displayedProductInfoPanelIndex ? this.renderProductInfoPanel(product, idx) : html``}`;

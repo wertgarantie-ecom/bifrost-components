@@ -54,7 +54,7 @@ class WertgarantieConfirmation extends LitElement {
         this.deleteProductOrder = this.deleteProductOrder.bind(this);
         this.displayComponent = this.displayComponent.bind(this);
         this.renderTab = this.renderTab.bind(this);
-        this.renderComponent = this.renderComponent.bind(this);
+        this.renderBoxTitle = this.renderBoxTitle.bind(this);
         this.clearWarnings = this.clearWarnings.bind(this);
         this.toggleConfirmation = this.toggleConfirmation.bind(this);
         this.sendToggleConfirmationRequest = this.sendToggleConfirmationRequest.bind(this);
@@ -284,12 +284,15 @@ class WertgarantieConfirmation extends LitElement {
         }
     }
 
-    renderComponent() {
-        return html`
+    render() {
+        return this.showComponent
+            ? html`
             <!--
             Font Awesome Free by @fontawesome - https://fontawesome.com
             License - https://fontawesome.com/license (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
             -->
+            <div class="box">
+            ${this.renderBoxTitle()}
             <div class="component">
                 <section class="info">
                     <div class="header">
@@ -325,31 +328,27 @@ class WertgarantieConfirmation extends LitElement {
                                     </div>
                                     <div class="confirmation__text">${unsafeHTML(confirmation.confirmationText)}</div>
                                 </div>`
-                            )}
+            )}
                         </div>
                     </div>
                     ${this.renderFlashMessage()}
                 </section>
                 ${this.renderProductPanel('product__panel', this.orders[this.selectedProductIndex])}
             </div>
-        
-        `;
+        </div>
+        `
+            : html``;
     }
 
-    render() {
-        if (!this.showComponent) {
-            return html``;
-        }
+    renderBoxTitle() {
         //language=HTML
         return (this.boxTitle) ?
             html`
-            <div class="box">
                 <div class="box__title">
                     <span class="box__title--text">${this.boxTitle}</span>
                 </div>
-               ${this.renderComponent()}
-            </div> `
-            : this.renderComponent();
+            `
+            : html``;
     }
 }
 

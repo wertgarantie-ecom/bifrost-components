@@ -7,7 +7,10 @@ export const confirmationStyling = css`
     }
 
     .box {
-        border: var(--wertgarantie-confirmation-box-border, 1px solid rgb(230, 230, 230));
+        border-top: var(--wertgarantie-confirmation-box-border-top, 0 solid rgb(230, 230, 230));
+        border-left: var(--wertgarantie-confirmation-box-border-left, 0 solid rgb(230, 230, 230));
+        border-right: var(--wertgarantie-confirmation-box-border-right, 0px solid rgb(230, 230, 230));
+        border-bottom: var(--wertgarantie-confirmation-box-border-bottom, 0 solid rgb(230, 230, 230));
         display: flex;
         flex-direction: column;
         margin: var(--wertgarantie-confirmation-box-margin, 0 0 20px 0);
@@ -17,6 +20,7 @@ export const confirmationStyling = css`
         background-color: var(--wertgarantie-confirmation-box-background-color, rgb(230, 230, 230));
         line-height: var(--wertgarantie-confirmation-box-title-line-height, 1em);
         padding: var(--wertgarantie-confirmation-box-title-padding, 9px 0 9px 0);
+        color: var(--wertgarantie-confirmation-box-title-color, black);
         text-align: left;
     }
 
@@ -34,13 +38,14 @@ export const confirmationStyling = css`
         flex-direction: row;
         padding: var(--wertgarantie-confirmation-component-padding, '0px 0px 0px 0px');
         color: var(--wertgarantie-confirmation-text-color, black);
+        margin: var(--wertgarantie-confirmation-component-margin, 0 0 0 0);
         background-color: var(--wertgarantie-confirmation-background-color, white);
     }
 
 
     .info {
         width: 65%;
-        padding: 1em;
+        padding: var(--wertgarantie-confirmation-info-padding, 1em);
     }
 
     .flash-message {
@@ -56,6 +61,7 @@ export const confirmationStyling = css`
 
     .product__panel {
         width: 35%;
+        margin: var(--wertgarantie-confirmation-product-panel-margin, 0 0 0 0);
     }
 
     .product__panel--mobile {
@@ -65,6 +71,7 @@ export const confirmationStyling = css`
     .header {
         display: flex;
         width: 100%;
+        margin: var(--wertgarantie-confirmation-header-margin, 0 0 0 0);
         background-color: var(--wertgarantie-confirmation-header-background-color, rgb(230, 230, 230));
     }
 
@@ -111,7 +118,7 @@ export const confirmationStyling = css`
 
     .confirmation__checkbox-column {
         min-width: 40px;
-        padding-left: 10px;
+        padding: var(--wertgarantie-confirmation-checkbox-column-padding, 0 0 0 10px);
     }
 
     .checkbox__container {

@@ -1,13 +1,8 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-</head>
-<body>
+# Embedded Selection Component
+
 <wertgarantie-selection-embedded
     data-client-id="public:5a576bd2-1953-4d20-80de-4de00d65fdc7"
-    data-bifrost-uri="http://localhost:3000/wertgarantie"
+    data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie"
     data-device-class="Bike"
     data-device-price="119900"
     data-product-base-identifier="Cube Race ONE 2020"
@@ -15,8 +10,5 @@
     data-product-selection-trigger-element-identifier="#addToShoppingCart"
     data-product-selection-trigger-event="click">
 </wertgarantie-selection-embedded>
+
 <button id="addToShoppingCart">In den Warenkorb</button>
-</body>
-<script type="module" src="http://localhost:3334/packages/package-selection-embedded/dist/selection-embedded.min.js"
-        crossorigin="anonymous"></script>
-</html>

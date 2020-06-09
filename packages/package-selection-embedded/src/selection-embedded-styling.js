@@ -52,13 +52,13 @@ export const selectionEmbeddedStyling = css`
     }
     
     .product__selection--first {
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
     }
 
     .product__selection--last {
-        border-bottom-left-radius: 5px;
-        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
         margin-bottom: 1em;
     }
     

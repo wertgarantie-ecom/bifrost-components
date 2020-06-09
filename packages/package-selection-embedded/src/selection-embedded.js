@@ -128,15 +128,15 @@ class WertgarantieSelectionEmbedded extends LitElement {
             productBaseIdentifier: this.productBaseIdentifier
         };
         if (this.selectedProductIndex === idx) {
-            // await fetchBifrost(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-embedded/unselect`, "POST", this.componentVersion, updatedProductSelection);
+            await fetchBifrost(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-embedded/select`, "DELETE", this.componentVersion, updatedProductSelection);
             await deleteProductSelection(updatedProductSelection.productBaseIdentifier);
             this.selectedProductIndex = -1;
         } else {
-            // await fetchBifrost(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-embedded/select`, "POST", this.componentVersion, updatedProductSelection);
+            await fetchBifrost(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-embedded/select`, "POST", this.componentVersion, updatedProductSelection);
             await saveProductSelection(updatedProductSelection);
             this.selectedProductIndex = idx;
-
         }
+        return;
     }
 
     fadeOut() {

@@ -44,36 +44,28 @@ export const selectionEmbeddedStyling = css`
         justify-content: space-between;
         align-items: center;
         border: 1px solid black;
-        padding: 0.6em;
+        padding: 1em;
         font-size: 0.9em;
         font-weight: 500;
-        opacity: 0.4;
-        transition: opacity 0.5s;
+        opacity: 0.2;
+        transition: opacity 1s;
+        cursor: pointer;
     }
     
     .product__selection--first {
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
+        border-top-left-radius: 7px;
+        border-top-right-radius: 7px;
     }
 
     .product__selection--last {
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
-        margin-bottom: 1em;
+        border-bottom-left-radius: 7px;
+        border-bottom-right-radius: 7px;
     }
     
     .product__selection--selected {
         opacity: 1;
     }
     
-    .selection__clickable {
-        width: 90%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        cursor: pointer;
-    }
-
     .selection__overview {
         display: flex;
         align-items: center;
@@ -97,26 +89,24 @@ export const selectionEmbeddedStyling = css`
     }
     
     .selection__information-icon {
-        padding: 0 0.5em;
+        padding: 1em;
         margin: 0.7em 0px;
         width: 10%;
         cursor: pointer;
         display: flex;
-        justify-content: flex-end;
     }
 
     .info-icon {
-        width: 17px;
-        height: 17px;
+        width: 15px;
+        height: 15px;
     }
     
     .selection__checkmark {
         padding-bottom: 1em;
     }
 
-
     .component__footer {
-        margin: 0.5em 0;
+        margin: 1em 0;
         font-size: 0.7em;
     }
 `;

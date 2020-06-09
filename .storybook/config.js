@@ -4,6 +4,7 @@ import { configure } from '@storybook/html';
 const loaderFn = () => [
   require('../stories/about.stories'),
   require('../stories/popup.stories'),
+  require('../stories/selection-embedded.stories'),
   require('../stories/confirmation.stories'),
   require('../stories/after-sales.stories'),
   require('../stories/rating.stories'),

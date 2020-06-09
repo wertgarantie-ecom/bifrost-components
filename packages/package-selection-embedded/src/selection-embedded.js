@@ -1,483 +1,327 @@
-(function () {
-    const template = document.createElement('template');
-    template.innerHTML = `
-        <style>
-            :host {
-                font-family: var(--wertgarantie-selection-font-family, Roboto),sans-serif;
-            }
-            
-            .wg-selection-container {
-                background-color: var(--wertgarantie-selection-container-background-color, white);
-                max-width: var(--wertgarantie-selection-container-max-width, 600px);
-                font-weight: var(--wertgarantie-selection-container-font-weight, 400);
-                font-size: var(--wertgarantie-selection-container-font-size, 16px);
-                color: var(--wertgarantie-selection-container-text-color, #575757);
-            }
+import {LitElement, html} from "lit-element";
+import fetchBifrost from "../../../shared-code/fetchBifrost";
+import {saveProductSelection, findProductSelection, deleteProductSelection} from "../../../shared-code/wertgarantieShoppingCartRepository";
+import '../../package-rating/dist/rating.min.js';
+import initSentry from "../../../shared-code/sentry";
+import {selectionEmbeddedStyling} from "./selection-embedded-styling";
+import {selectionEmbeddedProductPanelStyling} from "./selection-embedded-product-panel-styling";
+import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
+import {classMap} from "lit-html/directives/class-map";
+import {styleMap} from "lit-html/directives/style-map";
 
-            .head-section {
-                background-image: var(--wertgarantie-selection-head-section-background-image, linear-gradient(to right, #f5f5f5, #f5f5f5));
-                color: var(--wertgarantie-selection-head-section-text-color, #2574be);
-                display: grid;
-                grid-template-columns: 12% 60% 28%;
-                padding: 0.7em;
-            }
 
-            .head-section__item {
-                padding-top: 0.5em;
-            }
+class WertgarantieSelectionEmbedded extends LitElement {
 
-            .head-section__left {
-                min-width: 100px;
-                grid-column-start: 1;
-                align-self: center;
-                margin: 30%;
-            }
+    static get styles() {
+        return [
+            selectionEmbeddedStyling,
+            selectionEmbeddedProductPanelStyling
+        ];
+    }
 
-            .head-section__order-checkbox {
-                zoom: 1.3;
-            }
-            
-            .head-section__middle {
-                align-self: center;
-                grid-column-start: 2;
-                grid-column-end: 2;
-                
-            }
+    static get properties() {
+        return {
+            showComponent: {type: Boolean},
+            title: {type: String},
+            wertgarantieFurtherInfoHtml: {type: String},
+            includedTax: {type: String},
 
-            .head-section__right {
-                height: 100%;
-                grid-column-start: 3;
-                grid-column-end: 3;
-                padding-right: 0.7em;
-                position: relative
-            }
-            
-            .price-info {
-                position: absolute;
-                bottom: 0.5em;
-                right: 0.5em;
-                text-align: right;
-            }
+            products: {type: Object},
+            displayedProductInfoPanelIndex: {type: Number},
+            selectedProductIndex: {type: Number},
 
-            .price-info__small {
-                font-size: 0.6em;
-            }
-            
-            .wg-title {
-                font-family: var(--wertgarantie-selection-title-font-family, inherit),sans-serif;
-                font-weight: var(--wertgarantie-selection-title-font-weight, 400);
-                font-size: var(--wertgarantie-selection-title-font-size, 20px);
-                text-transform: var(--wertgarantie-selection-title-text-transform); 
-                margin: 0.3em 0 0 0;
-            }
+            productPanelTitle: {type: String},
+            productPanelDetailsHeader: {type: String},
+            productFurtherInformation: {type: String}
+        };
+    }
 
-            .show-details__button {
-                border: none;
-                background: none;
-                outline: none;
-                color: var(--wertgarantie-selection-show-details-button-text-color, inherit);
-                font-size: var(--wertgarantie-selection-show-details-button-font-size);
-                font-weight: var(--wertgarantie-selection-show-details-button-font-weight);
-            }
+    constructor() {
+        super();
 
-            .show-details__button:hover {
-                cursor: pointer;
-            }
-            
-            .advantages__icon::before, .show-details__button::before {
-                -moz-osx-font-smoothing: grayscale;
-                -webkit-font-smoothing: antialiased;
-                display: inline-block; 
-                font-style: normal;
-                font-variant: normal;
-                text-rendering: auto;
-                margin:0 0.5em 0 -0.4em;
-                font-family: "Font Awesome 5 Free",sans-serif;
-                font-weight: 700;
-            }
+        // method binding
+        this.displayComponent = this.displayComponent.bind(this);
+        this.fetchSelectionData = this.fetchSelectionData.bind(this);
+        this.setProperties = this.setProperties.bind(this);
+        this.renderProductInfoPanel = this.renderProductInfoPanel.bind(this);
+        this.renderAdvantage = this.renderAdvantage.bind(this);
+        this.updateSelectedProductIndex = this.updateSelectedProductIndex.bind(this);
+        this.allDataAvailable = this.allDataAvailable.bind(this);
+    }
 
-            .show-details__button::before {
-                color: var(--wertgarantie-selection-show-details-button-arrow-color, inherit);
-            }
+    connectedCallback() {
+        super.connectedCallback();
+        this.componentVersion = '0.0.3';
+        this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://ecommerce.wertgarantie.com/wertgarantie";
+        this.clientId = this.getAttribute("data-client-id");
+        initSentry('selection-embedded', this.componentVersion, this.bifrostUri, this.clientId);
 
-            .show-details__button--expanded::before {
-                content: "\\F102";
-            }
+        this.devicePrice = parseInt(this.getAttribute("data-device-price"));
+        this.deviceClass = this.getAttribute("data-device-class");
+        this.landingPageUri = this.getAttribute("data-landing-page-uri") || "https://www.wertgarantie.de";
+        this.productBaseIdentifier = this.getAttribute("data-product-base-identifier");
+        this.completeProductName = this.getAttribute("data-complete-product-name");
+        this.selectionTriggerElementIdentifier = this.getAttribute('data-product-selection-trigger-element-identifier');
+        this.selectionTriggerEvent = this.getAttribute('data-product-selection-trigger-event');
+        this.showComponent = false;
+        this.displayedProductInfoPanelIndex = -1;
+        this.selectedProductIndex = -1;
+        this.displayComponent();
+    }
 
-            .show-details__button--collapsed::before {
-                content: "\\F103";
-            }
+    displayComponent() {
+        this.fetchSelectionData()
+            .then(this.setProperties)
+            .then(() => this.showComponent = true)
+            .catch(() => this.showComponent = false)
+    }
 
-            .product-details {
-                padding: 0.7em;
-                visibility: hidden;
-                opacity: 0;
-                max-height: 0;
-                transition: all 0.4s;
-                transform-origin: left top;
-                transform: scaleY(0);
-            }
+    allDataAvailable() {
+        const selectionTriggerExists = document.querySelector(this.selectionTriggerElementIdentifier);
+        return selectionTriggerExists && this.devicePrice && this.deviceClass && this.clientId && this.productBaseIdentifier && this.completeProductName && this.selectionTriggerEvent;
+    }
 
-            .product-details--expanded {
-                visibility: visible;
-                opacity: 1;
-                max-height: 100%;
-                transition: all 0.4s;
-                transform: scaleY(1);
-            }
-            
-            .advantages {
-                padding-inline-start: 1.5em;
-                list-style-type: none;
-            }
-
-            .advantages__item {
-                font-size: var(--wertgarantie-selection-advantage-font-size, 13px);
-                line-height: var(--wertgarantie-selection-container-line-height, 21px);
-                margin: var(--wertgarantie-selection-advantage-margin, 0 0 0.3em 0);
-            }
-
-            .advantages__item--included {
-                color: var(--wertgarantie-selection-advantage-included-text-color, #575757);
-            }
-
-            .advantages__item--excluded {
-                color: var(--wertgarantie-selection-advantage-excluded-text-color, lightgrey);
-            }
-        
-            .advantages__icon--included::before {
-                color: var(--wertgarantie-selection-advantage-included-icon-color, #2574be);
-            }
-        
-            .advantages__icon--excluded::before {
-                color: var(--wertgarantie-selection-advantage-excluded-icon-color, lightgrey);
-            }
-            
-            .advantages__icon--check::before {
-                content: "\\F00C";
-            }
-            
-            .advantages__icon--ban::before {
-                content: "\\F05E";
-            }
-
-            .advantages__icon--plus::before {
-                content: "\\F067";
-            }
-            
-            .advantages__icon--pdf::before {
-                content: "\\F1C1";
-            }
-            
-            .product-information__link, .product-information__link:visited {
-                color: var(--wertgarantie-selection-product-info-link-color, #2574be);
-                position: static;
-                text-decoration: none;
-            }
-
-            .product-selection {
-                padding: 0.7em;
-                display: flex;
-                justify-content: space-around;
-            }
-
-            .product-selection__button {
-                border: none;
-                outline: none;
-                width: 40%;
-                margin: 0.4em;
-                padding: 0.6em;
-                font-size: inherit;
-                opacity: 0.4;
-                transition: all 0.6s;
-                color: inherit;
-            }
-
-            .product-selection__button:hover {
-                cursor: pointer;
-            }
-
-            .product-selection__button-header {
-                font-weight: 700;
-                color: var(--wertgarantie-selection-button-header-color, #2574be);
-                border-radius: 10px;
-            }
-
-            .product-selection__button--selected {
-                opacity: 1;
-                box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
-            }
-        </style>
-
-        <div class="wg-selection-container">
-            <div class="head-section">
-                <div class="head-section__left">
-                    <input type="checkbox" class="head-section__order-checkbox" id="order">
-                </div>
-                <div class="head-section__middle">
-                    <h2 class="wg-title" id="wertgarantie-header"></h2>
-                    <div class="head-section__item" id="information">
-                        <slot name="wertgarantie-rating-component"></slot>
-                    </div>
-                    <div class="show-details head-section__item">
-                        <button class="show-details__button show-details__button--collapsed" id="details-dropdown-button">Details anzeigen</button>
-                    </div>
-                </div>
-                <div class="head-section__right">
-                    <div class="price-info">
-                        <small class="price-info__small" id="payment-interval">pro Monat</small><br/>
-                        <strong id="price-display">ab X,XX €</strong><br/>
-                        <small class="price-info__small" id="tax-display">inkl. x,xx€ VerSt</small>
-                    </div>
-                </div>
-            </div>
-            <div class="product-details" id="product-section">
-                <ul class="advantages" id="wertgarantie-services-list"></ul>
-                <ul class="advantages" id="wertgarantie-advantages-list"></ul>
-                <ul class="advantages">
-                    <li class="advantages__item">
-                        <small class="product-information">
-                            <span class="advantages__icon advantages__icon--included advantages__icon--plus">
-                                <a target="_blank" class="product-information__link" id="product-details-link"></a>
-                            </span>
-                        </small>
-                    </li>
-                    <li class="advantages__item">
-                        <small class="product-information">
-                            <span class="advantages__icon advantages__icon--included advantages__icon--pdf">
-                                <a target="_blank" class="product-information__link" id="product-information-sheet"></a>
-                            </span>
-                        </small>
-                    </li>
-                </ul>
-            </div>
-            <div class="product-selection" id="product-selection">
-            </div>
-        </div>
-    `;
-
-    /*
-    TODOs:
-     - add documentation for our vaious components
-     - what to do with multiple documents?
-
-     - we need to provide auth information
-     - what to do with multiple product offerings?
-     */
-    class WertgarantiePolicySelection extends HTMLElement {
-
-        constructor() {
-            super();
-            this.attachShadow({mode: 'open'});
-            this.shadowRoot.appendChild(template.content.cloneNode(true));
-            this.showDetailsButton = this.shadowRoot.querySelector("#details-dropdown-button");
-            this.productSection = this.shadowRoot.querySelector("#product-section");
-            this.wertgarantieHeader = this.shadowRoot.querySelector('#wertgarantie-header');
-            this.servicesList = this.shadowRoot.querySelector('#wertgarantie-services-list');
-            this.advantagesList = this.shadowRoot.querySelector('#wertgarantie-advantages-list');
-            this.productDetailsLink = this.shadowRoot.querySelector('#product-details-link');
-            this.productInformationSheet = this.shadowRoot.querySelector('#product-information-sheet');
-            this.priceDisplay = this.shadowRoot.querySelector('#price-display');
-            this.taxDisplay = this.shadowRoot.querySelector('#tax-display');
-            this.paymentInterval = this.shadowRoot.querySelector('#payment-interval');
-            this.productSelection = this.shadowRoot.querySelector('#product-selection');
-
-            this.overwriteWithUserDefinedAttributes = this.overwriteWithUserDefinedAttributes.bind(this);
-            this.setupDisplay = this.setupDisplay.bind(this);
-            this.createSelectionButton = this.createSelectionButton.bind(this);
-            this.updateDisplay = this.updateDisplay.bind(this);
-            this.toggleProductSection = this.toggleProductSection.bind(this);
+    async fetchSelectionData() {
+        if (!this.allDataAvailable()) {
+            const errorMessage = `component data incomplete: 
+                ${JSON.stringify({
+                deviceClass: this.deviceClass,
+                devicePrice: this.devicePrice,
+                clientId: this.clientId,
+                productBaseIdentifier: this.productBaseIdentifier,
+                completeProductName: this.completeProductName,
+                selectionTriggerElementIdentifier: this.selectionTriggerElementIdentifier,
+                selectionTriggerEvent: this.selectionTriggerEvent
+            }, null, 2)}`;
+            console.error(errorMessage);
+            throw new Error(errorMessage);
         }
+        const url = `${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-embedded/`;
+        const result = await fetchBifrost(url, 'PUT', this.componentVersion, {
+            deviceClass: this.deviceClass,
+            devicePrice: this.devicePrice
+        });
+        return result.body;
+    }
 
-        set devicePrice(devicePrice) {
-            this.setAttribute("data-device-price", devicePrice);
-        }
+    async setProperties(selectionData) {
+        this.title = selectionData.texts.title;
+        this.wertgarantieFurtherInfoHtml = selectionData.texts.wertgarantieFurtherInfoHtml.replace("%s", this.landingPageUri);
+        this.includedTax = selectionData.texts.includedTax;
+        this.footerHtml = selectionData.texts.footerHtml;
 
-        set deviceId(deviceId) {
-            this.setAttribute("data-device-id", deviceId);
-        }
+        this.productPanelTitle = selectionData.texts.productPanelTitle;
+        this.productPanelDetailsHeader = selectionData.texts.productPanelDetailsHeader;
+        this.productFurtherInformation = selectionData.texts.productFurtherInformation;
 
-        connectedCallback() {
-            this.showDetailsButton.addEventListener("click", this.toggleProductSection);
+        this.products = selectionData.products;
 
-            const addIfDefined = (object, name, property) => {
-                if (property) object[name] = property;
-            };
+        this.selectedProductIndex = await findProductSelection(this.productBaseIdentifier);
+    }
 
-            this._upgradeProperty('deviceId');
-            this._upgradeProperty('devicePrice');
+    async updateSelectedProductIndex(idx) {
+        const updatedProductSelection = {
+            productId: this.products[idx].id,
+            productName: this.products[idx].name,
+            productIndex: idx,
+            productBaseIdentifier: this.productBaseIdentifier
+        };
+        if (this.selectedProductIndex === idx) {
+            // await fetchBifrost(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-embedded/unselect`, "POST", this.componentVersion, updatedProductSelection);
+            await deleteProductSelection(updatedProductSelection.productBaseIdentifier);
+            this.selectedProductIndex = -1;
+        } else {
+            // await fetchBifrost(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-embedded/select`, "POST", this.componentVersion, updatedProductSelection);
+            await saveProductSelection(updatedProductSelection);
+            this.selectedProductIndex = idx;
 
-            const displayData = {};
-            addIfDefined(displayData, 'title', this.getAttribute('data-title'));
-
-            const fetchData = {};
-            addIfDefined(fetchData, 'devicePrice', this.getAttribute('data-device-price'));
-            addIfDefined(fetchData, 'deviceId', this.getAttribute('data-device-id'));
-            addIfDefined(fetchData, 'fetchUri', this.getAttribute('data-fetch-uri'));
-
-            this.fetchPolicy(fetchData)
-                .then((fetchedValues) => this.overwriteWithUserDefinedAttributes(fetchedValues, displayData)) // title can still be overwritten
-                .then(this.allDisplayDataAvailable) // check if display data is complete
-                .then(this.setupDisplay);
-        }
-
-        _upgradeProperty(prop) {
-            if (this[prop]) {
-                let value = this[prop];
-                delete this[prop];
-                this[prop] = value;
-            }
-        }
-
-        allDisplayDataAvailable(displayData) {
-            let isComplete = true;
-            displayData.products.forEach(data => {
-                if (!(data.name && data.detailsText && data.detailsUri 
-                    && data.infoSheetUri && data.infoSheetText && data.paymentInterval
-                    && data.price && data.currency && data.priceFormatted && data.tax)) {
-                        isComplete = false;
-                    }
-            });
-            if (!isComplete) {
-                this.remove();
-                throw new Error("display data incomplete");
-            }
-            return displayData;
-        }
-
-        async fetchPolicy({fetchUri, devicePrice, deviceId}) {
-            if (!(fetchUri && devicePrice && deviceId)) {
-                this.remove();
-                throw new Error("fetch data incomplete\n" + 
-                    "fetchUri: " + fetchUri + "\n" +
-                    "devicePrice: " + devicePrice + "\n" +
-                    "deviceId: " + deviceId
-                );
-            }
-            try {
-                const url = new URL(fetchUri);
-                const queryParams = {
-                    devicePrice: devicePrice,
-                    deviceId: deviceId
-                };
-                Object.keys(queryParams).forEach(key => url.searchParams.append(key, queryParams[key]));
-                const response = await fetch(url);
-                if (response.status !== 200) {
-                    console.error('fetch failed:', response);
-                    return {};
-                }
-                return await response.json();
-            } catch (error) {
-                console.error('Error:', error);
-                return {};
-            }
-        }
-
-        overwriteWithUserDefinedAttributes(fetchedDisplayData, displayData) {
-            const merge = (object1, object2) => {
-                return {...object1, ...object2}
-            };
-            return merge(fetchedDisplayData, displayData);
-        }
-
-        toggleProductSection() {
-            if (this.showDetailsButton.classList.toggle("show-details__button--expanded")) {
-                this.showDetailsButton.innerText = "Details ausblenden";
-            }
-            if (this.showDetailsButton.classList.toggle("show-details__button--collapsed")) {
-                this.showDetailsButton.innerText = "Details einblenden";
-            }
-            this.productSection.classList.toggle("product-details--expanded");
-        }
-
-        setupDisplay(displayData) {
-            displayData.products.forEach((product) => {
-                product.title = displayData.title;
-                this.createSelectionButton(product);
-            });
-            this.productSelection.firstChild.nextSibling.classList.add("product-selection__button--selected");
-            this.updateDisplay(displayData.products[0]);
-        }
-
-        createSelectionButton(product) {
-            const productButton = document.createElement('button');
-            productButton.classList.add("product-selection__button")
-
-            // add headline button headline
-            const productButtonHeader = document.createElement('p');
-            productButtonHeader.classList.add("product-selection__button-header")
-            productButtonHeader.textContent = product.name;
-            // append headline to button
-            productButton.appendChild(productButtonHeader);
-
-            // create info box for button with price details
-            const priceInfoDiv = document.createElement('div');
-            priceInfoDiv.classList.add("price-info__border");
-
-            const priceSpan = document.createElement('strong');
-            priceSpan.textContent = product.priceFormatted;
-            priceSpan.appendChild(document.createElement('br'));
-            
-            const payInterval = document.createElement('small');
-            payInterval.classList.add("price-info__small");
-            payInterval.textContent = "pro " + product.paymentInterval;
-            
-            // wire everything together in correct order
-            priceInfoDiv.appendChild(priceSpan);
-            priceInfoDiv.appendChild(payInterval);
-            productButton.appendChild(priceInfoDiv);
-
-            productButton.addEventListener("click", () => {
-                this.productSelection.querySelectorAll(".product-selection__button").forEach(button => button.classList.remove("product-selection__button--selected"));
-                productButton.classList.add("product-selection__button--selected");
-                this.updateDisplay(product);
-            });
-            this.productSelection.appendChild(productButton);
-        }
-
-        updateDisplay(product) {
-            this.wertgarantieHeader.innerHTML = product.title;
-            this.productDetailsLink.setAttribute('href', product.detailsUri);
-            this.productDetailsLink.textContent = product.detailsText;
-            this.productInformationSheet.setAttribute('href', product.infoSheetUri);
-            this.productInformationSheet.textContent = product.infoSheetText;
-            this.priceDisplay.textContent = product.priceFormatted;
-            this.taxDisplay.textContent = "inkl. " + product.tax + product.currency + " VerSt";
-            this.paymentInterval.textContent = "pro " + product.paymentInterval;
-            
-
-            // still uncertain what this should look like? separate lists? 
-            // resolve diffs between the products and mark 
-            // advantages / services that are not available in product a but in product b? 
-            // --> icons and css classes already available: advantages__icon--included, advantages__icon--ban
-            this.advantagesList.innerHTML = '';
-            this.servicesList.innerHTML = '';
-
-            product.services.forEach((service) => {
-                const listElement = this.createListElement(service);
-                this.servicesList.appendChild(listElement);
-            })
-
-            product.advantages.forEach((advantage) => {
-                const listElement = this.createListElement(advantage);
-                this.advantagesList.appendChild(listElement);
-            });
-        }
-
-        createListElement(listItem) {
-            const listElement = document.createElement('li');
-            listElement.classList.add('advantages__item', 'advantages__item--included');
-            const spanElement = document.createElement('span');
-            spanElement.innerText = listItem;
-            spanElement.classList.add('advantages__icon', 'advantages__icon--included', 'advantages__icon--check');
-            listElement.appendChild(spanElement);
-            return listElement;
-        }
-
-        disconnectedCallback() {
-            console.log("disconnected");
         }
     }
 
-    window.customElements.define('wertgarantie-policy-selection', WertgarantiePolicySelection);
-})();
+    fadeOut() {
+        const fadeTarget = this.shadowRoot.querySelector('.product-modal');
+        const self = this;
+        const fadeEffect = setInterval(function () {
+            if (!fadeTarget.style.opacity) {
+                fadeTarget.style.opacity = 1;
+            }
+            if (fadeTarget.style.opacity > 0) {
+                fadeTarget.style.opacity -= 0.05;
+            } else {
+                clearInterval(fadeEffect);
+                self.displayedProductInfoPanelIndex = -1;
+            }
+        }, 20);
+    }
+
+    renderAdvantage(advantage, isTop3) {
+        if (advantage.included) {
+            return html`
+                <div class="advantage advantage--included">
+                    <div class="advantage__icon-container">
+                        <!-- Font Awesome check icon-->
+                        <svg class="advantage__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class=${isTop3 ? "icon__svg--top3" : "icon__svg--included"} d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>
+                    </div>
+                    <div class="advantage__text-container">
+                        ${advantage.text}
+                    </div>
+                </div>`;
+        }
+        return html`
+            <div class="advantage advantage--excluded">
+                <!-- Font Awesome ban icon-->
+                <div class="advantage__icon-container">
+                    <svg class="advantage__icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="icon__svg--excluded" d="M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z"/></svg>
+                </div>        
+                <div class="advantage__text-container">                        
+                    ${advantage.text}
+                </div>
+            </div>`;
+    }
+
+    renderProductInfoPanel(product, idx) {
+        const productHeadClassList = {
+            "product-card--background-even": idx % 2 === 0,
+            "product-card--background-odd": idx % 2 !== 0
+        };
+        const productImageLinkStyleList = {
+            "--image-link": "url(" + product.imageLink + ")"
+        };
+        //language=HTML
+        return html`
+            <div class="product-modal">
+                <div class="content">
+                    <div class="content__head header">
+                        <div class="header__row">
+                            <strong class="header__title">${this.productPanelTitle}</strong>
+                            <span @click="${this.fadeOut}" class="closeBtn" id="closeBtn">×</span>
+                        </div>
+                        <div class="header__row">
+                            <wertgarantie-rating class="wg-rating-default"
+                                                 data-bifrost-uri="${this.bifrostUri}"
+                                                 data-disable-rating-number="true">
+                            </wertgarantie-rating>
+                        </div>
+                    </div>
+                    <div class="content__product-card">
+                        <div class=${classMap(productHeadClassList)} style=${styleMap(productImageLinkStyleList)}>
+                            <div class="product-card__base-info">
+                                <div class="product-card__base-info--top">
+                                    <div class="product-card__base-info--top-left">
+                                        <small class="payment-interval">${product.paymentInterval}</small><br>
+                                        <strong class="price-display">${product.priceFormatted}</strong><br>
+                                        <small class="tax-display">${product.taxFormatted}</small>
+                                    </div>
+                                </div>
+                                <div class="product-card__base-info--bottom">
+                                    <div class="product-card__title">${product.name}</div>
+                                    <div class="product-card__advantages">
+                                        ${product.top3.map(adv => this.renderAdvantage(adv, true))}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content__details details">
+                        <div class="details__title">
+                            ${this.productPanelDetailsHeader}
+                        </div>
+                        <div class="product__advantages product__advantages--details">
+                            ${product.advantages.map(adv => this.renderAdvantage(adv, false))}
+                        </div>
+                        <div class="product__footer-section">
+                            <p><strong>${this.productFurtherInformation}</strong></p>
+                            <a target="_blank" class="wg-link"
+                               href="${product.IPIDUri}">${product.IPIDText}</a><br>
+                            <a target="_blank" class="wg-link"
+                               href="${product.GTCIUri}">${product.GTCIText}</a>
+                        </div>
+                        <div class="product__footer-section">
+<!--                            <div class="trust-text">-->
+<!--                                 <p>${unsafeHTML(this.footerHtml)}</p>-->
+<!--                            </div>-->
+                            <div class="award-image-block">
+                                <a target="_blank" href="https://www.certipedia.com/quality_marks/9105052129">
+                                    <img class="award-image"
+                                         src="https://www.wertgarantie.de/portaldata/4/resources/Icons/tuev-logo.png"
+                                         alt="tuev-logo">
+                                     </a>
+                                <a target="_blank" href="https://www.wertgarantie.de/Home.aspx#">
+                                    <img class="award-image"
+                                         src="https://www.wertgarantie.de/Portaldata/4/Resources/logos/test-bild-wertgarantie-109-01.png"
+                                         alt="test-bild">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `
+    }
+
+    render() {
+        return this.showComponent ? html`
+            <!--
+                Font Awesome Free by @fontawesome - https://fontawesome.com
+                License - https://fontawesome.com/license (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
+            -->
+        <div class="component">
+            <div class="component__head head">
+                <div class="head__title">
+                    ${this.title}
+                </div>
+                <wertgarantie-rating class="head__rating"
+                                     data-bifrost-uri="${this.bifrostUri}"
+                                     data-disable-rating-number="true"
+                                     data-link-text=" ">
+                </wertgarantie-rating>
+            </div>
+            <div class="products">
+                ${this.products.map((product, idx) => this.renderProductTag(idx, product)
+                )}
+            <div class="component__footer">
+                ${this.includedTax}
+            </div>
+        </div>` : html``;
+    }
+
+    renderProductTag(idx, product) {
+        const selectionClassList = {
+            "selection": true,
+            "product__selection": true,
+            "product__selection--first": idx === 0,
+            "product__selection--last": idx === (this.products.length - 1),
+            "product__selection--selected": idx === this.selectedProductIndex
+
+        };
+
+        return html`
+            <div class="products__product product">
+                <div class="${classMap(selectionClassList)}">
+                    <div class="selection__clickable" @click="${() => this.updateSelectedProductIndex(idx)}">
+                        <div class="selection__overview overview">
+                            <div class="overview__checkbox">
+                                <!-- Font Awesome check icon -->
+                                ${this.selectedProductIndex === idx ?
+                                    html`<svg class="selection__checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>`
+                                    : html``}
+                            </div>
+                            <div class="overview__name">${product.shortName}</div>
+                        </div>
+                        <div class="selection__price">${product.priceFormatted + " / " + product.paymentInterval + "*"}</div>
+                    </div>
+                    <div class="selection__information-icon" @click="${() => this.displayedProductInfoPanelIndex = idx}">
+                        <!-- Font Awesome info icon -->
+                        <svg class="info-icon" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="info-circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                            <path class="info-icon" d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"></path>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+            ${idx === this.displayedProductInfoPanelIndex ? this.renderProductInfoPanel(product, idx) : html``}`;
+    }
+}
+
+if (!customElements.get('wertgarantie-selection-embedded')) {
+    customElements.define('wertgarantie-selection-embedded', WertgarantieSelectionEmbedded);
+}

@@ -48,6 +48,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
         this.renderProductTag = this.renderProductTag.bind(this);
         this.updateSelectedProductIndex = this.updateSelectedProductIndex.bind(this);
         this.allDataAvailable = this.allDataAvailable.bind(this);
+        this.addProductToShoppingCart = this.addProductToShoppingCart.bind(this);
     }
 
     connectedCallback() {
@@ -118,6 +119,10 @@ class WertgarantieSelectionEmbedded extends LitElement {
         this.products = selectionData.products;
 
         this.selectedProductIndex = await findProductSelection(this.productBaseIdentifier);
+
+        document.querySelector(this.selectionTriggerElementIdentifier).addEventListener(this.selectionTriggerEvent, async () => {
+            await this.addProductToShoppingCart()
+        });
     }
 
     async updateSelectedProductIndex(idx) {
@@ -317,6 +322,46 @@ class WertgarantieSelectionEmbedded extends LitElement {
                 </div>
             </div>
             ${idx === this.displayedProductInfoPanelIndex ? this.renderProductInfoPanel(product, idx) : html``}`;
+    }
+
+    async addProductToShoppingCart() {
+        if (this.selectedProductIndex === -1) {
+            return {};
+        }
+        const selectedProduct = this.products[this.selectedProductIndex];
+        if (!(this.bifrostUri && this.devicePrice && this.deviceClass && this.completeProductName && selectedProduct.id && selectedProduct.name && this.clientId)) {
+            throw new Error("order data incomplete: \n" +
+                "bifrostUri: " + this.bifrostUri + "\n" +
+                "devicePrice: " + this.devicePrice + "\n" +
+                "deviceClass: " + this.deviceClass + "\n" +
+                "clientId: " + this.clientId + "\n" +
+                "selectedProductId: " + selectedProduct.id + "\n" +
+                "selectedProductName: " + selectedProduct.name + "\n" +
+                "completeProductName: " + this.completeProductName
+            );
+        }
+        try {
+            const response = await fetchBifrost(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/shoppingCart/`, 'POST', this.componentVersion, {
+                shopProduct: {
+                    price: this.devicePrice,
+                    deviceClass: this.deviceClass,
+                    name: this.completeProductName,
+                    orderItemId: this.orderItemId
+                },
+                wertgarantieProduct: {
+                    id: selectedProduct.id,
+                    name: selectedProduct.name,
+                    paymentInterval: selectedProduct.intervalCode,
+                    price: selectedProduct.price
+                }
+            });
+            if (response.status !== 200) {
+                console.error('Adding product to shopping cart failed:', response);
+                return {};
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
     }
 }
 

@@ -9,28 +9,28 @@ export const selectionEmbeddedStyling = css`
     .component {
         display: flex;
         flex-direction: column;
-        padding: 1em;
+        padding: var(--wertgarantie-selection-embedded-component-padding, 1em 0);
         width: 100%;
-        max-width: 350px;
+        /*max-width: 350px;*/
     }
 
     .head__title {
-        font-size: 1em;
-        font-weight: 700;
+        font-size: var(--wertgarantie-selection-embedded-component-title-font-size, 1em);
+        font-weight: var(--wertgarantie-selection-embedded-component-title-font-weight, 700);
     }
 
-    .head__rating {
-        margin: 0.3em;
-        --wertgarantie-rating-font-size: 0.8em;
-        --wertgarantie-rating-font-family: var(--wertgarantie-embedded-rating-font-family, "Open Sans", sans-serif);
-        --wertgarantie-rating-text-color: rgb(134, 134, 134);
+    /*.head__rating {*/
+    /*    margin: 0.3em;*/
+    /*    --wertgarantie-rating-font-size: 0.8em;*/
+    /*    --wertgarantie-rating-font-family: var(--wertgarantie-embedded-rating-font-family, "Open Sans", sans-serif);*/
+    /*    --wertgarantie-rating-text-color: rgb(134, 134, 134);*/
 
-        --wertgarantie-rating-stars-font-size: 0.8em;
-        --wertgarantie-rating-stars-color: orange;
-    }
+    /*    --wertgarantie-rating-stars-font-size: 0.8em;*/
+    /*    --wertgarantie-rating-stars-color: orange;*/
+    /*}*/
     
     .products {
-        padding: 1em 0;
+        padding-top: 1em;
     }
 
     .products__product {
@@ -44,22 +44,13 @@ export const selectionEmbeddedStyling = css`
         justify-content: space-between;
         align-items: center;
         border: 1px solid black;
-        padding: 1em;
-        font-size: 0.9em;
+        padding: var(--wertgarantie-selection-embedded-component-title-product-padding, 0.5em);
+        font-size: var(--wertgarantie-selection-embedded-component-title-product-font-size, 0.9em);
         font-weight: 500;
         opacity: 0.2;
         transition: opacity 1s;
         cursor: pointer;
-    }
-    
-    .product__selection--first {
-        border-top-left-radius: 7px;
-        border-top-right-radius: 7px;
-    }
-
-    .product__selection--last {
-        border-bottom-left-radius: 7px;
-        border-bottom-right-radius: 7px;
+        max-height: 35px;
     }
     
     .product__selection--selected {
@@ -90,7 +81,6 @@ export const selectionEmbeddedStyling = css`
     
     .selection__information-icon {
         padding: 1em;
-        margin: 0.7em 0px;
         width: 10%;
         cursor: pointer;
         display: flex;

@@ -121,7 +121,9 @@ class WertgarantieSelectionEmbedded extends LitElement {
         this.selectedProductIndex = await findProductSelection(this.productBaseIdentifier);
 
         document.querySelector(this.selectionTriggerElementIdentifier).addEventListener(this.selectionTriggerEvent, async () => {
-            await this.addProductToShoppingCart()
+            await this.addProductToShoppingCart();
+            await deleteProductSelection(this.productBaseIdentifier);
+            return true;
         });
     }
 
@@ -266,6 +268,11 @@ class WertgarantieSelectionEmbedded extends LitElement {
     }
 
     render() {
+                // <wertgarantie-rating class="head__rating"
+                //                      data-bifrost-uri="${this.bifrostUri}"
+                //                      data-disable-rating-number="true"
+                //                      data-link-text=" ">
+                // </wertgarantie-rating>
         return this.showComponent ? html`
             <!--
                 Font Awesome Free by @fontawesome - https://fontawesome.com
@@ -276,11 +283,6 @@ class WertgarantieSelectionEmbedded extends LitElement {
                 <div class="head__title">
                     ${this.title}
                 </div>
-                <wertgarantie-rating class="head__rating"
-                                     data-bifrost-uri="${this.bifrostUri}"
-                                     data-disable-rating-number="true"
-                                     data-link-text=" ">
-                </wertgarantie-rating>
             </div>
             <div class="products">
                 ${this.products.map((product, idx) => this.renderProductTag(idx, product)

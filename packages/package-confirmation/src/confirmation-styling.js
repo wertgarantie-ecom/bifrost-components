@@ -33,7 +33,7 @@ export const confirmationStyling = css`
         box-sizing: border-box;
         text-align: left;
         line-height: 1em;
-        max-width: 1100px;
+        width: 100%;
         display: flex;
         flex-direction: row;
         padding: var(--wertgarantie-confirmation-component-padding, '0px 0px 0px 0px');

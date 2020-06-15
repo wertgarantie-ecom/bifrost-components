@@ -1,6 +1,6 @@
 {
   "name": "wertgarantie-selection-embedded",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "wertgarantie web component to select policy products",
   "main": "selection-embedded.js",
   "scripts": {
@@ -28,6 +28,6 @@
   },
   "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme",
   "dependencies": {
-    "wertgarantie-rating": "^2.0.7"
+    "wertgarantie-rating": "^2.0.8"
   }
 }

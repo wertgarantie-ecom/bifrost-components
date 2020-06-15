@@ -19,7 +19,7 @@ In order to see the confirmation component here, please select a bike insurance 
 <form id="demo-html-form">
     <input id="hidden-input-bike" type="hidden" />
     <wertgarantie-confirmation
-        data-client-id="public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
+        data-client-id="public:5a576bd2-1953-4d20-80de-4de00d65fdc7"
         data-hidden-input-selector="#hidden-input-bike"
         data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie">
         data-validation-trigger-selector="#demo-html-form">
@@ -33,7 +33,7 @@ Code for this component:
 <form id="demo-html-form">
     <input id="hidden-input-bike" type="hidden" />
     <wertgarantie-confirmation
-        data-client-id="public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f"
+        data-client-id="public:5a576bd2-1953-4d20-80de-4de00d65fdc7"
         data-hidden-input-selector="#hidden-input-bike"
         data-validation-trigger-selector="#demo-html-form">
     </wertgarantie-confirmation>
@@ -50,6 +50,61 @@ There are several attributes in the component that are configurable:
 "`
 
 
+### Product configuration in shopping cart
+If you have a shopping cart that allows modification of a selected product from within the cart which also changes the price, a possibly selected insurance for this product might have to change as well.
+In this case we have to somehow sync the shopping cart on Wertgarantie's side and the partner shop's cart. To do that, you need to instantiate the confirmation component with
+the `data-shop-order-base64` attribute that contains the your shopping cart as base64 encoded JSON object:
+```json
+[
+    {
+        "price": 86000,
+        "manufacturer": "XXXBikes Inc.",
+        "deviceClass": "Bike",
+        "name": "Example Bike",
+        "orderId": "orderNo1"
+    },
+    {
+        "price": "..."
+    }      
+]
+```
+
+So, your component might look like this in HTML:
+
+```html
+    <wertgarantie-confirmation
+        data-client-id="public:5a576bd2-1953-4d20-80de-4de00d65fdc7"
+        data-hidden-input-selector="#hidden-input-phone"
+        data-validation-trigger-selector="#demo-html-form"
+        data-shop-order-base64="JVBERi0xLjYNJeLjz9MNCjI1IDAgb2JqDTw8L0xpbmVhcml6ZWQgMS9MIDgxNTAyL08...">
+    </wertgarantie-confirmation>
+```
+
+On our side the server will calculate a differential of both shopping carts and detect price changes. If an insurance price is changed, the user will be notified via element 
+highlighting and message within the component. 
+
+
+### Code snippets
+The following code snippets may help to implement the base64 encoding. We will expand these for more languages step by step
+
+<details>
+<summary>JavaScript</summary> 
+
+```javascript
+const confirmationCompData = [];
+confirmationCompData.push(...shoppingCartData.products.map(product => {
+    return {
+        price: product.selectedVariant.devicePrice,
+        manufacturer: product.manufacturer,
+        deviceClass: product.deviceClass,
+        name: product.productName,
+        orderItemId: product.orderItemId
+    }
+}));
+const confirmationShopOrderBase64 = Buffer.from(JSON.stringify(confirmationCompData)).toString('base64');
+```
+</details>
+
 ## Validation
 
 If you, as a web shop, include Wertgarantie Frontend Components in your shop and you include this confirmation component in your shopping cart and there in your checkout form. If so, you will want to validate if the user has confirmed all checkboxes within the component.
@@ -57,4 +112,4 @@ Therefore you have different opportunities:
 * provide the `data-validation-trigger-selector` attribute in the html tag that selects your checkout form. This way the component automatically adds a `submit` - event listener to your form, and checks for confirmation status. If not confirmed the form will not be submitted and the confirmation component will notify the user and mark checkboxes in red.
 * the component has an API that you can use to validate. You'll just have to call the method `checkStateOnSubmit()` of the component which returns false in case the confirmation is not given by the user. So you can call this method in your maybe already existing submit event listening method.
 
-To see this in action, please checkout the [demo shop](https://wertgarantie-demo-shop.herokuapp.com/demoshop) where the interaction of the different components is displayed 
+To see this in action, please checkout the [demo shop](https://wertgarantie-demo-shop-staging.herokuapp.com/demoshop) where the interaction of the different components is displayed 

@@ -18,11 +18,11 @@ storiesOf('Components|Pop-Up', module)
         converter.makeHtml(PopupReadme) + 
     `</div>`
 )
-// .add("Bike Product Popup", () =>
-//     `<div class="markdown-body">` +
-//         converter.makeHtml(BikePopUp) +
-//     `</div>`
-// )
+.add("Bike Product Popup", () =>
+    `<div class="markdown-body">` +
+        converter.makeHtml(BikePopUp) +
+    `</div>`
+)
 .add("phone Product Popup", () => 
     `<div class="markdown-body">` + 
         converter.makeHtml(PhonePopUp) + 

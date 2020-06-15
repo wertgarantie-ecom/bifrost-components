@@ -104,7 +104,7 @@ class WertgarantieAfterSales extends LitElement {
             "order-item--light": index % 2 === 1
         };
         const imageLinkStyle = {
-            "--image-link": "url(" + item.imageLink + ")"
+            "--image-link": `url("${item.imageLink}")`
         };
         //language=HTML
         return html`

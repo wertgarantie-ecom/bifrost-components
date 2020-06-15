@@ -93,7 +93,7 @@ class WertgarantieRating extends LitElement {
     checkIfRatingDefined(displayData) {
         if (!this.allDisplayDataAvailable(displayData)) {
             this.remove();
-            throw new Error("display data incomplete");
+            throw new Error("display data incomplete" + JSON.stringify(displayData, null, 2));
         } else {
             return displayData;
         }

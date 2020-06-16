@@ -65,6 +65,8 @@ class WertgarantieSelectionEmbedded extends LitElement {
         this.completeProductName = this.getAttribute("data-complete-product-name");
         this.selectionTriggerElementIdentifier = this.getAttribute('data-product-selection-trigger-element-identifier');
         this.selectionTriggerEvent = this.getAttribute('data-product-selection-trigger-event');
+        this.afterSalesEmbedded = (this.getAttribute('data-after-sales-embedded') || 'false') === 'true';
+        this.rememberSelection = this.productBaseIdentifier ? true : false;
         this.showComponent = false;
         this.displayedProductInfoPanelIndex = -1;
         this.selectedProductIndex = -1;
@@ -79,8 +81,11 @@ class WertgarantieSelectionEmbedded extends LitElement {
     }
 
     allDataAvailable() {
-        const selectionTriggerExists = document.querySelector(this.selectionTriggerElementIdentifier);
-        return selectionTriggerExists && this.devicePrice && this.deviceClass && this.clientId && this.productBaseIdentifier && this.completeProductName && this.selectionTriggerEvent;
+        let selectionTriggerExists = true;
+        if (!this.afterSalesEmbedded) {
+            selectionTriggerExists = document.querySelector(this.selectionTriggerElementIdentifier) && this.selectionTriggerEvent;
+        }
+        return selectionTriggerExists && this.devicePrice && this.deviceClass && this.clientId && this.completeProductName;
     }
 
     async fetchSelectionData() {
@@ -118,13 +123,19 @@ class WertgarantieSelectionEmbedded extends LitElement {
 
         this.products = selectionData.products;
 
-        this.selectedProductIndex = await findProductSelection(this.productBaseIdentifier);
+        if (this.rememberSelection) {
+            this.selectedProductIndex = await findProductSelection(this.productBaseIdentifier);
+        }
 
-        document.querySelector(this.selectionTriggerElementIdentifier).addEventListener(this.selectionTriggerEvent, async () => {
-            await this.addProductToShoppingCart();
-            await deleteProductSelection(this.productBaseIdentifier);
-            return true;
-        });
+        if (!this.afterSalesEmbedded) {
+            document.querySelector(this.selectionTriggerElementIdentifier).addEventListener(this.selectionTriggerEvent, async () => {
+                await this.addProductToShoppingCart();
+                if (this.rememberSelection) {
+                    await deleteProductSelection(this.productBaseIdentifier);
+                }
+                return true;
+            });
+        }
     }
 
     async updateSelectedProductIndex(idx) {
@@ -136,11 +147,15 @@ class WertgarantieSelectionEmbedded extends LitElement {
         };
         if (this.selectedProductIndex === idx) {
             await fetchBifrost(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-embedded/select`, "DELETE", this.componentVersion, updatedProductSelection);
-            await deleteProductSelection(updatedProductSelection.productBaseIdentifier);
+            if (this.rememberSelection) {
+                await deleteProductSelection(updatedProductSelection.productBaseIdentifier);
+            }
             this.selectedProductIndex = -1;
         } else {
             await fetchBifrost(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-embedded/select`, "POST", this.componentVersion, updatedProductSelection);
-            await saveProductSelection(updatedProductSelection);
+            if (this.rememberSelection) {
+                await saveProductSelection(updatedProductSelection);
+            }
             this.selectedProductIndex = idx;
         }
         return;
@@ -280,15 +295,19 @@ class WertgarantieSelectionEmbedded extends LitElement {
             -->
         <div class="component">
             <div class="component__head head">
-                <div class="head__title">
-                    ${this.title}
-                </div>
+                ${this.afterSalesEmbedded ? html`` : html`
+                    <div class="head__title">
+                        ${this.title}
+                    </div>`
+                }
             </div>
             <div class="products">
-                ${this.products.map((product, idx) => this.renderProductTag(idx, product)
-                )}
-            <div class="component__footer">
-                ${this.includedTax}
+                ${this.products.map((product, idx) => this.renderProductTag(idx, product))}
+                ${this.afterSalesEmbedded ? html`` : html`
+                    <div class="component__footer">
+                        ${this.includedTax}
+                    </div>`
+                 }
             </div>
         </div>` : html``;
     }

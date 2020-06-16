@@ -4,13 +4,123 @@
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <style>
+        :root {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
+
+        .content {
+            display: flex;
+            flex-flow: column;
+            width: 70%;
+            margin: 2em auto;
+        }
+
+        .selection__item {
+            display: flex;
+            margin: 1em 0;
+            border-bottom: 1px solid black;
+        }
+
+        .tax-explanation {
+            margin: 2em 0;
+            align-self: end;
+        }
+
+        .shop-product {
+            width:60%;
+            display: flex;
+        }
+
+        .product__image {
+            width: 30%;
+            min-width: 100px;
+        }
+
+        .product__name {
+            align-self: center;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .insurance-offer {
+            width: 40%;
+        }
+    </style>
     <title>List Selection Example</title>
 </head>
 <body>
+<div class="content">
     <div class="head">
         <h3>EXTRASCHUTZ?</h3>
     </div>
-    <div class="content"></div>
-    <div class="footer"></div>
+    <div class="selection">
+        <div class="selection__item">
+            <div class="shop-product product">
+                <img class="product__image" src="https://cdn.pixabay.com/photo/2013/07/13/13/43/racing-bicycle-161449_1280.png" alt="">
+                <div class="product__name">
+                    Cube Race ONE 2020 16 Zoll | black´n´green | 27.5 Zoll
+                </div>
+            </div>
+            <div class="insurance-offer">
+                <wertgarantie-selection-embedded
+                    data-client-id="public:5a576bd2-1953-4d20-80de-4de00d65fdc7"
+                    data-bifrost-uri="http://localhost:3000/wertgarantie"
+                    data-device-class="Bike"
+                    data-device-price="119900"
+                    data-after-sales-embedded="true"
+                    data-complete-product-name="Cube Race ONE 2020 16 Zoll | black´n´green | 27.5 Zoll">
+                </wertgarantie-selection-embedded>
+            </div>
+
+        </div>
+        <div class="selection__item">
+            <div class="shop-product product">
+                <img class="product__image" src="https://cdn.pixabay.com/photo/2013/07/13/13/43/racing-bicycle-161449_1280.png" alt="">
+                <div class="product__name">
+                    Cube Race ONE 2020 16 Zoll | black´n´green | 27.5 Zoll
+                </div>
+            </div>
+            <div class="insurance-offer">
+                <wertgarantie-selection-embedded
+                        data-client-id="public:5a576bd2-1953-4d20-80de-4de00d65fdc7"
+                        data-bifrost-uri="http://localhost:3000/wertgarantie"
+                        data-device-class="E-Bike"
+                        data-device-price="119900"
+                        data-after-sales-embedded="true"
+                        data-complete-product-name="Cube Race ONE 2020 16 Zoll | black´n´green | 27.5 Zoll">
+                </wertgarantie-selection-embedded>
+            </div>
+
+        </div>
+        <div class="selection__item">
+            <div class="shop-product product">
+                <img class="product__image" src="https://cdn.pixabay.com/photo/2013/07/13/13/43/racing-bicycle-161449_1280.png" alt="">
+                <div class="product__name">
+                    Cube Race ONE 2020 16 Zoll | black´n´green | 27.5 Zoll
+                </div>
+            </div>
+            <div class="insurance-offer">
+                <wertgarantie-selection-embedded
+                        data-client-id="public:5a576bd2-1953-4d20-80de-4de00d65fdc7"
+                        data-bifrost-uri="http://localhost:3000/wertgarantie"
+                        data-device-class="E-Bike"
+                        data-device-price="119900"
+                        data-after-sales-embedded="true"
+                        data-complete-product-name="Cube Race ONE 2020 16 Zoll | black´n´green | 27.5 Zoll">
+                </wertgarantie-selection-embedded>
+            </div>
+
+        </div>
+        <div class="tax-explanation">
+            *inkl. 19% Versicherungssteuer
+        </div>
+    </div>
+    <div class="footer">
+        <button id="addToShoppingCart">In den Warenkorb</button>
+    </div>
+</div>
+<script src="../../package-selection-embedded/dist/selection-embedded.min.js" type="module"
+        crossorigin="anonymous"></script>
 </body>
 </html>

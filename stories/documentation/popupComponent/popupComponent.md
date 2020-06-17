@@ -73,9 +73,9 @@ document.querySelector('wertgarantie-selection-pop-up').clientId = ${clientId};
 * `quantity`: Currently we only support quantity= 1, in every other case the popup will not show up. 
 
 ### Open the Pop Up
-The popup opens automatically by calling `displayComponent` on itself. In case this is not desired and you want more control just disable this with `data-display-self=true` and manually call `displayComponent` 
+The popup opens automatically by calling `displayComponent` on itself. In case this is not desired and you want more control just disable this with `data-display-self=false` and manually call `displayComponent`.
 ```javascript
-document.querySelector('wertgarantie-selection-popup').displayComponent();
+document.querySelector('wertgarantie-selection-pop-up').displayComponent();
 ```
 
 

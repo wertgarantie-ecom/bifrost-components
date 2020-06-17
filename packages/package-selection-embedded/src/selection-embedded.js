@@ -66,6 +66,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
         this.selectionTriggerElementIdentifier = this.getAttribute('data-product-selection-trigger-element-identifier');
         this.selectionTriggerEvent = this.getAttribute('data-product-selection-trigger-event');
         this.afterSalesEmbedded = (this.getAttribute('data-after-sales-embedded') || 'false') === 'true';
+        this.displayData = this.getAttribute('data-display-data');
         this.rememberSelection = this.productBaseIdentifier ? true : false;
         this.showComponent = false;
         this.displayedProductInfoPanelIndex = -1;
@@ -89,6 +90,10 @@ class WertgarantieSelectionEmbedded extends LitElement {
     }
 
     async fetchSelectionData() {
+        if (this.displayData) {
+            return JSON.parse(decodeURIComponent(escape(atob(this.displayData))));
+        }
+        console.log("No display Data provided, so I'm gonna fetch");
         if (!this.allDataAvailable()) {
             const errorMessage = `component data incomplete: 
                 ${JSON.stringify({
@@ -283,11 +288,6 @@ class WertgarantieSelectionEmbedded extends LitElement {
     }
 
     render() {
-                // <wertgarantie-rating class="head__rating"
-                //                      data-bifrost-uri="${this.bifrostUri}"
-                //                      data-disable-rating-number="true"
-                //                      data-link-text=" ">
-                // </wertgarantie-rating>
         return this.showComponent ? html`
             <!--
                 Font Awesome Free by @fontawesome - https://fontawesome.com

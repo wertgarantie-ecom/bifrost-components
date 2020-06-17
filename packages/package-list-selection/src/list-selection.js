@@ -2,6 +2,7 @@ import {LitElement, html} from "lit-element";
 import {listSelectionStyling} from "./listSelectionStyling";
 import fetchBifrost from "../../../shared-code/fetchBifrost";
 import initSentry from "../../../shared-code/sentry";
+import "../../package-selection-embedded/dist/selection-embedded.min.js";
 
 class WertgarantieListSelection extends LitElement {
     static get styles() {
@@ -15,10 +16,10 @@ class WertgarantieListSelection extends LitElement {
             showComponent: {type: Boolean},
             title: {type: String},
             includedTax: {type: String},
-            addToShoppingCartText: {type: String},
+            addInsuranceButtonText: {type: String},
 
-            shopProducts: {type: Object},
-            shopProductsBase64: {type: String}
+            insurableProductRows: {type: Object},
+            shopOrderBase64: {type: String}
         };
     }
 
@@ -29,8 +30,8 @@ class WertgarantieListSelection extends LitElement {
 
         this.displayComponent = this.displayComponent.bind(this);
         this.setProperties = this.setProperties.bind(this);
-        this.checkDataComplete = this.checkDataComplete.bind(this);
         this.fetchListSelectionComponentData = this.fetchListSelectionComponentData.bind(this);
+        this.renderProductRow = this.renderProductRow.bind(this);
     }
 
     connectedCallback() {
@@ -39,16 +40,18 @@ class WertgarantieListSelection extends LitElement {
         this.clientId = this.getAttribute('data-client-id');
         this.shopOrderBase64 = this.getAttribute('data-shop-order-base64');
         this.bifrostUri = this.getAttribute('data-bifrost-uri') || "https://ecommerce.wertgarantie.com/wertgarantie";
-
+        initSentry('list-selection', this.componentVersion, this.bifrostUri, this.clientId);
         this.displayComponent();
     }
 
     displayComponent() {
         this.fetchListSelectionComponentData()
-            .then(this.checkDataComplete)
             .then(this.setProperties)
             .then(() => this.showComponent = true)
-            .catch(() => this.showComponent = false)
+            .catch((e) => {
+                console.error(e);
+                this.showComponent = false
+            })
     }
 
     async fetchListSelectionComponentData() {
@@ -64,50 +67,54 @@ class WertgarantieListSelection extends LitElement {
         return response.body;
     }
 
-    setProperties() {
-
-    }
-
-    checkDataComplete() {
-        //TODO keep or delete?
+    setProperties(fetchedData) {
+        this.insurableProductRows = fetchedData.insurableProductRows;
+        this.title = fetchedData.listSelectionComponentTexts.title;
+        this.includedTax = fetchedData.listSelectionComponentTexts.includedTax;
+        this.addInsuranceButtonText = fetchedData.listSelectionComponentTexts.addInsuranceButtonText;
     }
 
     render() {
-        this.showComponent ? html`
+        return this.showComponent ? html`
             <div class="content">
                 <div class="head">
-                    <h3>EXTRASCHUTZ?</h3>
+                    <h3>${this.title}</h3>
                 </div>
                 <div class="selection">
-                    ${this.shopProducts.map(shopProduct => html`
-                        <div class="selection__item">
-                            <div class="shop-product product">
-                                <img class="product__image" src=${shopProduct.imageLink}>
-                                <div class="product__name">
-                                    ${shopProduct.name}
-                                </div>
-                            </div>
-                            <div class="insurance-offer">
-                                <wertgarantie-selection-embedded
-                                    data-client-id=${this.clientId}
-                                    data-bifrost-uri=${this.bifrostUri}
-                                    data-device-class=${shopProduct.deviceClass}
-                                    data-device-price=${shopProduct.price}
-                                    data-after-sales-embedded="true"
-                                    data-complete-product-name=${shopProduct.name}>
-                                </wertgarantie-selection-embedded>
-                            </div>
-                        </div>
-                    `)}
+                    ${this.insurableProductRows.map(this.renderProductRow)}
                     <div class="tax-explanation">
                         ${this.includedTax}
                     </div>
                 </div>
                 <div class="footer">
-                    <button id="addToShoppingCart">${this.addToShoppingCartText}</button>
+                    <button id="addToShoppingCart">${this.addInsuranceButtonText}</button>
                 </div>
             </div>
-        ` : html``;
+        ` : html`
+            <div>nothing to show</div>  
+        `;
+    }
+
+    renderProductRow(productRow) {
+        const row = html`
+            <div class="selection__item">
+                <div class="shop-product product">
+                    <img class="product__image" src="${productRow.shopProductImageLink}">
+                    <div class="product__name">
+                        ${productRow.shopProductName}
+                    </div>
+                </div>
+                <div class="insurance-offer">
+                    <wertgarantie-selection-embedded
+                        data-client-id="${this.clientId}"
+                        data-bifrost-uri="${this.bifrostUri}"
+                        data-after-sales-embedded="true"
+                        data-display-data="${productRow.embeddedSelectionDataBase64}">
+                    </wertgarantie-selection-embedded>
+                </div>
+            </div>
+        `
+        return row;
     }
 }
 

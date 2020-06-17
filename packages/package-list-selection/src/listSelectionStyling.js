@@ -32,6 +32,7 @@ export const listSelectionStyling = css`
     .product__image {
         width: 30%;
         min-width: 100px;
+        height: auto;
     }
 
     .product__name {

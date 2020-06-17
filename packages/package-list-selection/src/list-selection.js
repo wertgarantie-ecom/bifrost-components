@@ -96,7 +96,7 @@ class WertgarantieListSelection extends LitElement {
     }
 
     renderProductRow(productRow) {
-        const row = html`
+        return html`
             <div class="selection__item">
                 <div class="shop-product product">
                     <img class="product__image" src="${productRow.shopProductImageLink}">
@@ -113,8 +113,7 @@ class WertgarantieListSelection extends LitElement {
                     </wertgarantie-selection-embedded>
                 </div>
             </div>
-        `
-        return row;
+        `;
     }
 }
 

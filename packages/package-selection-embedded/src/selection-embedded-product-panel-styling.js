@@ -6,7 +6,7 @@ export const selectionEmbeddedProductPanelStyling = css`
         display: block;
         width: 100%;
         height: 100%;
-        position: absolute;
+        position: fixed;
         z-index: 1000;
         top: 0;
         left: 0;

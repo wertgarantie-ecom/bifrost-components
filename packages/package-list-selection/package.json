@@ -1,0 +1,32 @@
+{
+  "name": "wertgarantie-list-selection",
+  "version": "0.0.0",
+  "description": "wertgarantie web component to select multiple policy products",
+  "main": "list-selection.js",
+  "scripts": {
+    "version": "sed -i \"\" -E \"s/(this.componentVersion = \\')(.*)(\\';)/\\1$(node -p 'require(\"./package.json\").version')\\3/\" ./src/list-selection.js && git add ./src/list-selection.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "faucet --compact",
+    "fingerprint": "faucet --fingerprint",
+    "watch": "faucet -w",
+    "serve": "faucet --liveservice 9999"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wertgarantie-ecom/bifrost-components.git"
+  },
+  "keywords": [
+    "e-commerce",
+    "webcomponent",
+    "wertgarantie"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wertgarantie-ecom/bifrost-components/issues"
+  },
+  "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme",
+  "dependencies": {
+    "wertgarantie-selection-embedded": "0.0.8"
+  }
+}

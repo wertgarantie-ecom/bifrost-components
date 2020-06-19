@@ -75,7 +75,8 @@ class WertgarantieSelectionPopUp extends LitElement {
         this.devicePrice = parseInt(this.getAttribute("data-device-price"));
         const quantity = this.getAttribute("data-quantity");
         this.quantity = quantity ? parseInt(quantity) : 1;
-        this.deviceClass = this.getAttribute("data-device-class");
+        this.deviceClass = this.getAttribute("data-device-class") || undefined;
+        this.deviceClasses = this.getAttribute("data-device-classes") || undefined;
         this.landingPageUri = this.getAttribute("data-landing-page-uri") || "https://www.wertgarantie.de";
         this.name = this.getAttribute("data-product-name");
         this.orderItemId = this.getAttribute("data-order-item-id") || undefined;
@@ -145,13 +146,14 @@ class WertgarantieSelectionPopUp extends LitElement {
     }
 
     checkConfiguration() {
-        if (!(this.bifrostUri && this.devicePrice && this.deviceClass && this.clientId && this.name)) {
+        if (!(this.bifrostUri && this.devicePrice && (this.deviceClass || this.deviceClasses) && this.clientId && this.name)) {
             this.remove();
             throw new Error("fetch data incomplete\n" +
                 "bifrostUri: " + this.bifrostUri + "\n" +
                 "clientId: " + this.clientId + "\n" +
                 "devicePrice: " + this.devicePrice + "\n" +
                 "deviceClass: " + this.deviceClass + "\n" +
+                "deviceClasses: " + this.deviceClasses + "\n" +
                 "name: " + this.name
             );
         }
@@ -162,6 +164,7 @@ class WertgarantieSelectionPopUp extends LitElement {
         const response = await fetchBifrost(url, 'PUT', this.componentVersion, {
             devicePrice: this.devicePrice,
             deviceClass: this.deviceClass,
+            deviceClasses: this.deviceClasses,
             clientId: this.clientId,
             orderItemId: this.orderItemId
         });
@@ -397,23 +400,12 @@ class WertgarantieSelectionPopUp extends LitElement {
     async addProductToShoppingCart() {
         // fetch uri with different path for POST call to set cookie
         const selectedProduct = this.products[this.selectedProductIndex];
-        if (!(this.bifrostUri && this.devicePrice && this.deviceClass && this.name && selectedProduct.id && selectedProduct.name && this.clientId)) {
-            this.fadeout();
-            throw new Error("order data incomplete: \n" +
-                "bifrostUri: " + this.bifrostUri + "\n" +
-                "devicePrice: " + this.devicePrice + "\n" +
-                "deviceClass: " + this.deviceClass + "\n" +
-                "clientId: " + this.clientId + "\n" +
-                "selectedProductId: " + selectedProduct.id + "\n" +
-                "selectedProductName: " + selectedProduct.name + "\n" +
-                "shopProductName: " + this.name
-            );
-        }
         try {
             const response = await fetchBifrost(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/shoppingCart/`, 'POST', this.componentVersion, {
                 shopProduct: {
                     price: this.devicePrice,
                     deviceClass: this.deviceClass,
+                    deviceClasses: this.deviceClasses,
                     name: this.name,
                     orderItemId: this.orderItemId
                 },
@@ -421,7 +413,9 @@ class WertgarantieSelectionPopUp extends LitElement {
                     id: selectedProduct.id,
                     name: selectedProduct.name,
                     paymentInterval: selectedProduct.intervalCode,
-                    price: selectedProduct.price
+                    price: selectedProduct.price,
+                    deviceClass: selectedProduct.deviceClass,
+                    shopDeviceClass: selectedProduct.shopDeviceClass
                 }
             });
             if (response.status !== 200) {

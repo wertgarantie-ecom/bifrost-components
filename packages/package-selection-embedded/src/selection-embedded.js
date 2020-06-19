@@ -1,6 +1,10 @@
 import {LitElement, html} from "lit-element";
 import fetchBifrost from "../../../shared-code/fetchBifrost";
-import {saveProductSelection, findProductSelection, deleteProductSelection} from "../../../shared-code/wertgarantieShoppingCartRepository";
+import {
+    saveProductSelection,
+    findProductSelection,
+    deleteProductSelection
+} from "../../../shared-code/wertgarantieShoppingCartRepository";
 import '../../package-rating/dist/rating.min.js';
 import initSentry from "../../../shared-code/sentry";
 import {selectionEmbeddedStyling} from "./selection-embedded-styling";
@@ -268,11 +272,11 @@ class WertgarantieSelectionEmbedded extends LitElement {
     }
 
     render() {
-                // <wertgarantie-rating class="head__rating"
-                //                      data-bifrost-uri="${this.bifrostUri}"
-                //                      data-disable-rating-number="true"
-                //                      data-link-text=" ">
-                // </wertgarantie-rating>
+        // <wertgarantie-rating class="head__rating"
+        //                      data-bifrost-uri="${this.bifrostUri}"
+        //                      data-disable-rating-number="true"
+        //                      data-link-text=" ">
+        // </wertgarantie-rating>
         return this.showComponent ? html`
             <!--
                 Font Awesome Free by @fontawesome - https://fontawesome.com
@@ -286,7 +290,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
             </div>
             <div class="products">
                 ${this.products.map((product, idx) => this.renderProductTag(idx, product)
-                )}
+        )}
             <div class="component__footer">
                 ${this.includedTax}
             </div>
@@ -310,8 +314,8 @@ class WertgarantieSelectionEmbedded extends LitElement {
                         <div class="overview__checkbox">
                             <!-- Font Awesome check icon -->
                             ${this.selectedProductIndex === idx ?
-                                html`<svg class="selection__checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>`
-                                : html``}
+            html`<svg class="selection__checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>`
+            : html``}
                         </div>
                         <div class="overview__name">${product.shortName}</div>
                     </div>
@@ -354,7 +358,9 @@ class WertgarantieSelectionEmbedded extends LitElement {
                     id: selectedProduct.id,
                     name: selectedProduct.name,
                     paymentInterval: selectedProduct.intervalCode,
-                    price: selectedProduct.price
+                    price: selectedProduct.price,
+                    deviceClass: selectedProduct.deviceClass,
+                    shopDeviceClass: selectedProduct.shopDeviceClass
                 }
             });
             if (response.status !== 200) {

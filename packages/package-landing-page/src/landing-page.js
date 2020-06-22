@@ -1,13 +1,11 @@
 import {LitElement, html} from "lit-element";
-import fetchBifrost from "../../package-common/src/fetchBifrost";
-import '../../package-rating/dist/rating.min.js';
+import fetchBifrost from "wertgarantie-common/src/fetchBifrost";
+import 'wertgarantie-rating/dist/rating.min.js';
 import {landingPageStylingGeneral} from "./landing-page-styling-general";
 import {landingPageStylingHead} from "./landing-page-styling-head";
 import {landingPageStylingBody} from "./landing-page-styling-body";
 import {landingPageStylingSteps} from "./landing-page-styling-steps";
-import initSentry from "../../package-common/src/sentry";
-
-// import {landingPageStylingTariffCalculator} from "./landing-page-styling-tariff-calculator";
+import initSentry from "wertgarantie-common/src/sentry";
 
 class LandingPage extends LitElement {
 

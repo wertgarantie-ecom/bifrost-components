@@ -1,11 +1,11 @@
 import {LitElement, html} from "lit-element";
-import fetchBifrost from "../../package-common/src/fetchBifrost";
+import fetchBifrost from "wertgarantie-common/src/fetchBifrost";
 import {
     saveProductSelection,
     findProductSelection,
     deleteProductSelection
-} from "../../package-common/src/wertgarantieShoppingCartRepository";
-import '../../package-rating/dist/rating.min.js';
+} from "wertgarantie-common/src/wertgarantieShoppingCartRepository";
+import 'wertgarantie-rating/dist/rating.min.js';
 import initSentry from "../../package-common/src/sentry";
 import {selectionEmbeddedStyling} from "./selection-embedded-styling";
 import {selectionEmbeddedProductPanelStyling} from "./selection-embedded-product-panel-styling";

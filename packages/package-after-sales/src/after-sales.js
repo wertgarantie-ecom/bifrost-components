@@ -2,9 +2,9 @@ import {LitElement, html} from "lit-element";
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from "lit-html/directives/style-map";
 import {afterSalesStyling} from './after-sales-styling';
-import fetchBifrost from '../../package-common/src/fetchBifrost';
-import getWertgarantieCookieValue from "../../package-common/src/getWertgarantieCookieValue";
-import initSentry from "../../package-common/src/sentry";
+import fetchBifrost from 'wertgarantie-common/src/fetchBifrost';
+import getWertgarantieCookieValue from "wertgarantie-common/src/getWertgarantieCookieValue";
+import initSentry from "wertgarantie-common/src/sentry";
 
 const WERTGARANTIE_SESSION_ID_COOKIE = 'wertgarantie-session-id';
 

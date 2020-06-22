@@ -1,7 +1,6 @@
 import {LitElement, html} from 'lit-element';
 import {ratingStyling} from './rating-styling';
-import fetchBifrost from "../../package-common/src/fetchBifrost";
-import * as Sentry from '@sentry/browser';
+import fetchBifrost from "wertgarantie-common/src/fetchBifrost";
 
 const starText = '★★★★★';
 

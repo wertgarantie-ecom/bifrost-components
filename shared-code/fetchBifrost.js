@@ -1,4 +1,6 @@
 import {saveShoppingCart, getShoppingCart, deleteShoppingCart} from "./wertgarantieShoppingCartRepository";
+import {deleteOfferedForOrderItemId} from "./offeredItemsRepository";
+
 const SHOPPING_CART_DELETE_HEADER = 'X-wertgarantie-shopping-cart-delete';
 const WERTGARANTIE_SESSION_ID = 'X-wertgarantie-session-id';
 const WERTGARANTIE_SESSION_ID_COOKIE = 'wertgarantie-session-id';
@@ -26,6 +28,7 @@ export default async function fetchBifrost(url, method, version, body = {}) {
 
     if (result.headers.get(SHOPPING_CART_DELETE_HEADER)) {
         await deleteShoppingCart();
+        await deleteOfferedForOrderItemId();
         document.cookie = `${WERTGARANTIE_SESSION_ID_COOKIE}=; expires=Thu, 01 Jan 1970 00:00:00 UTC;`;
     }
 

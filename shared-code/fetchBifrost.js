@@ -37,7 +37,7 @@ export default async function fetchBifrost(url, method, version, body = {}) {
         responseJson = await result.json();
         if (responseJson.signedShoppingCart) {
             await saveShoppingCart(responseJson.signedShoppingCart);
-            document.cookie = `${WERTGARANTIE_SESSION_ID_COOKIE}=${responseJson.signedShoppingCart.shoppingCart.sessionId}`;
+            document.cookie = `${WERTGARANTIE_SESSION_ID_COOKIE}=${responseJson.signedShoppingCart.shoppingCart.sessionId}; path=/`;
         }
     }
     return {

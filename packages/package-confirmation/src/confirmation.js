@@ -45,7 +45,6 @@ class WertgarantieConfirmation extends LitElement {
         super();
         this.componentVersion = '2.0.28';
 
-        //method binding
         this.setProperties = this.setProperties.bind(this);
         this.checkStateOnSubmit = this.checkStateOnSubmit.bind(this);
         this.isFullyChecked = this.isFullyChecked.bind(this);

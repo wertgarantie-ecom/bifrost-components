@@ -1,6 +1,6 @@
 {
   "name": "wertgarantie-after-sales",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "After Sales component for Wertgarantie e-commerce push",
   "main": "index.js",
   "scripts": {

@@ -2,11 +2,11 @@ import {LitElement, html} from 'lit-element';
 import {confirmationStyling} from './confirmation-styling';
 import {confirmationStylingTabs} from "./confirmation-styling-tabs";
 import {confirmationStylingAdvantages} from "./confirmation-styling-advantages";
-import fetchBifrost from "../../../shared-code/fetchBifrost";
+import fetchBifrost from "wertgarantie-common/src/fetchBifrost";
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from "lit-html/directives/style-map";
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
-import initSentry from "../../../shared-code/sentry";
+import initSentry from "wertgarantie-common/src/sentry";
 
 class WertgarantieConfirmation extends LitElement {
 

@@ -1,12 +1,12 @@
 import {LitElement, html} from "lit-element";
-import fetchBifrost from "../../../shared-code/fetchBifrost";
+import fetchBifrost from "wertgarantie-common/src/fetchBifrost";
 import {
     saveProductSelection,
     findProductSelection,
     deleteProductSelection
-} from "../../../shared-code/wertgarantieShoppingCartRepository";
-import '../../package-rating/dist/rating.min.js';
-import initSentry from "../../../shared-code/sentry";
+} from "wertgarantie-common/src/wertgarantieShoppingCartRepository";
+import 'wertgarantie-rating/dist/rating.min.js';
+import initSentry from "../../package-common/src/sentry";
 import {selectionEmbeddedStyling} from "./selection-embedded-styling";
 import {selectionEmbeddedProductPanelStyling} from "./selection-embedded-product-panel-styling";
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';

@@ -1,12 +1,12 @@
 import {LitElement, html} from 'lit-element';
-import '../../package-rating/dist/rating.min.js';
-import fetchBifrost from "../../../shared-code/fetchBifrost";
-import {getOfferedForOrderItemId, saveOfferedOrderItemIds} from "../../../shared-code/offeredItemsRepository";
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from 'lit-html/directives/style-map';
 import {selectionPopUpStyling} from "./selection-popup-styling";
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
-import initSentry from "../../../shared-code/sentry";
+import 'wertgarantie-rating/src/rating.min.js';
+import fetchBifrost from "wertgarantie-common/src/fetchBifrost";
+import {getOfferedForOrderItemId, saveOfferedOrderItemIds} from "wertgarantie-common/src/offeredItemsRepository";
+import initSentry from "wertgarantie-common/src/sentry";
 
 const MOBILE_WIDTH = 878;
 

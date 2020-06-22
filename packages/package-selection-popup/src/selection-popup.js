@@ -1,6 +1,7 @@
 import {LitElement, html} from 'lit-element';
 import '../../package-rating/dist/rating.min.js';
 import fetchBifrost from "../../../shared-code/fetchBifrost";
+import {getOfferedForOrderItemId, saveOfferedOrderItemIds} from "../../../shared-code/offeredItemsRepository";
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from 'lit-html/directives/style-map';
 import {selectionPopUpStyling} from "./selection-popup-styling";
@@ -160,13 +161,15 @@ class WertgarantieSelectionPopUp extends LitElement {
     }
 
     async fetchPolicy() {
+        const offeredOrderItemIds = await getOfferedForOrderItemId();
         const url = new URL(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-popup`);
         const response = await fetchBifrost(url, 'PUT', this.componentVersion, {
             devicePrice: this.devicePrice,
             deviceClass: this.deviceClass,
             deviceClasses: this.deviceClasses,
             clientId: this.clientId,
-            orderItemId: this.orderItemId
+            orderItemId: this.orderItemId,
+            offeredOrderItemIds
         });
         if (response.status === 204) {
             return undefined;
@@ -174,6 +177,7 @@ class WertgarantieSelectionPopUp extends LitElement {
         if (response.status !== 200) {
             throw new Error(`invalid bifrost response: ${response.status}`);
         }
+        await saveOfferedOrderItemIds(response.body.offeredOrderItemIds);
         return response.body;
     }
 

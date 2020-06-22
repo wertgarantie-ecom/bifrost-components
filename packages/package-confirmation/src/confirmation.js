@@ -113,6 +113,7 @@ class WertgarantieConfirmation extends LitElement {
             this.flashMessage = this.confirmationPrompt;
             e.target.scrollIntoView();
             e.preventDefault();
+            e.stopPropagation();
             return false;
         }
     }

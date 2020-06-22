@@ -1,10 +1,9 @@
 {
   "name": "wertgarantie-common",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Common libs for wertgaranties cross selling components",
   "main": "index.js",
   "scripts": {
-    "version": "sed -i \"\" -E \"s/(this.componentVersion = \\')(.*)(\\';)/\\1$(node -p 'require(\"./package.json\").version')\\3/\" ./src/after-sales.js && git add ./src/after-sales.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "faucet --compact",
     "fingerprint": "faucet --fingerprint",

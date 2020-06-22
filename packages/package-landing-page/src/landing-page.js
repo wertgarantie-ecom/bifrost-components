@@ -43,7 +43,7 @@ class LandingPage extends LitElement {
 
     connectedCallback() {
         super.connectedCallback();
-        this.componentVersion = '0.0.14';
+        this.componentVersion = '0.0.15';
         this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://ecommerce.wertgarantie.com/wertgarantie";
         this.clientId = this.getAttribute("data-client-id");
         initSentry('landing-page', this.componentVersion, this.bifrostUri, this.clientId);

@@ -1,6 +1,6 @@
 {
   "name": "wertgarantie-rating",
-  "version": "2.0.9",
+  "version": "2.0.10",
   "description": "wertgarantie web component to display google review ratings",
   "main": "dist/rating.min.js",
   "scripts": {
@@ -29,6 +29,6 @@
   },
   "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme",
   "dependencies": {
-    "wertgarantie-common": "^1.0.0"
+    "wertgarantie-common": "^1.0.2"
   }
 }

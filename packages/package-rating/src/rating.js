@@ -21,6 +21,7 @@ class WertgarantieRating extends LitElement {
         return ratingStyling;
     }
 
+
     constructor() {
         super();
         this.componentVersion = '2.0.8';

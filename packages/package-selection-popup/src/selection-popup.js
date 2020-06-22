@@ -46,6 +46,7 @@ class WertgarantieSelectionPopUp extends LitElement {
         };
     }
 
+    
     constructor() {
         super();
         this.initialized = false;

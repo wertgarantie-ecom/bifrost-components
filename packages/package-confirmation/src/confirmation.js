@@ -41,6 +41,7 @@ class WertgarantieConfirmation extends LitElement {
         ];
     }
 
+
     constructor() {
         super();
         this.componentVersion = '2.0.29';

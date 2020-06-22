@@ -24,7 +24,7 @@ class WertgarantieRating extends LitElement {
 
     constructor() {
         super();
-        this.componentVersion = '2.0.8';
+        this.componentVersion = '2.0.9';
         this.fetchRating = this.fetchRating.bind(this);
         this.checkIfRatingDefined = this.checkIfRatingDefined.bind(this);
         this.setProperties = this.setProperties.bind(this);

@@ -1,0 +1,29 @@
+{
+  "name": "wertgarantie-information-popup",
+  "version": "1.0.0",
+  "description": "wertgarantie information pop up for insurance products",
+  "main": "information-popup.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wertgarantie-ecom/bifrost-components.git"
+  },
+  "keywords": [
+    "e-commerce",
+    "webcomponent",
+    "wertgarantie",
+    "modal"
+  ],
+  "author": "henning.nobbe@innoq.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wertgarantie-ecom/bifrost-components/issues"
+  },
+  "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme",
+  "dependencies": {
+    "wertgarantie-common": "^1.0.3",
+    "wertgarantie-rating": "^2.0.11"
+  }
+}

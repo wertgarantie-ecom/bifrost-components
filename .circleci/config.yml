@@ -72,6 +72,9 @@ jobs:
       - run:
           name: purge CDN cache for landing page component
           command: curl https://purge.jsdelivr.net/npm/wertgarantie-landing-page@0/dist/landing-page.min.js
+      - run:
+          name: purge CDN cache for information pop up component
+          command: curl https://purge.jsdelivr.net/npm/wertgarantie-information-popup@1/dist/information-popup.min.js
 workflows:
   version: 2
   build_and_publish:

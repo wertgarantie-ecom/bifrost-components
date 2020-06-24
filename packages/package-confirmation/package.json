@@ -1,6 +1,6 @@
 {
   "name": "wertgarantie-confirmation",
-  "version": "2.0.32",
+  "version": "2.0.33",
   "description": "Confirmation component for Wertgarantie e-commerce push",
   "main": "index.js",
   "scripts": {
@@ -28,6 +28,6 @@
   },
   "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme",
   "dependencies": {
-    "wertgarantie-common": "^1.0.3"
+    "wertgarantie-common": "^1.0.4"
   }
 }

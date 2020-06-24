@@ -15,7 +15,7 @@ export const informationPopUpStyling = css`
         top: 0;
         left: 0;
         overflow: auto;
-        background-color: rgba(0, 0, 0, 0.3);
+        background-color: rgba(0, 0, 0, 0.8);
         animation-name: openInfoPopUp;
         animation-duration: 1s;
     }

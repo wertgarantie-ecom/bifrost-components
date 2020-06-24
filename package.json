@@ -53,6 +53,7 @@
     "wertgarantie-landing-page": "file:packages/package-landing-page",
     "wertgarantie-rating": "file:packages/package-rating",
     "wertgarantie-selection-embedded": "file:packages/package-selection-embedded",
+    "wertgarantie-information-popup": "file:packages/package-information-popup",
     "wertgarantie-selection-popup": "file:packages/package-selection-popup",
     "wertgarantie-common": "file:packages/package-common"
   }

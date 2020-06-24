@@ -1,0 +1,33 @@
+{
+  "name": "wertgarantie-information-popup",
+  "version": "1.0.0",
+  "description": "wertgarantie information pop up for insurance products",
+  "main": "information-popup.js",
+  "scripts": {
+    "version": "sed -i \"\" -E \"s/(this.componentVersion = \\')(.*)(\\';)/\\1$(node -p 'require(\"./package.json\").version')\\3/\" ./src/information-popup.js && git add ./src/information-popup.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "faucet --compact",
+    "fingerprint": "faucet --fingerprint",
+    "watch": "faucet -w",
+    "serve": "faucet --liveservice 9999"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wertgarantie-ecom/bifrost-components.git"
+  },
+  "keywords": [
+    "e-commerce",
+    "webcomponent",
+    "wertgarantie",
+    "modal"
+  ],
+  "author": "henning.nobbe@innoq.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wertgarantie-ecom/bifrost-components/issues"
+  },
+  "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme",
+  "dependencies": {
+    "wertgarantie-rating": "^2.0.11"
+  }
+}

@@ -3,7 +3,6 @@ import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from "lit-html/directives/style-map";
 import {afterSalesStyling} from './after-sales-styling';
 import fetchBifrost from 'wertgarantie-common/src/fetchBifrost';
-import getWertgarantieCookieValue from "wertgarantie-common/src/getWertgarantieCookieValue";
 import initSentry from "wertgarantie-common/src/sentry";
 
 const WERTGARANTIE_SESSION_ID_COOKIE = 'wertgarantie-session-id';
@@ -64,7 +63,7 @@ class WertgarantieAfterSales extends LitElement {
             return;
         }
         if (!this.base64EncodedShopCheckoutData) {
-            const sessionId = getWertgarantieCookieValue(WERTGARANTIE_SESSION_ID_COOKIE);
+            const sessionId = document.cookie.match('(^|[^;]+)\\s*' + WERTGARANTIE_SESSION_ID_COOKIE + '\\s*=\\s*([^;]+)').pop();
             if (!sessionId) {
                 this.showComponent = false;
                 return;

@@ -9,10 +9,6 @@ module.exports = {
             target: "./dist/fetchBifrost.min.js"
         },
         {
-            source: "./src/getWertgarantieCookieValue.js",
-            target: "./dist/getWertgarantieCookieValue.min.js"
-        },
-        {
             source: "./src/offeredItemsRepository.js",
             target: "./dist/offeredItemsRepository.min.js"
         },

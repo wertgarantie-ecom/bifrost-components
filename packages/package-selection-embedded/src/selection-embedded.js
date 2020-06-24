@@ -62,6 +62,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
 
         this.devicePrice = parseInt(this.getAttribute("data-device-price"));
         this.deviceClass = this.getAttribute("data-device-class");
+        this.deviceClasses = this.getAttribute("data-device-classes");
         this.landingPageUri = this.getAttribute("data-landing-page-uri") || "https://www.wertgarantie.de";
         this.productBaseIdentifier = this.getAttribute("data-product-base-identifier");
         this.completeProductName = this.getAttribute("data-complete-product-name");
@@ -82,7 +83,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
 
     allDataAvailable() {
         const selectionTriggerExists = document.querySelector(this.selectionTriggerElementIdentifier);
-        return selectionTriggerExists && this.devicePrice && this.deviceClass && this.clientId && this.productBaseIdentifier && this.completeProductName && this.selectionTriggerEvent;
+        return selectionTriggerExists && this.devicePrice && (this.deviceClass || this.deviceClasses) && this.clientId && this.productBaseIdentifier && this.completeProductName && this.selectionTriggerEvent;
     }
 
     async fetchSelectionData() {
@@ -102,6 +103,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
         }
         const url = `${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-embedded/`;
         const result = await fetchBifrost(url, 'PUT', this.componentVersion, {
+            deviceClasses: this.deviceClasses,
             deviceClass: this.deviceClass,
             devicePrice: this.devicePrice
         });
@@ -225,11 +227,12 @@ class WertgarantieSelectionEmbedded extends LitElement {
             return {};
         }
         const selectedProduct = this.products[this.selectedProductIndex];
-        if (!(this.bifrostUri && this.devicePrice && this.deviceClass && this.completeProductName && selectedProduct.id && selectedProduct.name && this.clientId)) {
+        if (!(this.bifrostUri && this.devicePrice && (this.deviceClass || this.deviceClasses) && this.completeProductName && selectedProduct.id && selectedProduct.name && this.clientId)) {
             throw new Error("order data incomplete: \n" +
                 "bifrostUri: " + this.bifrostUri + "\n" +
                 "devicePrice: " + this.devicePrice + "\n" +
                 "deviceClass: " + this.deviceClass + "\n" +
+                "deviceClass: " + this.deviceClasses + "\n" +
                 "clientId: " + this.clientId + "\n" +
                 "selectedProductId: " + selectedProduct.id + "\n" +
                 "selectedProductName: " + selectedProduct.name + "\n" +
@@ -241,6 +244,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
                 shopProduct: {
                     price: this.devicePrice,
                     deviceClass: this.deviceClass,
+                    deviceClasses: this.deviceClasses,
                     name: this.completeProductName,
                     orderItemId: this.orderItemId
                 },

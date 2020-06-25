@@ -8,6 +8,7 @@ Lieber Kunde,
 schön, dass Sie sich für die Versicherung der WERTGARANTIE entschieden haben und Ihr Vertrauen neben 500.000 zufriedener Kunden in den Testsieger in Sachen Sicherheit, Service und Zufriedenheit setzen.
 
 Wir informieren Sie erneut per E-Mail, sobald wir Ihren Auftrag 57619994 bearbeitet haben und gratulieren zu Ihrer Entscheidung.
+Ihr Versicherungsschutz gilt ab dem Ersten des kommenden Monats.
 
 Herzlichst, 
 Ihr digitalpersönlicher Auftragsservice

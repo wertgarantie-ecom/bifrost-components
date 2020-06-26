@@ -3,7 +3,7 @@ import fetchBifrost from "wertgarantie-common/src/fetchBifrost";
 import {
     saveProductSelection,
     findProductSelection,
-    deleteProductSelection
+    deleteProductSelection, getShoppingCart
 } from "wertgarantie-common/src/wertgarantieShoppingCartRepository";
 import 'wertgarantie-rating/dist/rating.min.js';
 import 'wertgarantie-information-popup/dist/information-popup.min';
@@ -51,6 +51,9 @@ class WertgarantieSelectionEmbedded extends LitElement {
         this.updateSelectedProductIndex = this.updateSelectedProductIndex.bind(this);
         this.allDataAvailable = this.allDataAvailable.bind(this);
         this.addProductToShoppingCart = this.addProductToShoppingCart.bind(this);
+        this.deleteFromShoppingCart = this.deleteFromShoppingCart.bind(this);
+        this.updateShoppingCart = this.updateShoppingCart.bind(this);
+        this.checkForExistingProductSelection = this.checkForExistingProductSelection.bind(this);
     }
 
     connectedCallback() {
@@ -61,13 +64,14 @@ class WertgarantieSelectionEmbedded extends LitElement {
         initSentry('selection-embedded', this.componentVersion, this.bifrostUri, this.clientId);
 
         this.devicePrice = parseInt(this.getAttribute("data-device-price"));
-        this.deviceClass = this.getAttribute("data-device-class");
-        this.deviceClasses = this.getAttribute("data-device-classes");
+        this.deviceClass = this.getAttribute("data-device-class") || undefined;
+        this.deviceClasses = this.getAttribute("data-device-classes") || undefined;
         this.landingPageUri = this.getAttribute("data-landing-page-uri") || "https://www.wertgarantie.de";
         this.productBaseIdentifier = this.getAttribute("data-product-base-identifier");
         this.completeProductName = this.getAttribute("data-complete-product-name");
         this.selectionTriggerElementIdentifier = this.getAttribute('data-product-selection-trigger-element-identifier');
         this.selectionTriggerEvent = this.getAttribute('data-product-selection-trigger-event');
+        this.directSelectionMode = !this.selectionTriggerElementIdentifier;
         this.showComponent = false;
         this.displayedProductInfoPanelIndex = -1;
         this.selectedProductIndex = -1;
@@ -77,27 +81,36 @@ class WertgarantieSelectionEmbedded extends LitElement {
     displayComponent() {
         this.fetchSelectionData()
             .then(this.setProperties)
-            .then(() => this.showComponent = true)
-            .catch(() => this.showComponent = false)
+            .catch((e) => {
+                console.error(e);
+                this.showComponent = false
+            })
     }
 
     allDataAvailable() {
+        if (this.directSelectionMode) {
+            return this.devicePrice && (this.deviceClass || this.deviceClasses) && this.clientId && this.productBaseIdentifier && this.completeProductName;
+        }
         const selectionTriggerExists = document.querySelector(this.selectionTriggerElementIdentifier);
         return selectionTriggerExists && this.devicePrice && (this.deviceClass || this.deviceClasses) && this.clientId && this.productBaseIdentifier && this.completeProductName && this.selectionTriggerEvent;
     }
 
     async fetchSelectionData() {
         if (!this.allDataAvailable()) {
-            const errorMessage = `component data incomplete: 
-                ${JSON.stringify({
+            const errorContent = {
                 deviceClass: this.deviceClass,
                 devicePrice: this.devicePrice,
                 clientId: this.clientId,
                 productBaseIdentifier: this.productBaseIdentifier,
                 completeProductName: this.completeProductName,
-                selectionTriggerElementIdentifier: this.selectionTriggerElementIdentifier,
-                selectionTriggerEvent: this.selectionTriggerEvent
-            }, null, 2)}`;
+                directSelectionMode: this.directSelectionMode
+            };
+            if (!this.directSelectionMode) {
+                errorContent.selectionTriggerElementIdentifier = this.selectionTriggerElementIdentifier;
+                errorContent.selectionTriggerEvent = this.selectionTriggerEvent;
+            }
+            const errorMessage = `component data incomplete: 
+                ${JSON.stringify(errorContent, null, 2)}`;
             console.error(errorMessage);
             throw new Error(errorMessage);
         }
@@ -122,13 +135,31 @@ class WertgarantieSelectionEmbedded extends LitElement {
 
         this.products = selectionData.products;
 
-        this.selectedProductIndex = await findProductSelection(this.productBaseIdentifier);
+        if (this.directSelectionMode) {
+            await this.checkForExistingProductSelection();
+        } else {
+            this.selectedProductIndex = await findProductSelection(this.productBaseIdentifier) || -1;
+            document.querySelector(this.selectionTriggerElementIdentifier).addEventListener(this.selectionTriggerEvent, async () => {
+                await this.addProductToShoppingCart();
+                await deleteProductSelection(this.productBaseIdentifier);
+                return true;
+            });
+        }
+        this.showComponent = true;
+    }
 
-        document.querySelector(this.selectionTriggerElementIdentifier).addEventListener(this.selectionTriggerEvent, async () => {
-            await this.addProductToShoppingCart();
-            await deleteProductSelection(this.productBaseIdentifier);
-            return true;
-        });
+    async checkForExistingProductSelection() {
+        const signedShoppingCart = await getShoppingCart();
+        const orderForShopProduct = signedShoppingCart ?
+            signedShoppingCart.shoppingCart.orders.find(order => order.shopProduct.orderItemId === this.completeProductName && order.shopProduct.price === this.devicePrice)
+            : undefined;
+        if (orderForShopProduct) {
+            for (var i = 0; i < this.products.length; i++) {
+                if (this.products[i].id === orderForShopProduct.wertgarantieProduct.id) {
+                    this.selectedProductIndex = i;
+                }
+            }
+        }
     }
 
     async updateSelectedProductIndex(idx) {
@@ -142,10 +173,17 @@ class WertgarantieSelectionEmbedded extends LitElement {
             await fetchBifrost(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-embedded/select`, "DELETE", this.componentVersion, updatedProductSelection);
             await deleteProductSelection(updatedProductSelection.productBaseIdentifier);
             this.selectedProductIndex = -1;
+            if (this.directSelectionMode) {
+                await this.deleteFromShoppingCart(idx);
+            }
         } else {
+            const updateNeeded = this.selectedProductIndex !== -1;
             await fetchBifrost(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-embedded/select`, "POST", this.componentVersion, updatedProductSelection);
             await saveProductSelection(updatedProductSelection);
             this.selectedProductIndex = idx;
+            if (this.directSelectionMode) {
+                await this.updateShoppingCart(updateNeeded);
+            }
         }
         return;
     }
@@ -246,7 +284,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
                     deviceClass: this.deviceClass,
                     deviceClasses: this.deviceClasses,
                     name: this.completeProductName,
-                    orderItemId: this.orderItemId
+                    orderItemId: this.completeProductName
                 },
                 wertgarantieProduct: {
                     id: selectedProduct.id,
@@ -258,12 +296,65 @@ class WertgarantieSelectionEmbedded extends LitElement {
                 }
             });
             if (response.status !== 200) {
-                console.error('Adding product to shopping cart failed:', response);
+                console.error('Adding product to shopping cart failed: ', response);
                 return {};
             }
+            document.dispatchEvent(new Event('wertgarantie-shopping-cart-updated'));
         } catch (error) {
             console.error('Error:', error);
         }
+    }
+
+    async deleteFromShoppingCart(idx) {
+        const url = new URL(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-embedded/product`);
+        const productToDelete = this.products[idx];
+        const result = await fetchBifrost(url, 'DELETE', this.componentVersion, {
+            wertgarantieProductId: productToDelete.id,
+            orderItemId: this.completeProductName,
+            devicePrice: this.devicePrice
+        });
+        if (result.status === 204 || result.status === 200) {
+            document.dispatchEvent(new Event('wertgarantie-shopping-cart-updated'));
+            return;
+        }
+        console.error('Deleting product from shopping cart failed: ', result);
+        return;
+    }
+
+    async updateShoppingCart(updateNeeded) {
+        // updateNeeded indicates if a different product has already been selected before
+        // in this case we do not have to replace the selection, we can just add the product to the shopping cart
+        if (!updateNeeded) {
+            await this.addProductToShoppingCart();
+            document.dispatchEvent(new Event('wertgarantie-shopping-cart-updated'));
+        }
+        const signedShoppingCart = await getShoppingCart();
+        const productToBeUpdated = signedShoppingCart.shoppingCart.orders.find(order => order.shopProduct.orderItemId === this.completeProductName);
+        const selectedProduct = this.products[this.selectedProductIndex];
+        const url = new URL(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-embedded/product`);
+        const response = await fetchBifrost(url, 'POST', this.componentVersion, {
+            orderId: productToBeUpdated.id,
+            shopProduct: {
+                price: this.devicePrice,
+                deviceClass: this.deviceClass,
+                deviceClasses: this.deviceClasses,
+                name: this.completeProductName,
+                orderItemId: this.completeProductName
+            },
+            wertgarantieProduct: {
+                id: selectedProduct.id,
+                name: selectedProduct.name,
+                paymentInterval: selectedProduct.intervalCode,
+                price: selectedProduct.price,
+                deviceClass: selectedProduct.deviceClass,
+                shopDeviceClass: selectedProduct.shopDeviceClass
+            }
+        });
+        if (response.status !== 200) {
+            console.error('Updating product in shopping cart failed: ', response);
+            return {};
+        }
+        document.dispatchEvent(new Event('wertgarantie-shopping-cart-updated'));
     }
 }
 

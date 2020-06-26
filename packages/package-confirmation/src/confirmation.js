@@ -101,7 +101,7 @@ class WertgarantieConfirmation extends LitElement {
                 console.warn(`validation trigger configuration invalid. Couldn't find specified element: ${this.validationTriggerSelector}`)
             }
         }
-        document.addEventListener('wertgarantie-product-added', () => {
+        document.addEventListener('wertgarantie-shopping-cart-updated', () => {
             this.displayComponent();
         });
     }

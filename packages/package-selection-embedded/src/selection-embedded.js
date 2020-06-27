@@ -6,7 +6,7 @@ import {
     deleteProductSelection, getShoppingCart
 } from "wertgarantie-common/src/wertgarantieShoppingCartRepository";
 import 'wertgarantie-rating/dist/rating.min.js';
-import 'wertgarantie-information-popup/dist/information-popup.min';
+import 'wertgarantie-information-popup/dist/information-popup.min.js';
 import initSentry from "../../package-common/src/sentry";
 import {selectionEmbeddedStyling} from "./selection-embedded-styling";
 import {selectionEmbeddedProductPanelStyling} from "./selection-embedded-product-panel-styling";

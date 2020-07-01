@@ -90,9 +90,9 @@ The component can be styled by providing a stylesheet with CSS properties. Avail
     * `--wertgarantie-popup-dark-button-background-color`
     * `--wertgarantie-popup-dark-button-text-color`
 * background image color fading for every second product
-    * `--wertgarantie-popup-product-background-even`
+    * `--wertgarantie-popup-product-background-primary`
 * background image color fading for every second product
-    * `--wertgarantie-popup-product-background-odd`
+    * `--wertgarantie-popup-product-background-secondary`
 * text color of advantages that are included and excluded
     * `--wertgarantie-selection-advantage-included-text-color`
     * `--wertgarantie-selection-advantage-excluded-text-color`

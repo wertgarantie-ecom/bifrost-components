@@ -18,12 +18,12 @@ This is the css code for the example here:
     --wertgarantie-popup-dark-button-text-color: rgb(254, 255, 208);
 
     /* background image color fading for every second product */
-    --wertgarantie-popup-product-background-even:
+    --wertgarantie-popup-product-background-primary:
         linear-gradient(to bottom right, rgba(0,0,0,0), #000),
         linear-gradient(to top right, rgb(192, 137, 17), rgba(81,61,61,0));
 
     /* background image color fading for every second product */
-    --wertgarantie-popup-product-background-odd:
+    --wertgarantie-popup-product-background-secondary:
         linear-gradient(to bottom right, rgba(81,61,61,0), rgba(190, 70, 0, 0.6)),
         linear-gradient(to top right, rgba(0,0,0,0), #000);
 

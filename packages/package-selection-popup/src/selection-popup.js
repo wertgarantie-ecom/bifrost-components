@@ -280,8 +280,8 @@ class WertgarantieSelectionPopUp extends LitElement {
         };
         const productHeadClassList = {
             "product__head--background": true,
-            "product__head--background-even": idx % 2 === 0,
-            "product__head--background-odd": idx % 2 !== 0
+            "product__head--background-primary": product.backgroundStyle === "primary",
+            "product__head--background-secondary": product.backgroundStyle === "secondary"
         };
         const productDetailsClassList = {
             "product__details": true,
@@ -293,7 +293,7 @@ class WertgarantieSelectionPopUp extends LitElement {
             "product__selection--invisible": this.selectedProductIndex !== idx
         };
         const productImageLinkStyleList = {
-            "--image-link": "url(" + product.imageLink + ")"
+            "--image-link": "url(" + product.productImageLink + ")"
         };
         //language=HTML
         return html`

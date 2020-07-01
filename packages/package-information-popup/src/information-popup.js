@@ -18,7 +18,6 @@ class WertgarantieInformationPopup extends LitElement {
             title: {type: String},
             productPanelDetailsHeader: {type: String},
             productFurtherInformation: {type: String},
-            idx: {type: Number},
             showComponent: {type: Boolean},
             bifrostUri: {type: String}
         };
@@ -35,7 +34,6 @@ class WertgarantieInformationPopup extends LitElement {
 
     connectedCallback() {
         super.connectedCallback();
-        this.idx = this.getAttribute('data-product-offer-index');
         this.bifrostUri = this.getAttribute('data-bifrost-uri') || "https://ecommerce.wertgarantie.com/wertgarantie";
         const productDataString = decodeURIComponent(escape(atob(this.getAttribute('data-insurance-product'))));
         const productData = JSON.parse(productDataString);
@@ -49,16 +47,16 @@ class WertgarantieInformationPopup extends LitElement {
     }
 
     checkAllPropertiesSet() {
-        this.showComponent = this.product && this.idx && this.title && this.productPanelDetailsHeader && this.productFurtherInformation;
+        this.showComponent = this.product && this.title && this.productPanelDetailsHeader && this.productFurtherInformation;
     }
 
     render() {
         const productHeadClassList = {
-            "product-card--background-even": this.idx % 2 === 0,
-            "product-card--background-odd": this.idx % 2 !== 0
+            "product-card--background-primary": this.product.backgroundStyle === 'primary',
+            "product-card--background-secondary": this.product.backgroundStyle === 'secondary'
         };
         const productImageLinkStyleList = {
-            "--image-link": "url(" + this.product.imageLink + ")"
+            "--image-link": "url(" + this.product.productImageLink + ")"
         };
         return this.showComponent ? html `
             <div class="product-modal">

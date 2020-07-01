@@ -114,18 +114,18 @@ export const selectionPopUpStyling = css`
         color: white;
     }
 
-    .product__head--background-even {
+    .product__head--background-primary {
         --image-link: linear-gradient(to top right, #006EFF, rgba(81, 61, 61, 0));
-        background-image: var(--wertgarantie-popup-product-background-even,
+        background-image: var(--wertgarantie-popup-product-background-primary,
         linear-gradient(to bottom right, rgba(0, 0, 0, 0), #000),
         linear-gradient(to top right, #006EFF, rgba(81, 61, 61, 0))),
         var(--image-link);
         background-size: cover;
     }
 
-    .product__head--background-odd {
+    .product__head--background-secondary {
         --image-link: linear-gradient(to top right, rgba(0, 0, 0, 0), #000);
-        background-image: var(--wertgarantie-popup-product-background-odd,
+        background-image: var(--wertgarantie-popup-product-background-secondary,
         linear-gradient(to bottom right, rgba(81, 61, 61, 0.4), rgba(255, 145, 0, 0.84)),
         linear-gradient(to top right, rgba(0, 0, 0, 0.31), #000)),
         var(--image-link);

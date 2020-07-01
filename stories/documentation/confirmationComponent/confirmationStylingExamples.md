@@ -37,9 +37,9 @@ Otherwise no styling example will be seen here. To see the different background 
     --wertgarantie-confirmation-body-subtitle-text-transform: none;
 
     --wertgarantie-confirmation-product-panel-text-color: #e7e7e7;
-    --wertgarantie-confirmation-product-background-even: linear-gradient(to bottom right, rgba(0, 0, 0, 0), #000),
+    --wertgarantie-confirmation-product-background-primary: linear-gradient(to bottom right, rgba(0, 0, 0, 0), #000),
     linear-gradient(to top right, #006EFF, rgba(81, 61, 61, 0));
-    --wertgarantie-confirmation-product-background-odd: linear-gradient(to bottom right, rgba(44, 25, 25, 0), rgba(255, 145, 0, 0.6)),
+    --wertgarantie-confirmation-product-background-secondary: linear-gradient(to bottom right, rgba(44, 25, 25, 0), rgba(255, 145, 0, 0.6)),
     linear-gradient(to top right, #000, rgba(0, 0, 0, 0.3));
 }
 ````

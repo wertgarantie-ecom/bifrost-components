@@ -164,12 +164,12 @@ class WertgarantieConfirmation extends LitElement {
         const productDivClassList = {
             "product": true,
             "product--selected": true,
-            "product--even": this.selectedProductIndex % 2 === 0,
-            "product--odd": this.selectedProductIndex % 2 !== 0
+            "product--primary": order.backgroundStyle === "primary",
+            "product--secondary": order.backgroundStyle === "secondary"
         };
 
         const productDivStyleMap = {
-            "--image-link": "url(" + order.productBackgroundImageLink + ")"
+            "--image-link": "url(" + order.productImageLink + ")"
         };
 
         return html`

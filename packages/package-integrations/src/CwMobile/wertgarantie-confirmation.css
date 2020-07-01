@@ -13,8 +13,8 @@ wertgarantie-confirmation {
     --wertgarantie-confirmation-header-margin: 20px 0 0 0;
     --wertgarantie-confirmation-product-panel-margin: 0 0 0 15px;
 
-    --wertgarantie-confirmation-product-background-even: linear-gradient(to bottom right, rgba(0, 0, 0, 0), #000),
+    --wertgarantie-confirmation-product-background-primary: linear-gradient(to bottom right, rgba(0, 0, 0, 0), #000),
     linear-gradient(to top right, rgb(51, 102, 153), rgba(81, 61, 61, 0));
-    --wertgarantie-confirmation-product-background-odd: linear-gradient(to bottom right, rgba(81, 61, 61, 0), rgba(208, 20, 124, 0.6)),
+    --wertgarantie-confirmation-product-background-secondary: linear-gradient(to bottom right, rgba(81, 61, 61, 0), rgba(208, 20, 124, 0.6)),
     linear-gradient(to top right, rgba(0, 0, 0, 0), #000);
 }

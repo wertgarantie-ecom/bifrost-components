@@ -1,10 +1,10 @@
 wertgarantie-selection-pop-up {
     /* background image color fading for every second product */
-    --wertgarantie-popup-product-background-even: linear-gradient(to bottom right, rgba(0, 0, 0, 0), #000),
+    --wertgarantie-popup-product-background-primary: linear-gradient(to bottom right, rgba(0, 0, 0, 0), #000),
     linear-gradient(to top right, rgb(51, 102, 153), rgba(81, 61, 61, 0));
 
     /* background image color fading for every second product */
-    --wertgarantie-popup-product-background-odd: linear-gradient(to bottom right, rgba(81, 61, 61, 0), rgba(208, 20, 124, 0.6)),
+    --wertgarantie-popup-product-background-secondary: linear-gradient(to bottom right, rgba(81, 61, 61, 0), rgba(208, 20, 124, 0.6)),
     linear-gradient(to top right, rgba(0, 0, 0, 0), #000);
 
     --wertgarantie-popup-title-color: rgb(51, 102, 153);

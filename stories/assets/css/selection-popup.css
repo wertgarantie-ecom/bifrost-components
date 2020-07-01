@@ -11,12 +11,12 @@
     --wertgarantie-popup-dark-disabled-button-text-color: rgb(220, 220, 220);
 
     /* background image color fading for every second product */
-    --wertgarantie-popup-product-background-even:
+    --wertgarantie-popup-product-background-primary:
         linear-gradient(to bottom right, rgba(0,0,0,0), #000),
         linear-gradient(to top right, #006EFF, rgba(81,61,61,0));
 
     /* background image color fading for every second product */
-    --wertgarantie-popup-product-background-odd:
+    --wertgarantie-popup-product-background-secondary:
         linear-gradient(to bottom right, rgba(81,61,61,0), rgba(255, 145, 0, 0.6)),
         linear-gradient(to top right, rgba(0,0,0,0), #000);
 
@@ -39,12 +39,12 @@
     --wertgarantie-popup-dark-disabled-button-background-color: rgb(100, 100, 100);
     --wertgarantie-popup-dark-disabled-button-text-color: rgb(220, 220, 220);
     /* background image color fading for every second product */
-    --wertgarantie-popup-product-background-even:
+    --wertgarantie-popup-product-background-primary:
         linear-gradient(to bottom right, rgba(0,0,0,0), #000),
         linear-gradient(to top right, rgb(192, 137, 17), rgba(81,61,61,0));
 
     /* background image color fading for every second product */
-    --wertgarantie-popup-product-background-odd:
+    --wertgarantie-popup-product-background-secondary:
         linear-gradient(to bottom right, rgba(81,61,61,0), rgba(190, 70, 0, 0.6)),
         linear-gradient(to top right, rgba(0,0,0,0), #000);
 

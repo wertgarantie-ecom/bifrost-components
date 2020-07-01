@@ -88,22 +88,22 @@ export const afterSalesStyling = css`
         display: flex;
     }
 
-    .order-item--light {
+    .order-item--primary {
         --text-color: var(--wertgarantie-after-sales-product-card-text-color, white);
         color: var(--text-color);
         --image-link: linear-gradient(to top right, #006EFF, rgba(81, 61, 61, 0));
-        background-image: var(--wertgarantie-after-sales-product-card-background-even,
+        background-image: var(--wertgarantie-after-sales-product-card-background-primary,
         linear-gradient(to bottom right, rgba(0, 0, 0, 0), #000),
         linear-gradient(to top right, #006EFF, rgba(81, 61, 61, 0))),
         var(--image-link);
         background-size: cover;
     }
 
-    .order-item--dark {
+    .order-item--secondary {
         --text-color: var(--wertgarantie-after-sales-product-card-text-color, white);
         color: var(--text-color);
         --image-link: linear-gradient(to top right, rgba(0, 0, 0, 0), #000);
-        background-image: var(--wertgarantie-after-sales-product-card-background-odd,
+        background-image: var(--wertgarantie-after-sales-product-card-background-secondary,
         linear-gradient(to bottom right, rgba(81, 61, 61, 0), rgba(255, 145, 0, 0.6)),
         linear-gradient(to top right, rgba(0, 0, 0, 0), #000)),
         var(--image-link);

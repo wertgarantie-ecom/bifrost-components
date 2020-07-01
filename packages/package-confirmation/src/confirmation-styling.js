@@ -151,18 +151,18 @@ export const confirmationStyling = css`
         display: flex;
     }
 
-    .product--even {
+    .product--primary {
         --image-link: linear-gradient(to top right, #006EFF, rgba(81, 61, 61, 0));
-        background-image: var(--wertgarantie-confirmation-product-background-even,
+        background-image: var(--wertgarantie-confirmation-product-background-primary,
         linear-gradient(to bottom right, rgba(0, 0, 0, 0), #000),
         linear-gradient(to top right, #006EFF, rgba(81, 61, 61, 0))),
         var(--image-link);
         background-size: cover;
     }
 
-    .product--odd {
+    .product--secondary {
         --image-link: linear-gradient(to top right, rgba(0, 0, 0, 0), #000);
-        background-image: var(--wertgarantie-confirmation-product-background-odd,
+        background-image: var(--wertgarantie-confirmation-product-background-secondary,
         linear-gradient(to bottom right, rgba(44, 25, 25, 0), rgba(255, 145, 0, 0.6)),
         linear-gradient(to top right, #000, rgba(0, 0, 0, 0.3))),
         var(--image-link);

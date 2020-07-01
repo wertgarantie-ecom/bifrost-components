@@ -99,11 +99,11 @@ class WertgarantieAfterSales extends LitElement {
     renderOrderItem(item, index) {
         const contrastClasses = {
             "order-item": true,
-            "order-item--dark": index % 2 === 0,
-            "order-item--light": index % 2 === 1
+            "order-item--primary": item.backgroundStyle === "primary",
+            "order-item--secondary": item.backgroundStyle === "secondary"
         };
         const imageLinkStyle = {
-            "--image-link": `url("${item.imageLink}")`
+            "--image-link": `url("${item.productImageLink}")`
         };
         //language=HTML
         return html`

@@ -4,8 +4,8 @@ wertgarantie-after-sales {
     --wertgarantie-after-sales-body-background-color: white;
     --wertgarantie-after-sales-header-title-color: white;
 
-    --wertgarantie-after-sales-product-card-background-even: linear-gradient(to bottom right, rgba(0, 0, 0, 0), #000),
+    --wertgarantie-after-sales-product-card-background-primary: linear-gradient(to bottom right, rgba(0, 0, 0, 0), #000),
     linear-gradient(to top right, rgb(1, 57, 101), rgba(81, 61, 61, 0));
-    --wertgarantie-after-sales-product-card-background-odd: linear-gradient(to bottom right, rgba(81, 61, 61, 0), rgba(254, 207, 0, 0.6)),
+    --wertgarantie-after-sales-product-card-background-secondary: linear-gradient(to bottom right, rgba(81, 61, 61, 0), rgba(254, 207, 0, 0.6)),
     linear-gradient(to top right, rgba(0, 0, 0, 0), #000);
 }

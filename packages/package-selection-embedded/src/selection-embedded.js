@@ -9,7 +9,6 @@ import 'wertgarantie-rating/dist/rating.min.js';
 import 'wertgarantie-information-popup/dist/information-popup.min.js';
 import initSentry from "../../package-common/src/sentry";
 import {selectionEmbeddedStyling} from "./selection-embedded-styling";
-import {selectionEmbeddedProductPanelStyling} from "./selection-embedded-product-panel-styling";
 import {classMap} from "lit-html/directives/class-map";
 
 
@@ -17,8 +16,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
 
     static get styles() {
         return [
-            selectionEmbeddedStyling,
-            selectionEmbeddedProductPanelStyling
+            selectionEmbeddedStyling
         ];
     }
 
@@ -188,8 +186,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
         return;
     }
 
-    renderProductInfoPanel(product, idx) {
-        console.log("rendering information popup");
+    renderProductInfoPanel(product) {
         const popUp = document.createElement(`wertgarantie-information-popup`);
         const popUpDataString = JSON.stringify({
             product: product,
@@ -199,7 +196,6 @@ class WertgarantieSelectionEmbedded extends LitElement {
         });
         const base64PopUpData = btoa(unescape(encodeURIComponent(popUpDataString)));
         popUp.dataset.insuranceProduct = base64PopUpData;
-        popUp.dataset.productOfferIndex = idx;
         popUp.dataset.bifrostUri = this.bifrostUri;
 
         window.document.body.appendChild(popUp);
@@ -257,7 +253,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
                     </svg>
                 </div>
             </div>
-            ${idx === this.displayedProductInfoPanelIndex ? this.renderProductInfoPanel(product, idx) : html``}`;
+            ${idx === this.displayedProductInfoPanelIndex ? this.renderProductInfoPanel(product) : html``}`;
     }
 
     async addProductToShoppingCart() {

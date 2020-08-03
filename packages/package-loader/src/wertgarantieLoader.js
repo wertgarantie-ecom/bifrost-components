@@ -6,8 +6,8 @@ const config = [
             css: 'https://cdn.jsdelivr.net/npm/wertgarantie-integrations@0.0.15/src/CwMobile/wertgarantie-selection-pop-up.css'
         },
         target: {
-            pageSelector: '.*',
-            parentElementSelector: '#here'
+            pageSelector: '/shoppingCart',
+            parentElementSelector: 'body'
         }
     },
     {
@@ -26,12 +26,12 @@ const config = [
             js: 'https://cdn.jsdelivr.net/npm/wertgarantie-confirmation@2.0.35/dist/confirmation.min.js'
         },
         target: {
-            pageSelector: '.*',
-            parentElementSelector: '#here'
-        },
-        validation: {
-            inputSelector: '#test',
-            event: 'click'
+            pageSelector: '/shoppingCart',
+            parentElementSelector: '.confirmation-container',
+            validation: {
+                inputSelector: '#checkout-form',
+                event: 'submit'
+            }
         }
     }
 ];
@@ -42,19 +42,19 @@ function init(shopConfig) {
         if (document.location.pathname.match(componentConfig.target.pageSelector)) {
             const parentElement = document.querySelector(componentConfig.target.parentElementSelector);
             if (parentElement) {
-                includeComponent(componentConfig.name, parentElement, componentConfig.sources.css, shopConfig);
+                includeComponent(componentConfig.name, parentElement, componentConfig.sources.css, shopConfig, componentConfig.target);
             }
         }
     });
 }
 
-function includeComponent(name, parentElement, cssSrcPath, shopConfig) {
+function includeComponent(name, parentElement, cssSrcPath, shopConfig, componentConfigTarget) {
     const mapping = {
         "selection-pop-up": includeSelectionPopUp,
         "selection-embedded": includeSelectionEmbedded,
         "confirmation": includeConfirmation
-    }
-    mapping[name](parentElement, cssSrcPath, shopConfig)
+    };
+    mapping[name](parentElement, cssSrcPath, shopConfig, componentConfigTarget)
 }
 
 function includeSelectionPopUp(parentElement, cssSrcPath, shopConfig) {
@@ -97,7 +97,7 @@ function includeSelectionEmbedded(parentElement, cssSrcPath, shopConfig) {
     parentElement.appendChild(container);
 }
 
-function includeConfirmation(parentElement, cssSrcPath, shopConfig) {
+function includeConfirmation(parentElement, cssSrcPath, shopConfig, componentConfigTarget) {
     if (cssSrcPath) {
         const linkElem = document.createElement('link');
         linkElem.rel = 'stylesheet';
@@ -108,7 +108,8 @@ function includeConfirmation(parentElement, cssSrcPath, shopConfig) {
     const confirmationElement = document.createElement('wertgarantie-confirmation');
     confirmationElement.setAttribute('data-client-id', shopConfig.id);
     confirmationElement.setAttribute('data-bifrost-uri', 'http://localhost:3000/wertgarantie');
-    confirmationElement.setAttribute('data-validation-trigger-selector', 'TODO');
+    confirmationElement.setAttribute('data-validation-trigger-selector', componentConfigTarget.validation.inputSelector);
+    confirmationElement.setAttribute('data-validation-trigger-event', componentConfigTarget.validation.event);
     container.appendChild(confirmationElement);
     parentElement.appendChild(container);
 }

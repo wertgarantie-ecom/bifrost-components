@@ -33,27 +33,46 @@ const config = [
                 event: 'submit'
             }
         }
+    },
+    {
+        name: "after-sales",
+        sources: {
+            js: 'https://cdn.jsdelivr.net/npm/wertgarantie-after-sales@1/dist/after-sales.min.js'
+        },
+        target: {
+            pageSelector: '/checkout',
+            parentElementSelector: 'body',
+        }
     }
 ];
 
 const version = "1.0.0";
+let bifrostUri;
 
-function getFetchUri(stage = 'production') {
-    switch(stage) {
+function setBifrostUri(stage = 'production') {
+    const prodUri = "https://ecommerce.wertgarantie.com/wertgarantie";
+    switch (stage) {
         case 'production':
-            return "https://ecommerce.wertgarantie.com/wertgarantie";
+            bifrostUri = prodUri;
+            return;
         case 'staging':
-            return "https://wertgarantie-bifrost-staging.herokuapp.com/wertgarantie";
+            bifrostUri = "https://wertgarantie-bifrost-staging.herokuapp.com/wertgarantie";
+            return;
         case 'dev':
-            return "https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie";
+            bifrostUri = "https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie";
+            return;
         case 'local':
-            return "http://localhost:3000/wertgarantie";
-    };
+            bifrostUri = "http://localhost:3000/wertgarantie";
+            return;
+        default:
+            bifrostUri = prodUri;
+    }
 }
 
 function init(shopConfig) {
-    const fetchUri = getFetchUri(shopConfig.stage);
-    fetch(`${fetchUri}/client/...`);
+    setBifrostUri(shopConfig.stage);
+    // const fetchUri = getFetchUri(shopConfig.stage);
+    // fetch(`${fetchUri}/client/...`);
     config.map(componentConfig => {
         import(componentConfig.sources.js);
         if (document.location.pathname.match(componentConfig.target.pageSelector)) {
@@ -69,7 +88,8 @@ function includeComponent(name, parentElement, cssSrcPath, shopConfig, component
     const mapping = {
         "selection-pop-up": includeSelectionPopUp,
         "selection-embedded": includeSelectionEmbedded,
-        "confirmation": includeConfirmation
+        "confirmation": includeConfirmation,
+        "after-sales": includeAfterSales
     };
     mapping[name](parentElement, cssSrcPath, shopConfig, componentConfigTarget)
 }
@@ -84,7 +104,7 @@ function includeSelectionPopUp(parentElement, cssSrcPath, shopConfig) {
     const container = document.createElement('div');
     const selectionPopUpElement = document.createElement('wertgarantie-selection-pop-up');
     const product = shopConfig.cartProducts[shopConfig.cartProducts.length - 1];
-    selectionPopUpElement.setAttribute('data-bifrost-uri', 'http://localhost:3000/wertgarantie');
+    selectionPopUpElement.setAttribute('data-bifrost-uri', bifrostUri);
     selectionPopUpElement.setAttribute('data-client-id', shopConfig.id);
     selectionPopUpElement.setAttribute('data-device-price', product.price);
     selectionPopUpElement.setAttribute('data-display-self', true);
@@ -104,7 +124,7 @@ function includeSelectionEmbedded(parentElement, cssSrcPath, shopConfig) {
     }
     const container = document.createElement('div');
     const selectionEmbeddedElement = document.createElement('wertgarantie-selection-embedded');
-    selectionEmbeddedElement.setAttribute('data-bifrost-uri', 'http://localhost:3000/wertgarantie');
+    selectionEmbeddedElement.setAttribute('data-bifrost-uri', bifrostUri);
     selectionEmbeddedElement.setAttribute('data-client-id', shopConfig.id);
     selectionEmbeddedElement.setAttribute('data-device-price', shopConfig.displayedProduct.price);
     selectionEmbeddedElement.setAttribute('data-device-classes', shopConfig.displayedProduct.deviceClasses);
@@ -125,7 +145,7 @@ function includeConfirmation(parentElement, cssSrcPath, shopConfig, componentCon
     const container = document.createElement('div');
     const confirmationElement = document.createElement('wertgarantie-confirmation');
     confirmationElement.setAttribute('data-client-id', shopConfig.id);
-    confirmationElement.setAttribute('data-bifrost-uri', 'http://localhost:3000/wertgarantie');
+    confirmationElement.setAttribute('data-bifrost-uri', bifrostUri);
     confirmationElement.setAttribute('data-validation-trigger-selector', componentConfigTarget.validation.inputSelector);
     confirmationElement.setAttribute('data-validation-trigger-event', componentConfigTarget.validation.event);
     container.appendChild(confirmationElement);
@@ -133,19 +153,34 @@ function includeConfirmation(parentElement, cssSrcPath, shopConfig, componentCon
 }
 
 function includeAfterSales(parentElement, cssSrcPath, shopConfig) {
-
     if (cssSrcPath) {
         const linkElem = document.createElement('link');
         linkElem.rel = 'stylesheet';
         linkElem.href = cssSrcPath;
         parentElement.appendChild(linkElem);
     }
+
+    const purchasesProducts = shopConfig.cartProducts.map(cartProduct => {
+        return {
+            price: cartProduct.price,
+            manufacturer: cartProduct.manufacturer,
+            deviceClasses: cartProduct.deviceClasses,
+            name: cartProduct.name,
+            orderItemId: cartProduct.sku
+        }
+    });
+
+    const shopPurchaseData = {
+        purchasesProducts: purchasesProducts,
+        customer: shopConfig.customer,
+        encryptedSessionId: shopConfig.encryptedSessionId
+    }
     const container = document.createElement('div');
-    const confirmationElement = document.createElement('wertgarantie-confirmation');
-    confirmationElement.setAttribute('data-client-id', shopConfig.id);
-    confirmationElement.setAttribute('data-bifrost-uri', 'http://localhost:3000/wertgarantie');
-    confirmationElement.setAttribute('data-validation-trigger-selector', 'TODO');
-    container.appendChild(confirmationElement);
+    const afterSales = document.createElement('wertgarantie-after-sales');
+    afterSales.setAttribute('data-client-id', shopConfig.id);
+    afterSales.setAttribute('data-bifrost-uri', bifrostUri);
+    afterSales.setAttribute('data-shop-purchase-data', btoa(shopPurchaseData));
+    container.appendChild(afterSales);
     parentElement.appendChild(container);
 }
 

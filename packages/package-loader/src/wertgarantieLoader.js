@@ -36,7 +36,24 @@ const config = [
     }
 ];
 
+const version = "1.0.0";
+
+function getFetchUri(stage = 'production') {
+    switch(stage) {
+        case 'production':
+            return "https://ecommerce.wertgarantie.com/wertgarantie";
+        case 'staging':
+            return "https://wertgarantie-bifrost-staging.herokuapp.com/wertgarantie";
+        case 'dev':
+            return "https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie";
+        case 'local':
+            return "http://localhost:3000/wertgarantie";
+    };
+}
+
 function init(shopConfig) {
+    const fetchUri = getFetchUri(shopConfig.stage);
+    fetch(`${fetchUri}/client/...`);
     config.map(componentConfig => {
         import(componentConfig.sources.js);
         if (document.location.pathname.match(componentConfig.target.pageSelector)) {
@@ -73,6 +90,7 @@ function includeSelectionPopUp(parentElement, cssSrcPath, shopConfig) {
     selectionPopUpElement.setAttribute('data-display-self', true);
     selectionPopUpElement.setAttribute('data-device-classes', product.deviceClasses);
     selectionPopUpElement.setAttribute('data-product-name', product.name);
+    selectionPopUpElement.setAttribute('data-order-item-id', product.sku);
     container.appendChild(selectionPopUpElement);
     parentElement.appendChild(container);
 }

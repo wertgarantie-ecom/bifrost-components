@@ -171,15 +171,15 @@ function includeAfterSales(parentElement, cssSrcPath, shopConfig) {
     });
 
     const shopPurchaseData = {
-        purchasesProducts: purchasesProducts,
+        purchasedProducts: purchasesProducts,
         customer: shopConfig.customer,
         encryptedSessionId: shopConfig.encryptedSessionId
-    }
+    };
     const container = document.createElement('div');
     const afterSales = document.createElement('wertgarantie-after-sales');
     afterSales.setAttribute('data-client-id', shopConfig.id);
     afterSales.setAttribute('data-bifrost-uri', bifrostUri);
-    afterSales.setAttribute('data-shop-purchase-data', btoa(shopPurchaseData));
+    afterSales.setAttribute('data-shop-purchase-data', btoa(JSON.stringify(shopPurchaseData)));
     container.appendChild(afterSales);
     parentElement.appendChild(container);
 }

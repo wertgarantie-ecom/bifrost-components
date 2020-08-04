@@ -2,7 +2,8 @@ module.exports = {
     js: [{
         source: "./src/wertgarantieLoader.js",
         target: "./dist/wertgarantieLoader.min.js",
-        compact: "minify"
+        compact: "mangle",
+        format: "esm"
     }],
     watchDirs: ["./*"]
 };

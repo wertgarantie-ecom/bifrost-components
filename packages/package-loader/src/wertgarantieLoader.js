@@ -1,51 +1,3 @@
-const config = [
-    {
-        name: "selection-pop-up",
-        sources: {
-            js: 'https://cdn.jsdelivr.net/npm/wertgarantie-selection-popup@2.0.47/dist/selection-popup.min.js',
-            css: 'https://cdn.jsdelivr.net/npm/wertgarantie-integrations@0.0.15/src/CwMobile/wertgarantie-selection-pop-up.css'
-        },
-        target: {
-            pageSelector: '/shoppingCart',
-            parentElementSelector: 'body'
-        }
-    },
-    {
-        name: "selection-embedded",
-        sources: {
-            js: 'https://cdn.jsdelivr.net/npm/wertgarantie-selection-embedded@0.0.19/dist/selection-embedded.min.js'
-        },
-        target: {
-            pageSelector: '.dummy',
-            parentElementSelector: '#here'
-        }
-    },
-    {
-        name: "confirmation",
-        sources: {
-            js: 'https://cdn.jsdelivr.net/npm/wertgarantie-confirmation@2.0.35/dist/confirmation.min.js'
-        },
-        target: {
-            pageSelector: '/shoppingCart',
-            parentElementSelector: '.confirmation-container',
-            validation: {
-                inputSelector: '#checkout-form',
-                event: 'submit'
-            }
-        }
-    },
-    {
-        name: "after-sales",
-        sources: {
-            js: 'https://cdn.jsdelivr.net/npm/wertgarantie-after-sales@1/dist/after-sales.min.js'
-        },
-        target: {
-            pageSelector: '/checkout',
-            parentElementSelector: 'body',
-        }
-    }
-];
-
 const version = "1.0.0";
 let bifrostUri;
 
@@ -72,13 +24,20 @@ function setBifrostUri(stage = 'production') {
     }
 }
 
-function init(shopConfig) {
+async function init(shopConfig) {
     if (!shopConfig) {
         throw new Error('no shop configuration provided');
     }
     setBifrostUri(shopConfig.stage);
-    // const fetchUri = getFetchUri(shopConfig.stage);
-    // fetch(`${fetchUri}/client/...`);
+    const response = await fetch(`${bifrostUri}/ecommerce/clients/${shopConfig.id}/loader-config`, {
+        method: "GET",
+        headers: {
+            "credentials": 'include',
+            'content-Type': 'application/json',
+            'X-Version': version
+        }
+    });
+    const config = await response.json();
     config.map(componentConfig => {
         import(componentConfig.sources.js);
         if (document.location.pathname.match(componentConfig.target.pageSelector)) {

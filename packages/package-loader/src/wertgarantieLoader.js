@@ -62,6 +62,7 @@ function includeComponent(name, parentElement, cssSrcPath, shopConfig, component
     const mapping = {
         "selection-pop-up": includeSelectionPopUp,
         "selection-embedded": includeSelectionEmbedded,
+        "selection-embedded-multi": includeSelectionEmbeddedMulti,
         "confirmation": includeConfirmation,
         "after-sales": includeAfterSales
     };
@@ -159,6 +160,50 @@ function includeAfterSales(parentElement, cssSrcPath, shopConfig) {
     afterSales.setAttribute('data-shop-purchase-data', btoa(JSON.stringify(shopPurchaseData)));
     container.appendChild(afterSales);
     parentElement.appendChild(container);
+}
+
+
+function includeSelectionEmbeddedMulti(parentElement, cssSrcPath, shopConfig, componentConfigTarget) {
+    if (cssSrcPath) {
+        const head = document.querySelector('head');
+        const linkElem = document.createElement('link');
+        linkElem.rel = 'stylesheet';
+        linkElem.href = cssSrcPath;
+        head.appendChild(linkElem);
+    }
+
+    let purchasesProducts;
+    if (shopConfig.cartProducts) {
+        purchasesProducts = shopConfig.cartProducts.map(cartProduct => {
+            return {
+                price: cartProduct.price,
+                manufacturer: cartProduct.manufacturer,
+                deviceClasses: cartProduct.deviceClasses,
+                name: cartProduct.name,
+                orderItemId: cartProduct.sku
+            }
+        });
+        const parentElements = document.querySelectorAll(componentConfigTarget.parentElementSelector);
+        purchasesProducts.map(product => {
+            for (var i = 0; i < parentElements.length; i++) {
+                const parent = parentElements[i];
+                if (parent.innerHTML.includes(product.name)) {
+                    const container = document.createElement('div');
+                    const selectionEmbeddedElement = document.createElement('wertgarantie-selection-embedded');
+                    selectionEmbeddedElement.setAttribute('data-bifrost-uri', bifrostUri);
+                    selectionEmbeddedElement.setAttribute('data-client-id', shopConfig.id);
+                    selectionEmbeddedElement.setAttribute('data-device-price', product.price);
+                    selectionEmbeddedElement.setAttribute('data-device-classes', product.deviceClasses);
+                    selectionEmbeddedElement.setAttribute('data-product-name', product.name);
+                    selectionEmbeddedElement.setAttribute('data-product-base-identifier', product.name);
+                    selectionEmbeddedElement.setAttribute('data-complete-product-name', product.name);
+                    container.appendChild(selectionEmbeddedElement);
+                    parent.appendChild(container);
+                    return;
+                }
+            }
+        });
+    }
 }
 
 export default init;

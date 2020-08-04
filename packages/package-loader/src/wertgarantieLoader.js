@@ -37,6 +37,9 @@ async function init(shopConfig) {
             'X-Version': version
         }
     });
+    if (response.status === 204) {
+        throw new Error(`No configuration for component loader found for client with id ${shopConfig.id}`);
+    }
     const config = await response.json();
     config.map(componentConfig => {
         import(componentConfig.sources.js);

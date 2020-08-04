@@ -64,12 +64,18 @@ function setBifrostUri(stage = 'production') {
         case 'local':
             bifrostUri = "http://localhost:3000/wertgarantie";
             return;
+        case 'dockerlocal':
+            bifrostUri = "http://localhost:3000/wertgarantie";
+            return;
         default:
             bifrostUri = prodUri;
     }
 }
 
 function init(shopConfig) {
+    if (!shopConfig) {
+        throw new Error('no shop configuration provided');
+    }
     setBifrostUri(shopConfig.stage);
     // const fetchUri = getFetchUri(shopConfig.stage);
     // fetch(`${fetchUri}/client/...`);
@@ -160,15 +166,18 @@ function includeAfterSales(parentElement, cssSrcPath, shopConfig) {
         parentElement.appendChild(linkElem);
     }
 
-    const purchasesProducts = shopConfig.cartProducts.map(cartProduct => {
-        return {
-            price: cartProduct.price,
-            manufacturer: cartProduct.manufacturer,
-            deviceClasses: cartProduct.deviceClasses,
-            name: cartProduct.name,
-            orderItemId: cartProduct.sku
-        }
-    });
+    let purchasesProducts;
+    if (shopConfig.cartProducts) {
+        purchasesProducts = shopConfig.cartProducts.map(cartProduct => {
+            return {
+                price: cartProduct.price,
+                manufacturer: cartProduct.manufacturer,
+                deviceClasses: cartProduct.deviceClasses,
+                name: cartProduct.name,
+                orderItemId: cartProduct.sku
+            }
+        });
+    }
 
     const shopPurchaseData = {
         purchasedProducts: purchasesProducts,

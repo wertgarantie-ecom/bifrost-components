@@ -39,6 +39,12 @@ async function init(shopConfig) {
     });
     if (response.status === 204) {
         throw new Error(`No configuration for component loader found for client with id ${shopConfig.id}`);
+    } else if (response.status === 400) {
+        const errorResponse = await response.json();
+        throw new Error(`invalid call, received error response ${JSON.stringify(errorResponse)}`)
+    } else if (response.status === 500) {
+        const errorResponse = await response.json();
+        throw new Error(`server error: ${JSON.stringify(errorResponse)}`)
     }
     const config = await response.json();
     config.map(componentConfig => {

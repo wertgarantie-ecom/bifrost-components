@@ -75,6 +75,9 @@ jobs:
       - run:
           name: purge CDN cache for information pop up component
           command: curl https://purge.jsdelivr.net/npm/wertgarantie-information-popup@1/dist/information-popup.min.js
+      - run:
+          name: purge CDN cache for information pop up component
+          command: curl https://purge.jsdelivr.net/npm/wertgarantie-component-loader@1/dist/wertgarantieLoader.min.js
 workflows:
   version: 2
   build_and_publish:

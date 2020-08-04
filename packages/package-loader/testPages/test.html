@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<p>This is just some test</p>
+<div id="here"></div>
+<p>And even more text</p>
+</body>
+<script type=module>
+    // we need to have per shop:
+    // - id
+    // - country
+    // - currency
+    import initInsuranceComponents from '../src/wertgarantieLoader.js';
+
+    const shopConfig = {
+        encryptedSessionId: "test", // only for checkout
+        orderId: "test", // only for checkout
+        id: "public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f",
+        customer: { // only for checkout
+            salutation: "test",
+            firstname: "test",
+            lastname: "test",
+            street: "test",
+            zip: "test",
+            city: "test",
+            country: "test",
+            email: "test"
+        },
+        displayedProduct: {
+            sku: "test",
+            baseSku: "test", //optional
+            name: "IPhone X",
+            deviceClasses: "Smartphone",
+            price: "1000,00",
+        },
+        cartProducts: [{
+            sku: "test",
+            baseSku: "test", //optional
+            name: "IPhone X",
+            deviceClasses: "Smartphone",
+            price: "1000,00",
+        }]
+    }
+    initInsuranceComponents(shopConfig);
+</script>
+</html>

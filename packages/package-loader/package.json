@@ -1,0 +1,26 @@
+{
+  "name": "wertgarantie-component-loader",
+  "version": "1.0.0",
+  "description": "Component Loader for Wertgarantie's Cross Selling WebComponents",
+  "main": "index.js",
+  "scripts": {
+    "version": "sed -i \"\" -E \"s/(this.componentVersion = \\')(.*)(\\';)/\\1$(node -p 'require(\"./package.json\").version')\\3/\" ./src/wertgarantieLoader.js && git add ./src/wertgarantieLoader.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "faucet --compact",
+    "fingerprint": "faucet --fingerprint",
+    "watch": "faucet -w",
+    "serve": "faucet --liveservice 9999"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wertgarantie-ecom/bifrost-components.git"
+  },
+  "keywords": [
+    "WebComponent",
+    "Loader",
+    "e-commerce",
+    "Wertgarantie"
+  ],
+  "author": "henning.nobbe@innoq.com, arne.landwehr@innoq.com",
+  "license": "MIT"
+}

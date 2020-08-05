@@ -1,6 +1,7 @@
 import {storiesOf} from '@storybook/html';
 
 import handbook from './documentation/about/handbook.md';
+import handbookInitializer from './documentation/about/handbookInitializer.md';
 import about from './documentation/about/about.md';
 import email from './documentation/about/email.md';
 
@@ -16,9 +17,14 @@ storiesOf('About|About', module)
             converter.makeHtml(about) +
         `</div>`
     )
-    .add("Handbook", () =>
+    .add("Handbuch zur manuelle Einbindung der Komponenten", () =>
         `<div class="markdown-body">` +
             converter.makeHtml(handbook) +
+        `</div>`
+    )
+    .add("Handbuch zur dynamischen Einbindung der Komponenten mit dem Wertgarantie-Initializer", () =>
+        `<div class="markdown-body">` +
+            converter.makeHtml(handbookInitializer) +
         `</div>`
     );
 storiesOf('About|Content', module)

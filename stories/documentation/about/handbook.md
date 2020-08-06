@@ -2,7 +2,7 @@
 
 WERTGARANTIE Komponenten integrieren. So geht's.
 
-In diesem Handbuch werden wir Sie Schritt für Schritt durch die zu erledigenden Punkte führen,  die dafür notwendig sind.
+In diesem Handbuch werden wir Sie Schritt für Schritt durch die zu erledigenden Punkte führen, die dafür notwendig sind.
 Enthalten sind:
 
 1. [Konfiguration](#konfiguration)

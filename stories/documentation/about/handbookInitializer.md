@@ -97,7 +97,7 @@ Das JavaScript-Snippet muss als `type="module"` in die Seite inkludiert werden. 
 | baseSku  | Die sku des Basis-Produkts   | nein  |
 | name  | Anzeigename des Produkts  | ja  |
 | deviceClasses  | Produktkategorie(n), der/denen das Produkt angehört als kommaseparierte Liste | ja  |
-| price  | Der Preis des Produkts in `minor units`(Preis `1000,00€` muss mit `100000` angegeben  |   |
+| price  | Der Preis des Produkts in `minor units`(Preis `1000,00€` muss mit `100000` angegeben  | ja  |
 
 # Encrypted Session ID - Checkout
 Diese wird nur für den Checkout durch unsere AfterSales-Komponente benötigt. Sie muss zwingend auf dem Server erstellt werden, da hierfür das `Client Secret` benötigt wird, das wir Ihnen vorab übermittelt haben.

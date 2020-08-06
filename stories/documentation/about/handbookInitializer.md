@@ -46,7 +46,6 @@ Das JavaScript-Snippet muss als `type="module"` in die Seite inkludiert werden. 
     // import des wertgarantieLoaders, der sich mit den unten beschriebenen Daten um die Initialisierung der Komponente(n) auf der jeweiligen Seite kümmert:
     import initInsuranceComponents from 'https://cdn.jsdelivr.net/npm/wertgarantie-component-loader@1/dist/wertgarantieLoader.min.js';
 
-    // 
     const shopConfig = {
         encryptedSessionId: "test", // nur auf der Checkout-Seite
         orderId: "test", // nur auf der Checkout-Seite

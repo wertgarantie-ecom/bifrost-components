@@ -6,7 +6,6 @@ import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
 import 'wertgarantie-rating/dist/rating.min.js';
 import fetchBifrost from "wertgarantie-common/src/fetchBifrost";
 import {getOfferedForOrderItemId, saveOfferedOrderItemIds} from "wertgarantie-common/src/offeredItemsRepository";
-import initSentry from "wertgarantie-common/src/sentry";
 
 const MOBILE_WIDTH = 878;
 
@@ -72,7 +71,6 @@ class WertgarantieSelectionPopUp extends LitElement {
         super.connectedCallback();
         this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://ecommerce.wertgarantie.com/wertgarantie";
         this.clientId = this.getAttribute("data-client-id");
-        initSentry('selection-pop-up', this.componentVersion, this.bifrostUri, this.clientId);
         this.devicePrice = parseInt(this.getAttribute("data-device-price"));
         const quantity = this.getAttribute("data-quantity");
         this.quantity = quantity ? parseInt(quantity) : 1;

@@ -1,7 +1,8 @@
 module.exports = {
     js: [{
         source: "./src/after-sales.js",
-        target: "./dist/after-sales.min.js"
+        target: "./dist/after-sales.min.js",
+        compact: "mangle"
     }],
     watchDirs: ["./*"]
 };

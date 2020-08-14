@@ -3,7 +3,6 @@ import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from "lit-html/directives/style-map";
 import {afterSalesStyling} from './after-sales-styling';
 import fetchBifrost from 'wertgarantie-common/src/fetchBifrost';
-import initSentry from "wertgarantie-common/src/sentry";
 
 const WERTGARANTIE_SESSION_ID_COOKIE = 'wertgarantie-session-id';
 
@@ -48,7 +47,6 @@ class WertgarantieAfterSales extends LitElement {
         super.connectedCallback();
         this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://ecommerce.wertgarantie.com/wertgarantie";
         this.clientId = this.getAttribute("data-client-id");
-        initSentry('after-sales', this.componentVersion, this.bifrostUri, this.clientId);
         this.base64EncodedShopCheckoutData = this.getAttribute('data-shop-purchase-data');
         const testData = this.getAttribute('data-test-data');
         this.testData = testData ? JSON.parse(testData) : undefined;

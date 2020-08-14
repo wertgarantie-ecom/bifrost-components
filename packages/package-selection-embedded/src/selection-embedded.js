@@ -7,7 +7,6 @@ import {
 } from "wertgarantie-common/src/wertgarantieShoppingCartRepository";
 import 'wertgarantie-rating/dist/rating.min.js';
 import 'wertgarantie-information-popup/dist/information-popup.min.js';
-import initSentry from "../../package-common/src/sentry";
 import {selectionEmbeddedStyling} from "./selection-embedded-styling";
 import {classMap} from "lit-html/directives/class-map";
 
@@ -59,7 +58,6 @@ class WertgarantieSelectionEmbedded extends LitElement {
         this.componentVersion = '0.0.3';
         this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://ecommerce.wertgarantie.com/wertgarantie";
         this.clientId = this.getAttribute("data-client-id");
-        initSentry('selection-embedded', this.componentVersion, this.bifrostUri, this.clientId);
 
         this.devicePrice = parseInt(this.getAttribute("data-device-price"));
         this.deviceClass = this.getAttribute("data-device-class") || undefined;

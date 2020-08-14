@@ -5,7 +5,6 @@ import {landingPageStylingGeneral} from "./landing-page-styling-general";
 import {landingPageStylingHead} from "./landing-page-styling-head";
 import {landingPageStylingBody} from "./landing-page-styling-body";
 import {landingPageStylingSteps} from "./landing-page-styling-steps";
-import initSentry from "wertgarantie-common/src/sentry";
 
 class LandingPage extends LitElement {
 
@@ -46,7 +45,6 @@ class LandingPage extends LitElement {
         this.componentVersion = '0.0.17';
         this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://ecommerce.wertgarantie.com/wertgarantie";
         this.clientId = this.getAttribute("data-client-id");
-        initSentry('landing-page', this.componentVersion, this.bifrostUri, this.clientId);
         this.partnerNumber = this.getAttribute('data-partner-number');
         this.showComponent = false;
         this.displayComponent();

@@ -42,7 +42,7 @@ class LandingPage extends LitElement {
 
     connectedCallback() {
         super.connectedCallback();
-        this.componentVersion = '0.0.17';
+        this.componentVersion = '0.0.18';
         this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://ecommerce.wertgarantie.com/wertgarantie";
         this.clientId = this.getAttribute("data-client-id");
         this.partnerNumber = this.getAttribute('data-partner-number');

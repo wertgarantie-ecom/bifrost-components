@@ -50,7 +50,7 @@ export const selectionEmbeddedStyling = css`
         opacity: 0.2;
         transition: opacity 1s;
         cursor: pointer;
-        max-height: 35px;
+        padding: 0 0.5em;
     }
     
     .product__selection--selected {
@@ -67,17 +67,23 @@ export const selectionEmbeddedStyling = css`
         font-size: 0.8em;
     }
 
+    .product--selectable {
+        display: flex;
+        width: 90%;
+    }
+    
     .product__checkbox {
         margin: 0 0.5em;
         border: 1px solid black;
         height: 12px;
         width: 12px;
     }
+
     
     .product__info {
         display: flex;
         justify-content: space-between;
-        width: 80%;
+        width: 90%;
         padding: 0 1em;
     }
     

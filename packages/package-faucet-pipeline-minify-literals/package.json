@@ -1,0 +1,30 @@
+{
+  "name": "faucet-pipeline-minify-literals",
+  "version": "0.0.0",
+  "description": "wertgarantie web component to select policy products",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "faucet --compact",
+    "fingerprint": "faucet --fingerprint",
+    "watch": "faucet -w",
+    "serve": "faucet --liveservice 9999"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wertgarantie-ecom/bifrost-components.git"
+  },
+  "keywords": [
+    "faucet-pipeline",
+    "html-literals",
+    "css-literals",
+    "minify",
+    "plugin"
+  ],
+  "author": "Arne Landwehr",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wertgarantie-ecom/bifrost-components/issues"
+  },
+  "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme"
+}

@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme",
   "dependencies": {
-    "wertgarantie-common": "^1.0.4"
+    "wertgarantie-common": "^1.0.4",
+    "faucet-pipeline-minify-literals": "^0.0.0"
   }
 }

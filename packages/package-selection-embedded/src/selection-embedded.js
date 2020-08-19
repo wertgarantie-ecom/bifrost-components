@@ -51,6 +51,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
         this.deleteFromShoppingCart = this.deleteFromShoppingCart.bind(this);
         this.updateShoppingCart = this.updateShoppingCart.bind(this);
         this.checkForExistingProductSelection = this.checkForExistingProductSelection.bind(this);
+        this.initEventListeners = this.initEventListeners.bind(this);
     }
 
     connectedCallback() {
@@ -72,7 +73,17 @@ class WertgarantieSelectionEmbedded extends LitElement {
         this.displayedProductInfoPanelIndex = -1;
         this.selectedProductIndex = -1;
         this.currentOrderId = undefined;
+        this.initEventListeners();
         this.displayComponent();
+    }
+
+    initEventListeners() {
+        document.addEventListener('wertgarantie-product-deleted', e => {
+            if (e.detail.orderId === this.currentOrderId) {
+                this.selectedProductIndex = -1;
+                this.currentOrderId = undefined;
+            }
+        });
     }
 
     displayComponent() {

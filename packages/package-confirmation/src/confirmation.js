@@ -246,10 +246,11 @@ class WertgarantieConfirmation extends LitElement {
             this.showComponent = false
         }
         const event = new CustomEvent('wertgarantie-product-deleted', {
-            orderId: product.orderId
-
+            detail: {
+                orderId: product.orderId
+            }
         });
-        document.dispatchEvent(new Event('wertgarantie-product-deleted'));
+        document.dispatchEvent(event);
     }
 
 

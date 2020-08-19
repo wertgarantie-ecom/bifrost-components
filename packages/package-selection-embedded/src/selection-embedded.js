@@ -3,7 +3,8 @@ import fetchBifrost from "wertgarantie-common/src/fetchBifrost";
 import {
     saveProductSelection,
     findProductSelection,
-    deleteProductSelection, getShoppingCart
+    deleteProductSelection,
+    getShoppingCart
 } from "wertgarantie-common/src/wertgarantieShoppingCartRepository";
 import 'wertgarantie-rating/dist/rating.min.js';
 import 'wertgarantie-information-popup/dist/information-popup.min.js';

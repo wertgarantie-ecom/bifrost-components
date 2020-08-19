@@ -242,8 +242,8 @@ class WertgarantieSelectionEmbedded extends LitElement {
                         <div class="product__checkbox">
                             <!-- Font Awesome check icon -->
                             ${this.selectedProductIndex === idx ?
-                            html`<svg class="selection__checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>`
-                            : html``}
+            html`<svg class="selection__checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>`
+            : html``}
                         </div>
                         <div class="product__info">
                             <div class="product__name">${product.shortName}</div>
@@ -301,6 +301,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
                 return {};
             }
             document.dispatchEvent(new Event('wertgarantie-shopping-cart-updated'));
+            return response;
         } catch (error) {
             console.error('Error:', error);
         }
@@ -311,7 +312,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
         const result = await fetchBifrost(url, 'DELETE', this.componentVersion, {
             orderId: this.currentOrderId
         });
-        if (result.status !== 204 || result.status !== 200) {
+        if (result.status !== 204 && result.status !== 200) {
             console.error('Deleting product from shopping cart failed: ', result);
             return;
         }

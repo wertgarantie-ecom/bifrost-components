@@ -51,6 +51,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
         this.deleteFromShoppingCart = this.deleteFromShoppingCart.bind(this);
         this.updateShoppingCart = this.updateShoppingCart.bind(this);
         this.checkForExistingProductSelection = this.checkForExistingProductSelection.bind(this);
+        this.initEventListeners = this.initEventListeners.bind(this);
     }
 
     connectedCallback() {
@@ -71,7 +72,18 @@ class WertgarantieSelectionEmbedded extends LitElement {
         this.showComponent = false;
         this.displayedProductInfoPanelIndex = -1;
         this.selectedProductIndex = -1;
+        this.currentOrderId = undefined;
+        this.initEventListeners();
         this.displayComponent();
+    }
+
+    initEventListeners() {
+        document.addEventListener('wertgarantie-product-deleted', e => {
+            if (e.detail.orderId === this.currentOrderId) {
+                this.selectedProductIndex = -1;
+                this.currentOrderId = undefined;
+            }
+        });
     }
 
     displayComponent() {
@@ -153,6 +165,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
             for (var i = 0; i < this.products.length; i++) {
                 if (this.products[i].id === orderForShopProduct.wertgarantieProduct.id) {
                     this.selectedProductIndex = i;
+                    this.currentOrderId = orderForShopProduct.id;
                 }
             }
         }
@@ -163,25 +176,30 @@ class WertgarantieSelectionEmbedded extends LitElement {
             productId: this.products[idx].id,
             productName: this.products[idx].name,
             productIndex: idx,
-            productBaseIdentifier: this.productBaseIdentifier
+            productBaseIdentifier: this.productBaseIdentifier,
+            orderId: this.currentOrderId
         };
         if (this.selectedProductIndex === idx) {
-            await fetchBifrost(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-embedded/select`, "DELETE", this.componentVersion, updatedProductSelection);
-            await deleteProductSelection(updatedProductSelection.productBaseIdentifier);
+            await this.registerClick("DELETE", updatedProductSelection);
             this.selectedProductIndex = -1;
-            if (this.directSelectionMode) {
+            if (!this.directSelectionMode) {
+                await deleteProductSelection(updatedProductSelection.productBaseIdentifier);
+            } else {
                 await this.deleteFromShoppingCart(idx);
             }
         } else {
-            const updateNeeded = this.selectedProductIndex !== -1;
-            await fetchBifrost(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-embedded/select`, "POST", this.componentVersion, updatedProductSelection);
-            await saveProductSelection(updatedProductSelection);
+            await this.registerClick("POST", updatedProductSelection);
             this.selectedProductIndex = idx;
-            if (this.directSelectionMode) {
-                await this.updateShoppingCart(updateNeeded);
+            if (!this.directSelectionMode) {
+                await saveProductSelection(updatedProductSelection);
+            } else {
+                await this.updateShoppingCart();
             }
         }
-        return;
+    }
+
+    async registerClick(method, updatedProductSelection) {
+        await fetchBifrost(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-embedded/select`, method, this.componentVersion, updatedProductSelection);
     }
 
     renderProductInfoPanel(product) {
@@ -235,8 +253,8 @@ class WertgarantieSelectionEmbedded extends LitElement {
                         <div class="product__checkbox">
                             <!-- Font Awesome check icon -->
                             ${this.selectedProductIndex === idx ?
-                            html`<svg class="selection__checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>`
-                            : html``}
+            html`<svg class="selection__checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>`
+            : html``}
                         </div>
                         <div class="product__info">
                             <div class="product__name">${product.shortName}</div>
@@ -294,59 +312,54 @@ class WertgarantieSelectionEmbedded extends LitElement {
                 return {};
             }
             document.dispatchEvent(new Event('wertgarantie-shopping-cart-updated'));
+            return response;
         } catch (error) {
             console.error('Error:', error);
         }
     }
 
-    async deleteFromShoppingCart(idx) {
+    async deleteFromShoppingCart() {
         const url = new URL(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-embedded/product`);
-        const productToDelete = this.products[idx];
         const result = await fetchBifrost(url, 'DELETE', this.componentVersion, {
-            wertgarantieProductId: productToDelete.id,
-            orderItemId: this.completeProductName,
-            devicePrice: this.devicePrice
+            orderId: this.currentOrderId
         });
-        if (result.status === 204 || result.status === 200) {
-            document.dispatchEvent(new Event('wertgarantie-shopping-cart-updated'));
+        if (result.status !== 204 && result.status !== 200) {
+            console.error('Deleting product from shopping cart failed: ', result);
             return;
         }
-        console.error('Deleting product from shopping cart failed: ', result);
-        return;
+        this.currentOrderId = undefined;
+        document.dispatchEvent(new Event('wertgarantie-shopping-cart-updated'));
     }
 
-    async updateShoppingCart(updateNeeded) {
-        // updateNeeded indicates if a different product has already been selected before
-        // in this case we do not have to replace the selection, we can just add the product to the shopping cart
-        if (!updateNeeded) {
-            await this.addProductToShoppingCart();
-            document.dispatchEvent(new Event('wertgarantie-shopping-cart-updated'));
-        }
-        const signedShoppingCart = await getShoppingCart();
-        const productToBeUpdated = signedShoppingCart.shoppingCart.orders.find(order => order.shopProduct.orderItemId === this.completeProductName);
-        const selectedProduct = this.products[this.selectedProductIndex];
-        const url = new URL(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-embedded/product`);
-        const response = await fetchBifrost(url, 'POST', this.componentVersion, {
-            orderId: productToBeUpdated.id,
-            shopProduct: {
-                price: this.devicePrice,
-                deviceClass: this.deviceClass,
-                deviceClasses: this.deviceClasses,
-                name: this.completeProductName,
-                orderItemId: this.completeProductName
-            },
-            wertgarantieProduct: {
-                id: selectedProduct.id,
-                name: selectedProduct.name,
-                paymentInterval: selectedProduct.intervalCode,
-                price: selectedProduct.price,
-                deviceClass: selectedProduct.deviceClass,
-                shopDeviceClass: selectedProduct.shopDeviceClass
+    async updateShoppingCart() {
+        if (!this.currentOrderId) {
+            const response = await this.addProductToShoppingCart();
+            this.currentOrderId = response.body.orderId;
+        } else {
+            const selectedProduct = this.products[this.selectedProductIndex];
+            const url = new URL(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-embedded/product`);
+            const response = await fetchBifrost(url, 'POST', this.componentVersion, {
+                orderId: this.currentOrderId,
+                shopProduct: {
+                    price: this.devicePrice,
+                    deviceClass: this.deviceClass,
+                    deviceClasses: this.deviceClasses,
+                    name: this.completeProductName,
+                    orderItemId: this.completeProductName
+                },
+                wertgarantieProduct: {
+                    id: selectedProduct.id,
+                    name: selectedProduct.name,
+                    paymentInterval: selectedProduct.intervalCode,
+                    price: selectedProduct.price,
+                    deviceClass: selectedProduct.deviceClass,
+                    shopDeviceClass: selectedProduct.shopDeviceClass
+                }
+            });
+            if (response.status !== 200) {
+                console.error('Updating product in shopping cart failed: ', response);
+                return {};
             }
-        });
-        if (response.status !== 200) {
-            console.error('Updating product in shopping cart failed: ', response);
-            return {};
         }
         document.dispatchEvent(new Event('wertgarantie-shopping-cart-updated'));
     }

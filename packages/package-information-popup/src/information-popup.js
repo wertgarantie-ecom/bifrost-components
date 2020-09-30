@@ -110,12 +110,12 @@ class WertgarantieInformationPopup extends LitElement {
                             <div class="award-image-block">
                                 <a target="_blank" href="https://www.certipedia.com/quality_marks/9105052129">
                                     <img class="award-image"
-                                         src="https://www.wertgarantie.de/portaldata/4/resources/Icons/tuev-logo.png"
+                                         src="https://www.certipedia.com/logos/000/049/786/9105052129_de.png?1396417891"
                                          alt="tuev-logo">
                                      </a>
                                 <a target="_blank" href="https://www.wertgarantie.de/Home.aspx#">
                                     <img class="award-image"
-                                         src="https://www.wertgarantie.de/Portaldata/4/Resources/logos/test-bild-wertgarantie-109-01.png"
+                                         src="https://www.wertgarantie.de/sites/default/files/styles/trust_badge_s_2x/public/trust-badges/2014_fomo_elvers_sp_b.jpg?itok=CfZUjPTG"
                                          alt="test-bild">
                                 </a>
                             </div>

@@ -47,6 +47,7 @@ Das JavaScript-Snippet muss als `type="module"` in die Seite inkludiert werden. 
     import initInsuranceComponents from 'https://cdn.jsdelivr.net/npm/wertgarantie-component-loader@1/dist/wertgarantieLoader.min.js';
 
     const shopConfig = {
+        stage: "staging" // optional, default ist production
         encryptedSessionId: "test", // nur auf der Checkout-Seite
         orderId: "test", // nur auf der Checkout-Seite
         id: "public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f", // von uns übermittelte public client ID aus Schritt 4
@@ -81,6 +82,7 @@ Das JavaScript-Snippet muss als `type="module"` in die Seite inkludiert werden. 
 ### JavaScript-Snippet Bestandteile
 | Attribut  | Erklärung  | erforderlich |
 |---|---|---|
+|stage | Gegen welche Stage die Integration laufen soll. Mögliche Werte sind `local`, `dev`, `staging` und `production`. Default ist `production`.
 | encryptedSessionId  | Die Wertgarantie setzt beim Einkauf eines Kunden einen Cookie, in dem eine Session ID gespeichert ist. Diese muss beim Checkout durch den Shop ausgelesen und mit dem von der Wertgarantie übermittelten `secret` verschlüsselt werden. Dieses muss zwingend auf dem Server erfolgen. Nähere Informationen s. [Encrypted Session ID - Checkout](#encrypted-session-id---checkout).  | nur bei Checkout  |
 | orderId  | Die ID der Bestellung des Kunden im Shop selbst. Darüber kann später der übermittelte Versicherungsantrag der Bestellung im Shop zugeordnet werden.  | nur bei Checkout  |
 | customer  | Die Daten des Kunden. Diese werden mit Einverständnis des Kunden an die Wertgarantie übermittelt und sind notwendig, um einen Versicherungsantrag anlegen zu können. | nur bei Checkout  |

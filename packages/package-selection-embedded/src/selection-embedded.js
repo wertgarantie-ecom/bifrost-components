@@ -1,10 +1,10 @@
-import {LitElement, html} from "lit-element";
+import {html, LitElement} from "lit-element";
 import fetchBifrost from "wertgarantie-common/src/fetchBifrost";
 import {
-    saveProductSelection,
-    findProductSelection,
     deleteProductSelection,
-    getShoppingCart
+    findProductSelection,
+    getShoppingCart,
+    saveProductSelection
 } from "wertgarantie-common/src/wertgarantieShoppingCartRepository";
 import 'wertgarantie-rating/dist/rating.min.js';
 import 'wertgarantie-information-popup/dist/information-popup.min.js';
@@ -211,13 +211,11 @@ class WertgarantieSelectionEmbedded extends LitElement {
             productPanelDetailsHeader: this.productPanelDetailsHeader,
             productFurtherInformation: this.productFurtherInformation
         });
-        const base64PopUpData = btoa(unescape(encodeURIComponent(popUpDataString)));
-        popUp.dataset.insuranceProduct = base64PopUpData;
+        popUp.dataset.insuranceProduct = btoa(unescape(encodeURIComponent(popUpDataString)));
         popUp.dataset.bifrostUri = this.bifrostUri;
 
         window.document.body.appendChild(popUp);
         this.displayedProductInfoPanelIndex = -1;
-        return;
     }
 
     render() {

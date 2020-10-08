@@ -9,7 +9,7 @@
     "login": "npm-cli-login",
     "build-storybook": "build-storybook -s ./stories/assets/*",
     "build": "lerna run build",
-    "watch": "lerna run watch",
+    "watch": "lerna run watch --parallel",
     "serve": "node_modules/.bin/faucet --liveserve 3333"
   },
   "author": "arne.landwehr@innoq.com",

@@ -24,12 +24,9 @@ function setBifrostUri(stage = 'production') {
     }
 }
 
-async function init(shopConfig) {
-    if (!shopConfig) {
-        throw new Error('no shop configuration provided');
-    }
-    setBifrostUri(shopConfig.stage);
-    const response = await fetch(`${bifrostUri}/ecommerce/clients/${shopConfig.id}/loader-config`, {
+
+async function fetchConfig(publicId) {
+    const response = await fetch(`${bifrostUri}/ecommerce/clients/${publicId}/loader-config`, {
         method: "GET",
         headers: {
             "credentials": 'include',
@@ -38,7 +35,7 @@ async function init(shopConfig) {
         }
     });
     if (response.status === 204) {
-        throw new Error(`No configuration for component loader found for client with id ${shopConfig.id}`);
+        throw new Error(`No configuration for component loader found for client with id ${publicId}`);
     } else if (response.status === 400) {
         const errorResponse = await response.json();
         throw new Error(`invalid call, received error response ${JSON.stringify(errorResponse)}`)
@@ -46,7 +43,15 @@ async function init(shopConfig) {
         const errorResponse = await response.json();
         throw new Error(`server error: ${JSON.stringify(errorResponse)}`)
     }
-    const config = await response.json();
+    return await response.json();
+}
+
+async function init(shopConfig, loaderConfig) {
+    if (!shopConfig) {
+        throw new Error('no shop configuration provided');
+    }
+    setBifrostUri(shopConfig.stage);
+    const config = loaderConfig || await fetchConfig(shopConfig.id)
     config.map(componentConfig => {
         import(componentConfig.sources.js);
         if (document.location.pathname.match(componentConfig.target.pageSelector)) {
@@ -127,7 +132,7 @@ function includeConfirmation(parentElement, cssSrcPath, shopConfig, componentCon
     parentElement.appendChild(container);
 }
 
-function includeAfterSales(parentElement, cssSrcPath, shopConfig) {
+function includeAfterSales(parentElement, cssSrcPath, shopConfig, targetConfig) {
     if (cssSrcPath) {
         const linkElem = document.createElement('link');
         linkElem.rel = 'stylesheet';
@@ -155,6 +160,9 @@ function includeAfterSales(parentElement, cssSrcPath, shopConfig) {
     };
     const container = document.createElement('div');
     const afterSales = document.createElement('wertgarantie-after-sales');
+    if (targetConfig.testData) {
+        afterSales.setAttribute('data-test-data', JSON.stringify(targetConfig.testData));
+    }
     afterSales.setAttribute('data-client-id', shopConfig.id);
     afterSales.setAttribute('data-bifrost-uri', bifrostUri);
     afterSales.setAttribute('data-shop-purchase-data', btoa(JSON.stringify(shopPurchaseData)));
@@ -207,3 +215,4 @@ function includeSelectionEmbeddedMulti(parentElement, cssSrcPath, shopConfig, co
 }
 
 export default init;
+

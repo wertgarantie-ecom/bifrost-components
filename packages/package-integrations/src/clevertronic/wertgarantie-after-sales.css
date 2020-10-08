@@ -1,0 +1,15 @@
+wertgarantie-after-sales {
+    --wertgarantie-after-sales-text-color: #565a5c;
+    --wertgarantie-after-sales-header-icon-background-color: #f5911f;
+    --wertgarantie-after-sales-body-background-color: white;
+    --wertgarantie-after-sales-font-family: "Roboto";
+    --wertgarantie-after-sales-line-height: 20px;
+    --wertgarantie-after-sales-header-title-background-color: #dce0e0;
+    --wertgarantie-after-sales-header-title-color: #565a5c;
+    --wertgarantie-after-sales-header-title-font-size: 14px;
+    --wertgarantie-after-sales-header-title-font-weight: 500;
+    --wertgarantie-after-sales-header-title-text-transform: none;
+    --wertgarantie-after-sales-box-header-font-size: 14px;
+    --wertgarantie-after-sales-box-header-text-transform: none;
+    --wertgarantie-after-sales-box-header-font-weight: 700;
+}

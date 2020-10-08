@@ -3,7 +3,8 @@ import {css} from 'lit-element';
 //language=CSS
 export const afterSalesStyling = css`
     :host {
-        font-family: var(--wertgarantie-after-sales-font-family, Arial, Helvetica), sans-serif;
+        font-family: var(--wertgarantie-after-sales-font-family, Arial, Helvetica, sans-serif);
+        line-height: var(--wertgarantie-after-sales-line-height, 1.2em);
     }
 
     .after-sales {
@@ -26,12 +27,12 @@ export const afterSalesStyling = css`
         justify-content: center;
         align-items: center;
     }
-    
+
     .icon__svg {
         width: 45%;
         height: 45%;
     }
-    
+
     .icon__svg--white {
         fill: var(--wertgarantie-after-sales-header-icon-color, white);
     }
@@ -41,7 +42,6 @@ export const afterSalesStyling = css`
         padding: 1.5em 1.5em;
         font-size: var(--wertgarantie-after-sales-header-title-font-size, 0.9em);
         font-weight: var(--wertgarantie-after-sales-header-title-font-weight, 700);
-        line-height: var(--wertgarantie-after-sales-header-title-line-height, 1.2em);
         background-color: var(--wertgarantie-after-sales-header-title-background-color, #CDFFCC);
         color: var(--wertgarantie-after-sales-header-title-color, black);
         text-transform: var(--wertgarantie-after-sales-header-title-text-transform, uppercase);
@@ -56,20 +56,19 @@ export const afterSalesStyling = css`
 
     .content__box {
     }
-    
+
     .box__insured-products {
         width: 60%;
     }
+
     .box__next-steps {
         width: 40%;
-        line-height: 0.5em;
     }
 
     .box__header {
-        line-height: 1.2em;
-        font-size: 1.1em;
-        text-transform: uppercase;
-        font-weight: 700;
+        font-size: var(--wertgarantie-after-sales-box-header-font-size, 1.1em);
+        text-transform: var(--wertgarantie-after-sales-box-header-text-transform, uppercase);
+        font-weight: var(--wertgarantie-after-sales-box-header-font-weight, 700);
     }
 
     .order {
@@ -113,7 +112,7 @@ export const afterSalesStyling = css`
     .panel {
         font-size: var(--wertgarantie-after-sales-product-card-font-size, 0.9em);
     }
-    
+
     .panel__content {
         margin: 0.8em 0.8em;
     }
@@ -169,7 +168,7 @@ export const afterSalesStyling = css`
         align-items: center;
         margin: 0 0.5em;
     }
-    
+
     .next-steps__arrow {
         width: 50%;
         height: 50%;
@@ -179,7 +178,7 @@ export const afterSalesStyling = css`
         width: 47px;
         height: 47px;
     }
-    
+
     .next-steps__icon--color {
         fill: var(--wertgarantie-after-sales-next-steps-icon-color, black);
     }
@@ -188,11 +187,11 @@ export const afterSalesStyling = css`
         margin-top: 2em;
     }
 
-    @media only screen and (max-width: 1050px)  {
+    @media only screen and (max-width: 1050px) {
         .after-sales {
             max-width: 750px;
         }
-        
+
         .content {
             flex-flow: column;
         }
@@ -200,27 +199,27 @@ export const afterSalesStyling = css`
         .box__insured-products {
             width: 100%;
         }
-        
+
         .box__next-steps {
             width: 100%;
             padding-top: 2.5em;
         }
-        
+
         .box__icons {
             align-items: center;
             justify-content: flex-start;
-        }  
-        
+        }
+
         .box__icons__arrow {
             align-items: center;
         }
-        
+
         .next-steps__arrow {
             max-height: 35px;
         }
     }
 
-    @media only screen and (max-width: 480px)  {
+    @media only screen and (max-width: 480px) {
         .after-sales {
             max-width: 380px;
         }
@@ -234,12 +233,12 @@ export const afterSalesStyling = css`
         .box__header {
             text-align: center;
         }
-        
+
         .order {
             display: flex;
             justify-content: center;
         }
-        
+
         .box__insured-products {
             width: 100%;
         }

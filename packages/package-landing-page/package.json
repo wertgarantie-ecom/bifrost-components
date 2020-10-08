@@ -1,6 +1,6 @@
 {
   "name": "wertgarantie-landing-page",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "Landing Page component for Wertgarantie e-commerce push",
   "main": "index.js",
   "scripts": {
@@ -29,7 +29,7 @@
   "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme",
   "dependencies": {
     "faucet-pipeline-esnext": "^2.1.6",
-    "wertgarantie-common": "^1.0.4",
-    "wertgarantie-rating": "^2.0.13"
+    "wertgarantie-common": "^1.0.5",
+    "wertgarantie-rating": "^2.0.14"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "wertgarantie-information-popup",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "wertgarantie information pop up for insurance products",
   "main": "information-popup.js",
   "scripts": {
@@ -29,6 +29,6 @@
   "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme",
   "dependencies": {
     "faucet-pipeline-esnext": "^2.1.6",
-    "wertgarantie-rating": "^2.0.13"
+    "wertgarantie-rating": "^2.0.14"
   }
 }

@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/wertgarantie-ecom/bifrost-components/issues"
   },
-  "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme"
+  "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme",
+  "dependencies": {
+    "faucet-pipeline-esnext": "^2.1.6"
+  }
 }

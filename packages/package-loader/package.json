@@ -22,5 +22,8 @@
     "Wertgarantie"
   ],
   "author": "henning.nobbe@innoq.com, arne.landwehr@innoq.com",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "faucet-pipeline-esnext": "^2.1.6"
+  }
 }

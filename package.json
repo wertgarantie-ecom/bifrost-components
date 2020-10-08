@@ -48,14 +48,6 @@
     "lit-element": "^2.2.1",
     "lit-html": "^1.1.2",
     "npm-cli-login": "^0.1.1",
-    "showdown": "^1.9.1",
-    "wertgarantie-confirmation": "file:packages/package-confirmation",
-    "wertgarantie-landing-page": "file:packages/package-landing-page",
-    "wertgarantie-rating": "file:packages/package-rating",
-    "wertgarantie-selection-embedded": "file:packages/package-selection-embedded",
-    "wertgarantie-information-popup": "file:packages/package-information-popup",
-    "wertgarantie-selection-popup": "file:packages/package-selection-popup",
-    "wertgarantie-loader": "file:packages/package-loader",
-    "wertgarantie-common": "file:packages/package-common"
+    "showdown": "^1.9.1"
   }
 }

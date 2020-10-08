@@ -28,6 +28,7 @@
   },
   "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme",
   "dependencies": {
+    "faucet-pipeline-esnext": "^2.1.6",
     "wertgarantie-rating": "^2.0.13"
   }
 }

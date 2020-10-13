@@ -4,7 +4,7 @@ import {css} from 'lit-element';
 export const selectionPopUpStyling = css`
     :host {
         font-family: var(--wertgarantie-popup-font-family, Arial, Helvetica), sans-serif;
-        font-size: 0.8em;
+        font-size: var(--wertgarantie-popup-font-size, 0.8em);
     }
 
     .modal {
@@ -47,7 +47,7 @@ export const selectionPopUpStyling = css`
         grid-column-start: 1;
         grid-column-end: 1;
         display: inline-block;
-        font-size: 0.8em;
+        font-size: var(--wertgarantie-popup-font-size, 0.8em)
     }
 
     .head__right {
@@ -83,7 +83,7 @@ export const selectionPopUpStyling = css`
 
     .product-selectors__button {
         font-family: var(--wertgarantie-popup-font-family, Arial, Helvetica), sans-serif;
-        font-size: 0.9em;
+        font-size: var(--wertgarantie-popup-font-size, 0.8em);
         cursor: pointer;
         background: none;
         outline: none;
@@ -228,7 +228,7 @@ export const selectionPopUpStyling = css`
 
     .advantage {
         display: flex;
-        font-size: 0.9em;
+        font-size: var(--wertgarantie-popup-font-size, 0.8em);
         padding-top: 0.9em;
     }
 
@@ -314,7 +314,7 @@ export const selectionPopUpStyling = css`
 
     .product__terms {
         margin-top: 3em;
-        font-size: 0.8em;
+        font-size: var(--wertgarantie-popup-font-size, 0.8em)
     }
 
     .product-further-info {
@@ -328,7 +328,7 @@ export const selectionPopUpStyling = css`
     }
 
     wg-infosheet-link {
-        font-size: 8px;
+        font-size: var(--wertgarantie-popup-font-size, 0.8em);
     }
 
     .award-image-block {
@@ -366,7 +366,7 @@ export const selectionPopUpStyling = css`
 
     .button {
         font-family: var(--wertgarantie-popup-font-family, Arial, Helvetica), sans-serif;
-        font-size: 0.9em;
+        font-size: var(--wertgarantie-popup-font-size, 0.8em);
         cursor: pointer;
         background: none;
         outline: none;

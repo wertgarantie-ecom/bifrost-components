@@ -1,5 +1,5 @@
 import {storiesOf} from '@storybook/html';
-import '../packages/package-after-sales/dist/after-sales.min';
+// import '../packages/package-after-sales/dist/after-sales.min';
 
 import afterSalesDocumentation from './documentation/after-sales/afterSalesDoc.md';
 import afterSalesStylingExample from './documentation/after-sales/afterSalesStylingExample.md';

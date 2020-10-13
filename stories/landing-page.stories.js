@@ -1,5 +1,5 @@
 import {storiesOf} from '@storybook/html';
-import '../packages/package-landing-page/dist/landing-page.min.js';
+// import '../packages/package-landing-page/dist/landing-page.min.js';
 
 import landingPageReadme from './documentation/landingPage/landingPage.md';
 import landingPageStylingExample from './documentation/landingPage/landingPageStylingExample.md';

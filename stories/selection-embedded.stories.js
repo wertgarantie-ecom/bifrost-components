@@ -1,6 +1,6 @@
 import {storiesOf} from '@storybook/html';
-import '../packages/package-rating/dist/rating.min.js';
-import '../packages/package-selection-embedded/dist/selection-embedded.min';
+// import '../packages/package-rating/dist/rating.min.js';
+// import '../packages/package-selection-embedded/dist/selection-embedded.min';
 import selectionEmbeddedPhone from './documentation/selectionEmbedded/selectionEmbeddedPhone.md';
 import selectionEmbeddedBike from './documentation/selectionEmbedded/selectionEmbeddedBike.md';
 

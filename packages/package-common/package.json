@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "faucet --compact",
+    "build:dev": "faucet",
     "fingerprint": "faucet --fingerprint",
     "watch": "faucet -w",
     "serve": "faucet --liveservice 9999"

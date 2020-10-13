@@ -9,6 +9,7 @@
     "build": "faucet --compact",
     "fingerprint": "faucet --fingerprint",
     "watch": "faucet -w",
+    "build:dev": "faucet",
     "serve": "faucet --liveservice 9999"
   },
   "repository": {

@@ -1,6 +1,6 @@
 {
   "name": "wertgarantie-component-loader",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Component Loader for Wertgarantie's Cross Selling WebComponents",
   "main": "index.js",
   "scripts": {

@@ -58,9 +58,33 @@ async function init(shopConfig, loaderConfig) {
             const parentElement = document.querySelector(componentConfig.target.parentElementSelector);
             if (parentElement) {
                 includeComponent(componentConfig.name, parentElement, componentConfig.sources.css, shopConfig, componentConfig.target);
+                if (componentConfig.mutationObserver) {
+                    addMutationObserver(componentConfig, shopConfig);
+                }
             }
         }
     });
+}
+
+function addMutationObserver(componentConfig, shopConfig) {
+    const includeComponentFunction = (mutationRecords) => {
+        mutationRecords.forEach(record => {
+            if (record.addedNodes && record.addedNodes.length > 0) {
+                const parentElement = document.querySelector(componentConfig.target.parentElementSelector);
+                if (!parentElement) {
+                    return;
+                }
+                includeComponent(componentConfig.name, parentElement, componentConfig.sources.css, shopConfig, componentConfig.target);
+            }
+        });
+    }
+    const observerConfig = componentConfig.mutationObserver;
+    const target = document.querySelector(observerConfig.selector);
+    if (!target) {
+        return;
+    }
+    const observer = new MutationObserver(includeComponentFunction);
+    observer.observe(target, observerConfig.config);
 }
 
 function includeComponent(name, parentElement, cssSrcPath, shopConfig, componentConfigTarget) {

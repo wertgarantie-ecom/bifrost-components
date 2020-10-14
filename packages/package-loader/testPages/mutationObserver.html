@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Mutation!</title>
+</head>
+<script type="module">
+    function toggleDiv() {
+        const productDiv = document.querySelector('#product');
+        if (productDiv) {
+            productDiv.remove();
+        } else {
+            const sectionElement = document.querySelector('#section');
+            const newProductDiv = document.createElement("div");
+            newProductDiv.textContent = "This is a product";
+            newProductDiv.setAttribute("id", "product");
+            sectionElement.appendChild(newProductDiv);
+
+            const newWertgarantieContainerDiv = document.createElement("div");
+            newWertgarantieContainerDiv.setAttribute("id", "wertgarantie");
+            newProductDiv.appendChild(newWertgarantieContainerDiv);
+        }
+    }
+
+    const button = document.querySelector('#button');
+    button.addEventListener("click", toggleDiv)
+</script>
+<script type=module>
+    import init from 'http://localhost:3334/packages/package-loader/src/wertgarantieLoader.js';
+
+    const shopConfig = {
+        stage: 'local',
+        id: "public:5209d6ea-1a6e-11ea-9f8d-778f0ad9137f",
+        displayedProduct: {
+            sku: "352827112615638",
+            name: "Apple iPhone 11 Pro 256GB Space Grau **",
+            deviceClasses: "Smartphone",
+            price: "114999"
+        },
+        cartProducts: [
+            {
+                sku: "352827112615638",
+                name: "Apple iPhone 11 Pro 256GB Space Grau **",
+                deviceClasses: "Smartphone",
+                price: "114999"
+            },
+            {
+                sku: "Apple iPhone 11 Pro 256GB Space Grau **",
+                name: "Galaxy Tab S6 WiFi 128GB cloud blue",
+                deviceClasses: "Smartphone",
+                price: "60699"
+            },
+            {
+                sku: "352873110893025",
+                name: "iPhone 11 Pro Max 64GB Nachtgrün",
+                deviceClasses: "Smartphone",
+                price: "101999"
+            },
+            {
+                sku: "357211091568750",
+                name: "iPhone Xs 64GB Silber",
+                deviceClasses: "Smartphone",
+                price: "64499",
+            },
+        ]
+    };
+
+    const loaderConfig = [
+        {
+            "name": "selection-embedded",
+            "target": {
+                "pageSelector": ".*bifrost-components.*",
+                "parentElementSelector": "#wertgarantie"
+            },
+            "mutationObserver": {
+                "config": {
+                    "childList": true,
+                    "subTree": true
+                },
+                "selector": "#section"
+            },
+            "sources": {
+                "js": "http://localhost:3334/packages/package-selection-embedded/dist/selection-embedded.min.js"
+            }
+        }
+    ];
+    init(shopConfig, loaderConfig);
+</script>
+<body>
+<h1>This is just a test</h1>
+<!--observable parent-->
+<div id="section">
+    <!--    deleted div -->
+    <div id="product">
+        This is a product
+        <!--    component marker -->
+        <div id="wertgarantie"></div>
+    </div>
+</div>
+<input id="button" type="button" value="submit">
+</body>
+</html>

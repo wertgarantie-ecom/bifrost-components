@@ -133,6 +133,7 @@ function includeSelectionEmbedded(parentElement, cssSrcPath, shopConfig) {
     selectionEmbeddedElement.setAttribute('data-device-price', shopConfig.displayedProduct.price);
     selectionEmbeddedElement.setAttribute('data-device-classes', shopConfig.displayedProduct.deviceClasses);
     selectionEmbeddedElement.setAttribute('data-product-name', shopConfig.displayedProduct.name);
+    selectionEmbeddedElement.setAttribute('data-order-item-id', shopConfig.displayedProduct.sku);
     selectionEmbeddedElement.setAttribute('data-product-base-identifier', shopConfig.displayedProduct.name);
     selectionEmbeddedElement.setAttribute('data-complete-product-name', shopConfig.displayedProduct.name);
     container.appendChild(selectionEmbeddedElement);
@@ -151,9 +152,21 @@ function includeConfirmation(parentElement, cssSrcPath, shopConfig, componentCon
     confirmationElement.setAttribute('data-client-id', shopConfig.id);
     confirmationElement.setAttribute('data-bifrost-uri', bifrostUri);
     confirmationElement.setAttribute('data-validation-trigger-selector', componentConfigTarget.validation.inputSelector);
+    const base64ShopOrder = btoa(JSON.stringify(shopConfig.cartProducts.map(loaderShopProductToBifrostShopProduct)));
+    confirmationElement.setAttribute('data-shop-order-base64', base64ShopOrder);
     confirmationElement.setAttribute('data-validation-trigger-event', componentConfigTarget.validation.event);
     container.appendChild(confirmationElement);
     parentElement.appendChild(container);
+}
+
+function loaderShopProductToBifrostShopProduct(loaderProduct) {
+    return {
+        price: loaderProduct.price,
+        manufacturer: loaderProduct.manufacturer,
+        deviceClasses: loaderProduct.deviceClasses,
+        name: loaderProduct.name,
+        orderItemId: loaderProduct.sku
+    }
 }
 
 function includeAfterSales(parentElement, cssSrcPath, shopConfig, targetConfig) {
@@ -227,6 +240,7 @@ function includeSelectionEmbeddedMulti(parentElement, cssSrcPath, shopConfig, co
                     selectionEmbeddedElement.setAttribute('data-device-price', product.price);
                     selectionEmbeddedElement.setAttribute('data-device-classes', product.deviceClasses);
                     selectionEmbeddedElement.setAttribute('data-product-name', product.name);
+                    selectionEmbeddedElement.setAttribute('data-order-item-id', product.orderItemId);
                     selectionEmbeddedElement.setAttribute('data-product-base-identifier', product.name);
                     selectionEmbeddedElement.setAttribute('data-complete-product-name', product.name);
                     container.appendChild(selectionEmbeddedElement);

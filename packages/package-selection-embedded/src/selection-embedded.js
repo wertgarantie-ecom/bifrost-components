@@ -66,6 +66,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
         this.landingPageUri = this.getAttribute("data-landing-page-uri") || "https://www.wertgarantie.de";
         this.productBaseIdentifier = this.getAttribute("data-product-base-identifier");
         this.completeProductName = this.getAttribute("data-complete-product-name");
+        this.orderItemId = this.getAttribute("data-order-item-id") || this.completeProductName;
         this.selectionTriggerElementIdentifier = this.getAttribute('data-product-selection-trigger-element-identifier');
         this.selectionTriggerEvent = this.getAttribute('data-product-selection-trigger-event');
         this.directSelectionMode = !this.selectionTriggerElementIdentifier;
@@ -159,7 +160,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
     async checkForExistingProductSelection() {
         const signedShoppingCart = await getShoppingCart();
         const orderForShopProduct = signedShoppingCart ?
-            signedShoppingCart.shoppingCart.orders.find(order => order.shopProduct.orderItemId === this.completeProductName && order.shopProduct.price === this.devicePrice)
+            signedShoppingCart.shoppingCart.orders.find(order => order.shopProduct.orderItemId === this.orderItemId && order.shopProduct.price === this.devicePrice)
             : undefined;
         if (orderForShopProduct) {
             for (var i = 0; i < this.products.length; i++) {
@@ -294,7 +295,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
                     deviceClass: this.deviceClass,
                     deviceClasses: this.deviceClasses,
                     name: this.completeProductName,
-                    orderItemId: this.completeProductName
+                    orderItemId: this.orderItemId
                 },
                 wertgarantieProduct: {
                     id: selectedProduct.id,
@@ -343,7 +344,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
                     deviceClass: this.deviceClass,
                     deviceClasses: this.deviceClasses,
                     name: this.completeProductName,
-                    orderItemId: this.completeProductName
+                    orderItemId: this.orderItemId
                 },
                 wertgarantieProduct: {
                     id: selectedProduct.id,

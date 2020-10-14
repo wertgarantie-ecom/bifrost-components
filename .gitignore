@@ -11,3 +11,4 @@ tests_output/
 lerna-debug.log
 /reports/report.html
 /reports/tests/
+/chromedriver.log

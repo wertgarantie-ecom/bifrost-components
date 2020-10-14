@@ -1,22 +1,20 @@
-
 module.exports = {
-    "Should display rating component with fetched data": function(browser) {
+    "Should display rating component with fetched data": function (browser) {
         browser
             .url("file://" + process.cwd() + "/packages/package-rating/testPages/ratingTest.html")
             .waitForElementVisible('#rating-fetch-success')
             .expect.element('#rating-fetch-success').to.be.visible;
 
     },
-    "Should not display rating component with invalid fetch uri": function(browser) {
+    "Should not display rating component with invalid fetch uri": function (browser) {
         browser
             .url("file://" + process.cwd() + "/packages/package-rating/testPages/ratingTest.html")
-            .expect.elements('#rating-invalid-fetch-uri').count.to.equal(0);
+            .expect.element('#rating-invalid-fetch-uri').not.to.be.visible;
     },
-    "Should have different text and not show rating number": function(browser) {
+    "Should have different text and not show rating number": function (browser) {
         browser
             .url("file://" + process.cwd() + "/packages/package-rating/testPages/ratingTest.html")
             .waitForElementVisible('#rating-fetch-success')
-            .expect.elements('#rating-modified-text').text.to.contain('Google Rezensionen');
-        
+            .expect.element('#rating-modified-text').text.to.contain('Google Rezensionen');
     }
 }

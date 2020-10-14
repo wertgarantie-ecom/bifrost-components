@@ -4,7 +4,6 @@ module.exports = {
     "src_folders": [
         "packages/package-rating/tests",
         "packages/package-selection-popup/tests"
-        // "packages/package-confirmation/tests"
     ],
     "webdriver": {
         "start_process": true,
@@ -14,7 +13,7 @@ module.exports = {
     "test_settings": {
         "default": {
             "desiredCapabilities": {
-                "browsername": "chrome"
+                "browserName": "chrome"
             },
             "skip_testcases_on_fail": false
         }

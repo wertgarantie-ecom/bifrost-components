@@ -9,7 +9,7 @@ module.exports = {
     "Should not display rating component with invalid fetch uri": function (browser) {
         browser
             .url("file://" + process.cwd() + "/packages/package-rating/testPages/ratingTest.html")
-            .expect.element('#rating-invalid-fetch-uri').not.to.be.visible;
+            .expect.element('#rating-invalid-fetch-uri').not.to.be.present;
     },
     "Should have different text and not show rating number": function (browser) {
         browser

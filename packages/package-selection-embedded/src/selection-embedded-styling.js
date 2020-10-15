@@ -12,6 +12,7 @@ export const selectionEmbeddedStyling = css`
         flex-direction: column;
         padding: var(--wertgarantie-selection-embedded-component-padding, 1em 0);
         max-width: 500px;
+        min-width: 220px;
     }
 
     .head__title {
@@ -19,16 +20,6 @@ export const selectionEmbeddedStyling = css`
         font-weight: var(--wertgarantie-selection-embedded-component-title-font-weight, 700);
     }
 
-    /*.head__rating {*/
-    /*    margin: 0.3em;*/
-    /*    --wertgarantie-rating-font-size: 0.8em;*/
-    /*    --wertgarantie-rating-font-family: var(--wertgarantie-embedded-rating-font-family, "Open Sans", sans-serif);*/
-    /*    --wertgarantie-rating-text-color: rgb(134, 134, 134);*/
-
-    /*    --wertgarantie-rating-stars-font-size: 0.8em;*/
-    /*    --wertgarantie-rating-stars-color: orange;*/
-    /*}*/
-    
     .products {
         padding-top: 1em;
     }
@@ -61,6 +52,7 @@ export const selectionEmbeddedStyling = css`
         text-transform: uppercase;
         font-weight: bold;
         font-size: 0.8em;
+        padding-right: 1em;
     }
 
     .product__price {
@@ -72,8 +64,14 @@ export const selectionEmbeddedStyling = css`
         width: 90%;
     }
     
+    .checkbox__container {
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        padding: 0 0.5em;
+    }
+    
     .product__checkbox {
-        margin: 0 0.5em;
         border: 1px solid black;
         height: 12px;
         width: 12px;
@@ -84,7 +82,11 @@ export const selectionEmbeddedStyling = css`
         display: flex;
         justify-content: space-between;
         width: 90%;
-        padding: 0 1em;
+        padding: 0.5em 1em;
+    }
+    
+    .product__info--small {
+        flex-flow: column;
     }
     
     .product__information-icon {
@@ -107,11 +109,5 @@ export const selectionEmbeddedStyling = css`
     .component__footer {
         margin: 1em 0;
         font-size: 0.7em;
-    }
-
-    @media only screen and (max-width: 350px)  {
-        .product__info {
-            flex-flow: column;
-        }
     }
 `;

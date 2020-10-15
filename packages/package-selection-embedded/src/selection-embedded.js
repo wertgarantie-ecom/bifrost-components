@@ -10,6 +10,7 @@ import 'wertgarantie-rating/dist/rating.min.js';
 import 'wertgarantie-information-popup/dist/information-popup.min.js';
 import {selectionEmbeddedStyling} from "./selection-embedded-styling";
 import {classMap} from "lit-html/directives/class-map";
+const MOBILE_BREAKPOINT = 350;
 
 
 class WertgarantieSelectionEmbedded extends LitElement {
@@ -23,6 +24,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
     static get properties() {
         return {
             showComponent: {type: Boolean},
+            smallView: {type: Boolean},
             title: {type: String},
             wertgarantieFurtherInfoHtml: {type: String},
             includedTax: {type: String},
@@ -74,6 +76,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
         this.displayedProductInfoPanelIndex = -1;
         this.selectedProductIndex = -1;
         this.currentOrderId = undefined;
+        this.smallView = this.parentElement.clientWidth <= 350;
         this.initEventListeners();
         this.displayComponent();
     }
@@ -83,6 +86,11 @@ class WertgarantieSelectionEmbedded extends LitElement {
             if (e.detail.orderId === this.currentOrderId) {
                 this.selectedProductIndex = -1;
                 this.currentOrderId = undefined;
+            }
+        });
+        window.addEventListener('resize', () => {
+            if ((this.parentElement.clientWidth <= MOBILE_BREAKPOINT && !this.smallView) || (this.parentElement.clientWidth > MOBILE_BREAKPOINT && this.smallView)) {
+                this.smallView = !this.smallView;
             }
         });
     }
@@ -242,20 +250,25 @@ class WertgarantieSelectionEmbedded extends LitElement {
         const selectionClassList = {
             "product__selection": true,
             "product__selection--selected": idx === this.selectedProductIndex
-
+        };
+        const productInfoClassList = {
+            "product__info": true,
+            "product__info--small": this.smallView
         };
 
         return html`
             <div class="products__product product">
                 <div class="${classMap(selectionClassList)}">
                     <div class="product--selectable" @click="${() => this.updateSelectedProductIndex(idx)}">
-                        <div class="product__checkbox">
-                            <!-- Font Awesome check icon -->
-                            ${this.selectedProductIndex === idx ?
-            html`<svg class="selection__checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>`
-            : html``}
+                        <div class="checkbox__container">
+                            <div class="product__checkbox">
+                                <!-- Font Awesome check icon -->
+                                ${this.selectedProductIndex === idx ?
+                                    html`<svg class="selection__checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>`
+                                    : html``}
+                            </div>
                         </div>
-                        <div class="product__info">
+                        <div class="${classMap(productInfoClassList)}">
                             <div class="product__name">${product.shortName}</div>
                             <div class="product__price">${product.priceFormatted + " / " + product.paymentInterval + "*"}</div>
                         </div>

@@ -59,7 +59,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
 
     connectedCallback() {
         super.connectedCallback();
-        this.componentVersion = '0.0.31';
+        this.componentVersion = '0.0.32';
         this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://ecommerce.wertgarantie.com/wertgarantie";
         this.clientId = this.getAttribute("data-client-id");
         this.devicePrice = parseInt(this.getAttribute("data-device-price"));

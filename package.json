@@ -11,7 +11,8 @@
     "build": "lerna bootstrap && lerna run build",
     "build:dev": "lerna bootstrap && lerna run build:dev",
     "watch": "lerna run watch --parallel",
-    "serve": "node_modules/.bin/faucet --liveserve 3333"
+    "serve": "node_modules/.bin/faucet --liveserve 3333",
+    "version": "git add -A"
   },
   "author": "arne.landwehr@innoq.com",
   "license": "ISC",

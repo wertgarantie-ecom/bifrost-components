@@ -3,6 +3,9 @@
     "packages/*"
   ],
   "command": {
+    "version": {
+      "allowBranch": "master"
+    },
     "publish": {
       "npmClient": "npm",
       "verifyAccess": false,

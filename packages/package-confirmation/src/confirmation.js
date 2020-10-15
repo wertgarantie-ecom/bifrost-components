@@ -48,6 +48,7 @@ class WertgarantieConfirmation extends LitElement {
         this.setProperties = this.setProperties.bind(this);
         this.checkStateOnSubmit = this.checkStateOnSubmit.bind(this);
         this.isFullyChecked = this.isFullyChecked.bind(this);
+        this.check = this.check.bind(this);
         this.fetchConfirmationComponentData = this.fetchConfirmationComponentData.bind(this);
         this.productDataAvailable = this.productDataAvailable.bind(this);
         this.deleteProductOrder = this.deleteProductOrder.bind(this);
@@ -104,15 +105,25 @@ class WertgarantieConfirmation extends LitElement {
         });
     }
 
-    checkStateOnSubmit(e) {
+    check() {
         if (!this.isFullyChecked() && this.showComponent) {
             this.showPriceChangedWarning = false;
             this.showUncheckedWarning = true;
             this.flashMessage = this.confirmationPrompt;
-            e.target.scrollIntoView();
+            this.scrollIntoView();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    checkStateOnSubmit(e) {
+        if (!this.check()) {
             e.preventDefault();
             e.stopPropagation();
             return false;
+        } else {
+            return true;
         }
     }
 

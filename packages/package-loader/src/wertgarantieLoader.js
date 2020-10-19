@@ -237,6 +237,9 @@ function includeSelectionEmbeddedMulti(parentElement, cssSrcPath, shopConfig, co
         purchasesProducts = loaderShopProductsToBifrostShopProducts(shopConfig.cartProducts);
         const parentElements = document.querySelectorAll(componentConfigTarget.parentElementSelector);
         purchasesProducts.map(product => {
+            if (product.quantity !== 1) {
+                return;
+            }
             for (var i = 0; i < parentElements.length; i++) {
                 const parent = parentElements[i];
                 if (parent.innerHTML.includes(product.name)) {

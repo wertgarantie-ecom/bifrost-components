@@ -159,13 +159,28 @@ function includeConfirmation(parentElement, cssSrcPath, shopConfig, componentCon
     parentElement.appendChild(container);
 }
 
+function loaderShopProductsToBifrostShopProducts(loaderProducts) {
+    const convertProducts = (acc, currentValue) => {
+        const bifrostShopProduct = loaderShopProductToBifrostShopProduct(currentValue);
+        const duplicateProduct = acc.find(product => bifrostShopProduct.orderItemId === product.orderItemId);
+        if (duplicateProduct) {
+            duplicateProduct.quantity++;
+        } else {
+            acc.push(bifrostShopProduct);
+        }
+        return acc;
+    };
+    return loaderProducts.reduce(convertProducts, []);
+}
+
 function loaderShopProductToBifrostShopProduct(loaderProduct) {
     return {
         price: loaderProduct.price,
         manufacturer: loaderProduct.manufacturer,
         deviceClasses: loaderProduct.deviceClasses,
         name: loaderProduct.name,
-        orderItemId: loaderProduct.sku
+        orderItemId: loaderProduct.sku,
+        quantity: 1
     }
 }
 
@@ -219,15 +234,7 @@ function includeSelectionEmbeddedMulti(parentElement, cssSrcPath, shopConfig, co
 
     let purchasesProducts;
     if (shopConfig.cartProducts) {
-        purchasesProducts = shopConfig.cartProducts.map(cartProduct => {
-            return {
-                price: cartProduct.price,
-                manufacturer: cartProduct.manufacturer,
-                deviceClasses: cartProduct.deviceClasses,
-                name: cartProduct.name,
-                orderItemId: cartProduct.sku
-            }
-        });
+        purchasesProducts = loaderShopProductsToBifrostShopProducts(shopConfig.cartProducts);
         const parentElements = document.querySelectorAll(componentConfigTarget.parentElementSelector);
         purchasesProducts.map(product => {
             for (var i = 0; i < parentElements.length; i++) {

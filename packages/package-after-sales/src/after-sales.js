@@ -32,6 +32,13 @@ class WertgarantieAfterSales extends LitElement {
         this.nextSteps = data.texts.success.nextSteps;
         this.successfulOrders = data.successfulOrders;
 
+        this.reportToShopCallback(data.proposalsInformation)
+    }
+
+    reportToShopCallback(proposalsInformation) {
+        if (this.proposalInformationCallback && proposalsInformation) {
+            window[this.proposalInformationCallback](proposalsInformation);
+        }
     }
 
     constructor() {
@@ -41,12 +48,14 @@ class WertgarantieAfterSales extends LitElement {
         this.renderOrder = this.renderOrder.bind(this);
         this.renderOrderItem = this.renderOrderItem.bind(this);
         this.displayComponent = this.displayComponent.bind(this);
+        this.reportToShopCallback = this.reportToShopCallback.bind(this);
     }
 
     async connectedCallback() {
         super.connectedCallback();
         this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://ecommerce.wertgarantie.com/wertgarantie";
         this.clientId = this.getAttribute("data-client-id");
+        this.proposalInformationCallback = this.getAttribute("data-proposal-information-callback");
         this.base64EncodedShopCheckoutData = this.getAttribute('data-shop-purchase-data');
         const testData = this.getAttribute('data-test-data');
         this.testData = testData ? JSON.parse(testData) : undefined;

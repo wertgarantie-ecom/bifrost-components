@@ -162,7 +162,7 @@ function includeConfirmation(parentElement, cssSrcPath, shopConfig, componentCon
 function loaderShopProductsToBifrostShopProducts(loaderProducts) {
     const convertProducts = (acc, currentValue) => {
         const bifrostShopProduct = loaderShopProductToBifrostShopProduct(currentValue);
-        const duplicateProduct = acc.find(product => bifrostShopProduct.orderItemId === product.orderItemId);
+        const duplicateProduct = acc.find(product => bifrostShopProduct.name === product.name);
         if (duplicateProduct) {
             duplicateProduct.quantity++;
         } else {

@@ -148,6 +148,10 @@ class WertgarantieSelectionEmbedded extends LitElement {
     }
 
     async setProperties(selectionData) {
+        if (!selectionData) {
+            this.showComponent = false;
+            return;
+        }
         this.title = selectionData.texts.title;
         this.wertgarantieFurtherInfoHtml = selectionData.texts.wertgarantieFurtherInfoHtml.replace("%s", this.landingPageUri);
         this.includedTax = selectionData.texts.includedTax;

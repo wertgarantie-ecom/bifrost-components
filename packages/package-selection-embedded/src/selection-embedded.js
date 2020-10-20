@@ -141,7 +141,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
             devicePrice: this.devicePrice,
             deviceCondition: this.deviceCondition,
         });
-        if (response.status === 204) {
+        if (result.status === 204) {
             return undefined;
         }
         return result.body;

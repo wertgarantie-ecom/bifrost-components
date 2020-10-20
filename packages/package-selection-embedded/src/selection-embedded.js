@@ -10,6 +10,7 @@ import 'wertgarantie-rating/dist/rating.min.js';
 import 'wertgarantie-information-popup/dist/information-popup.min.js';
 import {selectionEmbeddedStyling} from "./selection-embedded-styling";
 import {classMap} from "lit-html/directives/class-map";
+
 const MOBILE_BREAKPOINT = 350;
 
 
@@ -68,6 +69,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
         this.landingPageUri = this.getAttribute("data-landing-page-uri") || "https://www.wertgarantie.de";
         this.productBaseIdentifier = this.getAttribute("data-product-base-identifier");
         this.completeProductName = this.getAttribute("data-complete-product-name");
+        this.deviceCondition = this.getAttribute("data-device-condition");
         this.orderItemId = this.getAttribute("data-order-item-id") || this.completeProductName;
         this.selectionTriggerElementIdentifier = this.getAttribute('data-product-selection-trigger-element-identifier');
         this.selectionTriggerEvent = this.getAttribute('data-product-selection-trigger-event');
@@ -118,6 +120,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
                 deviceClass: this.deviceClass,
                 devicePrice: this.devicePrice,
                 clientId: this.clientId,
+                deviceCondition: this.deviceCondition,
                 productBaseIdentifier: this.productBaseIdentifier,
                 completeProductName: this.completeProductName,
                 directSelectionMode: this.directSelectionMode
@@ -135,7 +138,8 @@ class WertgarantieSelectionEmbedded extends LitElement {
         const result = await fetchBifrost(url, 'PUT', this.componentVersion, {
             deviceClasses: this.deviceClasses,
             deviceClass: this.deviceClass,
-            devicePrice: this.devicePrice
+            devicePrice: this.devicePrice,
+            deviceCondition: this.deviceCondition,
         });
         return result.body;
     }
@@ -264,8 +268,8 @@ class WertgarantieSelectionEmbedded extends LitElement {
                             <div class="product__checkbox">
                                 <!-- Font Awesome check icon -->
                                 ${this.selectedProductIndex === idx ?
-                                    html`<svg class="selection__checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>`
-                                    : html``}
+            html`<svg class="selection__checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"/></svg>`
+            : html``}
                             </div>
                         </div>
                         <div class="${classMap(productInfoClassList)}">

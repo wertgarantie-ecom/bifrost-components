@@ -249,6 +249,7 @@ function includeSelectionEmbeddedMulti(parentElement, cssSrcPath, shopConfig, co
                     selectionEmbeddedElement.setAttribute('data-client-id', shopConfig.id);
                     selectionEmbeddedElement.setAttribute('data-device-price', product.price);
                     selectionEmbeddedElement.setAttribute('data-device-classes', product.deviceClasses);
+                    selectionEmbeddedElement.setAttribute('data-device-condition', product.condition);
                     selectionEmbeddedElement.setAttribute('data-product-name', product.name);
                     selectionEmbeddedElement.setAttribute('data-order-item-id', product.orderItemId);
                     selectionEmbeddedElement.setAttribute('data-product-base-identifier', product.name);

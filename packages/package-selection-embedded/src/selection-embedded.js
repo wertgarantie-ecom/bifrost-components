@@ -69,7 +69,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
         this.landingPageUri = this.getAttribute("data-landing-page-uri") || "https://www.wertgarantie.de";
         this.productBaseIdentifier = this.getAttribute("data-product-base-identifier");
         this.completeProductName = this.getAttribute("data-complete-product-name");
-        this.deviceCondition = this.getAttribute("data-device-condition");
+        this.deviceCondition = this.getAttribute("data-device-condition") || undefined;
         this.orderItemId = this.getAttribute("data-order-item-id") || this.completeProductName;
         this.selectionTriggerElementIdentifier = this.getAttribute('data-product-selection-trigger-element-identifier');
         this.selectionTriggerEvent = this.getAttribute('data-product-selection-trigger-event');
@@ -141,6 +141,9 @@ class WertgarantieSelectionEmbedded extends LitElement {
             devicePrice: this.devicePrice,
             deviceCondition: this.deviceCondition,
         });
+        if (response.status === 204) {
+            return undefined;
+        }
         return result.body;
     }
 

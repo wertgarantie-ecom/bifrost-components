@@ -180,6 +180,7 @@ function loaderShopProductToBifrostShopProduct(loaderProduct) {
         deviceClasses: loaderProduct.deviceClasses,
         name: loaderProduct.name,
         orderItemId: loaderProduct.sku,
+        condition: loaderProduct.condition,
         quantity: 1
     }
 }

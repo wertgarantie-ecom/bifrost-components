@@ -36,6 +36,7 @@ class WertgarantieAfterSales extends LitElement {
     }
 
     reportToShopCallback(proposalsInformation) {
+        console.log(`called ${this.proposalInformationCallback} with: ${JSON.stringify(proposalsInformation)}`)
         if (this.proposalInformationCallback && proposalsInformation) {
             window[this.proposalInformationCallback](proposalsInformation);
         }

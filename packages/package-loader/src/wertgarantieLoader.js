@@ -218,6 +218,9 @@ function includeAfterSales(parentElement, cssSrcPath, shopConfig, targetConfig) 
     }
     afterSales.setAttribute('data-client-id', shopConfig.id);
     afterSales.setAttribute('data-bifrost-uri', bifrostUri);
+    if (targetConfig.proposalInformationCallback) {
+        afterSales.setAttribute('data-proposal-information-callback', targetConfig.proposalInformationCallback);
+    }
     afterSales.setAttribute('data-shop-purchase-data', btoa(JSON.stringify(shopPurchaseData)));
     container.appendChild(afterSales);
     parentElement.appendChild(container);

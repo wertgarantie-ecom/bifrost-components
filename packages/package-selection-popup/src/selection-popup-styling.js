@@ -4,7 +4,7 @@ import {css} from 'lit-element';
 export const selectionPopUpStyling = css`
     :host {
         font-family: var(--wertgarantie-popup-font-family, Arial, Helvetica), sans-serif;
-        font-size: var(--wertgarantie-popup-desktop-text-font-size, 12px);
+        font-size: var(--wertgarantie-popup-desktop-text-font-size, 13px);
     }
 
     .modal {
@@ -56,7 +56,7 @@ export const selectionPopUpStyling = css`
     }
 
     .head__title {
-        font-size: 1.5em;
+        font-size: 1.4em;
         color: var(--wertgarantie-popup-title-color, black);
         padding-right: 2em;
         text-transform: uppercase;
@@ -82,7 +82,7 @@ export const selectionPopUpStyling = css`
 
     .product-selectors__button {
         font-family: var(--wertgarantie-popup-font-family, Arial, Helvetica), sans-serif;
-        font-size: var(--wertgarantie-popup-desktop-text-font-size, 12px);
+        font-size: inherit;
         cursor: pointer;
         background: none;
         outline: none;
@@ -168,11 +168,10 @@ export const selectionPopUpStyling = css`
 
     .product__base-info--top-left {
         width: calc(100% - 25px);
-        font-size: var(--wertgarantie-popup-desktop-text-font-size, 12px);
     }
 
     .price-display {
-        font-size: var(--wertgarantie-popup-desktop-title-font-size, 18px);
+        font-size: 1.4em;
     }
 
     .product__base-info--top-right {
@@ -215,7 +214,7 @@ export const selectionPopUpStyling = css`
 
     .product__title {
         font-weight: 700;
-        font-size: var(--wertgarantie-popup-desktop-title-font-size, 18px);
+        font-size: 1.2em;
         max-width: 85%;
         text-transform: uppercase;
         min-height: 4em;
@@ -228,7 +227,6 @@ export const selectionPopUpStyling = css`
 
     .advantage {
         display: flex;
-        font-size: var(--wertgarantie-popup-desktop-text-font-size, 12px);
         padding-top: 0.9em;
     }
 
@@ -272,7 +270,7 @@ export const selectionPopUpStyling = css`
 
     .details__title {
         padding-top: 2em;
-        font-size: var(--wertgarantie-popup-desktop-title-font-size, 18px);
+        font-size: 1.4em;
         font-weight: 700;
     }
 
@@ -314,7 +312,6 @@ export const selectionPopUpStyling = css`
 
     .product__terms {
         margin-top: 3em;
-        font-size: var(--wertgarantie-popup-desktop-text-font-size, 12px);
     }
 
     .product-further-info {
@@ -325,10 +322,6 @@ export const selectionPopUpStyling = css`
     .wg-link {
         text-decoration: none;
         color: #39f;
-    }
-
-    wg-infosheet-link {
-        font-size: var(--wertgarantie-popup-desktop-text-font-size, 12px);
     }
 
     .award-image-block {
@@ -366,7 +359,7 @@ export const selectionPopUpStyling = css`
 
     .button {
         font-family: var(--wertgarantie-popup-font-family, Arial, Helvetica), sans-serif;
-        font-size: var(--wertgarantie-popup-desktop-text-font-size, 12px);
+        font-size: inherit;
         cursor: pointer;
         background: none;
         outline: none;
@@ -405,16 +398,12 @@ export const selectionPopUpStyling = css`
 
     @media only screen and (max-width: 878px) {
         :host {
-            font-size: var(--wertgarantie-popup-tablet-text-font-size, 10px);
+            font-size: var(--wertgarantie-popup-tablet-text-font-size, 11px);
         }
         
-        .head__title {
-            font-size: var(--wertgarantie-popup-tablet-title-font-size, 1.2em);
-        }
-
         .wg-rating-default {
-            --wertgarantie-rating-font-size: var(--wertgarantie-popup-tablet-text-font-size, 10px);
-            --wertgarantie-rating-stars-font-size: var(--wertgarantie-popup-tablet-text-font-size, 10px);
+            --wertgarantie-rating-font-size: var(--wertgarantie-popup-tablet-text-font-size, 11px);
+            --wertgarantie-rating-stars-font-size: var(--wertgarantie-popup-tablet-text-font-size, 11px);
         }
         
         .button-section {
@@ -434,7 +423,6 @@ export const selectionPopUpStyling = css`
 
         .button {
             width: 50%;
-            font-size: var(--wertgarantie-popup-tablet-text-font-size, 10px);
             padding: 1.5em 2em;
         }
 
@@ -448,10 +436,6 @@ export const selectionPopUpStyling = css`
             justify-content: center;
         }
         
-        .product-selectors__button {
-            font-size: var(--wertgarantie-popup-tablet-text-font-size, 10px);
-        }
-
         .checkouts {
             display: block;
             position: relative;
@@ -485,33 +469,29 @@ export const selectionPopUpStyling = css`
         }
         
         .product__base-info {
-            min-height: 220px;
+            min-height: 230px;
             opacity: 1;
             padding: 2em 3em 2em 3em;
         }
 
         .product__title {
-            font-size: var(--wertgarantie-popup-tablet-title-font-size, 1.3em);
             min-height: 2.5em;
             max-width: 100%;
         }
         
-        .advantage {
-            font-size: var(--wertgarantie-popup-tablet-text-font-size, 10px);
-        }
-
         .order-button {
             min-width: 0;
         }
     }
     
-     @media only screen and (max-width: 400px) { 
+     @media only screen and (max-width: 450px) { 
         :host {
             font-size: var(--wertgarantie-popup-phone-text-font-size, 9px);
         }
-         
-         .product__title {
-             font-size: var(--wertgarantie-popup-phone-title-font-size, 13px);
+
+         .wg-rating-default {
+             --wertgarantie-rating-font-size: var(--wertgarantie-popup-tablet-text-font-size, 9px);
+             --wertgarantie-rating-stars-font-size: var(--wertgarantie-popup-tablet-text-font-size, 9px);
          }
          
          .head {
@@ -530,8 +510,8 @@ export const selectionPopUpStyling = css`
              padding: 2em;
          }
 
-         .advantage {
-             font-size: var(--wertgarantie-popup-phone-text-font-size, 9px);
+         .product__title {
+             min-height: 1em;
          }
     }
 `;

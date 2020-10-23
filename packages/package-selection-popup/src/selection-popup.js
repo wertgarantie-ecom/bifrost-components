@@ -175,7 +175,7 @@ class WertgarantieSelectionPopUp extends LitElement {
         if (response.status !== 200) {
             throw new Error(`invalid bifrost response: ${response.status}`);
         }
-        // await saveOfferedOrderItemIds(response.body.offeredOrderItemIds);
+        await saveOfferedOrderItemIds(response.body.offeredOrderItemIds);
         return response.body;
     }
 

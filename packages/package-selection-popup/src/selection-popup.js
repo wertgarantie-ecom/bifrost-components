@@ -175,7 +175,7 @@ class WertgarantieSelectionPopUp extends LitElement {
         if (response.status !== 200) {
             throw new Error(`invalid bifrost response: ${response.status}`);
         }
-        await saveOfferedOrderItemIds(response.body.offeredOrderItemIds);
+        // await saveOfferedOrderItemIds(response.body.offeredOrderItemIds);
         return response.body;
     }
 
@@ -205,16 +205,18 @@ class WertgarantieSelectionPopUp extends LitElement {
                         <div class="head">
                             <div class="head__left">
                                 <strong class="head__title">${this.title}</strong>
-                                <wertgarantie-rating class="wg-rating-default"
-                                                     data-bifrost-uri="${this.bifrostUri}"
-                                                     data-disable-rating-number="true">
-                                </wertgarantie-rating>
                             </div>
                             <div class="head__right">
                                 <span @click="${() => this.cancelPopUp()}" class="closeBtn" id="closeBtn">×</span>
                             </div>
                         </div>
-                        <p class="head__subtitle">${this.subtitle}</p>
+                        <div class="head__subtitle">
+                            <wertgarantie-rating class="wg-rating-default"
+                                                         data-bifrost-uri="${this.bifrostUri}"
+                                                         data-disable-rating-number="true">
+                            </wertgarantie-rating>
+                            <p>${this.subtitle}</p>
+                        </div>
                         <section class="product-selectors" id="product-selectors">
                             ${this.products.map(this.createMobileProductSelectionButton)}
                         </section>
@@ -244,7 +246,7 @@ class WertgarantieSelectionPopUp extends LitElement {
                         </section>
                         <section class="button-section">
                             <div class="button-section__details-cancel">
-                                <button @click="${() => this.toggleDetailsExpansion()}" class="button button--light" id="detailsBtn">${this.showDetails ? this.hideDetailsText : this.showDetailsText}</button>
+                                <button @click="${() => this.toggleDetailsExpansion()}" class="button button--dark" id="detailsBtn">${this.showDetails ? this.hideDetailsText : this.showDetailsText}</button>
                                 <button @click="${() => this.cancelPopUp()}" class="button button--light" id="cancelOrder">${this.cancelButtonText}</button>
                             </div>
                             <div class="button-section__order">

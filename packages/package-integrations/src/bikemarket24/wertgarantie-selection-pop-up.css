@@ -1,4 +1,11 @@
 wertgarantie-selection-pop-up {
+    --wertgarantie-popup-desktop-title-font-size: 18px;
+    --wertgarantie-popup-desktop-text-font-size: 12px;
+    --wertgarantie-popup-tablet-title-font-size: 15px;
+    --wertgarantie-popup-tablet-text-font-size: 11px;
+    --wertgarantie-popup-phone-title-font-size: 13px;
+    --wertgarantie-popup-phone-text-font-size: 9px;
+
     --wertgarantie-popup-font-size: 1.1em;
 
     /* background image color fading for every second product */

@@ -4,7 +4,7 @@ import {css} from 'lit-element';
 export const selectionPopUpStyling = css`
     :host {
         font-family: var(--wertgarantie-popup-font-family, Arial, Helvetica), sans-serif;
-        font-size: var(--wertgarantie-popup-font-size, 0.8em);
+        font-size: var(--wertgarantie-popup-desktop-text-font-size, 12px);
     }
 
     .modal {
@@ -40,14 +40,13 @@ export const selectionPopUpStyling = css`
     .head {
         padding: 3em 3em 0.5em 3em;
         display: grid;
-        grid-template-columns: 75% 25%;
+        grid-template-columns: 90% 10%;
     }
 
     .head__left {
         grid-column-start: 1;
         grid-column-end: 1;
         display: inline-block;
-        font-size: var(--wertgarantie-popup-font-size, 0.8em)
     }
 
     .head__right {
@@ -83,15 +82,16 @@ export const selectionPopUpStyling = css`
 
     .product-selectors__button {
         font-family: var(--wertgarantie-popup-font-family, Arial, Helvetica), sans-serif;
-        font-size: var(--wertgarantie-popup-font-size, 0.8em);
+        font-size: var(--wertgarantie-popup-desktop-text-font-size, 12px);
         cursor: pointer;
         background: none;
         outline: none;
-        padding: 1em 2em 1em 2em;
+        padding: 1em;
         border: 2px solid var(--wertgarantie-popup-dark-button-background-color, rgb(32, 32, 32));
         background-color: var(--wertgarantie-popup-light-button-background-color, rgb(244, 244, 244));
         color: var(--wertgarantie-popup-light-button-text-color, rgb(32, 32, 32));
         transition: all 0.4s;
+        width: 50%;
     }
 
     .product-selectors__button--selected {
@@ -156,7 +156,7 @@ export const selectionPopUpStyling = css`
         display: flex;
         flex-flow: column;
         justify-content: space-between;
-        min-height: 320px;
+        min-height: 280px;
         opacity: 1;
         padding: 2em 3em 2em 3em;
     }
@@ -168,11 +168,11 @@ export const selectionPopUpStyling = css`
 
     .product__base-info--top-left {
         width: calc(100% - 25px);
-        font-size: 1.1em;
+        font-size: var(--wertgarantie-popup-desktop-text-font-size, 12px);
     }
 
     .price-display {
-        font-size: 2.3em;
+        font-size: var(--wertgarantie-popup-desktop-title-font-size, 18px);
     }
 
     .product__base-info--top-right {
@@ -215,7 +215,7 @@ export const selectionPopUpStyling = css`
 
     .product__title {
         font-weight: 700;
-        font-size: 1.4em;
+        font-size: var(--wertgarantie-popup-desktop-title-font-size, 18px);
         max-width: 85%;
         text-transform: uppercase;
         min-height: 4em;
@@ -228,7 +228,7 @@ export const selectionPopUpStyling = css`
 
     .advantage {
         display: flex;
-        font-size: var(--wertgarantie-popup-font-size, 0.8em);
+        font-size: var(--wertgarantie-popup-desktop-text-font-size, 12px);
         padding-top: 0.9em;
     }
 
@@ -272,7 +272,7 @@ export const selectionPopUpStyling = css`
 
     .details__title {
         padding-top: 2em;
-        font-size: 1.3em;
+        font-size: var(--wertgarantie-popup-desktop-title-font-size, 18px);
         font-weight: 700;
     }
 
@@ -294,13 +294,13 @@ export const selectionPopUpStyling = css`
 
     .product__details-footer {
         text-align: center;
-        padding: 2em 3em;
         visibility: hidden;
         opacity: 0;
         max-height: 0;
         transition: height 0.6s;
         transform-origin: left top;
         transform: scaleY(0);
+        overflow: auto;
     }
 
     .product__details--expanded, .product__details-footer--expanded {
@@ -309,12 +309,12 @@ export const selectionPopUpStyling = css`
         max-height: 100%;
         transition: all 0.6s;
         transform: scaleY(1);
-        padding: 0 3em 1.7em 3em;
+        padding: 0 3em 1em 3em;
     }
 
     .product__terms {
         margin-top: 3em;
-        font-size: var(--wertgarantie-popup-font-size, 0.8em)
+        font-size: var(--wertgarantie-popup-desktop-text-font-size, 12px);
     }
 
     .product-further-info {
@@ -328,7 +328,7 @@ export const selectionPopUpStyling = css`
     }
 
     wg-infosheet-link {
-        font-size: var(--wertgarantie-popup-font-size, 0.8em);
+        font-size: var(--wertgarantie-popup-desktop-text-font-size, 12px);
     }
 
     .award-image-block {
@@ -342,7 +342,7 @@ export const selectionPopUpStyling = css`
     }
 
     .button-section {
-        padding: 0 3em 3em 3em;
+        padding: 3em;
         display: flex;
     }
 
@@ -366,14 +366,14 @@ export const selectionPopUpStyling = css`
 
     .button {
         font-family: var(--wertgarantie-popup-font-family, Arial, Helvetica), sans-serif;
-        font-size: var(--wertgarantie-popup-font-size, 0.8em);
+        font-size: var(--wertgarantie-popup-desktop-text-font-size, 12px);
         cursor: pointer;
         background: none;
         outline: none;
         padding: 1.5em 3em 1.5em 3em;
         margin: 3px;
         border: none;
-        /*border: 2px solid var(--wertgarantie-popup-dark-button-background-color, rgb(32, 32, 32));*/
+        border: 2px solid var(--wertgarantie-popup-dark-button-background-color, rgb(32, 32, 32));
         transition: all 0.4s;
     }
 
@@ -396,16 +396,28 @@ export const selectionPopUpStyling = css`
 
     .wg-rating-default {
         --wertgarantie-rating-font-family: var(--wertgarantie-embedded-rating-font-family, "Open Sans", sans-serif);
-        --wertgarantie-rating-font-size: 1.2em;
+        --wertgarantie-rating-font-size: var(--wertgarantie-popup-desktop-text-font-size, 12px);
         --wertgarantie-rating-text-color: rgb(134, 134, 134);
 
-        --wertgarantie-rating-stars-font-size: 1.2em;
+        --wertgarantie-rating-stars-font-size: var(--wertgarantie-popup-desktop-text-font-size, 12px);
         --wertgarantie-rating-stars-color: orange;
     }
 
     @media only screen and (max-width: 878px) {
+        :host {
+            font-size: var(--wertgarantie-popup-tablet-text-font-size, 10px);
+        }
+        
+        .head__title {
+            font-size: var(--wertgarantie-popup-tablet-title-font-size, 1.2em);
+        }
+
+        .wg-rating-default {
+            --wertgarantie-rating-font-size: var(--wertgarantie-popup-tablet-text-font-size, 10px);
+            --wertgarantie-rating-stars-font-size: var(--wertgarantie-popup-tablet-text-font-size, 10px);
+        }
+        
         .button-section {
-            padding: 0 3em 3em 3em;
             display: flex;
             flex-flow: column;
         }
@@ -422,6 +434,8 @@ export const selectionPopUpStyling = css`
 
         .button {
             width: 50%;
+            font-size: var(--wertgarantie-popup-tablet-text-font-size, 10px);
+            padding: 1.5em 2em;
         }
 
         .order-button {
@@ -430,8 +444,12 @@ export const selectionPopUpStyling = css`
 
         .product-selectors {
             display: flex;
-            padding-bottom: 3em;
+            padding: 0 3em 2em 3em;
             justify-content: center;
+        }
+        
+        .product-selectors__button {
+            font-size: var(--wertgarantie-popup-tablet-text-font-size, 10px);
         }
 
         .checkouts {
@@ -465,5 +483,55 @@ export const selectionPopUpStyling = css`
         .product--unfocused {
             display: none;
         }
+        
+        .product__base-info {
+            min-height: 220px;
+            opacity: 1;
+            padding: 2em 3em 2em 3em;
+        }
+
+        .product__title {
+            font-size: var(--wertgarantie-popup-tablet-title-font-size, 1.3em);
+            min-height: 2.5em;
+            max-width: 100%;
+        }
+        
+        .advantage {
+            font-size: var(--wertgarantie-popup-tablet-text-font-size, 10px);
+        }
+
+        .order-button {
+            min-width: 0;
+        }
+    }
+    
+     @media only screen and (max-width: 400px) { 
+        :host {
+            font-size: var(--wertgarantie-popup-phone-text-font-size, 9px);
+        }
+         
+         .product__title {
+             font-size: var(--wertgarantie-popup-phone-title-font-size, 13px);
+         }
+         
+         .head {
+             padding: 3em 2em 0.5em 2em;
+         }
+         
+         .head__subtitle {
+             padding: 1em 2em;
+         }
+    
+         .product-selectors {
+             padding: 0 2em 2em 2em;
+         }
+         
+         .button-section {
+             padding: 2em;
+         }
+
+         .advantage {
+             font-size: var(--wertgarantie-popup-phone-text-font-size, 9px);
+         }
     }
 `;

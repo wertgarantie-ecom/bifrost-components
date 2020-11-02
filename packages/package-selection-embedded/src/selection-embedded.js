@@ -318,6 +318,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
                     price: this.devicePrice,
                     deviceClass: this.deviceClass,
                     deviceClasses: this.deviceClasses,
+                    deviceCondition: this.deviceCondition,
                     name: this.completeProductName,
                     orderItemId: this.orderItemId
                 },

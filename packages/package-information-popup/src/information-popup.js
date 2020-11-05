@@ -66,12 +66,10 @@ class WertgarantieInformationPopup extends LitElement {
                             <strong class="header__title">${this.title}</strong>
                             <span @click="${this.fadeOut}" class="closeBtn" id="closeBtn">×</span>
                         </div>
-                        <div class="header__row">
-                            <wertgarantie-rating class="wg-rating-default"
-                                                 data-bifrost-uri="${this.bifrostUri}"
-                                                 data-disable-rating-number="true">
-                            </wertgarantie-rating>
-                        </div>
+                        <wertgarantie-rating class="wg-rating-default"
+                                             data-bifrost-uri="${this.bifrostUri}"
+                                             data-disable-rating-number="true">
+                        </wertgarantie-rating>
                     </div>
                     <div class="content__product-card">
                         <div class=${classMap(productHeadClassList)} style=${styleMap(productImageLinkStyleList)}>

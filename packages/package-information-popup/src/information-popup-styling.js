@@ -4,6 +4,7 @@ import {css} from "lit-element";
 export const informationPopUpStyling = css`
     :host {
         font-family: var(--wertgarantie-selection-embedded-font-family, Arial, Helvetica), sans-serif;
+        font-size: var(--wertgarantie-selection-embedded-font-size, 13px);
     }
     
     .product-modal {
@@ -39,7 +40,7 @@ export const informationPopUpStyling = css`
     .content__head {
         display: flex;
         flex-flow: column;
-        padding: 3em;
+        padding: 3em 3em 1em 3em;
     }
     
     .header__row {
@@ -61,7 +62,6 @@ export const informationPopUpStyling = css`
     }
 
     .wg-rating-default {
-        margin: 1em 0;
         --wertgarantie-rating-font-family: var(--wertgarantie-embedded-rating-font-family, "Open Sans", sans-serif);
         --wertgarantie-rating-font-size: 0.8em;
         --wertgarantie-rating-text-color: rgb(134, 134, 134);
@@ -97,7 +97,7 @@ export const informationPopUpStyling = css`
         display: flex;
         flex-flow: column;
         justify-content: space-between;
-        min-height: 320px;
+        min-height: 250px;
         opacity: 1;
         padding: 2em 3em 2em 3em;
     }
@@ -217,5 +217,13 @@ export const informationPopUpStyling = css`
     .award-image {
         vertical-align: text-top;
         max-height: 100px;
+    }
+    
+    @media only screen and (max-width: 450px) {
+        :host {
+            font-size: 11px;
+        }
+        
+        
     }
 `;

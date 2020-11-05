@@ -98,6 +98,7 @@ export const selectionEmbeddedStyling = css`
     }
 
     .product__info {
+        line-height: 1.2em;
         display: flex;
         flex-flow: column;
         width: 90%;

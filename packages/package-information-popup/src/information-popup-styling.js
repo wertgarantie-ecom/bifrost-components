@@ -40,7 +40,7 @@ export const informationPopUpStyling = css`
     .content__head {
         display: flex;
         flex-flow: column;
-        padding: 3em 3em 1em 3em;
+        padding: 3em;
     }
     
     .header__row {
@@ -63,10 +63,10 @@ export const informationPopUpStyling = css`
 
     .wg-rating-default {
         --wertgarantie-rating-font-family: var(--wertgarantie-embedded-rating-font-family, "Open Sans", sans-serif);
-        --wertgarantie-rating-font-size: 0.8em;
+        --wertgarantie-rating-font-size: 0.9em;
         --wertgarantie-rating-text-color: rgb(134, 134, 134);
 
-        --wertgarantie-rating-stars-font-size: 0.8em;
+        --wertgarantie-rating-stars-font-size: 0.9em;
         --wertgarantie-rating-stars-color: orange;
     }
     

@@ -261,7 +261,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
         const selectionClassList = {
             "product__selection": true,
             "product__selection--selected": idx === this.selectedProductIndex,
-            "product__selection--notselected": idx > -1 && idx !== this.selectedProductIndex
+            "product__selection--notselected": this.selectedProductIndex > -1 && idx !== this.selectedProductIndex
         };
 
         const productCheckboxClassList = {

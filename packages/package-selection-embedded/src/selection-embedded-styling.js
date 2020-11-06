@@ -39,7 +39,7 @@ export const selectionEmbeddedStyling = css`
         padding: var(--wertgarantie-selection-embedded-component-title-product-padding, 0.5em);
         font-size: var(--wertgarantie-selection-embedded-component-title-product-font-size, 0.9em);
         background-color: #f9f9f9;
-        transition: background-color 1s, border-color 1s;
+        transition: background-color 1s, border-color 1s, opacity 1s;
         cursor: pointer;
         padding: 0.7em;
         border-radius: 5px;
@@ -147,7 +147,7 @@ export const selectionEmbeddedStyling = css`
         .head__title {
             font-size: 1.1em
         }
-        
+
         .component__footer {
             font-size: 0.9em;
         }

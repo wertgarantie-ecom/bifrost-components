@@ -24,7 +24,7 @@ export const confirmationStylingTabs = css`
 
     .tab__name {
         width: 85%;
-        font-size: 0.8em;
+        font-size: 0.7em;
         padding: 0.8em 0.8em;
         display: flex;
         justify-content: flex-start;

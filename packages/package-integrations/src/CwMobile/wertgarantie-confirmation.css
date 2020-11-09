@@ -1,4 +1,5 @@
 wertgarantie-confirmation {
+    --wertgarantie-confirmation-font-family: open sans light,sans-serif;
     --wertgarantie-confirmation-component-margin: 0 0 15px 0;
     --wertgarantie-confirmation-box-border-right: none;
     --wertgarantie-confirmation-box-border-left: none;

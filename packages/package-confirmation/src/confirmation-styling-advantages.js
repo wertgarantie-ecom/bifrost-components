@@ -8,7 +8,6 @@ export const confirmationStylingAdvantages = css`
     }
 
     .product__advantage {
-        font-size: 0.8em;
         padding-top: 0.7em;
         display: flex;
     }

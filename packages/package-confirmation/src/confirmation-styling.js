@@ -3,7 +3,7 @@ import {css} from 'lit-element';
 //language=CSS
 export const confirmationStyling = css`
     :host {
-        font-family: var(--wertgarantie-confirmation-font-family, Arial, Helvetica), sans-serif;
+        font-family: var(--wertgarantie-confirmation-font-family, inherit), sans-serif;
     }
 
     .box {
@@ -37,7 +37,6 @@ export const confirmationStyling = css`
         display: flex;
         flex-direction: row;
         padding: var(--wertgarantie-confirmation-component-padding, '0px 0px 0px 0px');
-        color: var(--wertgarantie-confirmation-text-color, black);
         margin: var(--wertgarantie-confirmation-component-margin, 0 0 0 0);
         background-color: var(--wertgarantie-confirmation-background-color, white);
     }
@@ -56,7 +55,6 @@ export const confirmationStyling = css`
         padding: 8px;
         margin: 16px 50px 0px 50px;
         font-weight: 700;
-        font-size: 0.8em;
     }
 
     .product__panel {
@@ -98,7 +96,6 @@ export const confirmationStyling = css`
         text-align: center;
         font-weight: var(--wertgarantie-confirmation-header-title-font-weight, 700);
         text-transform: var(--wertgarantie-confirmation-header-title-text-transform, uppercase);
-        font-size: var(--wertgarantie-confirmation-header-title-font-size, 0.7em);
         line-height: var(--wertgarantie-confirmation-header-title-line-height, 1.2em);
         padding: 1.7em 1em;
     }
@@ -107,7 +104,6 @@ export const confirmationStyling = css`
         padding-top: 1.5em;
         padding-left: 50px;
         font-weight: var(--wertgarantie-confirmation-body-subtitle-font-weight, 700);
-        font-size: var(--wertgarantie-confirmation-body-subtitle-font-size, 0.8em);
         text-transform: var(--wertgarantie-confirmation-body-subtitle-text-transform, uppercase);
     }
 
@@ -121,20 +117,13 @@ export const confirmationStyling = css`
         padding: var(--wertgarantie-confirmation-checkbox-column-padding, 0 0 0 10px);
     }
 
-    .checkbox__container {
-        margin-left: 2px;
-        margin-right: 2px;
-        display: flex;
-        justify-content: center;
-    }
-
     .confirmation--unchecked {
         border: 2px solid #ee6767;
     }
 
     .confirmation__text {
         width: auto;
-        font-size: 0.8em;
+        line-height: 1.3;
     }
 
 
@@ -170,19 +159,20 @@ export const confirmationStyling = css`
     }
 
     .product__price-info--small {
-        font-size: 0.7em;
         opacity: 0.8;
     }
 
     .product__price-info--strong {
         font-weight: 700;
-        font-size: 1.3em;
+        font-size: 1.5em;
+        line-height: 1.7em;
     }
 
     .product__title {
         text-transform: uppercase;
         font-weight: 800;
         padding: 2em 0;
+        font-size: 1.2em;
     }
 
     .wg-link {
@@ -194,13 +184,12 @@ export const confirmationStyling = css`
         display: flex;
         padding-top: 2em;
         padding-bottom: 0.5em;
-        font-size: 0.7em;
     }
 
     @media only screen and (max-width: 768px) {
         .component {
             width: 100%;
-            max-width: 500px;
+            /*max-width: 500px;*/
         }
 
         .info {
@@ -232,6 +221,11 @@ export const confirmationStyling = css`
 
         .confirmation__header {
             padding-left: 2em;
+        }
+        
+        .checkbox-container {
+            display: flex;
+            justify-content: center;
         }
 
     }

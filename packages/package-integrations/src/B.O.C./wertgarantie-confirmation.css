@@ -1,2 +1,17 @@
 wertgarantie-confirmation {
+    --wertgarantie-confirmation-font-color: #505050;
+    --wertgarantie-confirmation-font-family: 'Roboto', sans-serif;
+    --wertgarantie-confirmation-header-background-color: rgba(0, 156, 59, 0.25);
+    --wertgarantie-confirmation-header-icon-background-color: #009c3b;
+
+    --wertgarantie-confirmation-box-border-top: 1px solid #c3c3c3;
+    --wertgarantie-confirmation-box-border-right: 1px solid #c3c3c3;
+    --wertgarantie-confirmation-box-border-bottom: 1px solid #c3c3c3;
+    --wertgarantie-confirmation-box-border-left: 1px solid #c3c3c3;
+
+    --wertgarantie-confirmation-product-background-primary: linear-gradient(to bottom right, rgba(0, 0, 0, 0), #000),
+    linear-gradient(to top right, #b7b7b7, rgba(81, 61, 61, 0));
+
+    --wertgarantie-confirmation-product-background-secondary: linear-gradient(to bottom right, rgba(44, 25, 25, 0), rgba(0, 255, 77, 0.6)),
+    linear-gradient(to top right, #000, rgba(0, 0, 0, 0.3));
 }

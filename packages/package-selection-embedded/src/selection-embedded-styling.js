@@ -111,7 +111,6 @@ export const selectionEmbeddedStyling = css`
         cursor: pointer;
         display: flex;
         justify-content: flex-end;
-        color: #c2c2c2;
     }
 
     .info-icon {

@@ -42,13 +42,13 @@ export const selectionEmbeddedStyling = css`
         transition: background-color 1s, border-color 1s, opacity 1s;
         cursor: pointer;
         padding: 0.7em;
-        border-radius: 5px;
+        border-radius: var(--wertgarantie-selection-embedded-component-product-border-radius, 5px);
         margin: 5px 0;
     }
 
     .product__selection--selected {
         opacity: 1;
-        border-color: #96c92a;
+        border-color: var(--wertgarantie-selection-embedded-component-product-selected-color, #96c92a);
         background-color: white;
     }
 
@@ -94,7 +94,7 @@ export const selectionEmbeddedStyling = css`
         border-width: 3px;
         height: 16px;
         width: 16px;
-        border-color: #96c92a;
+        border-color: var(--wertgarantie-selection-embedded-component-product-selected-color, #96c92a);
     }
 
     .product__info {
@@ -123,7 +123,7 @@ export const selectionEmbeddedStyling = css`
     .selection__checkmark {
         margin-bottom: 1em;
         border-radius: 50%;
-        background-color: #96c92a;
+        background-color: var(--wertgarantie-selection-embedded-component-product-selected-color, #96c92a);
         width: 100%;
     }
 

@@ -120,6 +120,9 @@ function includeSelectionPopUp(parentElement, cssSrcPath, shopConfig) {
 }
 
 function includeSelectionEmbedded(parentElement, cssSrcPath, shopConfig) {
+    const elementName = 'wertgarantie-selection-embedded';
+    const nodes = document.querySelectorAll(elementName);
+    nodes.forEach(n => n.remove());
     if (cssSrcPath) {
         const linkElem = document.createElement('link');
         linkElem.rel = 'stylesheet';
@@ -127,7 +130,7 @@ function includeSelectionEmbedded(parentElement, cssSrcPath, shopConfig) {
         parentElement.appendChild(linkElem);
     }
     const container = document.createElement('div');
-    const selectionEmbeddedElement = document.createElement('wertgarantie-selection-embedded');
+    const selectionEmbeddedElement = document.createElement(elementName);
     selectionEmbeddedElement.setAttribute('data-bifrost-uri', bifrostUri);
     selectionEmbeddedElement.setAttribute('data-client-id', shopConfig.id);
     selectionEmbeddedElement.setAttribute('data-device-price', shopConfig.displayedProduct.price);

@@ -208,6 +208,7 @@ function includeAfterSales(parentElement, cssSrcPath, shopConfig, targetConfig) 
 
     const shopPurchaseData = {
         purchasedProducts: purchasesProducts,
+        orderId: shopConfig.orderId,
         customer: shopConfig.customer,
         encryptedSessionId: shopConfig.encryptedSessionId
     };

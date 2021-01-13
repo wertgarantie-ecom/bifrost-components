@@ -61,7 +61,7 @@ export const selectionEmbeddedStyling = css`
     }
 
     .product__name {
-        text-transform: uppercase;
+        text-transform: var(--wertgarantie-selection-embedded-component-product-name-transform, uppercase);
         font-size: 1em;
         padding-bottom: 2px;
     }

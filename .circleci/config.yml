@@ -87,9 +87,9 @@ workflows:
           filters:
             branches:
               only: master
-#      - test:
-#          requires:
-#            - build
+      - test:
+          requires:
+            - build
       - gh-pages:
           requires:
             - build
@@ -97,7 +97,7 @@ workflows:
       - publish-npm:
           requires:
             - build
-            - test
+#            - test
   build:
     jobs:
       - build:

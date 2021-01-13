@@ -63,7 +63,7 @@ class WertgarantieInformationPopup extends LitElement {
                 <div class="content">
                     <div class="content__head header">
                         <div class="header__row">
-                            <strong class="header__title">${this.title}</strong>
+                            <strong class="header__title">${this.product.title || this.title}</strong>
                             <span @click="${this.fadeOut}" class="closeBtn" id="closeBtn">×</span>
                         </div>
                         <wertgarantie-rating class="wg-rating-default"

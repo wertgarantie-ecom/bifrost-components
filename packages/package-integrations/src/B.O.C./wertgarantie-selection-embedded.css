@@ -3,3 +3,15 @@ wertgarantie-selection-embedded {
     --wertgarantie-selection-embedded-component-product-border-radius: disabled;
     --wertgarantie-selection-embedded-component-product-name-transform: none
 }
+
+wertgarantie-information-popup {
+    /* background image color fading for every second product */
+    --wertgarantie-popup-product-background-primary: linear-gradient(to bottom right, rgba(0, 0, 0, 0), #000),
+    linear-gradient(to top right, #b7b7b7, rgba(81, 61, 61, 0));
+
+    /* background image color fading for every second product */
+    --wertgarantie-popup-product-background-secondary: linear-gradient(to bottom right, rgba(44, 25, 25, 0), rgba(0, 255, 77, 0.6)),
+    linear-gradient(to top right, #000, rgba(0, 0, 0, 0.3));
+
+    --wertgarantie-information-popup-title-text-transform: none;
+}

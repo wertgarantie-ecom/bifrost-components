@@ -52,7 +52,7 @@ export const informationPopUpStyling = css`
     .header__title {
         font-size: var(--wertgarantie-information-popup-title-font-size, 1.2em);
         margin-bottom: 1em;
-        text-transform: uppercase;
+        text-transform: var(--wertgarantie-information-popup-title-text-transform, uppercase);
     }
     
     .closeBtn {
@@ -129,7 +129,7 @@ export const informationPopUpStyling = css`
     .product-card__title {
         font-weight: 700;
         font-size: 1.3em;
-        text-transform: uppercase;
+        text-transform: var(--wertgarantie-information-popup-title-text-transform, uppercase);
         min-height: 3em;
     }
     

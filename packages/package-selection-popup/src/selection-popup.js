@@ -49,7 +49,6 @@ class WertgarantieSelectionPopUp extends LitElement {
     constructor() {
         super();
         this.initialized = false;
-        this.componentVersion = '2.0.54';
 
         this.setProperties = this.setProperties.bind(this);
         this.fetchPolicy = this.fetchPolicy.bind(this);
@@ -161,7 +160,7 @@ class WertgarantieSelectionPopUp extends LitElement {
     async fetchPolicy() {
         const offeredOrderItemIds = await getOfferedForOrderItemId();
         const url = new URL(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-popup`);
-        const response = await fetchBifrost(url, 'PUT', this.componentVersion, {
+        const response = await fetchBifrost(url, 'PUT', {
             devicePrice: this.devicePrice,
             deviceClass: this.deviceClass,
             deviceClasses: this.deviceClasses,
@@ -405,7 +404,7 @@ class WertgarantieSelectionPopUp extends LitElement {
         // fetch uri with different path for POST call to set cookie
         const selectedProduct = this.products[this.selectedProductIndex];
         try {
-            const response = await fetchBifrost(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/shoppingCart/`, 'POST', this.componentVersion, {
+            const response = await fetchBifrost(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/shoppingCart/`, 'POST', {
                 shopProduct: {
                     price: this.devicePrice,
                     deviceClass: this.deviceClass,
@@ -434,7 +433,7 @@ class WertgarantieSelectionPopUp extends LitElement {
     }
 
     async cancelPopUp() {
-        await fetchBifrost(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-popup/cancel`, 'POST', this.componentVersion);
+        await fetchBifrost(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-popup/cancel`, 'POST');
         this.fadeout();
     }
 

@@ -23,7 +23,6 @@ class WertgarantieRating extends LitElement {
 
     constructor() {
         super();
-        this.componentVersion = '2.0.17';
         this.fetchRating = this.fetchRating.bind(this);
         this.checkIfRatingDefined = this.checkIfRatingDefined.bind(this);
         this.setProperties = this.setProperties.bind(this);
@@ -78,7 +77,7 @@ class WertgarantieRating extends LitElement {
             );
         }
         try {
-            const response = await fetchBifrost(fetchUri, 'GET', this.componentVersion);
+            const response = await fetchBifrost(fetchUri, 'GET');
             if (response.status !== 200) {
                 console.error('fetch failed:', response);
                 return {};

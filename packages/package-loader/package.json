@@ -4,7 +4,6 @@
   "description": "Component Loader for Wertgarantie's Cross Selling WebComponents",
   "main": "index.js",
   "scripts": {
-    "version": "sed -i \"\" -E \"s/(this.componentVersion = \\')(.*)(\\';)/\\1$(node -p 'require(\"./package.json\").version')\\3/\" ./src/wertgarantieLoader.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "faucet --compact",
     "build:dev": "faucet",

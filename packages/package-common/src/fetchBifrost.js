@@ -5,14 +5,13 @@ const SHOPPING_CART_DELETE_HEADER = 'X-wertgarantie-shopping-cart-delete';
 const WERTGARANTIE_SESSION_ID = 'X-wertgarantie-session-id';
 const WERTGARANTIE_SESSION_ID_COOKIE = 'wertgarantie-session-id';
 
-export default async function fetchBifrost(url, method, version, body = {}) {
+export default async function fetchBifrost(url, method, body = {}) {
     const signedShoppingCart = await getShoppingCart();
     const requestParams = {
         method: method,
         headers: {
             "credentials": 'include',
             'content-Type': 'application/json',
-            'X-Version': version
         }
     };
     if (signedShoppingCart) {

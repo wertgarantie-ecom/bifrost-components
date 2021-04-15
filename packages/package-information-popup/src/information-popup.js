@@ -25,7 +25,6 @@ class WertgarantieInformationPopup extends LitElement {
 
     constructor() {
         super();
-        this.componentVersion = "1.0.0";
         this.renderAdvantage = this.renderAdvantage.bind(this);
         this.fadeOut = this.fadeOut.bind(this);
         this.checkAllPropertiesSet = this.checkAllPropertiesSet.bind(this);

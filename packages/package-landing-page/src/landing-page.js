@@ -42,7 +42,6 @@ class LandingPage extends LitElement {
 
     connectedCallback() {
         super.connectedCallback();
-        this.componentVersion = '0.0.22';
         this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://ecommerce.wertgarantie.com/wertgarantie";
         this.clientId = this.getAttribute("data-client-id");
         this.partnerNumber = this.getAttribute('data-partner-number');
@@ -59,7 +58,7 @@ class LandingPage extends LitElement {
 
     async fetchLandingPageData() {
         const url = `${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/landing-page/`;
-        const result = await fetchBifrost(url, 'GET', this.componentVersion);
+        const result = await fetchBifrost(url, 'GET');
         return result.body;
     }
 

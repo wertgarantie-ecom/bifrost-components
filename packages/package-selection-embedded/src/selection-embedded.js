@@ -61,7 +61,6 @@ class WertgarantieSelectionEmbedded extends LitElement {
 
     connectedCallback() {
         super.connectedCallback();
-        this.componentVersion = '0.0.43';
         this.bifrostUri = this.getAttribute("data-bifrost-uri") || "https://ecommerce.wertgarantie.com/wertgarantie";
         this.clientId = this.getAttribute("data-client-id");
         this.devicePrice = parseInt(this.getAttribute("data-device-price"));
@@ -136,7 +135,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
             throw new Error(errorMessage);
         }
         const url = `${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-embedded/`;
-        const result = await fetchBifrost(url, 'PUT', this.componentVersion, {
+        const result = await fetchBifrost(url, 'PUT', {
             deviceClasses: this.deviceClasses,
             deviceClass: this.deviceClass,
             devicePrice: this.devicePrice,
@@ -220,7 +219,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
     }
 
     async registerClick(method, updatedProductSelection) {
-        await fetchBifrost(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-embedded/select`, method, this.componentVersion, updatedProductSelection);
+        await fetchBifrost(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-embedded/select`, method, updatedProductSelection);
     }
 
     renderProductInfoPanel(product) {
@@ -320,7 +319,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
             );
         }
         try {
-            const response = await fetchBifrost(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/shoppingCart/`, 'POST', this.componentVersion, {
+            const response = await fetchBifrost(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/shoppingCart/`, 'POST', {
                 shopProduct: {
                     price: this.devicePrice,
                     deviceClass: this.deviceClass,
@@ -351,7 +350,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
 
     async deleteFromShoppingCart() {
         const url = new URL(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-embedded/product`);
-        const result = await fetchBifrost(url, 'DELETE', this.componentVersion, {
+        const result = await fetchBifrost(url, 'DELETE', {
             orderId: this.currentOrderId
         });
         if (result.status !== 204 && result.status !== 200) {
@@ -369,7 +368,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
         } else {
             const selectedProduct = this.products[this.selectedProductIndex];
             const url = new URL(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/selection-embedded/product`);
-            const response = await fetchBifrost(url, 'POST', this.componentVersion, {
+            const response = await fetchBifrost(url, 'POST', {
                 orderId: this.currentOrderId,
                 shopProduct: {
                     price: this.devicePrice,

@@ -43,8 +43,6 @@ class WertgarantieConfirmation extends LitElement {
 
     constructor() {
         super();
-        this.componentVersion = '2.0.42';
-
         this.setProperties = this.setProperties.bind(this);
         this.checkStateOnSubmit = this.checkStateOnSubmit.bind(this);
         this.isFullyChecked = this.isFullyChecked.bind(this);
@@ -140,7 +138,7 @@ class WertgarantieConfirmation extends LitElement {
 
     async fetchConfirmationComponentData() {
         const url = new URL(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/confirmation`);
-        const response = await fetchBifrost(url, 'PUT', this.componentVersion, {
+        const response = await fetchBifrost(url, 'PUT', {
             shopShoppingCart: this.shopOrderBase64
         });
 
@@ -230,7 +228,7 @@ class WertgarantieConfirmation extends LitElement {
 
     async sendToggleConfirmationRequest(method, confirmationName) {
         const url = `${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/confirmation/${confirmationName}`;
-        const response = await fetchBifrost(url, method, this.componentVersion);
+        const response = await fetchBifrost(url, method);
         if (response.status === 200) {
             if (this.confirmations[confirmationName] !== undefined) {
                 this.confirmations[confirmationName] = !this.confirmations[confirmationName];
@@ -248,7 +246,7 @@ class WertgarantieConfirmation extends LitElement {
     async deleteProductOrder(product) {
         const url = new URL(`${this.bifrostUri}/ecommerce/clients/${this.clientId}/components/confirmation/product`);
 
-        const result = await fetchBifrost(url, 'DELETE', this.componentVersion, {
+        const result = await fetchBifrost(url, 'DELETE', {
             orderId: product.orderId
         });
         if (result.status === 200) {

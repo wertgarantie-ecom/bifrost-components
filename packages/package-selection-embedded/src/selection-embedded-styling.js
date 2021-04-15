@@ -133,7 +133,7 @@ export const selectionEmbeddedStyling = css`
     .component__footer {
         margin: 1em 0;
         font-size: 0.8em;
-        text-transform: uppercase;
+        text-transform: var(--wertgarantie-selection-embedded-component-footer-text-transform, uppercase);
         letter-spacing: 1px;
         text-align: center;
     }

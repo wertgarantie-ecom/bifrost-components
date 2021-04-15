@@ -24,8 +24,14 @@ export const informationPopUpStyling = css`
     .content {
         background-color: var(--wertgarantie-information-popup-background-color, rgb(244, 244, 244));
         margin: 5% auto;
-        width: 75%;
+        width: 90%;
         max-width: 600px;
+    }
+
+    @media screen and (min-width: 450px) {
+        .content {
+            width: 75%;
+        }
     }
 
     @keyframes openInfoPopUp {

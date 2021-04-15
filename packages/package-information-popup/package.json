@@ -1,6 +1,6 @@
 {
   "name": "wertgarantie-information-popup",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "wertgarantie information pop up for insurance products",
   "main": "information-popup.js",
   "scripts": {

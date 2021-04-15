@@ -1,6 +1,6 @@
 {
   "name": "wertgarantie-rating",
-  "version": "2.0.17",
+  "version": "2.0.18",
   "description": "wertgarantie web component to display google review ratings",
   "main": "dist/rating.min.js",
   "scripts": {
@@ -30,6 +30,6 @@
   "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme",
   "dependencies": {
     "faucet-pipeline-esnext": "^2.1.6",
-    "wertgarantie-common": "^1.0.6"
+    "wertgarantie-common": "^1.0.7"
   }
 }

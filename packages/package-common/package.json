@@ -1,6 +1,6 @@
 {
   "name": "wertgarantie-common",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Common libs for wertgaranties cross selling components",
   "main": "index.js",
   "scripts": {

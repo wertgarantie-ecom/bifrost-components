@@ -126,7 +126,7 @@ class WertgarantieAfterSales extends LitElement {
                     </div>
                     <div class="panel__content--bottom">
                         <div class="panel__content">
-                            <span">${this.contractNumberText + " " + item.contractNumber}</span>
+                            <span>${this.contractNumberText + " " + item.contractNumber}</span>
                         </div>
                         <div class="panel__content">
                             <span class="panel__product-name">${item.productTitle}</span>

@@ -5,4 +5,4 @@ WORKDIR /app/watch
 COPY package*.json /app/watch/
 RUN npm install
 
-CMD npm rum watch
+CMD npm run watch

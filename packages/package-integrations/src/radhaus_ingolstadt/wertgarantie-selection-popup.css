@@ -1,0 +1,16 @@
+wertgarantie-selection-pop-up {
+    --wertgarantie-popup-desktop-text-font-size: 13px;
+      --wertgarantie-popup-tablet-text-font-size: 12px;
+      --wertgarantie-popup-phone-text-font-size: 10px;
+
+      /* background image color fading for every second product */
+      --wertgarantie-popup-product-background-primary: linear-gradient(to bottom right, rgba(0, 0, 0, 0), #000),
+        linear-gradient(to top right, #000000, rgba(134, 114, 114, 0));
+
+      /* background image color fading for every second product */
+      --wertgarantie-popup-product-background-secondary: linear-gradient(to bottom right, rgba(81, 61, 61, 0), rgba(201, 39, 38, 0.6)),
+        linear-gradient(to top right, rgba(0, 0, 0, 0), #000);
+
+      --wertgarantie-popup-title-color: #000000;
+      --wertgarantie-popup-dark-button-background-color: #000000;
+}

@@ -10,6 +10,7 @@ import 'wertgarantie-rating/dist/rating.min.js';
 import 'wertgarantie-information-popup/dist/information-popup.min.js';
 import {selectionEmbeddedStyling} from "./selection-embedded-styling";
 import {classMap} from "lit-html/directives/class-map";
+import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
 
 const MOBILE_BREAKPOINT = 350;
 
@@ -246,7 +247,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
         <div class="component">
             <div class="component__head head">
                 <div class="head__title">
-                    ${this.title}
+                    ${unsafeHTML(this.title)}
                 </div>
             </div>
             <div class="products">

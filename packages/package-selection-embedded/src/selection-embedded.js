@@ -283,7 +283,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
                         </div>
                         <div class="product__info">
                             <div class="product__name">${product.shortName}</div>
-                            <div class="product__price">${product.priceFormatted + " / " + product.paymentInterval + "*"}</div>
+                            <div class="product__price">${product.priceFormatted + " pro " + product.paymentInterval + "*"}</div>
                         </div>
                     </div>
                     

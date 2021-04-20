@@ -1,6 +1,6 @@
 {
   "name": "wertgarantie-selection-embedded",
-  "version": "0.0.46",
+  "version": "0.0.47",
   "description": "wertgarantie web component to select policy products",
   "main": "selection-embedded.js",
   "scripts": {

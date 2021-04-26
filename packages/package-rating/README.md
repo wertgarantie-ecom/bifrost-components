@@ -1,5 +1,12 @@
-# Wertgarantie's Google rating component
+<h1>Rating-Component</h1>
+The rating component displays the current google rating for wertgarantie. You can also pass raw values to provide a backup if no valid payment info is configured at Google.
+<br>
+<br>
 
-This web component can be used to embed Wertgarantie's google rating into any website.
+<h2>Setup</h2>
 
-For a full documentation on how to use it, please visit our [Living Styleguide](https://wertgarantie-ecom.github.io/bifrost-components/?path=/story/components-rating--google-rating-component).
+To start run <br>
+`npm run dev`
+
+<h2>License</h2>
+MIT

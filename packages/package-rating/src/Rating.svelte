@@ -5,7 +5,7 @@
 	import fetchBifrost from "wertgarantie-common/src/fetchBifrost";
 
     
-    export let bifrosturi: string;
+    export let bifrosturi: string = "https://ecommerce.wertgarantie.com/wertgarantie";
     export let link: string = "https://www.wertgarantie.de/#/";
     export let linktext: string = "";
     export let rating: number | null = null;

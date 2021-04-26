@@ -1,6 +1,6 @@
 {
   "name": "wertgarantie-rating",
-  "version": "2.0.18",
+  "version": "3.0.0",
   "description": "wertgarantie web component to display google review ratings",
   "main": "dist/rating.min.js",
   "author": "felix.knopf@innoq.com",

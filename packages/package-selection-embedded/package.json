@@ -1,6 +1,6 @@
 {
   "name": "wertgarantie-selection-embedded",
-  "version": "0.0.47",
+  "version": "0.0.48",
   "description": "wertgarantie web component to select policy products",
   "main": "selection-embedded.js",
   "scripts": {
@@ -31,7 +31,7 @@
   "dependencies": {
     "faucet-pipeline-esnext": "^2.1.6",
     "wertgarantie-common": "^1.0.7",
-    "wertgarantie-information-popup": "^1.0.14",
-    "wertgarantie-rating": "^2.0.18"
+    "wertgarantie-information-popup": "^1.0.15",
+    "wertgarantie-rating": "^3.0.0"
   }
 }

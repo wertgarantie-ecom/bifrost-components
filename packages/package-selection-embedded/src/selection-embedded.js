@@ -6,7 +6,6 @@ import {
     getShoppingCart,
     saveProductSelection
 } from "wertgarantie-common/src/wertgarantieShoppingCartRepository";
-import 'wertgarantie-rating/dist/rating.min.js';
 import 'wertgarantie-information-popup/dist/information-popup.min.js';
 import {selectionEmbeddedStyling} from "./selection-embedded-styling";
 import {classMap} from "lit-html/directives/class-map";

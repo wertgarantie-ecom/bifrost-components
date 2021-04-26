@@ -31,7 +31,6 @@
   "dependencies": {
     "faucet-pipeline-esnext": "^2.1.6",
     "wertgarantie-common": "^1.0.7",
-    "wertgarantie-information-popup": "^1.0.17",
-    "wertgarantie-rating": "^3.0.1"
+    "wertgarantie-information-popup": "^1.0.17"
   }
 }

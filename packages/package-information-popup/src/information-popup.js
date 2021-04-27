@@ -1,8 +1,8 @@
-import {LitElement, html} from "lit-element";
-import {classMap} from "lit-html/directives/class-map";
-import {styleMap} from "lit-html/directives/style-map";
+import { LitElement, html } from "lit-element";
+import { classMap } from "lit-html/directives/class-map";
+import { styleMap } from "lit-html/directives/style-map";
 import 'wertgarantie-rating/dist/rating.min.js';
-import {informationPopUpStyling} from "./information-popup-styling";
+import { informationPopUpStyling } from "./information-popup-styling";
 
 class WertgarantieInformationPopup extends LitElement {
 
@@ -14,12 +14,12 @@ class WertgarantieInformationPopup extends LitElement {
 
     static get properties() {
         return {
-            product: {type: Object},
-            title: {type: String},
-            productPanelDetailsHeader: {type: String},
-            productFurtherInformation: {type: String},
-            showComponent: {type: Boolean},
-            bifrostUri: {type: String}
+            product: { type: Object },
+            title: { type: String },
+            productPanelDetailsHeader: { type: String },
+            productFurtherInformation: { type: String },
+            showComponent: { type: Boolean },
+            bifrostUri: { type: String }
         };
     }
 
@@ -57,7 +57,7 @@ class WertgarantieInformationPopup extends LitElement {
         const productImageLinkStyleList = {
             "--image-link": "url(" + this.product.productImageLink + ")"
         };
-        return this.showComponent ? html `
+        return this.showComponent ? html`
             <div class="product-modal">
                 <div class="content">
                     <div class="content__head header">
@@ -103,16 +103,37 @@ class WertgarantieInformationPopup extends LitElement {
                         </div>
                         <div class="product__footer-section">
                             <div class="award-image-block">
-                                <a target="_blank" href="https://www.certipedia.com/quality_marks/9105052129">
-                                    <img class="award-image"
-                                         src="https://www.certipedia.com/logos/000/049/786/9105052129_de.png?1396417891"
-                                         alt="tuev-logo">
-                                     </a>
-                                <a target="_blank" href="https://www.wertgarantie.de/Home.aspx#">
-                                    <img class="award-image"
-                                         src="https://www.wertgarantie.de/sites/default/files/styles/trust_badge_s_2x/public/trust-badges/2014_fomo_elvers_sp_b.jpg?itok=CfZUjPTG"
-                                         alt="test-bild">
-                                </a>
+                                <div>
+                                    <a class="award-image-block__link" target="_blank" href="https://www.certipedia.com/quality_marks/9105052129">
+                                        <img class="quality-seal-image"
+                                            src="https://www.certipedia.com/logos/000/049/786/9105052129_de.png?1396417891"
+                                            alt="tuev-logo">
+                                        </a>
+                                </div>
+                                <div>
+                                    <a class="award-image-block__link" target="_blank" href="https://www.wertgarantie.de/Home.aspx#">
+                                        <img class="award-image"
+                                            src="https://www.wertgarantie.de/sites/default/files/styles/trust_badge_s_2x/public/trust-badges/fokus-money_beste_elektronik-versicherung_21.jpg?itok=FDzxiDkY"
+                                            alt="Focus Money Beste Elektronik-Versicherung 15/2021">
+                                    </a>
+                                    <a class="award-image-block__link" target="_blank" href="https://www.wertgarantie.de/Home.aspx#">
+                                        <img class="award-image"
+                                            src="https://www.wertgarantie.de/sites/default/files/styles/trust_badge_s_2x/public/trust-badges/fokus-money_beste_smartphone-versicherung_21.jpg?itok=1LnS6qe5"
+                                            alt="Focus Money Beste Smartphone-Versicherung 15/2021">
+                                    </a>
+
+                                    <a class="award-image-block__link" target="_blank" href="https://www.wertgarantie.de/Home.aspx#">
+                                        <img class="award-image"
+                                            src="https://www.wertgarantie.de/sites/default/files/styles/trust_badge_s_2x/public/trust-badges/wertgarantie-komplettschutz_einzeilig_cd151898.jpg?itok=SLmWlTDo"
+                                            alt="CHIP Smartphone Versicherungen Juni 2020">
+                                    </a>
+
+                                    <a class="award-image-block__link" target="_blank" href="https://www.wertgarantie.de/Home.aspx#">
+                                        <img class="award-image"
+                                            src="https://www.wertgarantie.de/sites/default/files/styles/trust_badge_s_2x/public/trust-badges/wertgarantie_komplettschutz_e-bike_ef151003.jpg?itok=SEUggGmy"
+                                            alt="EFahrer.com Bester Leistungsumfang E-Bike Versicherungen">
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>

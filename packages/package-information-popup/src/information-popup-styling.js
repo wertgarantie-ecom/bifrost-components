@@ -218,11 +218,23 @@ export const informationPopUpStyling = css`
         padding: 2em;
         display: flex;
         justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .award-image-block__link {
+        text-decoration: none;
+    }
+
+    .quality-seal-image {
+        vertical-align: text-top;
+        max-height: 100px;
     }
 
     .award-image {
         vertical-align: text-top;
         max-height: 100px;
+        max-width: 80px
+        margin: 0.2rem;
     }
     
     @media only screen and (max-width: 450px) {

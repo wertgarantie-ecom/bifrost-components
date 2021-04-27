@@ -10,7 +10,7 @@ showdown.setFlavor('github');
 
 var converter = new showdown.Converter();
 
-storiesOf('Components|After Sales', module)
+storiesOf('Components/After Sales', module)
     .add("After Sales general", () =>
         `<div class="markdown-body">` +
             converter.makeHtml(afterSalesDocumentation) +

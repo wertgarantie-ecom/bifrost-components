@@ -18,9 +18,9 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "7.6.0",
-    "@storybook/addon-notes": "5.2.0",
-    "@storybook/html": "5.2.0",
-    "babel-loader": "8.0.6",
+    "@storybook/addon-notes": "5.3.21",
+    "@storybook/html": "6.2.9",
+    "babel-loader": "8.2.2",
     "chai": "^4.2.0",
     "chromedriver": "^83.0.1",
     "donny": "0.1.0",
@@ -33,7 +33,7 @@
     "live-server": "1.2.1",
     "nightwatch": "^1.4.3",
     "nightwatch-html-reporter": "^2.0.6",
-    "storybook-readme": "^5.0.8"
+    "storybook-readme": "^5.0.9"
   },
   "browserslist": [
     "last 1 version",

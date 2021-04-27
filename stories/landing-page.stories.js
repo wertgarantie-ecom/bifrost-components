@@ -11,7 +11,7 @@ showdown.setFlavor('github');
 
 var converter = new showdown.Converter();
 
-storiesOf('Components|Landing-Page', module)
+storiesOf('Components/Landing-Page', module)
     .add("Landing Page general", () =>
         `<div class="markdown-body">` +
         converter.makeHtml(landingPageReadme) +

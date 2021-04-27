@@ -9,7 +9,7 @@ import showdown from 'showdown';
 showdown.setFlavor('github');
 var converter = new showdown.Converter();
 
-storiesOf('Components|Embedded Selection', module)
+storiesOf('Components/Embedded Selection', module)
     .add('Embedded Selection Phone', () => `
     <div class="markdown-body"> 
         ${converter.makeHtml(selectionEmbeddedPhone)}

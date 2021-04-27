@@ -12,8 +12,8 @@ showdown.setFlavor('github');
 
 var converter = new showdown.Converter();
 
-storiesOf('Components|Pop-Up', module)
-.add("Product Selection Popup", () => 
+storiesOf('Components/Pop-Up', module)
+.add("Product Selection Popup", () =>  
     `<div class="markdown-body">` + 
         converter.makeHtml(PopupReadme) + 
     `</div>`

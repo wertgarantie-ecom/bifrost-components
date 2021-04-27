@@ -11,7 +11,7 @@ showdown.setFlavor('github');
 
 var converter = new showdown.Converter();
 
-storiesOf('About|About', module)
+storiesOf('About/About', module)
     .add("Overview", () =>
         `<div class="markdown-body">` +
             converter.makeHtml(about) +
@@ -27,7 +27,7 @@ storiesOf('About|About', module)
             converter.makeHtml(handbookInitializer) +
         `</div>`
     );
-storiesOf('About|Content', module)
+storiesOf('About/Content', module)
     .add("Email", () =>
         `<div class="markdown-body">` +
             converter.makeHtml(email) +

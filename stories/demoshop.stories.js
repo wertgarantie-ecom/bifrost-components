@@ -8,7 +8,7 @@ showdown.setFlavor('github');
 
 var converter = new showdown.Converter();
 
-storiesOf('Demo Shop|Demo Shop', module)
+storiesOf('Demo Shop/Demo Shop', module)
 .add("Shop Info", () => 
     `<div class="markdown-body">` + 
         converter.makeHtml(demoShopReadme) + 

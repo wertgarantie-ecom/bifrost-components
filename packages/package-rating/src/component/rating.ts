@@ -14,7 +14,7 @@ export class MyElement extends LitElement {
 
 
   @property({ type: Number, attribute: 'data-rating' }) rating: number | null = null;
-  @property({ type: String, attribute: 'data-bifrost-uri' }) bifrostUri: String = "http://localhost:3000/wertgarantie";
+  @property({ type: String, attribute: 'data-bifrost-uri' }) bifrostUri: String = "https://ecommerce.wertgarantie.com/wertgarantie";
   @property({ type: String, attribute: 'data-link' }) link: String = "";
   @property({ type: String, attribute: 'data-link-text' }) linkText: String = ""; 
   @property({ type: Number, attribute: 'data-ratings-total' }) ratingsTotal: number | null = null;

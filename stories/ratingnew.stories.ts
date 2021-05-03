@@ -9,14 +9,16 @@ export default {
 export const Rating = ({ rating, ratingstotal, linktext, link, showratingnumber }) => `
     <div style="display: flex; justify-content: center; margin-top: 8rem;">
         
-        <wertgarantie-rating 
-            rating="${rating}" 
-            ratingstotal="${ratingstotal}" 
-            linktext="${linktext}"
-            link="${link}"
-            showratingnumber="${showratingnumber}"
-            >
-        </wertgarantie-rating>
+    ${showratingnumber ? `
+
+        <wertgarantie-rating data-show-rating-number data-rating="${rating}" data-link-text="${linktext}" data-ratings-total="${ratingstotal}" data-link="${link}" data-bifrost-uri="https://ecommerce.wertgarantie.com/wertgarantie"></wertgarantie-rating>
+    
+        ` : `
+
+        <wertgarantie-rating data-rating="${rating}" data-link-text="${linktext}" data-ratings-total="${ratingstotal}" data-link="${link}" data-bifrost-uri="https://ecommerce.wertgarantie.com/wertgarantie"></wertgarantie-rating>
+    
+        `}
+    
 
     </div>
 `;

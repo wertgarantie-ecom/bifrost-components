@@ -26,8 +26,6 @@ export class MyElement extends LitElement {
     await fetchBifrost(`${this.bifrostUri}/ecommerce/rating`, 'GET')
       .then((response: any) => this.setProperties(response))
       .catch((e: Error) => { console.error(e) });
-
-      console.log(this.rating)
   }
 
 

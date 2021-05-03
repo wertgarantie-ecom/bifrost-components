@@ -1,18 +1,20 @@
-import { defineConfig } from 'vite'
-import svelte from '@sveltejs/vite-plugin-svelte'
+import { defineConfig } from 'vite';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [svelte({ compilerOptions: { customElement: true } })],
-  build: {
-    target: "esnext",
-    assetsDir: "",
-    rollupOptions: {
-      output: {
-        format: 'esm',
-        dir: 'dist',
-        entryFileNames: 'rating.min.js'
-      }
-    }
-  }
+	build: {
+		lib: {
+			entry: 'src/component/rating.ts',
+			formats: ['es']
+		},
+		rollupOptions: {
+			// external: /^lit/
+			// external: /^wertgarantie-common/
+			output: {
+				format: 'esm',
+				dir: 'dist',
+				entryFileNames: 'rating.min.js'
+			},
+		},
+	}
 })

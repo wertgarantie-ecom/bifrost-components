@@ -29,6 +29,26 @@
 # Bifrost Components 
 This repo contains all custom elements as well as common-functions and client-styling-packages.
 
+## Running locally
+The docker instance is build by bifrosts docker-compose. If dependencies are added or changed, this might break the docker container.
+In this case either run ``docker-compose down``, then delete the bifrost-component-images (list them via: ``docker images``) followed by ``docker-compose up -d`` to rebuild and restart (you must seed the database again or no component will show, see bifrost readme).
+
+Or better: Run ``npm i`` at package root level, then build via ``npm run build `` // `` npm run build:dev``.
+Make sure to hard-reload the (e.g. demo-shop) browser-tab to delete any cached scripts.
+
+## Publish packages to NPM
+Make sure you've installed "lerna" globally.
+```
+// Check globally installed packages:
+npm list -g --depth=0
+
+// Install lerna
+npm i -g lerna
+
+// Publish packages -> in root dir, run:
+lerna version
+```
+
 ## Running the library locally
 ```
 npm install

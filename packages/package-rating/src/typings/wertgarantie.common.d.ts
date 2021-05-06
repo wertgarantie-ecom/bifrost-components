@@ -1,0 +1,1 @@
+declare module 'wertgarantie-common/src/fetchBifrost';

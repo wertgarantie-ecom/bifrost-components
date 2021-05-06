@@ -1,0 +1,23 @@
+wertgarantie-confirmation {
+    --wertgarantie-confirmation-font-family: 'Roboto', sans-serif;
+    --wertgarantie-confirmation-component-margin: 0 0 15px 0;
+    --wertgarantie-confirmation-box-border-right: none;
+    --wertgarantie-confirmation-box-border-left: none;
+    --wertgarantie-confirmation-box-border-top: none;
+    --wertgarantie-confirmation-box-border-bottom: 2px dotted #ddd;
+    --wertgarantie-confirmation-box-background-color: #323232;
+    --wertgarantie-confirmation-box-title-padding: 1.5rem 0;
+    --wertgarantie-confirmation-box-title-color: white;
+    --wertgarantie-confirmation-box-title-margin: 2rem;
+    --wertgarantie-confirmation-info-padding: 1rem;
+    --wertgarantie-confirmation-checkbox-column-padding: 0 0 0 0;
+    --wertgarantie-confirmation-header-margin: 20px 0 0 0;
+    --wertgarantie-confirmation-product-panel-margin: 0 0 0 15px;
+    --wertgarantie-confirmation-product-tab-background-color-hover: #f5bbbb;
+    --wertgarantie-confirmation-product-tab-background-color-selected: #f5bbbb;
+
+    --wertgarantie-confirmation-product-background-primary: linear-gradient(to bottom right, rgba(0, 0, 0, 0), #5e5e5c),
+        linear-gradient(to top right, #c92726, rgba(81, 61, 61, 0));
+    --wertgarantie-confirmation-product-background-secondary: linear-gradient(to bottom right, rgba(81, 61, 61, 0), #af131a),
+        linear-gradient(to top right, rgba(0, 0, 0, 0), #000);
+}

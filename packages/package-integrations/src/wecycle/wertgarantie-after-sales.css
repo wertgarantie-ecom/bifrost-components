@@ -1,0 +1,8 @@
+wertgarantie-after-sales {
+    /* for now */
+    --wertgarantie-after-sales-product-card-background-primary: linear-gradient(to bottom right, rgba(0, 0, 0, 0), #000),
+    linear-gradient(to top right, #af131a, rgba(81, 61, 61, 0));
+    --wertgarantie-after-sales-product-card-background-secondary: linear-gradient(to bottom right, rgba(0, 0, 0, 0), #000),
+    linear-gradient(to top right, #af131a, rgba(81, 61, 61, 0));
+
+}

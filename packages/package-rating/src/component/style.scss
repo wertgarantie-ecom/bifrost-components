@@ -1,0 +1,38 @@
+// hot reloading with sass currently not possible
+@import 'vars.scss';
+
+:host {
+    display: inline-block;
+}
+
+.rating {
+    font-family: $fontFamily, sans-serif;
+    font-size: $fontSize;
+
+    &__number {
+        color: $textColor;
+        font-weight: $fontWeight
+    }
+
+    &__stars {
+        $rating: 1.3;
+        $starEmptyColor: #d3dbdb;
+        $starFilledColor: $starsColor;
+        $percent: calc(var(--wertgarantie-internal-rating) / 5 * 100%);
+        display: inline-block;
+        font-family: Arial, serif;
+        /* make sure ★ appears correctly */
+        background: linear-gradient(90deg, $starFilledColor $percent, $starEmptyColor $percent);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        letter-spacing: 3px;
+        font-size: $starsFontSize;
+    }
+
+    &__link {
+        color: $textColor;
+        text-decoration: none;
+        font-weight: $fontWeight;
+    }
+}

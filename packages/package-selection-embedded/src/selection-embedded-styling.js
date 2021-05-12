@@ -121,7 +121,6 @@ export const selectionEmbeddedStyling = css`
 
     .selection__checkmark {
         margin-bottom: 1em;
-        border-radius: 50%;
         background-color: var(--wertgarantie-selection-embedded-component-product-selected-color, #96c92a);
         width: 100%;
     }

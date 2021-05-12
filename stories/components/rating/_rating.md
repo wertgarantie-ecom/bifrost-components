@@ -39,11 +39,8 @@ The endpoint will return a JSON object like
     "uri": "https://www.google.com/maps/place/WERTGARANTIE+AG/@52.3691835,9.7394476,17z/data=!3m1!4b1!4m7!3m6!1s0x0:0x5a09a30e8964c1f7!8m2!3d52.3691835!4d9.7416363!9m1!1b1"
 }
 ```
-This is all the data, the component needs in order to be displayed in your web page.
+This is all the data, the component needs in order to be displayed in your web page. If there's an error on the google site, the component will not be displayed. Therefore it is advised to provide fallback data.
 
-<wertgarantie-rating
-    data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie">
-</wertgarantie-rating>
 
 ```html
 <wertgarantie-rating></wertgarantie-rating>
@@ -51,37 +48,40 @@ This is all the data, the component needs in order to be displayed in your web p
 
 ### Provide data manually
 Another way to configure the component is to provide all of the following three attributes:
-* data-text (e. g. "Reviews on Google")
+* data-link-text (e. g. "Reviews on Google")
+* data-link (e. g. "https://www.google.com")
 * data-ratings-total (e. g. 5000)
-* data-uri (the link behind the `data-ratings-total` + `data-text`)
 * data-rating (the rating number itself, e. g. 3.5)
 
-<wertgarantie-rating data-link-text="Reviews on Google"
-                     data-ratings-total="5000"
-                     data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie"
-                     data-uri="https://www.google.de/"
-                     data-rating="3.5">
-</wertgarantie-rating>
+<div class="highlight-box">
+    <wertgarantie-rating data-rating="3" data-ratings-total="5000" data-link-text="Reviews on Google" data-link="cwww.google.com"></wertgarantie-rating>
+</div>
 
 ```html
-<wertgarantie-rating data-link-text="Reviews on Google"
-                     data-ratings-total="5000"
-                     data-uri="https://www.google.de/"
-                     data-rating="3.5">
+<wertgarantie-rating 
+    data-rating="3" 
+    data-ratings-total="5000" 
+    data-link-text="Reviews on Google" 
+    data-link="https://www.google.com">
 </wertgarantie-rating>
 ```
 
 ### Noteworthy
 <strong>Note</strong> that you either have to provide `data-bifrost-uri` or <i>all</i> four attributes for manual data providing
 
-The attribute `data-disable-rating-number` can be set to true in order to hide the number and just show the stars:
-<wertgarantie-rating 
-    data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie"
-    data-disable-rating-number="true">
-</wertgarantie-rating>
+If the `data-show-rating-number` attribute is present, the rating number will be shown prior to the stars:
+
+<div class="highlight-box">
+    <wertgarantie-rating data-show-rating-number data-rating="4.2" data-ratings-total="4750" data-link-text="Reviews on Yelp" data-link="https://www.google.com"></wertgarantie-rating>
+</div>
+
 ```html
 <wertgarantie-rating 
-                     data-disable-rating-number="true">
+    data-show-rating-number 
+    data-rating="4.2" 
+    data-ratings-total="4750" 
+    data-link-text="Reviews on Yelp" 
+    data-link="https://www.google.com">
 </wertgarantie-rating>
 ```
 
@@ -99,21 +99,28 @@ The component can be styled by providing a stylesheet with CSS properties. Avail
 Provide a css file with the following code:
 
 ```css
-.example {
+wertgarantie-rating {
     --wertgarantie-rating-font-family: "Comic Sans MS", sans-serif;
-    --wertgarantie-rating-font-size: 1.8rem;
+    --wertgarantie-rating-font-size: 1.2rem;
     --wertgarantie-rating-font-weight: 800;
     --wertgarantie-rating-text-color: rgb(134, 134, 134);
-    
     --wertgarantie-rating-stars-font-size: 30px;
     --wertgarantie-rating-stars-color: green;
 }
-```
-<wertgarantie-rating class="example"
-    data-bifrost-uri="https://wertgarantie-bifrost-dev.herokuapp.com/wertgarantie">
-</wertgarantie-rating>
 
-```html
-<wertgarantie-rating class="example">
-</wertgarantie-rating>
 ```
+<style>
+    .example {
+    --wertgarantie-rating-font-family: "Comic Sans MS", sans-serif;
+    --wertgarantie-rating-font-size: 1.2rem;
+    --wertgarantie-rating-font-weight: 800;
+    --wertgarantie-rating-text-color: rgb(134, 134, 134);
+    --wertgarantie-rating-stars-font-size: 30px;
+    --wertgarantie-rating-stars-color: green;
+}
+</style>
+<div class="highlight-box">
+    <wertgarantie-rating class="example" data-show-rating-number data-rating="4.2" data-ratings-total="4750" data-link-text="Reviews on Yelp" data-link="https://www.google.com"></wertgarantie-rating>
+</div>
+
+Note: If multiple rating-components are presents on a page `wertgarantie-rating { ... }` will style all of them identically. If they should be displayed differently you could also pass a class to the element and specify: ```.my-class { ... }``` as well as ```<wertgarantie-rating class="my-class" ...>```

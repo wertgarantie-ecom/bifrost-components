@@ -1,7 +1,6 @@
 import {LitElement, html, unsafeCSS } from 'lit';
 import { styleMap } from 'lit/directives/style-map'; 
 import {customElement, property} from 'lit/decorators.js';
-// import { ratingStyles } from "./styles";
 import fetchBifrost from "wertgarantie-common/src/fetchBifrost";
 import sassstyles from './style.scss';
 
@@ -9,9 +8,7 @@ const starText = '★★★★★';
 
 @customElement('wertgarantie-rating')
 export class MyElement extends LitElement {
-  // static get styles() { return [ratingStyles, unsafeCSS(sassstyles)] }
   static get styles() { return [ unsafeCSS(sassstyles)] }
-
 
   @property({ type: Number, attribute: 'data-rating' }) rating: number | null = null;
   @property({ type: String, attribute: 'data-bifrost-uri' }) bifrostUri: String = "https://ecommerce.wertgarantie.com/wertgarantie";

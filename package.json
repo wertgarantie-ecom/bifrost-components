@@ -45,6 +45,7 @@
   "dependencies": {
     "@sentry/browser": "^5.26.0",
     "@sentry/integrations": "^5.26.0",
+    "@types/showdown": "^1.9.3",
     "dexie": "^2.0.4",
     "faucet-pipeline-sass": "^1.4.0",
     "faucet-pipeline-static": "^1.2.0",

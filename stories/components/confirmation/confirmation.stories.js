@@ -1,17 +1,22 @@
 import {storiesOf} from '@storybook/html';
-// import '../packages/package-confirmation/dist/confirmation.min.js';
-
-import bikeConfirmationReadme from './documentation/confirmationComponent/bikeConfirmation.md';
-import phoneConfirmationReadme from './documentation/confirmationComponent/phoneConfirmation.md';
-import confirmationStylingExamples from './documentation/confirmationComponent/confirmationStylingExamples.md'
-
+import '../../../packages/package-confirmation/dist/confirmation.min.js';
+import bikeConfirmationReadme from './_bikeConfirmation.md';
+import phoneConfirmationReadme from './_phoneConfirmation.md';
+import confirmationStylingExamples from './_confirmationStylingExamples.md'
+import styling from './_styling.md'
 import showdown from 'showdown';
 
 showdown.setFlavor('github');
+const converter = new showdown.Converter();
 
-var converter = new showdown.Converter();
+// export default {
+//     title: '2.Components/Confirmation'
+// }
 
-storiesOf('Components/Confirmation', module)
+// export const Setup = () => `<div class="markdown-body">${converter.makeHtml(RatingReadme)}</div>`
+
+
+storiesOf('2.Components/Confirmation', module)
     .add("Confirmation component phone shop", () =>
         `<div class="markdown-body">` +
         converter.makeHtml(phoneConfirmationReadme) +

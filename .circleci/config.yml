@@ -93,7 +93,7 @@ workflows:
       - gh-pages:
           requires:
             - build
-            - test
+            # - test
       - publish-npm:
           requires:
             - build

@@ -1,5 +1,7 @@
 # Handbuch zur Integration
 
+🔴🔴 __Deprecated! We will deprecte this method in the near future.__ 🔴🔴
+
 WERTGARANTIE Komponenten integrieren. So geht's.
 
 In diesem Handbuch werden wir Sie Schritt für Schritt durch die zu erledigenden Punkte führen, die dafür notwendig sind.

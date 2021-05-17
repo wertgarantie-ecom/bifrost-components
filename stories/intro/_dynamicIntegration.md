@@ -1,16 +1,15 @@
-# Handbuch zur dynamischen Integration mit dem Wertgarantie Initializer
+# Dynamic Integration of WERTGARANTIE-Components
 
-WERTGARANTIE Komponenten integrieren. So geht's.
+🟢 This is the recommended way of component integration 🟢
 
-In diesem Handbuch werden wir Sie Schritt für Schritt durch die zu erledigenden Punkte führen, die dafür notwendig sind.
-Enthalten sind:
+This handbook will guide you through the setup process.
 
-1. [Konfiguration](#konfiguration)
+1. [Configuration](#configuration)
 2. [Integration](#integration)
 3. [Encrypted Session ID](#encrypted-session-id---checkout)
 
 
-# Konfiguration
+# Configuration
 
 ### Versicherbare Geräteklassen
 Als Partner der Wertgarantie müssen Sie entscheiden, welche Geräteklassen versichert werden sollen. 

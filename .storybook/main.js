@@ -7,5 +7,5 @@ module.exports = {
         '@storybook/addon-controls',
         '@storybook/addon-notes/register-panel',
         'storybook-readme/register'
-    ]
+    ],
 }

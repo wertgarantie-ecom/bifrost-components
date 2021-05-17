@@ -72,15 +72,15 @@ Another way to configure the component is to provide all of the following three 
 If the `data-show-rating-number` attribute is present, the rating number will be shown prior to the stars:
 
 <div class="highlight-box">
-    <wertgarantie-rating data-show-rating-number data-rating="4.2" data-ratings-total="4750" data-link-text="Reviews on Yelp" data-link="https://www.google.com"></wertgarantie-rating>
+    <wertgarantie-rating data-show-rating-number data-rating="3.5" data-ratings-total="9999" data-link-text="Google-Reviews" data-link="https://www.google.com"></wertgarantie-rating>
 </div>
 
 ```html
 <wertgarantie-rating 
     data-show-rating-number 
-    data-rating="4.2" 
-    data-ratings-total="4750" 
-    data-link-text="Reviews on Yelp" 
+    data-rating="3.5" 
+    data-ratings-total="9999" 
+    data-link-text="Google-Reviews" 
     data-link="https://www.google.com">
 </wertgarantie-rating>
 ```
@@ -120,7 +120,7 @@ wertgarantie-rating {
 }
 </style>
 <div class="highlight-box">
-    <wertgarantie-rating class="example" data-show-rating-number data-rating="4.2" data-ratings-total="4750" data-link-text="Reviews on Yelp" data-link="https://www.google.com"></wertgarantie-rating>
+    <wertgarantie-rating class="example" data-show-rating-number data-rating="4.2" data-ratings-total="4750" data-link-text="Reviews" data-link="https://www.google.com"></wertgarantie-rating>
 </div>
 
 Note: If multiple rating-components are presents on a page `wertgarantie-rating { ... }` will style all of them identically. If they should be displayed differently you could also pass a class to the element and specify: ```.my-class { ... }``` as well as ```<wertgarantie-rating class="my-class" ...>```

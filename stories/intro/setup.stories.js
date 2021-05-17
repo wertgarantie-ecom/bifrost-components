@@ -19,7 +19,7 @@ export const Loader = () => `<div class="markdown-body">${converter.makeHtml(_lo
 export const Selection = () => `<div class="markdown-body">${converter.makeHtml(_selectionMD)}</div>`;
 export const Confirmation = () => `<div class="markdown-body">${converter.makeHtml(_confirmationMD)}</div>`;
 export const AfterSales = () => `<div class="markdown-body">${converter.makeHtml(_afterSalesMD)}</div>`;
-export const WrapUp = () => `<div class="markdown-body">${converter.makeHtml(_wrapUpMD)}</div>`;
+// export const WrapUp = () => `<div class="markdown-body">${converter.makeHtml(_wrapUpMD)}</div>`;
 
 Selection.storyName = "Component: Selection";
 Confirmation.storyName = "Component: Confirmation";

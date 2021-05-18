@@ -49,7 +49,7 @@ export const selectionEmbeddedStyling = css`
     .product__selection--selected {
         opacity: 1;
         border-color: var(--wertgarantie-selection-embedded-component-product-selected-color, #96c92a);
-        background-color: white;
+        background: var(--wertgarantie-selection-embedded-component-product-selected-color, #96c92a);
     }
 
     .product__selection--notselected {
@@ -121,7 +121,6 @@ export const selectionEmbeddedStyling = css`
 
     .selection__checkmark {
         margin-bottom: 1em;
-        background-color: var(--wertgarantie-selection-embedded-component-product-selected-color, #96c92a);
         width: 100%;
     }
 

@@ -23,7 +23,7 @@ Please provide us with a shop-email address so that we can inform you on new ins
 ### Environments and credentials
 We provide two different environments: ```staging``` and ```production```. You will receive two seperate e-mails with the neccessary credentials (publicId and secret) for each environment.
 
-The publicId is the public shop identifier. This id is passed to each component-loader-script. The secret on the other hand is used to protect the actual insurance contract and guarantee the insurace selection or any passed product / client information was not modified by a third party.
+The publicId is the public shop identifier which is passed to each component-loader-script. The secret on the other hand is used to protect the actual insurance contract and guarantee the insurace selection or any passed product / client information was not modified by a third party.
 
 
 

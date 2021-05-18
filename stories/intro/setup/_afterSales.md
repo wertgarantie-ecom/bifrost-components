@@ -1,6 +1,6 @@
 # After-sales Component
 
-The after-sales component is responsible for the actual insurance contract. It __must__ be placed within the _thanks for your purchase_-page.
+The after-sales component is responsible for the actual insurance contract. It __must__ be placed within the _"thanks for your purchase"_-page.
 
 _* Examples / Demos for each component can be found in *Chapter 2: Components* below._
 
@@ -9,7 +9,7 @@ _* Examples / Demos for each component can be found in *Chapter 2: Components* b
 
 
 Placeholder: ```<div id="wertgarantie-after-sales"></div>```
-Place placeholder whereever it should be rendered within the _thanks for your purchase_-page.
+Place placeholder whereever it should be rendered within the _"thanks for your purchase"_-page.
 
 _* If another placeholder-div is wanted (other class or id), please inform us so that we can configure it on our side._
 
@@ -99,8 +99,8 @@ Process:
 You can find examples below:
 
 
-### NodeJS
-You'll need a 3rd party package like [CryptoJS](https://www.npmjs.com/package/crypto-js)
+### NodeJS + Express
+You'll need a 3rd party package for encryption (like [CryptoJS](https://www.npmjs.com/package/crypto-js)).
 ```js
 const CryptoJS = require('crypto-js');
 

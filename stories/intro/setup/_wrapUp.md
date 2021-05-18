@@ -9,6 +9,9 @@ You hopefully now got it working by the end of this guide. If problems occur or 
 - [ ] We agreed on a set of ```deviceClasses```
 - [ ] We agreed on a set of ```placeholder-divs``` (only if you chose to __not__ use the defaults from the component-integration pages, if you use the defaults, we're good)
 
+_If your shop support conditions_
+- [ ] We agreed on a set of ```conditions``` which we will map internally to the WERTGARANTIE conditions
+
 
 
 ### Integration

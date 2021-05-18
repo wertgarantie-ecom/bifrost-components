@@ -48,7 +48,9 @@ You tell us which ```deviceClasses``` you want to use and we configure them befo
 
 _*Multiple deviceClasses can be configured, seperated by Commas._ 
 
-
+## Conditions
+If your shop supports different conditions of a product (e.g. "Used", "New", "Refurbished", etc.) these can also be passed to the product information data.
+Please talk to us beforehand so we can map your conditions to WERTGARANTIE insurances.
 
 
 ## A word about performance

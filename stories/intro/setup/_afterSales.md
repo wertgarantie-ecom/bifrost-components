@@ -25,15 +25,7 @@ _* If another placeholder-div is wanted (other class or id), please inform us so
 | encryptedSessionId | ```string``` | Session Id from ```wertgarantie-session-id```-Cookie the which was SHA-256 encrypted on the server side with the provided secret (see [below](##encryption)) 
 | customer | ```object``` | Neccessary customer data (see table below)
 
-_displayed product_
-| Property | Type     | Description
-| -------- | -------- | --------
-| sku    | ```string```     | shop internal product id
-| name    | ```string```     | shop internal product name
-| deviceClasses    | ```string```     | deviceClasses for this product
-| price   | ```number```     | Price as a ```minor unit``` number: 801,75€ -> 80175
-| baseSku&nbsp;(optional)    | ```string```     | sku of the base product
-| manufacturer&nbsp;(optional) | ```string``` | Manufacturer of the product
+#includeDisplayedProductTable#
 
 _customer_
 | Property | Type     | Description

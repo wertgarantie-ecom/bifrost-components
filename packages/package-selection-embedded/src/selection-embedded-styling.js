@@ -49,7 +49,6 @@ export const selectionEmbeddedStyling = css`
     .product__selection--selected {
         opacity: 1;
         border-color: var(--wertgarantie-selection-embedded-component-product-selected-color, #96c92a);
-        background: var(--wertgarantie-selection-embedded-component-product-selected-color, #96c92a);
     }
 
     .product__selection--notselected {
@@ -95,6 +94,7 @@ export const selectionEmbeddedStyling = css`
         height: 16px;
         width: 16px;
         border-color: var(--wertgarantie-selection-embedded-component-product-selected-color, #96c92a);
+        background: var(--wertgarantie-selection-embedded-component-product-selected-color, #96c92a);
     }
 
     .product__info {

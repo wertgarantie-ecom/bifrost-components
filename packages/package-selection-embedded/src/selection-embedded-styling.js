@@ -133,7 +133,6 @@ export const selectionEmbeddedStyling = css`
         font-size: 0.8em;
         text-transform: var(--wertgarantie-selection-embedded-component-footer-text-transform, uppercase);
         letter-spacing: 1px;
-        /* text-align: center; */
         text-align: var(--wertgarantie-selection-embedded-component-footer-text-align, center);
     }
 
@@ -152,3 +151,4 @@ export const selectionEmbeddedStyling = css`
         }
     }
 `;
+

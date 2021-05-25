@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "lit": "^2.0.0-rc.1",
-    "wertgarantie-common": "^2.0.1"
+    "wertgarantie-common": "^1.0.7"
   },
   "devDependencies": {
     "sass": "^1.32.12",

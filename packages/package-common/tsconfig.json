@@ -4,18 +4,13 @@
       "es2020",
       "DOM"
     ],
-    "module": "ES6",
+    "module": "esnext",
     "target": "es2020",
     "declaration": true,
+    "outDir": "dist",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-  },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+    "forceConsistentCasingInFileNames": true
+  }
 }

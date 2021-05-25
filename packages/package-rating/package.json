@@ -1,6 +1,6 @@
 {
   "name": "wertgarantie-rating",
-  "version": "3.1.8",
+  "version": "3.1.9",
   "description": "wertgarantie web component to display google review ratings",
   "main": "dist/rating.min.js",
   "types": "dist/rating.d.ts",

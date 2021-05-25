@@ -1,6 +1,6 @@
 {
   "name": "wertgarantie-rating",
-  "version": "3.1.6",
+  "version": "3.1.7",
   "description": "wertgarantie web component to display google review ratings",
   "main": "dist/rating.min.js",
   "author": "felix.knopf@innoq.com",
@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "lit": "^2.0.0-rc.1",
-    "wertgarantie-common": "^1.0.7"
+    "wertgarantie-common": "^1.0.8"
   },
   "devDependencies": {
     "sass": "^1.32.12",

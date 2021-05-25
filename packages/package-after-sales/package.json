@@ -1,6 +1,6 @@
 {
   "name": "wertgarantie-after-sales",
-  "version": "1.0.32",
+  "version": "1.0.33",
   "description": "After Sales component for Wertgarantie e-commerce push",
   "main": "index.js",
   "scripts": {
@@ -29,6 +29,6 @@
   "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme",
   "dependencies": {
     "faucet-pipeline-esnext": "^2.1.6",
-    "wertgarantie-common": "^1.0.7"
+    "wertgarantie-common": "^2.0.0"
   }
 }

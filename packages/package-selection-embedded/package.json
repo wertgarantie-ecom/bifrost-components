@@ -1,6 +1,6 @@
 {
   "name": "wertgarantie-selection-embedded",
-  "version": "0.0.60",
+  "version": "0.0.61",
   "description": "wertgarantie web component to select policy products",
   "main": "selection-embedded.js",
   "scripts": {
@@ -30,7 +30,7 @@
   "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme",
   "dependencies": {
     "faucet-pipeline-esnext": "^2.1.6",
-    "wertgarantie-common": "^1.0.7",
-    "wertgarantie-information-popup": "^1.0.23"
+    "wertgarantie-common": "^2.0.0",
+    "wertgarantie-information-popup": "^1.0.24"
   }
 }

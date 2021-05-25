@@ -1,6 +1,6 @@
 {
   "name": "wertgarantie-confirmation",
-  "version": "2.0.43",
+  "version": "2.0.44",
   "description": "Confirmation component for Wertgarantie e-commerce push",
   "main": "index.js",
   "scripts": {
@@ -29,6 +29,6 @@
   "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme",
   "dependencies": {
     "faucet-pipeline-esnext": "^2.1.6",
-    "wertgarantie-common": "^1.0.7"
+    "wertgarantie-common": "^2.0.0"
   }
 }

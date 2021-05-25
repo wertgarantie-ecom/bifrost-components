@@ -1,4 +1,4 @@
-import typescript from '@rollup/plugin-typescript';
+import typescript from 'rollup-plugin-typescript2';
 import {terser} from 'rollup-plugin-terser';
 
 export default [
@@ -16,7 +16,7 @@ export default [
             file: "dist/wertgarantieShoppingCartRepository.min.js",
             format: "esm",
         },
-        plugins: [typescript(), terser({})]
+        plugins: [typescript(), terser()]
     },
     {
         input: "src/offeredItemsRepository.ts",

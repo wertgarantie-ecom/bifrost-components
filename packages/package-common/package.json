@@ -23,10 +23,8 @@
     "url": "https://github.com/wertgarantie-ecom/bifrost-components/issues"
   },
   "files": [
-    "dist",
-    "types"
+    "dist"
   ],
-  "types": "./dist/types",
   "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme",
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.2.1",

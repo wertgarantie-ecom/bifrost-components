@@ -22,9 +22,9 @@
   "bugs": {
     "url": "https://github.com/wertgarantie-ecom/bifrost-components/issues"
   },
+  "types": "./dist/types/index.d.ts",
   "files": [
-    "dist",
-    "types"
+    "dist"
   ],
   "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme",
   "devDependencies": {

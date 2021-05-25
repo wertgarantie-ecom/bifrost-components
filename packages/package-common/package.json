@@ -29,6 +29,7 @@
   "devDependencies": {
     "faucet-pipeline-esnext": "^2.1.7",
     "faucet-pipeline-jsmin": "^2.1.7",
-    "faucet-pipeline-typescript": "^2.1.7"
+    "faucet-pipeline-typescript": "^2.1.7",
+    "typescript": "^4.1.5"
   }
 }

@@ -30,7 +30,7 @@
   "homepage": "https://github.com/wertgarantie-ecom/bifrost-components#readme",
   "dependencies": {
     "faucet-pipeline-esnext": "^2.1.6",
-    "wertgarantie-common": "^1.0.8",
+    "wertgarantie-common": "^1.0.7",
     "wertgarantie-information-popup": "^1.0.26"
   }
 }

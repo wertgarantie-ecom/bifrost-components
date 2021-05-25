@@ -6,7 +6,7 @@
     "types": ["vite/client"],
     "declaration": true,
     "emitDeclarationOnly": true,
-    "outDir": "./types",
+    "outDir": "dist",
     "rootDir": "./src",
     "strict": true,
     "noUnusedLocals": true,
@@ -18,6 +18,6 @@
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/*.ts"],
   "exclude": []
 }

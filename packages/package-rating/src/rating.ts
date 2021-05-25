@@ -1,7 +1,7 @@
 import {LitElement, html, unsafeCSS } from 'lit';
 import { styleMap } from 'lit/directives/style-map'; 
 import {customElement, property} from 'lit/decorators.js';
-import fetchBifrost from "wertgarantie-common/src/fetchBifrost";
+import fetchBifrost from "wertgarantie-common/dist/fetchBifrost";
 import sassstyles from './style.scss';
 
 const starText = '★★★★★';

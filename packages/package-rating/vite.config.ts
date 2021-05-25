@@ -4,7 +4,7 @@ import { defineConfig } from 'vite';
 export default defineConfig({
 	build: {
 		lib: {
-			entry: 'src/component/rating.ts',
+			entry: 'src/rating.ts',
 			formats: ['es']
 		},
 		rollupOptions: {

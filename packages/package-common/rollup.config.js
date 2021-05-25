@@ -5,7 +5,7 @@ export default [
     {
         input: "src/fetchBifrost.ts",
         output: {
-            file: "dist/fetchBifrost.min.js",
+            file: "dist/fetchBifrost.js",
             format: "esm",
         },
         plugins: [typescript(), terser()]
@@ -13,7 +13,7 @@ export default [
     {
         input: "src/wertgarantieShoppingCartRepository.ts",
         output: {
-            file: "dist/wertgarantieShoppingCartRepository.min.js",
+            file: "dist/wertgarantieShoppingCartRepository.js",
             format: "esm",
         },
         plugins: [typescript(), terser()]
@@ -21,7 +21,7 @@ export default [
     {
         input: "src/offeredItemsRepository.ts",
         output: {
-            file: "dist/offeredItemsRepository.min.js",
+            file: "dist/offeredItemsRepository.js",
             format: "esm",
         },
         plugins: [typescript(), terser()]

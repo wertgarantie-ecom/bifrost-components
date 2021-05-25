@@ -7,8 +7,6 @@ export default [
         output: {
             file: "dist/fetchBifrost.min.js",
             format: "esm",
-            compact: true,
-            sourcemap: true
         },
         plugins: [typescript(), terser()]
     },
@@ -17,8 +15,6 @@ export default [
         output: {
             file: "dist/wertgarantieShoppingCartRepository.min.js",
             format: "esm",
-            compact: true,
-            sourcemap: true
         },
         plugins: [typescript(), terser({})]
     },
@@ -27,8 +23,6 @@ export default [
         output: {
             file: "dist/offeredItemsRepository.min.js",
             format: "esm",
-            compact: true,
-            sourcemap: true
         },
         plugins: [typescript(), terser()]
     },

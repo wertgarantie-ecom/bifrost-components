@@ -1,6 +1,6 @@
 {
   "name": "wertgarantie-common",
-  "version": "2.1.4",
+  "version": "2.1.5",
   "description": "Common libs for wertgaranties cross selling components",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

@@ -1,6 +1,6 @@
 {
   "name": "wertgarantie-landing-page",
-  "version": "0.0.35",
+  "version": "0.0.36",
   "description": "Landing Page component for Wertgarantie e-commerce push",
   "main": "index.js",
   "scripts": {
@@ -30,6 +30,6 @@
   "dependencies": {
     "faucet-pipeline-esnext": "^2.1.6",
     "wertgarantie-common": "^1.0.7",
-    "wertgarantie-rating": "^3.1.9"
+    "wertgarantie-rating": "^3.1.10"
   }
 }

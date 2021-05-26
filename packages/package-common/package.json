@@ -1,6 +1,6 @@
 {
   "name": "wertgarantie-common",
-  "version": "2.1.6",
+  "version": "2.1.7",
   "description": "Common libs for wertgaranties cross selling components",
   "main": "dist",
   "types": "dist",

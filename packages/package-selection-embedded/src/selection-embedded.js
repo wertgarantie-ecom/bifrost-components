@@ -1,11 +1,11 @@
 import {html, LitElement} from "lit-element";
-import fetchBifrost from "wertgarantie-common/src/fetchBifrost";
+import fetchBifrost from "wertgarantie-common/dist/fetchBifrost";
 import {
     deleteProductSelection,
     findProductSelection,
     getShoppingCart,
     saveProductSelection
-} from "wertgarantie-common/src/wertgarantieShoppingCartRepository";
+} from "wertgarantie-common/dist/wertgarantieShoppingCartRepository";
 import 'wertgarantie-information-popup/dist/information-popup.min.js';
 import {selectionEmbeddedStyling} from "./selection-embedded-styling";
 import {classMap} from "lit-html/directives/class-map";

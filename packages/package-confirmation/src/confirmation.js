@@ -2,7 +2,7 @@ import {LitElement, html} from 'lit-element';
 import {confirmationStyling} from './confirmation-styling';
 import {confirmationStylingTabs} from "./confirmation-styling-tabs";
 import {confirmationStylingAdvantages} from "./confirmation-styling-advantages";
-import fetchBifrost from "wertgarantie-common/src/fetchBifrost";
+import fetchBifrost from "wertgarantie-common/dist/fetchBifrost";
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from "lit-html/directives/style-map";
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';

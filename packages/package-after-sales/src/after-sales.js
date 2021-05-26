@@ -2,7 +2,7 @@ import {LitElement, html} from "lit-element";
 import {classMap} from 'lit-html/directives/class-map';
 import {styleMap} from "lit-html/directives/style-map";
 import {afterSalesStyling} from './after-sales-styling';
-import fetchBifrost from 'wertgarantie-common/src/fetchBifrost';
+import fetchBifrost from 'wertgarantie-common/dist/fetchBifrost';
 
 const WERTGARANTIE_SESSION_ID_COOKIE = 'wertgarantie-session-id';
 

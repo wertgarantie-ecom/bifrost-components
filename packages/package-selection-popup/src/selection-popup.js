@@ -4,8 +4,8 @@ import {styleMap} from 'lit-html/directives/style-map';
 import {selectionPopUpStyling} from "./selection-popup-styling";
 import {unsafeHTML} from 'lit-html/directives/unsafe-html.js';
 import 'wertgarantie-rating/dist/rating.min.js';
-import fetchBifrost from "wertgarantie-common/src/fetchBifrost";
-import {getOfferedForOrderItemId, saveOfferedOrderItemIds} from "wertgarantie-common/src/offeredItemsRepository";
+import fetchBifrost from "wertgarantie-common/dist/fetchBifrost";
+import {getOfferedForOrderItemId, saveOfferedOrderItemIds} from "wertgarantie-common/dist/offeredItemsRepository";
 
 const MOBILE_WIDTH = 878;
 

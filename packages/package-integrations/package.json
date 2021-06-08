@@ -1,6 +1,6 @@
 {
   "name": "wertgarantie-integrations",
-  "version": "0.0.35",
+  "version": "0.0.36",
   "description": "Mostly shop specific styling to smoothly integrate our components",
   "main": "index.js",
   "scripts": {},

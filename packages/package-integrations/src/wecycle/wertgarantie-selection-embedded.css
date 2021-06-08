@@ -4,3 +4,25 @@ wertgarantie-selection-embedded {
   --wertgarantie-selection-embedded-component-product-name-transform: none;
   --wertgarantie-selection-embedded-component-footer-text-transform: none;
 }
+
+.wertgarantie-banner {
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.wertgarantie-banner .wertgarantie-banner__title {
+  margin-top: 0.5rem;
+}
+
+@media screen and (min-width: 1440px) {
+  .wertgarantie-banner {
+    flex-direction: row;
+  }
+
+  .wertgarantie-banner .wertgarantie-banner__title {
+    margin-top: 0;
+  }
+
+}

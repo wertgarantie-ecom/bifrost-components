@@ -27,7 +27,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
             showComponent: {type: Boolean},
             smallView: {type: Boolean},
             title: {type: String},
-            wertgarantieFurtherInfoHtml: {type: String},
+            wertgarantieFurtherInfoHtml: {type: String}, // used?
             includedTax: {type: String},
 
             products: {type: Object},
@@ -65,7 +65,7 @@ class WertgarantieSelectionEmbedded extends LitElement {
         this.devicePrice = parseInt(this.getAttribute("data-device-price"));
         this.deviceClass = this.getAttribute("data-device-class") || undefined;
         this.deviceClasses = this.getAttribute("data-device-classes") || undefined;
-        this.landingPageUri = this.getAttribute("data-landing-page-uri") || "https://www.wertgarantie.de";
+        this.landingPageUri = this.getAttribute("data-landing-page-uri") || "https://www.wertgarantie.de"; // TODO: Used?
         this.productBaseIdentifier = this.getAttribute("data-product-base-identifier");
         this.completeProductName = this.getAttribute("data-complete-product-name");
         this.deviceCondition = this.getAttribute("data-device-condition") || undefined;
@@ -152,9 +152,9 @@ class WertgarantieSelectionEmbedded extends LitElement {
             return;
         }
         this.title = selectionData.texts.title;
-        this.wertgarantieFurtherInfoHtml = selectionData.texts.wertgarantieFurtherInfoHtml.replace("%s", this.landingPageUri);
+        this.wertgarantieFurtherInfoHtml = selectionData.texts.wertgarantieFurtherInfoHtml.replace("%s", this.landingPageUri); // TODO: Used?
         this.includedTax = selectionData.texts.includedTax;
-        this.footerHtml = selectionData.texts.footerHtml;
+        this.footerHtml = selectionData.texts.footerHtml; // TODO: Used?
 
         this.productPanelTitle = selectionData.texts.productPanelTitle;
         this.productPanelDetailsHeader = selectionData.texts.productPanelDetailsHeader;

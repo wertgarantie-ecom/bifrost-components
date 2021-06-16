@@ -1,0 +1,11 @@
+wertgarantie-after-sales {
+    /* Header */
+    --wertgarantie-after-sales-header-icon-background-color: #cc3333;
+    --wertgarantie-after-sales-header-title-background-color: #495057;
+
+    /* Products */
+    --wertgarantie-after-sales-product-card-background-primary: linear-gradient(to bottom right, rgba(0, 0, 0, 0), #495057),
+        linear-gradient(to top right, #cc3333, rgba(81, 61, 61, 0));
+    --wertgarantie-after-sales-product-card-background-secondary: linear-gradient(to bottom right, rgba(0, 0, 0, 0), #495057),
+        linear-gradient(to top right, #cc3333, rgba(81, 61, 61, 0));
+}

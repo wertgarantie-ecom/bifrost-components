@@ -17,8 +17,8 @@ wertgarantie-confirmation {
     --wertgarantie-confirmation-checkbox-column-padding: 0 0 0 0;
     --wertgarantie-confirmation-header-margin: 20px 0 0 0;
     --wertgarantie-confirmation-product-panel-margin: 0 0 0 15px;
-    --wertgarantie-confirmation-product-tab-background-color-hover: #616569;
-    --wertgarantie-confirmation-product-tab-background-color-selected: #495057;
+    /* --wertgarantie-confirmation-product-tab-background-color-hover: #d3d3d3; */
+    /* --wertgarantie-confirmation-product-tab-background-color-selected: #495057; */
 
     --wertgarantie-confirmation-product-background-primary: linear-gradient(to bottom right, rgba(0, 0, 0, 0), #000),
     linear-gradient(to top right, #b7b7b7, #495057);

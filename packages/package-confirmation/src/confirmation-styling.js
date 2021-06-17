@@ -97,6 +97,7 @@ export const confirmationStyling = css`
         font-weight: var(--wertgarantie-confirmation-header-title-font-weight, 700);
         text-transform: var(--wertgarantie-confirmation-header-title-text-transform, uppercase);
         line-height: var(--wertgarantie-confirmation-header-title-line-height, 1.2em);
+        color: var(--wertgarantie-confirmation-header-title-color, black);
         padding: 1.7em 1em;
     }
 

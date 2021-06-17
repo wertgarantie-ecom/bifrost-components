@@ -1,6 +1,7 @@
 wertgarantie-confirmation {
     --wertgarantie-confirmation-header-background-color: #495057;
     --wertgarantie-confirmation-header-icon-background-color: #cc3333;
+    --wertgarantie-confirmation-header-title-color: white;
     --wertgarantie-confirmation-font-family: 'Roboto', sans-serif;
     --wertgarantie-confirmation-font-color: #505050;
     --wertgarantie-confirmation-component-margin: 0 0 15px 0;

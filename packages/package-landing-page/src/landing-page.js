@@ -105,9 +105,9 @@ class LandingPage extends LitElement {
                     </div>
                     <div class="bottom">
                         <div class="head__images">
-                            <img id="tuev-image" src="https://wertgarantie-bifrost.s3.eu-central-1.amazonaws.com/landing-page/wertgarantie-tuev-logo.png" alt="">
-                            <img id="focus-money-image" src="https://wertgarantie-bifrost.s3.eu-central-1.amazonaws.com/landing-page/focus-money-smartphone.png" alt="">
-                            <img id="test-bild-image" src="https://wertgarantie-bifrost.s3.eu-central-1.amazonaws.com/landing-page/test-bild-wertgarantie-109-01.png" alt="">
+                            <img id="tuev-image" src="https://wertgarantie-components.s3.eu-central-1.amazonaws.com/landing-page/wertgarantie-tuev-logo.png" alt="">
+                            <img id="focus-money-image" src="https://wertgarantie-components.s3.eu-central-1.amazonaws.com/landing-page/focus-money-smartphone.png" alt="">
+                            <img id="test-bild-image" src="https://wertgarantie-components.s3.eu-central-1.amazonaws.com/landing-page/test-bild-wertgarantie-109-01.png" alt="">
                         </div>
                     </div>
                 </div>
@@ -122,7 +122,7 @@ class LandingPage extends LitElement {
                             </div>
                         </div>
                         <div class="section__image--small">
-                            <img class="wertgarantie-logo" src="https://wertgarantie-bifrost.s3.eu-central-1.amazonaws.com/landing-page/wertgarantie-logo.png" alt="">
+                            <img class="wertgarantie-logo" src="https://wertgarantie-components.s3.eu-central-1.amazonaws.com/landing-page/wertgarantie-logo.png" alt="">
                         </div>
                     </div>
                     <div class="body__section body__section--with-picture">

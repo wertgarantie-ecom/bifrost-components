@@ -238,7 +238,7 @@ class WertgarantieSelectionPopUp extends LitElement {
                                      </a>
                                 <a target="_blank" href="https://www.wertgarantie.de">
                                     <img class="award-image"
-                                         src="https://www.wertgarantie.de/sites/default/files/styles/trust_badge_s_2x/public/trust-badges/2014_fomo_elvers_sp_b.jpg?itok=CfZUjPTG"
+                                         src="https://wertgarantie-components.s3.eu-central-1.amazonaws.com/zertifikate/focus_money_15_21_beste_smartphone_versicherung.jpg"
                                          alt="test-bild">
                                 </a>
                             </div>

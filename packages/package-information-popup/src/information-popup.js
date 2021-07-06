@@ -112,24 +112,24 @@ class WertgarantieInformationPopup extends LitElement {
                                 <div>
                                     <a class="award-image-block__link" target="_blank" href="https://www.wertgarantie.de/Home.aspx#">
                                         <img class="award-image"
-                                            src="https://www.wertgarantie.de/sites/default/files/styles/trust_badge_s_2x/public/trust-badges/fokus-money_beste_elektronik-versicherung_21.jpg?itok=FDzxiDkY"
+                                            src="https://wertgarantie-components.s3.eu-central-1.amazonaws.com/zertifikate/focus_money_15_21_beste_elektronikversicherung.jpg"
                                             alt="Focus Money Beste Elektronik-Versicherung 15/2021">
                                     </a>
                                     <a class="award-image-block__link" target="_blank" href="https://www.wertgarantie.de/Home.aspx#">
                                         <img class="award-image"
-                                            src="https://www.wertgarantie.de/sites/default/files/styles/trust_badge_s_2x/public/trust-badges/fokus-money_beste_smartphone-versicherung_21.jpg?itok=1LnS6qe5"
+                                            src="https://wertgarantie-components.s3.eu-central-1.amazonaws.com/zertifikate/focus_money_15_21_beste_smartphone_versicherung.jpg"
                                             alt="Focus Money Beste Smartphone-Versicherung 15/2021">
                                     </a>
 
                                     <a class="award-image-block__link" target="_blank" href="https://www.wertgarantie.de/Home.aspx#">
                                         <img class="award-image"
-                                            src="https://www.wertgarantie.de/sites/default/files/styles/trust_badge_s_2x/public/trust-badges/wertgarantie-komplettschutz_einzeilig_cd151898.jpg?itok=SLmWlTDo"
+                                            src="https://wertgarantie-components.s3.eu-central-1.amazonaws.com/zertifikate/chip_juni_2020_small.jpeg"
                                             alt="CHIP Smartphone Versicherungen Juni 2020">
                                     </a>
 
                                     <a class="award-image-block__link" target="_blank" href="https://www.wertgarantie.de/Home.aspx#">
                                         <img class="award-image"
-                                            src="https://www.wertgarantie.de/sites/default/files/styles/trust_badge_s_2x/public/trust-badges/wertgarantie_komplettschutz_e-bike_ef151003.jpg?itok=SEUggGmy"
+                                            src="https://wertgarantie-components.s3.eu-central-1.amazonaws.com/zertifikate/efahrer_03_21_bester_leistungsumfang.jpg"
                                             alt="EFahrer.com Bester Leistungsumfang E-Bike Versicherungen">
                                     </a>
                                 </div>
